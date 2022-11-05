@@ -1,6 +1,6 @@
 import { HelixVideo, HelixVideoType } from "@twurple/api/lib";
 import { useGetTwitchVideos } from "features/channels/hooks/useGetTwitchVideos";
-import TwitchVideoListing from "./TwitchVideoListing";
+import { TwitchVideoListing } from "./TwitchVideoListing";
 import * as React from "react";
 import styles from "features/channels/components/styles/TwitchChannelVideos.module.css";
 import { useEffect, useState } from "react";
@@ -9,17 +9,11 @@ import {
   filterByDurationTwitch,
   filterByKeywordTwitch,
 } from "features/channels/utils/twitchVideoFilters";
-import VideosFilterMenu from "features/players/components/VideosFilterMenu";
+import { VideosFilterMenu } from "../VideosFilterMenu";
+import { VideoFilters } from "features/channels/types/videoFilters";
 
 interface TwitchChannelVideosProps {
   userId: string;
-}
-
-export interface VideoFilters {
-  dateFilter: Date;
-  minDurationFilter: number;
-  maxDurationFilter: number;
-  keywordFilter: string;
 }
 
 // Make API call here to fetch videos using channel/user ID

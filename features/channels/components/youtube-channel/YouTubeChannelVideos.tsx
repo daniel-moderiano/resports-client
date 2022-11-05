@@ -3,8 +3,8 @@ import * as React from "react";
 import { YouTubeVideoListing } from "./YouTubeVideoListing";
 import { useEffect, useState } from "react";
 import styles from "features/channels/components/styles/YouTubeChannelVideos.module.css";
-import VideosFilterMenu from "../VideosFilterMenu";
-import { VideoFilters } from "features/channels";
+import { VideosFilterMenu } from "../VideosFilterMenu";
+import { VideoFilters } from "features/channels/types/videoFilters";
 import { YouTubeVideoResult } from "types/youtubeAPITypes";
 import {
   filterByDateYouTube,
