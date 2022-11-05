@@ -1,0 +1,82 @@
+.controlsBtn {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  opacity: 0.9;
+}
+
+.controlsBtn:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.controlsContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
+.duration {
+  color: white;
+  font-size: 0.85rem;
+  text-align: left;
+  margin-right: 0.35rem;
+  margin-left: 0.2rem;
+  width: 32px;
+  padding-top: 0.1rem;
+}
+
+.durationMedium {
+  width: 40px;
+}
+
+.durationLarge {
+  width: 54px;
+}
+
+.leftControls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.rightControls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.leftControls .controlsBtn {
+  margin-right: 0.5rem;
+}
+
+.rightControls .controlsBtn {
+  margin-left: 0.5rem;
+}
+
+.icons24 {
+  width: 24px;
+  pointer-events: none;
+}
+
+.icons27 {
+  width: 27px;
+  pointer-events: none;
+}
+
+.icons30 {
+  width: 30px;
+  pointer-events: none;
+}
+
+.icons32 {
+  width: 32px;
+  pointer-events: none;
+}
