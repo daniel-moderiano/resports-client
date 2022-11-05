@@ -1,19 +1,19 @@
-import { formatElapsedTime } from "../helpers/videoDurationConversion";
+import { formatElapsedTime } from "utils/videoDurationConversion";
 import { useEffect, useState } from "react";
-import styles from "../styles/componentStyles/YouTubeVideoControls.module.css";
-import MutedIcon from "./icons/MutedIcon";
-import VolumeIcon from "./icons/VolumeIcon";
-import BackTenIcon from "./icons/BackTenIcon";
-import BackFiveIcon from "./icons/BackFiveIcon";
-import BackOneIcon from "./icons/BackOneIcon";
-import ForwardOneIcon from "./icons/ForwardOneIcon";
-import ForwardFiveIcon from "./icons/ForwardFiveIcon";
-import ForwardTenIcon from "./icons/ForwardTenIcon";
-import ExitFullscreenIcon from "./icons/ExitFullscreenIcon";
-import EnterFullscreenIcon from "./icons/EnterFullscreenIcon";
-import TheaterIcon from "./icons/TheaterIcon";
-import PlayIcon from "./icons/PlayIcon";
-import PauseIcon from "./icons/PauseIcon";
+import styles from "features/players/components/styles/YouTubeVideoControls.module.css";
+import MutedIcon from "icons/MutedIcon";
+import VolumeIcon from "icons/VolumeIcon";
+import BackTenIcon from "icons/BackTenIcon";
+import BackFiveIcon from "icons/BackFiveIcon";
+import BackOneIcon from "icons/BackOneIcon";
+import ForwardOneIcon from "icons/ForwardOneIcon";
+import ForwardFiveIcon from "icons/ForwardFiveIcon";
+import ForwardTenIcon from "icons/ForwardTenIcon";
+import ExitFullscreenIcon from "icons/ExitFullscreenIcon";
+import EnterFullscreenIcon from "icons/EnterFullscreenIcon";
+import TheaterIcon from "icons/TheaterIcon";
+import PlayIcon from "icons/PlayIcon";
+import PauseIcon from "icons/PauseIcon";
 import * as React from "react";
 
 interface YouTubeVideoControlsProps {
@@ -29,7 +29,7 @@ interface YouTubeVideoControlsProps {
   projectedTime: number | null;
 }
 
-const YouTubeVideoControls = ({
+export const YouTubeVideoControls = ({
   player,
   toggleFullscreen,
   toggleTheater,
@@ -235,5 +235,3 @@ const YouTubeVideoControls = ({
     </div>
   );
 };
-
-export default YouTubeVideoControls;

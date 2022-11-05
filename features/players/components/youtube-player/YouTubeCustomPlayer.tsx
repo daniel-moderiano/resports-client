@@ -1,6 +1,6 @@
-import { useYouTubeIframe } from "../hooks/useYouTubeIframe";
+import { useYouTubeIframe } from "features/players/hooks/useYouTubeIframe";
 import { useState } from "react";
-import styles from "../styles/componentStyles/YouTubePlayer.module.css";
+import styles from "features/players/components/styles/YouTubePlayer.module.css";
 import YouTubeVideoControls from "./YouTubeVideoControls";
 import * as React from "react";
 
@@ -8,7 +8,7 @@ interface YouTubeCustomPlayerProps {
   videoId: string;
 }
 
-const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
+export const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
   const [theaterMode, setTheaterMode] = useState(false);
 
   // This local state is used to avoid the long delays of an API call to check muted state when toggling icons and UI
@@ -293,5 +293,3 @@ const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
     </div>
   );
 };
-
-export default YouTubeCustomPlayer;
