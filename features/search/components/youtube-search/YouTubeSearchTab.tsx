@@ -1,4 +1,4 @@
-import { useYouTubeSearch } from "../hooks/useYoutubeSearch";
+import { useYouTubeSearch } from "features/search/hooks/useYoutubeSearch";
 import YouTubeChannelResult from "./YouTubeChannelResult";
 
 interface YouTubeSearchTabProps {
@@ -740,7 +740,7 @@ const testData = {
   ],
 };
 
-const YouTubeSearchTab = ({ searchQuery }: YouTubeSearchTabProps) => {
+export const YouTubeSearchTab = ({ searchQuery }: YouTubeSearchTabProps) => {
   const { isLoading, isError, data } = useYouTubeSearch(searchQuery, "channel");
 
   return (
@@ -775,5 +775,3 @@ const YouTubeSearchTab = ({ searchQuery }: YouTubeSearchTabProps) => {
     </div>
   );
 };
-
-export default YouTubeSearchTab;
