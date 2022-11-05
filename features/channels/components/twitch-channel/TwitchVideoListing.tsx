@@ -2,14 +2,14 @@ import { HelixVideo } from "@twurple/api/lib";
 import Image from "next/image";
 import { convertTwitchVideoDuration } from "utils/videoDurationConversion";
 import { timeAgo } from "config/timeAgoFormatter";
-import styles from "../styles/componentStyles/TwitchVideoListing.module.css";
+import styles from "features/channels/components/styles/TwitchVideoListing.module.css";
 import Link from "next/link";
 
 interface TwitchVideoListingProps {
   videoData: HelixVideo;
 }
 
-const TwitchVideoListing = ({ videoData }: TwitchVideoListingProps) => {
+export const TwitchVideoListing = ({ videoData }: TwitchVideoListingProps) => {
   return (
     <div className={styles.videoListing}>
       <div className={styles.imageContainer}>
@@ -52,5 +52,3 @@ const TwitchVideoListing = ({ videoData }: TwitchVideoListingProps) => {
     </div>
   );
 };
-
-export default TwitchVideoListing;

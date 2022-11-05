@@ -1,22 +1,24 @@
-import { useGetYouTubeVideos } from "../hooks/useGetYouTubeVideos";
+import { useGetYouTubeVideos } from "features/channels/hooks/useGetYouTubeVideos";
 import * as React from "react";
-import YouTubeVideoListing from "@/components/YouTubeVideoListing";
+import { YouTubeVideoListing } from "./YouTubeVideoListing";
 import { useEffect, useState } from "react";
-import styles from "@/styles/componentStyles/YouTubeChannelVideos.module.css";
-import VideosFilterMenu from "@/components/VideosFilterMenu";
-import { VideoFilters } from "@/components/TwitchChannelVideos";
-import { YouTubeVideoResult } from "../types/youtubeAPITypes";
+import styles from "features/channels/components/styles/YouTubeChannelVideos.module.css";
+import VideosFilterMenu from "../VideosFilterMenu";
+import { VideoFilters } from "features/channels";
+import { YouTubeVideoResult } from "types/youtubeAPITypes";
 import {
   filterByDateYouTube,
   filterByDurationYouTube,
   filterByKeywordYouTube,
-} from "../helpers/YouTubeVideoFilters";
+} from "features/channels/utils/YouTubeVideoFilters";
 
 interface YouTubeChannelVideosProps {
   uploadsId: string;
 }
 
-const YouTubeChannelVideos = ({ uploadsId }: YouTubeChannelVideosProps) => {
+export const YouTubeChannelVideos = ({
+  uploadsId,
+}: YouTubeChannelVideosProps) => {
   const { isLoading, isError, data } = useGetYouTubeVideos(uploadsId);
   const [hideVideos, setHideVideos] = useState(true);
   const [filters, setFilters] = React.useState<VideoFilters | null>(null);
@@ -78,5 +80,3 @@ const YouTubeChannelVideos = ({ uploadsId }: YouTubeChannelVideosProps) => {
     </div>
   );
 };
-
-export default YouTubeChannelVideos;

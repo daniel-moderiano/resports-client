@@ -1,15 +1,17 @@
-import { YouTubeVideoResult } from "../types/youtubeAPITypes";
-import styles from "@/styles/componentStyles/YouTubeVideoListing.module.css";
+import { YouTubeVideoResult } from "types/youtubeAPITypes";
+import styles from "features/channels/components/styles/YouTubeVideoListing.module.css";
 import Image from "next/image";
-import { convertYouTubeVideoDuration } from "../helpers/videoDurationConversion";
+import { convertYouTubeVideoDuration } from "utils/videoDurationConversion";
 import Link from "next/link";
-import { timeAgo } from "../config/timeAgoFormatter";
+import { timeAgo } from "config/timeAgoFormatter";
 
 interface YouTubeVideoListingProps {
   videoData: YouTubeVideoResult;
 }
 
-const YouTubeVideoListing = ({ videoData }: YouTubeVideoListingProps) => {
+export const YouTubeVideoListing = ({
+  videoData,
+}: YouTubeVideoListingProps) => {
   return (
     <div className={styles.videoListing}>
       <div className={styles.imageContainer}>
@@ -50,5 +52,3 @@ const YouTubeVideoListing = ({ videoData }: YouTubeVideoListingProps) => {
     </div>
   );
 };
-
-export default YouTubeVideoListing;
