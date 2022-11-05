@@ -1,11 +1,13 @@
 interface RoundPauseIconProps {
   className?: string;
   fill?: string;
+  testId?: string;
 }
 
 const RoundPauseIcon = ({
   className,
   fill = "#FFFFFF",
+  testId,
 }: RoundPauseIconProps) => {
   return (
     <svg
@@ -14,6 +16,7 @@ const RoundPauseIcon = ({
       viewBox="0 0 24 24"
       fill={fill}
       className={className ? className : undefined}
+      data-testid={testId ? testId : undefined}
     >
       <g>
         <rect fill="none" height="32" width="32" />

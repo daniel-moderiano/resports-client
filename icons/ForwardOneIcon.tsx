@@ -1,11 +1,13 @@
 interface ForwardOneIconProps {
   className?: string;
   fill?: string;
+  testId?: string;
 }
 
 const ForwardOneIcon = ({
   className,
   fill = "#FFFFFF",
+  testId,
 }: ForwardOneIconProps) => {
   return (
     <svg
@@ -15,6 +17,7 @@ const ForwardOneIcon = ({
       viewBox="0 0 24 24"
       enableBackground="new 0 0 24 24"
       className={className ? className : undefined}
+      data-testid={testId ? testId : undefined}
       fill={fill}
     >
       <path d="M18,13c0,3.3-2.7,6-6,6s-6-2.7-6-6s2.7-6,6-6v4l5-5l-5-5v4c-4.4,0-8,3.6-8,8s3.6,8,8,8s8-3.6,8-8H18z" />

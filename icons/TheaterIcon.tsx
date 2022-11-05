@@ -1,14 +1,20 @@
 interface TheaterIconProps {
   className?: string;
   fill?: string;
+  testId?: string;
 }
 
-const TheaterIcon = ({ className, fill = "#FFFFFF" }: TheaterIconProps) => {
+const TheaterIcon = ({
+  className,
+  fill = "#FFFFFF",
+  testId,
+}: TheaterIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 138.7 90.93"
       className={className ? className : undefined}
+      data-testid={testId ? testId : undefined}
     >
       <rect
         x="3.5"

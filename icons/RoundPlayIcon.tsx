@@ -1,9 +1,14 @@
 interface RoundPlayIconProps {
   className?: string;
   fill?: string;
+  testId?: string;
 }
 
-const RoundPlayIcon = ({ className, fill = "#FFFFFF" }: RoundPlayIconProps) => {
+const RoundPlayIcon = ({
+  className,
+  fill = "#FFFFFF",
+  testId,
+}: RoundPlayIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -11,6 +16,7 @@ const RoundPlayIcon = ({ className, fill = "#FFFFFF" }: RoundPlayIconProps) => {
       viewBox="0 0 24 24"
       fill={fill}
       className={className ? className : undefined}
+      data-testid={testId ? testId : undefined}
     >
       <g>
         <rect fill="none" height="32" width="32" />

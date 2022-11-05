@@ -1,17 +1,20 @@
 interface QualityBarsIconProps {
   className?: string;
   fill?: string;
+  testId?: string;
 }
 
 const QualityBarsIcon = ({
   className,
   fill = "#FFFFFF",
+  testId,
 }: QualityBarsIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       className={className ? className : undefined}
+      data-testid={testId ? testId : undefined}
       fill={fill}
     >
       <path d="M0 0h24v24H0z" fill="none" />

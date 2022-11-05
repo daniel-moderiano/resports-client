@@ -1,15 +1,21 @@
 interface BackOneIconProps {
   className?: string;
   fill?: string;
+  testId?: string;
 }
 
-const BackOneIcon = ({ className, fill = "#FFFFFF" }: BackOneIconProps) => {
+const BackOneIcon = ({
+  className,
+  fill = "#FFFFFF",
+  testId,
+}: BackOneIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       enableBackground="new 0 0 24 24"
       className={className ? className : undefined}
+      data-testid={testId ? testId : undefined}
       fill={fill}
     >
       <path d="M12,5V1L7,6l5,5V7c3.3,0,6,2.7,6,6s-2.7,6-6,6s-6-2.7-6-6H4c0,4.4,3.6,8,8,8s8-3.6,8-8S16.4,5,12,5z" />

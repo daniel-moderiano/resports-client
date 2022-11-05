@@ -1,16 +1,19 @@
 interface ForwardFiveIconProps {
   className?: string;
   fill?: string;
+  testId?: string;
 }
 
 const ForwardFiveIcon = ({
   className,
   fill = "#FFFFFF",
+  testId,
 }: ForwardFiveIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       className={className ? className : undefined}
+      data-testid={testId ? testId : undefined}
       fill={fill}
       viewBox="0 0 24 24"
       enableBackground="new 0 0 24 24"

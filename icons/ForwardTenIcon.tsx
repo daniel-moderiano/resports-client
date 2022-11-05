@@ -1,11 +1,13 @@
 interface ForwardTenIconProps {
   className?: string;
   fill?: string;
+  testId?: string;
 }
 
 const ForwardTenIcon = ({
   className,
   fill = "#FFFFFF",
+  testId,
 }: ForwardTenIconProps) => {
   return (
     <svg
@@ -13,6 +15,7 @@ const ForwardTenIcon = ({
       enableBackground="new 0 0 24 24"
       viewBox="0 0 24 24"
       className={className ? className : undefined}
+      data-testid={testId ? testId : undefined}
       fill={fill}
     >
       <g>

@@ -1,11 +1,13 @@
 interface BackFiveIconProps {
   className?: string;
   fill?: string;
+  testId?: string;
 }
 
 const BackFiveIcon = ({
   className = "",
   fill = "#FFFFFF",
+  testId,
 }: BackFiveIconProps) => {
   return (
     <svg
@@ -13,6 +15,7 @@ const BackFiveIcon = ({
       viewBox="0 0 24 24"
       enableBackground="new 0 0 24 24"
       className={className ? className : undefined}
+      data-testid={testId ? testId : undefined}
       fill={fill}
     >
       <path

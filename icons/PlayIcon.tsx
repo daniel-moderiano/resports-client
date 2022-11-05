@@ -11,7 +11,7 @@ const PlayIcon = ({ className, fill, testId }: PlayIconProps) => {
       viewBox="0 0 24 24"
       fill={fill}
       className={className ? className : undefined}
-      data-testid={testId}
+      data-testid={testId ? testId : undefined}
     >
       <path d="M0 0h24v24H0z" fill="none" />
       <path d="M8 5v14l11-7z" />
