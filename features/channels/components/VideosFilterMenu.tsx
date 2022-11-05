@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { VideoFilters } from "features/channels/types/videoFilters";
+import { VideoFilters } from "features/channels/types";
 
 interface YouTubeFilterMenuProps {
   setFilters: React.Dispatch<React.SetStateAction<VideoFilters | null>>;

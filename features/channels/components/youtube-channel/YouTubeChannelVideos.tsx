@@ -4,7 +4,7 @@ import { YouTubeVideoListing } from "./YouTubeVideoListing";
 import { useEffect, useState } from "react";
 import styles from "features/channels/components/styles/YouTubeChannelVideos.module.css";
 import { VideosFilterMenu } from "../VideosFilterMenu";
-import { VideoFilters } from "features/channels/types/videoFilters";
+import { VideoFilters } from "features/channels/types";
 import { YouTubeVideoResult } from "types/youtubeAPITypes";
 import {
   filterByDateYouTube,

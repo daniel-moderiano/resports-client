@@ -10,7 +10,7 @@ import {
   filterByKeywordTwitch,
 } from "features/channels/utils/twitchVideoFilters";
 import { VideosFilterMenu } from "../VideosFilterMenu";
-import { VideoFilters } from "features/channels/types/videoFilters";
+import { VideoFilters } from "features/channels/types";
 
 interface TwitchChannelVideosProps {
   userId: string;
