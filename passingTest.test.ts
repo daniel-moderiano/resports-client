@@ -1,5 +1,5 @@
 it("fails on purpose", () => {
-  expect(true).toBe(false);
+  expect(true).toBe(true);
 });
 
 export {};
