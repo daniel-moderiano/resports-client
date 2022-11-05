@@ -1,7 +1,7 @@
 import { HelixVideo } from "@twurple/api/lib";
 import Image from "next/image";
-import { convertTwitchVideoDuration } from "../helpers/videoDurationConversion";
-import { timeAgo } from "../config/timeAgoFormatter";
+import { convertTwitchVideoDuration } from "utils/videoDurationConversion";
+import { timeAgo } from "config/timeAgoFormatter";
 import styles from "../styles/componentStyles/TwitchVideoListing.module.css";
 import Link from "next/link";
 

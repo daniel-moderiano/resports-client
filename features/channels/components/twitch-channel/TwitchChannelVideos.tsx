@@ -1,5 +1,5 @@
 import { HelixVideo, HelixVideoType } from "@twurple/api/lib";
-import { useGetTwitchVideos } from "../hooks/useGetTwitchVideos";
+import { useGetTwitchVideos } from "features/channels/hooks/useGetTwitchVideos";
 import TwitchVideoListing from "./TwitchVideoListing";
 import * as React from "react";
 import styles from "../styles/componentStyles/TwitchChannelVideos.module.css";
@@ -8,8 +8,8 @@ import {
   filterByDateTwitch,
   filterByDurationTwitch,
   filterByKeywordTwitch,
-} from "../helpers/twitchVideoFilters";
-import VideosFilterMenu from "@/components/VideosFilterMenu";
+} from "features/channels/utils/twitchVideoFilters";
+import VideosFilterMenu from "features/players/components/VideosFilterMenu";
 
 interface TwitchChannelVideosProps {
   userId: string;
