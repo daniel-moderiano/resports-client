@@ -1,21 +1,21 @@
-import { formatElapsedTime } from "../helpers/videoDurationConversion";
+import { formatElapsedTime } from "utils/videoDurationConversion";
 import { useEffect, useState } from "react";
-import styles from "../styles/componentStyles/YouTubeVideoControls.module.css";
-import MutedIcon from "./icons/MutedIcon";
-import VolumeIcon from "./icons/VolumeIcon";
-import BackTenIcon from "./icons/BackTenIcon";
-import BackFiveIcon from "./icons/BackFiveIcon";
-import BackOneIcon from "./icons/BackOneIcon";
-import ForwardOneIcon from "./icons/ForwardOneIcon";
-import ForwardFiveIcon from "./icons/ForwardFiveIcon";
-import ForwardTenIcon from "./icons/ForwardTenIcon";
-import ExitFullscreenIcon from "./icons/ExitFullscreenIcon";
-import EnterFullscreenIcon from "./icons/EnterFullscreenIcon";
-import TheaterIcon from "./icons/TheaterIcon";
-import PlayIcon from "./icons/PlayIcon";
-import PauseIcon from "./icons/PauseIcon";
-import SettingsGearIcon from "./icons/SettingsGearIcon";
-import TwitchPlayerSettingsMenu from "./TwitchPlayerSettingsMenu";
+import styles from "features/players/components/styles/YouTubeVideoControls.module.css";
+import MutedIcon from "icons/MutedIcon";
+import VolumeIcon from "icons/VolumeIcon";
+import BackTenIcon from "icons/BackTenIcon";
+import BackFiveIcon from "icons/BackFiveIcon";
+import BackOneIcon from "icons/BackOneIcon";
+import ForwardOneIcon from "icons/ForwardOneIcon";
+import ForwardFiveIcon from "icons/ForwardFiveIcon";
+import ForwardTenIcon from "icons/ForwardTenIcon";
+import ExitFullscreenIcon from "icons/ExitFullscreenIcon";
+import EnterFullscreenIcon from "icons/EnterFullscreenIcon";
+import TheaterIcon from "icons/TheaterIcon";
+import PlayIcon from "icons/PlayIcon";
+import PauseIcon from "icons/PauseIcon";
+import SettingsGearIcon from "icons/SettingsGearIcon";
+import { TwitchPlayerSettingsMenu } from "./TwitchPlayerSettingsMenu";
 import * as React from "react";
 
 interface TwitchPlayerControlsProps {
@@ -31,7 +31,7 @@ interface TwitchPlayerControlsProps {
   projectedTime: number | null;
 }
 
-const TwitchPlayerControls = ({
+export const TwitchPlayerControls = ({
   player,
   toggleFullscreen,
   toggleTheater,
@@ -88,13 +88,13 @@ const TwitchPlayerControls = ({
         >
           {playerState === 1 ? (
             <PauseIcon
-              iconStyles={styles.icons32}
+              className={styles.icons32}
               fill="#FFFFFF"
               testId="pauseIcon"
             />
           ) : (
             <PlayIcon
-              iconStyles={styles.icons32}
+              className={styles.icons32}
               fill="#FFFFFF"
               testId="playIcon"
             />
@@ -111,13 +111,13 @@ const TwitchPlayerControls = ({
         >
           {playerMuted ? (
             <MutedIcon
-              iconStyles={styles.icons27}
+              className={styles.icons27}
               fill="#FFFFFF"
               testId="mutedIcon"
             />
           ) : (
             <VolumeIcon
-              iconStyles={styles.icons27}
+              className={styles.icons27}
               fill="none"
               testId="volumeIcon"
             />
@@ -132,7 +132,7 @@ const TwitchPlayerControls = ({
           }}
           aria-label="Skip backward ten minutes"
         >
-          <BackTenIcon iconStyles={styles.icons30} fill="#FFFFFF" />
+          <BackTenIcon className={styles.icons30} fill="#FFFFFF" />
         </button>
 
         <button
@@ -143,7 +143,7 @@ const TwitchPlayerControls = ({
           }}
           aria-label="Skip backward five minutes"
         >
-          <BackFiveIcon iconStyles={styles.icons30} fill="#FFFFFF" />
+          <BackFiveIcon className={styles.icons30} fill="#FFFFFF" />
         </button>
 
         <button
@@ -154,7 +154,7 @@ const TwitchPlayerControls = ({
           }}
           aria-label="Skip backward one minute"
         >
-          <BackOneIcon iconStyles={styles.icons30} fill="#FFFFFF" />
+          <BackOneIcon className={styles.icons30} fill="#FFFFFF" />
         </button>
 
         {/* These duration styles resize to ensure the text is always centered without constantly shifting adjacent divs */}
@@ -177,7 +177,7 @@ const TwitchPlayerControls = ({
           }}
           aria-label="Skip forward one minute"
         >
-          <ForwardOneIcon iconStyles={styles.icons30} fill="#FFFFFF" />
+          <ForwardOneIcon className={styles.icons30} fill="#FFFFFF" />
         </button>
 
         <button
@@ -188,7 +188,7 @@ const TwitchPlayerControls = ({
           }}
           aria-label="Skip forward five minutes"
         >
-          <ForwardFiveIcon iconStyles={styles.icons30} fill="#FFFFFF" />
+          <ForwardFiveIcon className={styles.icons30} fill="#FFFFFF" />
         </button>
 
         <button
@@ -199,7 +199,7 @@ const TwitchPlayerControls = ({
           }}
           aria-label="Skip forward ten minutes"
         >
-          <ForwardTenIcon iconStyles={styles.icons30} fill="#FFFFFF" />
+          <ForwardTenIcon className={styles.icons30} fill="#FFFFFF" />
         </button>
       </div>
 
@@ -211,7 +211,7 @@ const TwitchPlayerControls = ({
           onClick={() => setShowSettingsMenu((prevState) => !prevState)}
           data-id="twitchSettingsMenu"
         >
-          <SettingsGearIcon iconStyles={styles.icons24} fill="#FFFFFF" />
+          <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
         </button>
 
         {showSettingsMenu && (
@@ -227,7 +227,7 @@ const TwitchPlayerControls = ({
           data-testid="theater"
           aria-label="Switch to theater mode"
         >
-          <TheaterIcon iconStyles={styles.icons24} fill="#FFFFFF" />
+          <TheaterIcon className={styles.icons24} fill="#FFFFFF" />
         </button>
 
         <button
@@ -241,13 +241,13 @@ const TwitchPlayerControls = ({
         >
           {document.fullscreenElement ? (
             <ExitFullscreenIcon
-              iconStyles={styles.icons30}
+              className={styles.icons30}
               fill="#FFFFFF"
               testId="exitFullscreenIcon"
             />
           ) : (
             <EnterFullscreenIcon
-              iconStyles={styles.icons30}
+              className={styles.icons30}
               fill="#FFFFFF"
               testId="enterFullscreenIcon"
             />
@@ -257,5 +257,3 @@ const TwitchPlayerControls = ({
     </div>
   );
 };
-
-export default TwitchPlayerControls;

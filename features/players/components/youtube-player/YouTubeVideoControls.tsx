@@ -83,13 +83,13 @@ const YouTubeVideoControls = ({
         >
           {playerState === 1 ? (
             <PauseIcon
-              iconStyles={styles.icons32}
+              className={styles.icons32}
               fill="#FFFFFF"
               testId="pauseIcon"
             />
           ) : (
             <PlayIcon
-              iconStyles={styles.icons32}
+              className={styles.icons32}
               fill="#FFFFFF"
               testId="playIcon"
             />
@@ -106,13 +106,13 @@ const YouTubeVideoControls = ({
         >
           {playerMuted ? (
             <MutedIcon
-              iconStyles={styles.icons27}
+              className={styles.icons27}
               fill="#FFFFFF"
               testId="mutedIcon"
             />
           ) : (
             <VolumeIcon
-              iconStyles={styles.icons27}
+              className={styles.icons27}
               fill="none"
               testId="volumeIcon"
             />
@@ -127,7 +127,7 @@ const YouTubeVideoControls = ({
           }}
           aria-label="Skip backward ten minutes"
         >
-          <BackTenIcon iconStyles={styles.icons30} fill="#FFFFFF" />
+          <BackTenIcon className={styles.icons30} fill="#FFFFFF" />
         </button>
 
         <button
@@ -138,7 +138,7 @@ const YouTubeVideoControls = ({
           }}
           aria-label="Skip backward five minutes"
         >
-          <BackFiveIcon iconStyles={styles.icons30} fill="#FFFFFF" />
+          <BackFiveIcon className={styles.icons30} fill="#FFFFFF" />
         </button>
 
         <button
@@ -149,7 +149,7 @@ const YouTubeVideoControls = ({
           }}
           aria-label="Skip backward one minute"
         >
-          <BackOneIcon iconStyles={styles.icons30} fill="#FFFFFF" />
+          <BackOneIcon className={styles.icons30} fill="#FFFFFF" />
         </button>
 
         {/* These duration styles resize to ensure the text is always centered without constantly shifting adjacent divs */}
@@ -172,7 +172,7 @@ const YouTubeVideoControls = ({
           }}
           aria-label="Skip forward one minute"
         >
-          <ForwardOneIcon iconStyles={styles.icons30} fill="#FFFFFF" />
+          <ForwardOneIcon className={styles.icons30} fill="#FFFFFF" />
         </button>
 
         <button
@@ -183,7 +183,7 @@ const YouTubeVideoControls = ({
           }}
           aria-label="Skip forward five minutes"
         >
-          <ForwardFiveIcon iconStyles={styles.icons30} fill="#FFFFFF" />
+          <ForwardFiveIcon className={styles.icons30} fill="#FFFFFF" />
         </button>
 
         <button
@@ -194,7 +194,7 @@ const YouTubeVideoControls = ({
           }}
           aria-label="Skip forward ten minutes"
         >
-          <ForwardTenIcon iconStyles={styles.icons30} fill="#FFFFFF" />
+          <ForwardTenIcon className={styles.icons30} fill="#FFFFFF" />
         </button>
       </div>
 
@@ -205,7 +205,7 @@ const YouTubeVideoControls = ({
           data-testid="theater"
           aria-label="Switch to theater mode"
         >
-          <TheaterIcon iconStyles={styles.icons24} fill="#FFFFFF" />
+          <TheaterIcon className={styles.icons24} fill="#FFFFFF" />
         </button>
 
         <button
@@ -219,13 +219,13 @@ const YouTubeVideoControls = ({
         >
           {document.fullscreenElement ? (
             <ExitFullscreenIcon
-              iconStyles={styles.icons30}
+              className={styles.icons30}
               fill="#FFFFFF"
               testId="exitFullscreenIcon"
             />
           ) : (
             <EnterFullscreenIcon
-              iconStyles={styles.icons30}
+              className={styles.icons30}
               fill="#FFFFFF"
               testId="enterFullscreenIcon"
             />
