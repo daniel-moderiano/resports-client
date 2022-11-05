@@ -1,0 +1,16 @@
+.nav {
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navListItem {
+  padding: 0 0.25rem;
+}
+
+.navLink {
+}
