@@ -21,7 +21,7 @@ const YouTubeVideo = ({ videoId }: YouTubeVideoProps) => {
   return (
     <div>
       <YouTubePlayer videoId={videoId} />
-      <Link href={`/youtubeVideo/${videoId}`}>Custom player</Link>
+      <Link href={`/youtube-video/${videoId}`}>Custom player</Link>
     </div>
   );
 };

@@ -21,7 +21,7 @@ const YouTubeVideo = ({ videoId }: YouTubeVideoProps) => {
   return (
     <div>
       <YouTubeCustomPlayer videoId={videoId} />
-      <Link href={`/youtubeVideo/${videoId}/yt-enabled`}>
+      <Link href={`/youtube-video/${videoId}/yt-enabled`}>
         YT-enabled player
       </Link>
     </div>

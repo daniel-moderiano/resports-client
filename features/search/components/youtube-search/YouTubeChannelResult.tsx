@@ -22,7 +22,7 @@ export const YouTubeChannelResult = ({
         />
       </div>
       <div className={styles.channelText}>
-        <Link href={`/youtubeChannel/${channelData.channelId}`}>
+        <Link href={`/youtube-channel/${channelData.channelId}`}>
           <h3 className={styles.channelTitle}>{channelData.channelTitle}</h3>
         </Link>
         <p className={styles.description}>{channelData.description}</p>
