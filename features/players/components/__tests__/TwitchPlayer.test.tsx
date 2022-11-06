@@ -1,6 +1,6 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import TwitchPlayer from "../../components/TwitchPlayer";
+import { TwitchPlayer } from "features/players";
 
 // Named mocks to test player functions being called
 const playMock = jest.fn();

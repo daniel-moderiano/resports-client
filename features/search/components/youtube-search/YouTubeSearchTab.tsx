@@ -1,5 +1,5 @@
 import { useYouTubeSearch } from "features/search/hooks/useYoutubeSearch";
-import YouTubeChannelResult from "./YouTubeChannelResult";
+import { YouTubeChannelResult } from "./YouTubeChannelResult";
 
 interface YouTubeSearchTabProps {
   searchQuery: string;

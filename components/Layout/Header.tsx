@@ -7,9 +7,7 @@ export const Header = () => {
   return (
     <header role="banner" className={styles.header}>
       <h1 className={styles.headerTitle}>
-        <Link href="/">
-          <a>Resports</a>
-        </Link>
+        <Link href="/">Resports</Link>
       </h1>
       <SearchBar />
       <Nav />

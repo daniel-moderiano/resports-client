@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "features/players/components/styles/TwitchPlayer.module.css";
 import * as React from "react";
 import { useTwitchPlayer } from "features/players/hooks/useTwitchPlayer";
-import TwitchPlayerControls from "./TwitchPlayerControls";
+import { TwitchPlayerControls } from "./TwitchPlayerControls";
 
 // TODO: Adjust duration UI so it reflects projected time, not playing catch up with getCurrentTime calls
 

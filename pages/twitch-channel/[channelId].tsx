@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { channelId } };
 };
 
-export const TwitchChannel = ({ channelId }: TwitchChannelProps) => {
+const TwitchChannel = ({ channelId }: TwitchChannelProps) => {
   const { isLoading, isError, data, error } = useGetTwitchChannel(channelId);
 
   return (
@@ -56,3 +56,5 @@ export const TwitchChannel = ({ channelId }: TwitchChannelProps) => {
     </div>
   );
 };
+
+export default TwitchChannel;

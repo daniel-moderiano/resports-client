@@ -3,7 +3,7 @@ import {
   convertTwitchVideoDuration,
   convertYouTubeVideoDuration,
   formatElapsedTime,
-} from "../helpers/videoDurationConversion";
+} from "utils/videoDurationConversion";
 
 describe("Twitch video duration conversion", () => {
   it("Converts seconds-only input", () => {

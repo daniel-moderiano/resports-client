@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Search from "../../pages/search";
+import Search from "pages/search";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/router";
 

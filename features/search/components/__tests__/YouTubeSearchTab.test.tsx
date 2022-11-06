@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import YouTubeSearchTab from "../../components/YouTubeSearchTab";
+import { YouTubeSearchTab } from "features/search";
 import { YouTubeSearchListResponse } from "types/youtubeAPITypes";
 
 interface mockYouTubeSearchHook {

@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import TwitchSearchTab from "../../components/TwitchSearchTab";
+import { TwitchSearchTab } from "features/search";
 import { HelixChannelSearchResult } from "@twurple/api/lib/api/helix/search/HelixChannelSearchResult";
 
 interface mockTwitchSearchHook {

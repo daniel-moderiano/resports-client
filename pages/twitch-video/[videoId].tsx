@@ -16,10 +16,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { videoId } };
 };
 
-export const TwitchVideo = ({ videoId }: TwitchVideoProps) => {
+const TwitchVideo = ({ videoId }: TwitchVideoProps) => {
   return (
     <div>
       <TwitchPlayer videoId={videoId} />
     </div>
   );
 };
+
+export default TwitchVideo;

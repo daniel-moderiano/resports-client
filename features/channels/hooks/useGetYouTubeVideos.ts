@@ -1,4 +1,4 @@
-import { useGapiContext } from "../context/GapiContext";
+import { useGapiContext } from "providers/GapiContext";
 import { useQuery } from "react-query";
 import {
   YouTubePlaylistItemListResponse,

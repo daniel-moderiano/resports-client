@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Nav from "../../components/layout/Nav";
+import { Nav } from "components/Layout";
 
 describe("Nav component", () => {
   it("contains navigation accessiblity role", () => {

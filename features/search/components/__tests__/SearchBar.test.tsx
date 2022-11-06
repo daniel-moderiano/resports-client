@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import SearchBar from "../../components/SearchBar";
+import { SearchBar } from "features/search";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/router";
 

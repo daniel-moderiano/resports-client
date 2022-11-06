@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { HelixVideo } from "@twurple/api/lib";
-import TwitchVideoListing from "../../components/TwitchVideoListing";
+import { TwitchVideoListing } from "features/channels";
 
 const testData: HelixVideo = {
   description: "",

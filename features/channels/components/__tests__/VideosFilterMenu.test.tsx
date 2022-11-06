@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import VideosFilterMenu from "@/components/VideosFilterMenu";
+import { VideosFilterMenu } from "features/channels";
 
 // Use this before any testing involving the filter controls because they will be initially hidden by default
 const setup = async () => {

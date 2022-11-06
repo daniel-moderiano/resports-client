@@ -1,6 +1,5 @@
 import { useKeyboardNavigation } from "hooks/useKeyboardMenuNavigation";
 import { useMenuCloseEvents } from "hooks/useMenuCloseEvents";
-import React from "react";
 
 interface TwitchPlayerSettingsMenuProps {
   closeMenu: () => void;

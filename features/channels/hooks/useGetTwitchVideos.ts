@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import apiClient from "../config/twitchApiClient";
+import apiClient from "config/twitchApiClient";
 import { HelixVideoType } from "@twurple/api/lib";
 
 // conditions specify any additional criteria that must evaluate to true before the query is executed

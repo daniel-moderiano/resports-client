@@ -1,6 +1,6 @@
 // These functions are intended for use in the YouTubeChannelVideos component to filter the returned videos data set according to the specifications
-import { YouTubeVideoResult } from "../types/youtubeAPITypes";
-import { convertISOToSeconds } from "./videoDurationConversion";
+import { YouTubeVideoResult } from "types/youtubeAPITypes";
+import { convertISOToSeconds } from "utils/videoDurationConversion";
 
 // Able to take any kind of date input. It was decided to include a >= operator as it makes intuitive sense to filter by 'created after this date' to include time later that day ON the date/time selected
 export const filterByDateYouTube = (

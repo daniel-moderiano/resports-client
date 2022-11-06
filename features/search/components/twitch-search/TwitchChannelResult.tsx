@@ -25,10 +25,7 @@ export const TwitchChannelResult = ({
       </div>
       <div className={styles.channelText}>
         <Link href={`/twitchChannel/${channelData.id}`}>
-          <a>
-            {" "}
-            <h3 className={styles.channelTitle}>{channelData.displayName}</h3>
-          </a>
+          <h3 className={styles.channelTitle}>{channelData.displayName}</h3>
         </Link>
         <p className={styles.game}>{channelData.gameName}</p>
       </div>

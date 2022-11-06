@@ -39,15 +39,16 @@ export const TwitchVideoListing = ({ videoData }: TwitchVideoListingProps) => {
       </div>
       <h4 className={styles.title}>{videoData.title}</h4>
       <p className={styles.channel}>{videoData.userDisplayName}</p>
-      <Link href={videoData.url}>
-        <a rel="noopener" target="_blank" className={styles.link}>
-          View on Twitch
-        </a>
+      <Link
+        href={videoData.url}
+        rel="noopener"
+        target="_blank"
+        className={styles.link}
+      >
+        View on Twitch
       </Link>
-      <Link href={`/twitchVideo/${videoData.id}`}>
-        <a rel="noopener" target="_blank" className={styles.link}>
-          View in Player
-        </a>
+      <Link href={`/twitchVideo/${videoData.id}`} className={styles.link}>
+        View in Player
       </Link>
     </div>
   );

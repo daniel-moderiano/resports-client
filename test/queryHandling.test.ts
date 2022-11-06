@@ -5,7 +5,7 @@ import {
   isValidChannelQuery,
   isValidVideoQuery,
   sanitiseVideoQuery,
-} from "../helpers/queryHandling";
+} from "utils/queryHandling";
 
 describe("Checking search query validity", () => {
   it("recognises empty search query as invalid", () => {

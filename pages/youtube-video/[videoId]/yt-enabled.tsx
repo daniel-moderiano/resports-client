@@ -17,13 +17,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { videoId } };
 };
 
-export const YouTubeVideo = ({ videoId }: YouTubeVideoProps) => {
+const YouTubeVideo = ({ videoId }: YouTubeVideoProps) => {
   return (
     <div>
       <YouTubePlayer videoId={videoId} />
-      <Link href={`/youtubeVideo/${videoId}`}>
-        <a>Custom player</a>
-      </Link>
+      <Link href={`/youtubeVideo/${videoId}`}>Custom player</Link>
     </div>
   );
 };
+
+export default YouTubeVideo;

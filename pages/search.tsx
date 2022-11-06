@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { isValidSearchQuery, sanitiseSearchQuery } from "utils/queryHandling";
 
-export const Search = () => {
+const Search = () => {
   const router = useRouter();
   const UrlQuery = router.query;
 
@@ -39,3 +39,5 @@ export const Search = () => {
     </div>
   );
 };
+
+export default Search;

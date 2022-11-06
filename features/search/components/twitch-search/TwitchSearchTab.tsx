@@ -1,5 +1,5 @@
 import { useTwitchSearch } from "features/search/hooks/useTwitchSearch";
-import TwitchChannelResult from "./TwitchChannelResult";
+import { TwitchChannelResult } from "./TwitchChannelResult";
 
 interface TwitchSearchTabProps {
   searchQuery: string;

@@ -17,7 +17,7 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "*.{ts,tsx}": "tsc --noEmit",
+    "*.{ts,tsx}": "bash -c 'tsc --noEmit'",
     "*.css": "prettier --write"
   },
   "dependencies": {
@@ -32,6 +32,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
     "@types/gapi": "^0.0.43",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",

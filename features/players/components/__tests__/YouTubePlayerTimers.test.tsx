@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import YouTubePlayer from "../../components/YouTubePlayer";
+import { YouTubePlayer } from "features/players";
 import { act } from "react-dom/test-utils";
 
 // Provide channel data and other UI states via this mock of the channel search API call

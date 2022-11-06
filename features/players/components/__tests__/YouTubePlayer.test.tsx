@@ -1,6 +1,6 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import YouTubePlayer from "../../components/YouTubePlayer";
+import { YouTubePlayer } from "features/players";
 
 // Named mocks to test player functions being called
 const muteMock = jest.fn();

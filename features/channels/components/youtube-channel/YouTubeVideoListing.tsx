@@ -41,13 +41,16 @@ export const YouTubeVideoListing = ({
       </div>
       <h4 className={styles.title}>{videoData.snippet.title}</h4>
       <p className={styles.channel}>{videoData.snippet.channelTitle}</p>
-      <Link href={`https://www.youtube.com/watch?v=${videoData.id}`}>
-        <a rel="noopener" target="_blank" className={styles.link}>
-          View on YouTube
-        </a>
+      <Link
+        rel="noopener"
+        target="_blank"
+        className={styles.link}
+        href={`https://www.youtube.com/watch?v=${videoData.id}`}
+      >
+        View on YouTube
       </Link>
-      <Link href={`/youtubeVideo/${videoData.id}`}>
-        <a className={styles.link}>View in Player</a>
+      <Link href={`/youtubeVideo/${videoData.id}`} className={styles.link}>
+        View in Player
       </Link>
     </div>
   );

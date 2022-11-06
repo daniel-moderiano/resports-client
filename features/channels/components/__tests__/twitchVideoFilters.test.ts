@@ -2,7 +2,7 @@ import {
   filterByDurationTwitch,
   filterByKeywordTwitch,
   filterByDateTwitch,
-} from "../helpers/twitchVideoFilters";
+} from "features/channels/utils/twitchVideoFilters";
 import { HelixVideo } from "@twurple/api";
 
 const testVideos: HelixVideo[] = [
