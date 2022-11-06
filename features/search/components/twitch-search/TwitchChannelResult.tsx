@@ -23,7 +23,7 @@ export const TwitchChannelResult = ({
         {channelData.isLive && <span className={styles.live}>LIVE</span>}
       </div>
       <div className={styles.channelText}>
-        <Link href={`/twitchChannel/${channelData.id}`}>
+        <Link href={`/twitch-channel/${channelData.id}`}>
           <h3 className={styles.channelTitle}>{channelData.displayName}</h3>
         </Link>
         <p className={styles.game}>{channelData.gameName}</p>
