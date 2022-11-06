@@ -15,7 +15,7 @@ const setSearchQuery = (query: Record<string, unknown>) => {
 };
 
 // Mock the use..X..Search hooks to avoid errors
-jest.mock("../../hooks/useYoutubeSearch", () => ({
+jest.mock("features/search/hooks/useYoutubeSearch", () => ({
   useYouTubeSearch: () => ({
     isLoading: false,
     isError: false,
@@ -25,7 +25,7 @@ jest.mock("../../hooks/useYoutubeSearch", () => ({
   }),
 }));
 
-jest.mock("../../hooks/useTwitchSearch", () => ({
+jest.mock("features/search/hooks/useTwitchSearch", () => ({
   useTwitchSearch: () => ({
     isLoading: false,
     isError: false,

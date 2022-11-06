@@ -66,12 +66,12 @@ const mockChannelSearch: mockTwitchChannelSearchHook = {
 };
 
 // Provide channel data and other UI states via this mock of the channel search API call
-jest.mock("../../hooks/useGetTwitchChannel", () => ({
+jest.mock("features/channels/hooks/useGetTwitchChannel", () => ({
   useGetTwitchChannel: () => mockChannelSearch,
 }));
 
 // Provide generalised mock to avoid errors when the TwitchChannelVideos component renders
-jest.mock("../../hooks/useGetTwitchVideos", () => ({
+jest.mock("features/channels/hooks/useGetTwitchVideos", () => ({
   useGetTwitchVideos: () => ({}),
 }));
 

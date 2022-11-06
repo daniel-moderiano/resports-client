@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import YouTubeChannel from "pages/youtube-channel/[channelId]";
 import { YouTubeChannelSearchResult } from "types/youtubeAPITypes";
+import { useGetYouTubeChannel } from "features/channels/hooks/useGetYouTubeChannel";
 
 interface mockYouTubeChannelSearchHook {
   isLoading: boolean;
@@ -91,12 +92,12 @@ const mockChannelSearch: mockYouTubeChannelSearchHook = {
 };
 
 // Provide channel data and other UI states via this mock of the channel search API call
-jest.mock("../../hooks/useGetYouTubeChannel", () => ({
+jest.mock("features/channels/hooks/useGetYouTubeChannel", () => ({
   useGetYouTubeChannel: () => mockChannelSearch,
 }));
 
 // Provide generalised mock to avoid errors when the YouTubeChannelVideos component renders
-jest.mock("../../hooks/useGetYouTubeVideos", () => ({
+jest.mock("features/channels/hooks/useGetYouTubeVideos", () => ({
   useGetYouTubeVideos: () => ({}),
 }));
 
