@@ -51,7 +51,6 @@ const YouTubeChannel = ({ channelId }: YouTubeChannelProps) => {
                     alt={`${data.channelData.snippet.title} channel thumbnail`}
                     height={100}
                     width={100}
-                    layout="fixed"
                   />
                   <Image
                     src={
@@ -60,7 +59,6 @@ const YouTubeChannel = ({ channelId }: YouTubeChannelProps) => {
                     alt={`${data.channelData.snippet.title} channel banner`}
                     height={100}
                     width={100}
-                    layout="fixed"
                   />
                 </div>
                 <div>

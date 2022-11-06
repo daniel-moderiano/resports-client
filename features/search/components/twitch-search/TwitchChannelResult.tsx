@@ -19,7 +19,6 @@ export const TwitchChannelResult = ({
           height={100}
           width={100}
           className={styles.thumbnail}
-          layout="fixed"
         />
         {channelData.isLive && <span className={styles.live}>LIVE</span>}
       </div>

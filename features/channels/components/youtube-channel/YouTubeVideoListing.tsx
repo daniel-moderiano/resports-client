@@ -20,7 +20,6 @@ export const YouTubeVideoListing = ({
             src={videoData.snippet.thumbnails.medium.url}
             height={135}
             width={240}
-            layout="fixed"
             alt="Video thumbnail"
           />
         ) : (
@@ -28,7 +27,6 @@ export const YouTubeVideoListing = ({
             src="/images/no-thumbnail.png"
             height={135}
             width={240}
-            layout="fixed"
             alt="Video thumbnail"
           />
         )}

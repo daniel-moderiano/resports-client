@@ -36,7 +36,6 @@ const TwitchChannel = ({ channelId }: TwitchChannelProps) => {
               alt={`${data.channelData.displayName} channel thumbnail`}
               height={100}
               width={100}
-              layout="fixed"
             />
             {data.userData.offlinePlaceholderUrl && (
               <Image
@@ -44,7 +43,6 @@ const TwitchChannel = ({ channelId }: TwitchChannelProps) => {
                 alt={`${data.channelData.displayName} channel banner`}
                 height={100}
                 width={100}
-                layout="fixed"
               />
             )}
           </div>

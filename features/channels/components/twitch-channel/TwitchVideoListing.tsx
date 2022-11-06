@@ -18,7 +18,6 @@ export const TwitchVideoListing = ({ videoData }: TwitchVideoListingProps) => {
             src={videoData.getThumbnailUrl(240, 135)}
             height={135}
             width={240}
-            layout="fixed"
             alt="Video thumbnail"
           />
         ) : (
@@ -26,7 +25,6 @@ export const TwitchVideoListing = ({ videoData }: TwitchVideoListingProps) => {
             src="/images/no-thumbnail.png"
             height={135}
             width={240}
-            layout="fixed"
             alt="Video thumbnail"
           />
         )}

@@ -19,7 +19,6 @@ export const YouTubeChannelResult = ({
           height={100}
           width={100}
           className={styles.thumbnail}
-          layout="fixed"
         />
       </div>
       <div className={styles.channelText}>
