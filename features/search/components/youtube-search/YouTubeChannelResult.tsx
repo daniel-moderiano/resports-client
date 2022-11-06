@@ -1,13 +1,15 @@
 import { YouTubeSearchResultSnippet } from "types/youtubeAPITypes";
 import Image from "next/image";
-import styles from "../styles/componentStyles/YouTubeSearchResult.module.css";
+import styles from "features/search/components/styles/YouTubeSearchResult.module.css";
 import Link from "next/link";
 
 interface YouTubeChannelResultProps {
   channelData: YouTubeSearchResultSnippet;
 }
 // This component is used to render a search result 'listing' for an individual channel.
-const YouTubeChannelResult = ({ channelData }: YouTubeChannelResultProps) => {
+export const YouTubeChannelResult = ({
+  channelData,
+}: YouTubeChannelResultProps) => {
   return (
     <div className={styles.channel}>
       <div>
@@ -22,14 +24,10 @@ const YouTubeChannelResult = ({ channelData }: YouTubeChannelResultProps) => {
       </div>
       <div className={styles.channelText}>
         <Link href={`/youtubeChannel/${channelData.channelId}`}>
-          <a>
-            <h3 className={styles.channelTitle}>{channelData.channelTitle}</h3>
-          </a>
+          <h3 className={styles.channelTitle}>{channelData.channelTitle}</h3>
         </Link>
         <p className={styles.description}>{channelData.description}</p>
       </div>
     </div>
   );
 };
-
-export default YouTubeChannelResult;

@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Sidebar from "../../components/layout/Sidebar";
+import { Sidebar } from "components/Layout";
 
 describe("Sidebar component", () => {
   it("contains appropriate test-id", () => {

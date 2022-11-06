@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import YouTubeChannelVideos from "@/components/YouTubeChannelVideos";
-import { YouTubeVideoListResponse } from "../../types/youtubeAPITypes";
+import { YouTubeChannelVideos } from "features/channels";
+import { YouTubeVideoListResponse } from "types/youtubeAPITypes";
 
 interface mockYouTubeVideosHook {
   isLoading: boolean;

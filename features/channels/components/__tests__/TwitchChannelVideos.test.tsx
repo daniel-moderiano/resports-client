@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { HelixVideo } from "@twurple/api/lib";
-import TwitchChannelVideos from "../../components/TwitchChannelVideos";
+import { TwitchChannelVideos } from "features/channels";
 
 interface mockTwitchVideosHook {
   isLoading: boolean;

@@ -1,11 +1,8 @@
-import TwitchSearchTab from "../components/TwitchSearchTab";
-import YouTubeSearchTab from "../components/YouTubeSearchTab";
+import { TwitchSearchTab } from "features/search";
+import { YouTubeSearchTab } from "features/search";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import {
-  isValidSearchQuery,
-  sanitiseSearchQuery,
-} from "../helpers/queryHandling";
+import { isValidSearchQuery, sanitiseSearchQuery } from "utils/queryHandling";
 
 const Search = () => {
   const router = useRouter();

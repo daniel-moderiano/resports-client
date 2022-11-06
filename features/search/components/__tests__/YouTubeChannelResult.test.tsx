@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { YouTubeSearchResultSnippet } from "types/youtubeAPITypes";
-import YouTubeChannelResult from "../../components/YouTubeChannelResult";
+import { YouTubeChannelResult } from "features/search";
 
 const testData: YouTubeSearchResultSnippet = {
   publishedAt: "2015-08-26T11:12:55Z",

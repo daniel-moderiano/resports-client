@@ -1,14 +1,14 @@
 import * as React from "react";
-import styles from "../../styles/componentStyles/Layout.module.css";
-import Header from "./Header";
-import Footer from "./Footer";
-import Sidebar from "./Sidebar";
+import styles from "components/Layout/styles/Layout.module.css";
+import { Header } from "./Header";
+import { Footer } from "./Footer";
+import { Sidebar } from "./Sidebar";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+export const Layout = ({ children }: LayoutProps) => {
   return (
     <div className={styles.container}>
       <Header />
@@ -20,5 +20,3 @@ const Layout = ({ children }: LayoutProps) => {
     </div>
   );
 };
-
-export default Layout;

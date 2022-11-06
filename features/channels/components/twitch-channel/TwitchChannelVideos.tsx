@@ -1,31 +1,25 @@
 import { HelixVideo, HelixVideoType } from "@twurple/api/lib";
-import { useGetTwitchVideos } from "../hooks/useGetTwitchVideos";
-import TwitchVideoListing from "./TwitchVideoListing";
+import { useGetTwitchVideos } from "features/channels/hooks/useGetTwitchVideos";
+import { TwitchVideoListing } from "./TwitchVideoListing";
 import * as React from "react";
-import styles from "../styles/componentStyles/TwitchChannelVideos.module.css";
+import styles from "features/channels/components/styles/TwitchChannelVideos.module.css";
 import { useEffect, useState } from "react";
 import {
   filterByDateTwitch,
   filterByDurationTwitch,
   filterByKeywordTwitch,
-} from "../helpers/twitchVideoFilters";
-import VideosFilterMenu from "@/components/VideosFilterMenu";
+} from "features/channels/utils/twitchVideoFilters";
+import { VideosFilterMenu } from "../VideosFilterMenu";
+import { VideoFilters } from "features/channels/types";
 
 interface TwitchChannelVideosProps {
   userId: string;
 }
 
-export interface VideoFilters {
-  dateFilter: Date;
-  minDurationFilter: number;
-  maxDurationFilter: number;
-  keywordFilter: string;
-}
-
 // Make API call here to fetch videos using channel/user ID
 // * Use the archive video type filter to get past broadcasts!!
 
-const TwitchChannelVideos = ({ userId }: TwitchChannelVideosProps) => {
+export const TwitchChannelVideos = ({ userId }: TwitchChannelVideosProps) => {
   const [filters, setFilters] = React.useState<VideoFilters | null>(null);
 
   const handleOptionSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -120,5 +114,3 @@ const TwitchChannelVideos = ({ userId }: TwitchChannelVideosProps) => {
     </section>
   );
 };
-
-export default TwitchChannelVideos;

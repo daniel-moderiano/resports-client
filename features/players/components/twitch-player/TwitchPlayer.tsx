@@ -1,8 +1,8 @@
 import { useState } from "react";
-import styles from "../styles/componentStyles/TwitchPlayer.module.css";
+import styles from "features/players/components/styles/TwitchPlayer.module.css";
 import * as React from "react";
-import { useTwitchPlayer } from "../hooks/useTwitchPlayer";
-import TwitchPlayerControls from "./TwitchPlayerControls";
+import { useTwitchPlayer } from "features/players/hooks/useTwitchPlayer";
+import { TwitchPlayerControls } from "./TwitchPlayerControls";
 
 // TODO: Adjust duration UI so it reflects projected time, not playing catch up with getCurrentTime calls
 
@@ -10,7 +10,7 @@ interface TwitchPlayerProps {
   videoId: string;
 }
 
-const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
+export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
   const [theaterMode, setTheaterMode] = useState(false);
 
   // This local state is used to avoid the long delays of an API call to check muted state when toggling icons and UI
@@ -301,5 +301,3 @@ const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
     </div>
   );
 };
-
-export default TwitchPlayer;

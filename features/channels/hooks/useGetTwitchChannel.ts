@@ -1,14 +1,8 @@
 import { useQuery } from "react-query";
 import apiClient from "config/twitchApiClient";
-import { HelixChannel, HelixUser } from "@twurple/api/lib";
+import { TwitchChannel } from "features/channels/types";
 
 // * Twitch Channel ID is the same as a User ID in their ecosystem! We only need one to gather all sorts of data
-
-export interface TwitchChannel {
-  channelData: HelixChannel;
-  userData: HelixUser;
-  isLive?: boolean;
-}
 
 // conditions specify any additional criteria that must evaluate to true before the query is executed
 export const useGetTwitchChannel = (

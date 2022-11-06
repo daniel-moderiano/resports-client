@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import TwitchPlayerControls from "../../components/TwitchPlayerControls";
+import { TwitchPlayerControls } from "features/players";
 
 // Named mocks to test player functions being called
 const playerMock = {

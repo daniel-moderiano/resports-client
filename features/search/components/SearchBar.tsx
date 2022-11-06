@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import styles from "../styles/componentStyles/SearchBar.module.css";
+import styles from "features/search/components/styles/SearchBar.module.css";
 
 // TODO: Add custom disabled styles that replicate normal btn, but with 'stop sign' cursor
 
 // This component is expected to 'live' in the header and remain visible from all pages of the application
-const SearchBar = () => {
+export const SearchBar = () => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -53,5 +53,3 @@ const SearchBar = () => {
     </form>
   );
 };
-
-export default SearchBar;

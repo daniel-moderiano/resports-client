@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { YouTubeVideoResult } from "../../types/youtubeAPITypes";
-import YouTubeVideoListing from "../../components/YouTubeVideoListing";
+import { YouTubeVideoResult } from "types/youtubeAPITypes";
+import { YouTubeVideoListing } from "features/channels";
 
 const testData: YouTubeVideoResult = {
   kind: "youtube#video",

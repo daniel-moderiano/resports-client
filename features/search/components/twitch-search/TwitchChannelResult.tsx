@@ -1,13 +1,15 @@
 import Image from "next/image";
 import { HelixChannelSearchResult } from "@twurple/api/lib/api/helix/search/HelixChannelSearchResult";
-import styles from "../styles/componentStyles/TwitchSearchResult.module.css";
+import styles from "features/search/components/styles/TwitchSearchResult.module.css";
 import Link from "next/link";
 
 interface TwitchChannelResultProps {
   channelData: HelixChannelSearchResult;
 }
 
-const ChannelResult = ({ channelData }: TwitchChannelResultProps) => {
+export const TwitchChannelResult = ({
+  channelData,
+}: TwitchChannelResultProps) => {
   return (
     <div className={styles.channel}>
       <div className={styles.imgContainer}>
@@ -23,15 +25,10 @@ const ChannelResult = ({ channelData }: TwitchChannelResultProps) => {
       </div>
       <div className={styles.channelText}>
         <Link href={`/twitchChannel/${channelData.id}`}>
-          <a>
-            {" "}
-            <h3 className={styles.channelTitle}>{channelData.displayName}</h3>
-          </a>
+          <h3 className={styles.channelTitle}>{channelData.displayName}</h3>
         </Link>
         <p className={styles.game}>{channelData.gameName}</p>
       </div>
     </div>
   );
 };
-
-export default ChannelResult;

@@ -1,6 +1,5 @@
-import { useKeyboardNavigation } from "../hooks/useKeyboardMenuNavigation";
-import { useMenuCloseEvents } from "../hooks/useMenuCloseEvents";
-import React from "react";
+import { useKeyboardNavigation } from "hooks/useKeyboardMenuNavigation";
+import { useMenuCloseEvents } from "hooks/useMenuCloseEvents";
 
 interface TwitchPlayerSettingsMenuProps {
   closeMenu: () => void;
@@ -8,7 +7,7 @@ interface TwitchPlayerSettingsMenuProps {
 }
 
 // Currently this menu only supports quality settings, but may be adapted later to include playback rate and caption settings
-const TwitchPlayerSettingsMenu = ({
+export const TwitchPlayerSettingsMenu = ({
   closeMenu,
   player,
 }: TwitchPlayerSettingsMenuProps) => {
@@ -43,5 +42,3 @@ const TwitchPlayerSettingsMenu = ({
     </ul>
   );
 };
-
-export default TwitchPlayerSettingsMenu;

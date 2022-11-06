@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import TwitchChannelResult from "../../components/TwitchChannelResult";
+import { TwitchChannelResult } from "features/search";
 import { HelixChannelSearchResult } from "@twurple/api/lib/api/helix/search/HelixChannelSearchResult";
 
 const testData: HelixChannelSearchResult = {

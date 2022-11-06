@@ -1,11 +1,11 @@
-import { useTwitchSearch } from "../hooks/useTwitchSearch";
-import TwitchChannelResult from "./TwitchChannelResult";
+import { useTwitchSearch } from "features/search/hooks/useTwitchSearch";
+import { TwitchChannelResult } from "./TwitchChannelResult";
 
 interface TwitchSearchTabProps {
   searchQuery: string;
 }
 
-const TwitchSearchTab = ({ searchQuery }: TwitchSearchTabProps) => {
+export const TwitchSearchTab = ({ searchQuery }: TwitchSearchTabProps) => {
   const { isLoading, isError, data, error } = useTwitchSearch(searchQuery);
 
   return (
@@ -30,5 +30,3 @@ const TwitchSearchTab = ({ searchQuery }: TwitchSearchTabProps) => {
     </div>
   );
 };
-
-export default TwitchSearchTab;

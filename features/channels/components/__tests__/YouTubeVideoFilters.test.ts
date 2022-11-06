@@ -1,9 +1,9 @@
-import { YouTubeVideoResult } from "../types/youtubeAPITypes";
+import { YouTubeVideoResult } from "types/youtubeAPITypes";
 import {
   filterByDateYouTube,
   filterByDurationYouTube,
   filterByKeywordYouTube,
-} from "../helpers/YouTubeVideoFilters";
+} from "features/channels/utils/YouTubeVideoFilters";
 
 const testVideos: YouTubeVideoResult[] = [
   {
