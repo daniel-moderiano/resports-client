@@ -1,11 +1,9 @@
-import styles from "../../styles/componentStyles/Sidebar.module.css";
+import styles from "components/Layout/styles/Sidebar.module.css";
 
-const Sidebar = () => {
+export const Sidebar = () => {
   return (
     <div className={styles.sidebar} data-testid="sidebar">
       SB
     </div>
   );
 };
-
-export default Sidebar;
