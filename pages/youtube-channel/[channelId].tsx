@@ -1,8 +1,8 @@
-import { useGetYouTubeChannel } from "../../hooks/useGetYouTubeChannel";
+import { useGetYouTubeChannel } from "features/channels/hooks/useGetYouTubeChannel";
 import Image from "next/image";
-import { sanitiseChannelQuery } from "../../helpers/queryHandling";
+import { sanitiseChannelQuery } from "utils/queryHandling";
 import { GetServerSideProps } from "next";
-import YouTubeChannelVideos from "@/components/YouTubeChannelVideos";
+import { YouTubeChannelVideos } from "features/channels";
 import { useEffect } from "react";
 
 interface YouTubeChannelProps {

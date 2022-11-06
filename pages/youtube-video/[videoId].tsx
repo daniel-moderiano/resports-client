@@ -1,7 +1,7 @@
 // The video/watch page that houses an embedded YouTube iframe/player
 import { GetServerSideProps } from "next";
-import { sanitiseVideoQuery } from "../../helpers/queryHandling";
-import YouTubeCustomPlayer from "../../components/YouTubeCustomPlayer";
+import { sanitiseVideoQuery } from "utils/queryHandling";
+import { YouTubeCustomPlayer } from "features/players";
 import Link from "next/link";
 
 interface YouTubeVideoProps {
@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { videoId } };
 };
 
-const YouTubeVideo = ({ videoId }: YouTubeVideoProps) => {
+export const YouTubeVideo = ({ videoId }: YouTubeVideoProps) => {
   return (
     <div>
       <YouTubeCustomPlayer videoId={videoId} />
@@ -27,5 +27,3 @@ const YouTubeVideo = ({ videoId }: YouTubeVideoProps) => {
     </div>
   );
 };
-
-export default YouTubeVideo;

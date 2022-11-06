@@ -1,7 +1,7 @@
 // The video/watch page that houses an embedded Twitch iframe/player
-import TwitchPlayer from "../../components/TwitchPlayer";
+import { TwitchPlayer } from "features/players";
 import { GetServerSideProps } from "next";
-import { sanitiseVideoQuery } from "../../helpers/queryHandling";
+import { sanitiseVideoQuery } from "utils/queryHandling";
 
 interface TwitchVideoProps {
   videoId: string;
@@ -16,12 +16,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { videoId } };
 };
 
-const TwitchVideo = ({ videoId }: TwitchVideoProps) => {
+export const TwitchVideo = ({ videoId }: TwitchVideoProps) => {
   return (
     <div>
       <TwitchPlayer videoId={videoId} />
     </div>
   );
 };
-
-export default TwitchVideo;

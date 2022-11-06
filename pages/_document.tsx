@@ -7,6 +7,11 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
+        <script
+          id="gapi-script"
+          src="https://apis.google.com/js/api.js"
+          async
+        ></script>
       </body>
     </Html>
   );
