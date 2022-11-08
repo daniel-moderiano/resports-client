@@ -10,11 +10,6 @@ jest.mock("next/router", () => ({
 }));
 
 describe("Search bar and button UI states", () => {
-  const mockRouter = {
-    push: jest.fn(),
-    pathname: "",
-  };
-  (useRouter as jest.Mock).mockReturnValue(mockRouter);
   it('Shows "search channels" placeholder by default', () => {
     render(<SearchBar />);
     const input = screen.getByPlaceholderText(/search channels/i);
@@ -29,17 +24,41 @@ describe("Search bar and button UI states", () => {
     expect(input.value).toBe("test");
   });
 
-  it("Updates buttons selection state based on pathname changes", () => {
-    const mockRouter = {
-      push: jest.fn(),
-      pathname: "/twitch/search",
-    };
-    (useRouter as jest.Mock).mockReturnValue(mockRouter);
+  it("Defaults to twitch as selected platform, with twitch button UI updated accordingly", () => {
     render(<SearchBar />);
     const twitchButton: HTMLButtonElement = screen.getByRole("button", {
       name: /search twitch/i,
     });
     expect(twitchButton).toHaveClass("selected");
+  });
+
+  it("Switches button selected UI on button click", async () => {
+    const mockRouter = {
+      push: jest.fn(),
+      pathname: "",
+    };
+    (useRouter as jest.Mock).mockReturnValue(mockRouter);
+    render(<SearchBar />);
+    const youtubeButton: HTMLButtonElement = screen.getByRole("button", {
+      name: /search youtube/i,
+    });
+    const input: HTMLInputElement =
+      screen.getByPlaceholderText(/search channels/i);
+    await userEvent.type(input, "hello");
+    await userEvent.click(youtubeButton);
+    expect(youtubeButton).toHaveClass("selected");
+  });
+
+  it("Switches button selected UI on toggle platform click", async () => {
+    render(<SearchBar />);
+    const platformToggle: HTMLButtonElement = screen.getByRole("button", {
+      name: /toggle/i,
+    });
+    const youtubeButton: HTMLButtonElement = screen.getByRole("button", {
+      name: /search youtube/i,
+    });
+    await userEvent.click(platformToggle);
+    expect(youtubeButton).toHaveClass("selected");
   });
 
   it("disables search buttons when search query is empty", () => {
