@@ -1,7 +1,5 @@
 import { useGetTwitchChannel } from "features/channels/hooks/useGetTwitchChannel";
 import Image from "next/image";
-import { sanitiseChannelQuery } from "utils/queryHandling";
-import { GetServerSideProps } from "next";
 import { TwitchChannelVideos } from "features/channels";
 
 interface TwitchChannelProps {

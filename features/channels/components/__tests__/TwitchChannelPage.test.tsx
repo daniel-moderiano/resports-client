@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import TwitchChannelPage from "pages/twitch/channel/[channelId]";
+import { TwitchChannelPage } from "features/channels";
 import { TwitchChannel } from "features/channels";
 import { HelixChannel, HelixUser } from "@twurple/api/lib";
 
