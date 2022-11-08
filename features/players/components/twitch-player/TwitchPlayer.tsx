@@ -11,6 +11,7 @@ interface TwitchPlayerProps {
 }
 
 export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
+  const playerDivRef = React.useRef<HTMLDivElement | null>(null);
   const [theaterMode, setTheaterMode] = useState(false);
 
   // This local state is used to avoid the long delays of an API call to check muted state when toggling icons and UI
@@ -34,8 +35,8 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
   // When this is not null, it implies we are currently performing a seek() call.
   const [projectedTime, setProjectedTime] = React.useState<null | number>(null);
 
-  // Adds the YT Iframe to the div#player returned below
-  const { player } = useTwitchPlayer(videoId);
+  // Adds the Twitch Iframe to the div#player returned below
+  const { player } = useTwitchPlayer(videoId, playerDivRef);
 
   // Ensure the local playerState state is set on play/pause events. This ensures other elements modify with each of the changes as needed
   React.useEffect(() => {
@@ -254,7 +255,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
         onMouseLeave={() => setUserActive(false)}
         tabIndex={0}
       >
-        <div id="player"></div>
+        <div id="player" ref={playerDivRef}></div>
         <div
           className={`${styles.overlay} ${
             userActive || playerState === 2 ? "" : styles.overlayInactive
