@@ -1,23 +1,19 @@
-// The video/watch page that houses an embedded YouTube iframe/player
 import { GetServerSideProps } from "next";
 import { sanitiseVideoQuery } from "utils/queryHandling";
 import { YouTubePlayer } from "features/players";
 import Link from "next/link";
 
-interface YouTubeVideoProps {
+interface VideoProps {
   videoId: string;
 }
 
-// This server side props function ensures the dynamic route param is made available at component render time so that it can be passed safely and directly to the YouTubeVideo component hook. Using router.query in component causes videoId to be undefined on initial render.
-/* eslint-disable-next-line */
+// This server side props function ensures the dynamic route param is made available at component render time. Using router.query within the component means videoId would be undefined on initial render.
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const videoId = sanitiseVideoQuery(context.query);
-
-  // Pass data to the page via props
   return { props: { videoId } };
 };
 
-const YouTubeVideo = ({ videoId }: YouTubeVideoProps) => {
+const Video = ({ videoId }: VideoProps) => {
   return (
     <div>
       <YouTubePlayer videoId={videoId} />
@@ -26,4 +22,4 @@ const YouTubeVideo = ({ videoId }: YouTubeVideoProps) => {
   );
 };
 
-export default YouTubeVideo;
+export default Video;

@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import YouTubeChannel from "pages/youtube/channel/[channelId]";
+import { YouTubeChannelPage } from "features/channels";
 import { YouTubeChannelSearchResult } from "types/youtubeAPITypes";
-import { useGetYouTubeChannel } from "features/channels/hooks/useGetYouTubeChannel";
 
 interface mockYouTubeChannelSearchHook {
   isLoading: boolean;
@@ -106,14 +105,14 @@ describe("Channel page layout and elements", () => {
     mockChannelSearch.isError = false;
     mockChannelSearch.isLoading = false;
     mockChannelSearch.data = testData;
-    render(<YouTubeChannel channelId="1234" />);
+    render(<YouTubeChannelPage channelId="1234" />);
 
     const title = screen.getByRole("heading", { name: /Call of Duty/i });
     expect(title).toBeInTheDocument();
   });
 
   it("Shows the channel data (subscriber count and video count)", () => {
-    render(<YouTubeChannel channelId="1234" />);
+    render(<YouTubeChannelPage channelId="1234" />);
 
     const subCount = screen.getByText(/1600000 subscribers/i);
     const videoCount = screen.getByText(/9431 videos/i);
@@ -122,7 +121,7 @@ describe("Channel page layout and elements", () => {
   });
 
   it("Shows the channel thumbnail and banner", () => {
-    render(<YouTubeChannel channelId="1234" />);
+    render(<YouTubeChannelPage channelId="1234" />);
 
     // With channel thumbnail and banner, we should see two images in this component
     const images = screen.getAllByRole("img");
@@ -135,7 +134,7 @@ describe("Channel page UI states", () => {
     mockChannelSearch.isError = false;
     mockChannelSearch.isLoading = false;
     mockChannelSearch.data = testData;
-    render(<YouTubeChannel channelId="1234" />);
+    render(<YouTubeChannelPage channelId="1234" />);
 
     // Check that loading UI is not present
     const loading = screen.queryByText(/loading/i);
@@ -156,7 +155,7 @@ describe("Channel page UI states", () => {
     mockChannelSearch.isError = false;
     mockChannelSearch.isLoading = true;
     mockChannelSearch.data = undefined;
-    render(<YouTubeChannel channelId="1234" />);
+    render(<YouTubeChannelPage channelId="1234" />);
 
     // Check error UI is not present
     const error = screen.queryByText(/error/i);
@@ -171,7 +170,7 @@ describe("Channel page UI states", () => {
     mockChannelSearch.isError = true;
     mockChannelSearch.isLoading = false;
     mockChannelSearch.data = undefined;
-    render(<YouTubeChannel channelId="1234" />);
+    render(<YouTubeChannelPage channelId="1234" />);
 
     // Check that loading UI is not present
     const loading = screen.queryByText(/loading/i);
@@ -186,7 +185,7 @@ describe("Channel page UI states", () => {
     mockChannelSearch.isError = true;
     mockChannelSearch.isLoading = false;
     mockChannelSearch.data = { channelData: null };
-    render(<YouTubeChannel channelId="1234" />);
+    render(<YouTubeChannelPage channelId="1234" />);
 
     // Check that loading UI is not present
     const loading = screen.queryByText(/loading/i);
