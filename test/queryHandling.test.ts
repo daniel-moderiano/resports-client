@@ -9,43 +9,41 @@ import {
 
 describe("Checking search query validity", () => {
   it("recognises empty search query as invalid", () => {
-    expect(isValidSearchQuery({ searchQuery: "" })).toBe(false);
+    expect(isValidSearchQuery({ term: "" })).toBe(false);
   });
 
   it("recognises whitespace search query as invalid", () => {
-    expect(isValidSearchQuery({ searchQuery: "   " })).toBe(false);
+    expect(isValidSearchQuery({ term: "   " })).toBe(false);
   });
 
-  it("recognises lack of searchQuery param as invalid", () => {
+  it("recognises lack of search term param as invalid", () => {
     expect(isValidSearchQuery({})).toBe(false);
   });
 
-  it("recognises array of searchQuery params as invalid", () => {
-    expect(isValidSearchQuery({ searchQuery: ["hello", "test"] })).toBe(false);
+  it("recognises array of search term params as invalid", () => {
+    expect(isValidSearchQuery({ term: ["hello", "test"] })).toBe(false);
   });
 
-  it("recognises multiple param query as invalid if searchQuery is not present", () => {
+  it("recognises multiple param query as invalid if search term is not present", () => {
     expect(isValidSearchQuery({ one: "hello", two: "true" })).toBe(false);
   });
 
-  it("recognises multiple param query as valid as long as searchQuery is included", () => {
-    expect(isValidSearchQuery({ searchQuery: "hello", term: "true" })).toBe(
-      true
-    );
+  it("recognises multiple param query as valid as long as search term is included", () => {
+    expect(isValidSearchQuery({ term: "hello", invalid: "true" })).toBe(true);
   });
 
   it("recognises valid search query", () => {
-    expect(isValidSearchQuery({ searchQuery: "hello" })).toBe(true);
+    expect(isValidSearchQuery({ term: "hello" })).toBe(true);
   });
 });
 
 describe("Performing search query sanitisation", () => {
   it("returns empty string for invalid search queries", () => {
-    expect(sanitiseSearchQuery({ term: "test" })).toBe("");
+    expect(sanitiseSearchQuery({ invalid: "test" })).toBe("");
   });
 
   it("returns the search query when it is valid", () => {
-    expect(sanitiseSearchQuery({ searchQuery: "test" })).toBe("test");
+    expect(sanitiseSearchQuery({ term: "test" })).toBe("test");
   });
 });
 
@@ -121,7 +119,7 @@ describe("Checking video ID query validity", () => {
 
 describe("Performing video ID query sanitisation", () => {
   it("returns empty string for invalid video IDs", () => {
-    expect(sanitiseVideoQuery({ term: "test" })).toBe("");
+    expect(sanitiseVideoQuery({ invalid: "test" })).toBe("");
   });
 
   it("returns the video ID when it is valid", () => {

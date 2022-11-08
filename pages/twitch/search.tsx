@@ -13,7 +13,7 @@ const Search = () => {
 
   return (
     <div>
-      <h2>You searched for {UrlQuery.searchQuery}</h2>
+      <h2>You searched for {UrlQuery.term}</h2>
       <div>
         <section>
           <h3>Twitch results</h3>
