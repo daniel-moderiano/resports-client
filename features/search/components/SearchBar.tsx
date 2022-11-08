@@ -9,7 +9,6 @@ export const SearchBar = () => {
   const router = useRouter();
   const { pathname } = router;
   const [searchQuery, setSearchQuery] = useState("");
-  const selectedPlatform = "";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -21,6 +20,14 @@ export const SearchBar = () => {
       pathname: `/${platform}/search`,
       query: { searchQuery },
     });
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== "Enter" || searchQuery.trim() === "") {
+      return;
+    }
+
+    handleSearch("twitch");
   };
 
   return (
@@ -47,6 +54,7 @@ export const SearchBar = () => {
         spellCheck="false"
         autoCorrect="false"
         autoComplete="false"
+        onKeyDown={handleKeyPress}
       />
       <div>
         <button

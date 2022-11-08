@@ -42,19 +42,6 @@ describe("Search bar and button UI states", () => {
     expect(twitchButton).toHaveClass("selected");
   });
 
-  it("Updates buttons selection state based on pathname changes", () => {
-    const mockRouter = {
-      push: jest.fn(),
-      pathname: "/youtube/search",
-    };
-    (useRouter as jest.Mock).mockReturnValue(mockRouter);
-    render(<SearchBar />);
-    const youtubeBtn: HTMLButtonElement = screen.getByRole("button", {
-      name: /search youtube/i,
-    });
-    expect(youtubeBtn).toHaveClass("selected");
-  });
-
   it("disables search buttons when search query is empty", () => {
     render(<SearchBar />);
     const buttons: HTMLButtonElement[] = screen.getAllByRole("button", {
@@ -130,6 +117,24 @@ describe("Search bar functionality", () => {
     await userEvent.click(youtubeButton);
     expect(mockRouter.push).toHaveBeenCalledWith({
       pathname: "/youtube/search",
+      query: { searchQuery: "hello" },
+    });
+  });
+
+  it("routes to twitch search by default Enter key is pressed within input", async () => {
+    const mockRouter = {
+      push: jest.fn(),
+      pathname: "",
+    };
+    (useRouter as jest.Mock).mockReturnValue(mockRouter);
+    render(<SearchBar />);
+    const input: HTMLInputElement =
+      screen.getByPlaceholderText(/search channels/i);
+    await userEvent.type(input, "hello");
+    input.focus();
+    await userEvent.keyboard("[Enter]");
+    expect(mockRouter.push).toHaveBeenCalledWith({
+      pathname: "/twitch/search",
       query: { searchQuery: "hello" },
     });
   });
