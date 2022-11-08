@@ -4,7 +4,7 @@ interface SearchIconProps {
   testId?: string;
 }
 
-export const SearchIcon = ({
+const SearchIcon = ({
   className,
   fill = "#FFFFFF",
   testId,
@@ -23,3 +23,5 @@ export const SearchIcon = ({
     </svg>
   );
 };
+
+export default SearchIcon;

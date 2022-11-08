@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styles from "features/search/components/styles/SearchBar.module.css";
-import { SearchIcon } from "icons";
+import SearchIcon from "icons/SearchIcon";
 
 // TODO: Add custom disabled styles that replicate normal btn, but with 'stop sign' cursor
 

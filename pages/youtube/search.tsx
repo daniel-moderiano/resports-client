@@ -17,25 +17,10 @@ const Search = () => {
 
   return (
     <div>
-      <div>
-        <button onClick={() => setActiveTab("twitch")}>Search Twitch</button>
-        <button onClick={() => setActiveTab("youtube")}>Search YouTube</button>
-      </div>
-      <h2>You search for {UrlQuery.searchQuery}</h2>
-      <div>
-        {activeTab === "twitch" && (
-          <section>
-            <h3>Twitch results</h3>
-            <TwitchSearchTab searchQuery={sanitiseSearchQuery(UrlQuery)} />
-          </section>
-        )}
-        {activeTab === "youtube" && (
-          <section>
-            <h3>YouTube results</h3>
-            <YouTubeSearchTab searchQuery={sanitiseSearchQuery(UrlQuery)} />
-          </section>
-        )}
-      </div>
+      <section>
+        <h3>YouTube results</h3>
+        <YouTubeSearchTab searchQuery={sanitiseSearchQuery(UrlQuery)} />
+      </section>
     </div>
   );
 };
