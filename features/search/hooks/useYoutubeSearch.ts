@@ -14,7 +14,7 @@ export const useYouTubeSearch = (
   let enableApi = false;
 
   // ! Default this API call to NEVER occur in development unless manually set here. This API call cost 100 units of quota, so if you burn through 100 calls, every YouTube API feature is locked for 24 hours.
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === "development") {
     enableApi = true;
   } else {
     enableApi = false;

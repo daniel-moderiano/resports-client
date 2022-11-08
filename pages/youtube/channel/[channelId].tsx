@@ -52,14 +52,17 @@ const YouTubeChannel = ({ channelId }: YouTubeChannelProps) => {
                     height={100}
                     width={100}
                   />
-                  <Image
-                    src={
-                      data.channelData.brandingSettings.image.bannerExternalUrl
-                    }
-                    alt={`${data.channelData.snippet.title} channel banner`}
-                    height={100}
-                    width={100}
-                  />
+                  {data.channelData.brandingSettings.image && (
+                    <Image
+                      src={
+                        data.channelData.brandingSettings.image
+                          .bannerExternalUrl
+                      }
+                      alt={`${data.channelData.snippet.title} channel banner`}
+                      height={100}
+                      width={100}
+                    />
+                  )}
                 </div>
                 <div>
                   <p>
