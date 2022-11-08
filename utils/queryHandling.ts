@@ -1,11 +1,11 @@
 import { ParsedUrlQuery } from "querystring";
 // These functions exist to help handle URL Query params relating to searching for channels/videos/etc.
 
-// Use this to ensure searchQueries provided via a URL are in the correct format for API calls
+// Use this to ensure search queries provided via a URL are in the correct format for API calls
 export const isValidSearchQuery = (query: ParsedUrlQuery) => {
-  if (typeof query.searchQuery === "string") {
-    // covers lack of searchQuery param
-    return query.searchQuery.trim() !== ""; // covers empty/whitespace strings
+  if (typeof query.term === "string") {
+    // covers lack of search query param
+    return query.term.trim() !== ""; // covers empty/whitespace strings
   }
   return false;
 };
@@ -14,7 +14,7 @@ export const isValidSearchQuery = (query: ParsedUrlQuery) => {
 export const sanitiseSearchQuery = (query: ParsedUrlQuery) => {
   if (isValidSearchQuery(query)) {
     // This is a safe type assertion as the valid query check has passed
-    return query.searchQuery as string;
+    return query.term as string;
   } else {
     return "";
   }
