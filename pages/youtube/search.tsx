@@ -1,5 +1,6 @@
 import { YouTubeSearchTab } from "features/search";
 import { useRouter } from "next/router";
+import { GapiContextProvider } from "providers/GapiContext";
 import { isValidSearchQuery, sanitiseSearchQuery } from "utils/queryHandling";
 
 const Search = () => {
@@ -12,12 +13,14 @@ const Search = () => {
   }
 
   return (
-    <div>
-      <section>
-        <h3>YouTube results</h3>
-        <YouTubeSearchTab searchQuery={sanitiseSearchQuery(UrlQuery)} />
-      </section>
-    </div>
+    <GapiContextProvider>
+      <div>
+        <section>
+          <h3>YouTube results</h3>
+          <YouTubeSearchTab searchQuery={sanitiseSearchQuery(UrlQuery)} />
+        </section>
+      </div>
+    </GapiContextProvider>
   );
 };
 
