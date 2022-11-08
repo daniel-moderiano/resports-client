@@ -19,7 +19,7 @@ export const SearchBar = () => {
     // Router.push returns a promise, but this is an odd choice, and at this stage there is no intention of awaiting this promise for handling. The void keyword indicates this choice
     void router.push({
       pathname: `/${platform}/search`,
-      query: { searchQuery },
+      query: { term: searchQuery },
     });
   };
 

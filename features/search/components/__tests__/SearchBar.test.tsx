@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { SearchBar } from "features/search";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/router";
@@ -100,7 +100,7 @@ describe("Search bar and button UI states", () => {
 });
 
 describe("Search bar functionality", () => {
-  it("routes to search page with correct searchQuery when Twitch search btn is pressed", async () => {
+  it("routes to search page with correct search term when Twitch search btn is pressed", async () => {
     const mockRouter = {
       push: jest.fn(),
       pathname: "",
@@ -116,11 +116,11 @@ describe("Search bar functionality", () => {
     await userEvent.click(btn);
     expect(mockRouter.push).toHaveBeenCalledWith({
       pathname: "/twitch/search",
-      query: { searchQuery: "hello" },
+      query: { term: "hello" },
     });
   });
 
-  it("routes to search page with correct searchQuery when YouTube search btn is pressed", async () => {
+  it("routes to search page with correct search term when YouTube search btn is pressed", async () => {
     const mockRouter = {
       push: jest.fn(),
       pathname: "",
@@ -136,7 +136,7 @@ describe("Search bar functionality", () => {
     await userEvent.click(youtubeButton);
     expect(mockRouter.push).toHaveBeenCalledWith({
       pathname: "/youtube/search",
-      query: { searchQuery: "hello" },
+      query: { term: "hello" },
     });
   });
 
@@ -154,7 +154,7 @@ describe("Search bar functionality", () => {
     await userEvent.keyboard("[Enter]");
     expect(mockRouter.push).toHaveBeenCalledWith({
       pathname: "/twitch/search",
-      query: { searchQuery: "hello" },
+      query: { term: "hello" },
     });
   });
 
