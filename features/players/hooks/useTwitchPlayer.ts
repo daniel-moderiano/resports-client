@@ -11,9 +11,7 @@ export const useTwitchPlayer = (
   React.useEffect(() => {
     const tag = document.createElement("script");
 
-    console.log("Running useEffect hook");
-
-    // This conditional ensures the script tag is added to a fresh page, but does not duplicate. The alternative would be multiple iframes rendering on certain re-renders
+    // Avoid duplicating script tags in the DOM.
     if (!window.Twitch) {
       tag.src = "https://player.twitch.tv/js/embed/v1.js";
       document.body.appendChild(tag);
@@ -31,21 +29,20 @@ export const useTwitchPlayer = (
       setPlayer(player);
     };
 
-    // The key to this hook is the generic 'onload' listener. This ensures the player isn't created until the 3rd party script has full loaded.
+    // Do not attempt to create the Player until the 3rd party Twitch API has loaded and the global Twitch var is ready.
     tag.onload = () => {
       if (!playerDivRef.current) {
-        // Consider throwing an error here?
+        console.error("No containing <div> for <iframe>!");
         return;
       }
 
-      // This avoids rendering multiple stacked iframes. We cannot rely on state changes or player loading to check if an iframe already exists
+      // This avoids rendering multiple stacked iframes within the containing player <div>.
       if (!playerDivRef.current.hasChildNodes()) {
         createPlayer();
       }
     };
 
     return () => {
-      // ensure script tags are cleaned on dismount
       tag.remove();
     };
   }, [videoId, playerDivRef]);
