@@ -47,7 +47,7 @@ export const YouTubeVideoListing = ({
       >
         View on YouTube
       </Link>
-      <Link href={`/youtube-video/${videoData.id}`} className={styles.link}>
+      <Link href={`/youtube/video/${videoData.id}`} className={styles.link}>
         View in Player
       </Link>
     </div>
