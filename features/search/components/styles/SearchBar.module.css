@@ -30,3 +30,7 @@
 .button:disabled {
   cursor: not-allowed;
 }
+
+.selected {
+  border: blue 1px solid;
+}

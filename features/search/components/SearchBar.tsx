@@ -8,6 +8,7 @@ import styles from "features/search/components/styles/SearchBar.module.css";
 export const SearchBar = () => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedPlatform, setSelectedPlatform] = useState("twitch");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -16,14 +17,16 @@ export const SearchBar = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Router.push returns a promise, but this is an odd choice, and at this stage there is no intention of awaiting this promise for handling. The void keyword indicates this choice
-    // void router.push({ pathname: "/search", query: { searchQuery } });
-  };
-
-  const handleSearchButtonClick = (platform: string) => {
-    if (platform === "twitch") {
-      void router.push({ pathname: "twitch/search", query: { searchQuery } });
+    if (selectedPlatform === "twitch") {
+      void router.push({
+        pathname: "/twitch/search",
+        query: { searchQuery },
+      });
     } else {
-      void router.push({ pathname: "youtube/search", query: { searchQuery } });
+      void router.push({
+        pathname: "/youtube/search",
+        query: { searchQuery },
+      });
     }
   };
 
@@ -54,20 +57,28 @@ export const SearchBar = () => {
       />
       <div>
         <button
-          aria-label="Search YouTube"
-          className={styles.button}
-          disabled={searchQuery.trim() === ""}
-          onClick={() => handleSearchButtonClick("youtube")}
-        >
-          Search YouTube
-        </button>
-        <button
           aria-label="Search Twitch"
-          className={styles.button}
+          className={`${
+            selectedPlatform === "twitch"
+              ? `${styles.selected} ${styles.button}`
+              : styles.button
+          }`}
           disabled={searchQuery.trim() === ""}
-          onClick={() => handleSearchButtonClick("twitch")}
+          onClick={() => setSelectedPlatform("twitch")}
         >
           Search Twitch
+        </button>
+        <button
+          aria-label="Search YouTube"
+          className={`${
+            selectedPlatform === "youtube"
+              ? `${styles.selected} ${styles.button}`
+              : styles.button
+          }`}
+          disabled={searchQuery.trim() === ""}
+          onClick={() => setSelectedPlatform("youtube")}
+        >
+          Search YouTube
         </button>
       </div>
     </form>
