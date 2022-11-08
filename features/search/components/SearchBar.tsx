@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styles from "features/search/components/styles/SearchBar.module.css";
 
@@ -7,31 +7,24 @@ import styles from "features/search/components/styles/SearchBar.module.css";
 // This component is expected to 'live' in the header and remain visible from all pages of the application
 export const SearchBar = () => {
   const router = useRouter();
+  const { pathname } = router;
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedPlatform, setSelectedPlatform] = useState("twitch");
+  const selectedPlatform = "";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSearch = (platform: string) => {
     // Router.push returns a promise, but this is an odd choice, and at this stage there is no intention of awaiting this promise for handling. The void keyword indicates this choice
-    if (selectedPlatform === "twitch") {
-      void router.push({
-        pathname: "/twitch/search",
-        query: { searchQuery },
-      });
-    } else {
-      void router.push({
-        pathname: "/youtube/search",
-        query: { searchQuery },
-      });
-    }
+    void router.push({
+      pathname: `/${platform}/search`,
+      query: { searchQuery },
+    });
   };
 
   return (
-    <form className={styles.searchBar} onSubmit={handleSubmit}>
+    <div className={styles.searchBar}>
       <label htmlFor="search" className={styles.label}>
         Search
       </label>
@@ -59,28 +52,32 @@ export const SearchBar = () => {
         <button
           aria-label="Search Twitch"
           className={`${
-            selectedPlatform === "twitch"
+            pathname.includes("twitch")
               ? `${styles.selected} ${styles.button}`
               : styles.button
           }`}
           disabled={searchQuery.trim() === ""}
-          onClick={() => setSelectedPlatform("twitch")}
+          onClick={() => {
+            handleSearch("twitch");
+          }}
         >
           Search Twitch
         </button>
         <button
           aria-label="Search YouTube"
           className={`${
-            selectedPlatform === "youtube"
+            pathname.includes("youtube")
               ? `${styles.selected} ${styles.button}`
               : styles.button
           }`}
           disabled={searchQuery.trim() === ""}
-          onClick={() => setSelectedPlatform("youtube")}
+          onClick={() => {
+            handleSearch("youtube");
+          }}
         >
           Search YouTube
         </button>
       </div>
-    </form>
+    </div>
   );
 };
