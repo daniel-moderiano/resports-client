@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import YouTubeChannel from "pages/youtube-channel/[channelId]";
+import YouTubeChannel from "pages/youtube/channel/[channelId]";
 import { YouTubeChannelSearchResult } from "types/youtubeAPITypes";
 import { useGetYouTubeChannel } from "features/channels/hooks/useGetYouTubeChannel";
 

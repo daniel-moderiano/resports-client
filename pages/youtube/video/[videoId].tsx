@@ -1,7 +1,7 @@
 // The video/watch page that houses an embedded YouTube iframe/player
 import { GetServerSideProps } from "next";
 import { sanitiseVideoQuery } from "utils/queryHandling";
-import { YouTubePlayer } from "features/players";
+import { YouTubeCustomPlayer } from "features/players";
 import Link from "next/link";
 
 interface YouTubeVideoProps {
@@ -20,8 +20,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const YouTubeVideo = ({ videoId }: YouTubeVideoProps) => {
   return (
     <div>
-      <YouTubePlayer videoId={videoId} />
-      <Link href={`/youtube-video/${videoId}`}>Custom player</Link>
+      <YouTubeCustomPlayer videoId={videoId} />
+      <Link href={`/youtube/video/${videoId}/yt-enabled`}>
+        YT-enabled player
+      </Link>
     </div>
   );
 };

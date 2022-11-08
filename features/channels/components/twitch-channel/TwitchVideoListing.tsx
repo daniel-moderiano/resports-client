@@ -45,7 +45,7 @@ export const TwitchVideoListing = ({ videoData }: TwitchVideoListingProps) => {
       >
         View on Twitch
       </Link>
-      <Link href={`/twitch-video/${videoData.id}`} className={styles.link}>
+      <Link href={`/twitch/video/${videoData.id}`} className={styles.link}>
         View in Player
       </Link>
     </div>
