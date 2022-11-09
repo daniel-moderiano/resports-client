@@ -3,6 +3,7 @@ import styles from "features/players/components/styles/TwitchPlayer.module.css";
 import * as React from "react";
 import { useTwitchPlayer } from "features/players/api/useTwitchPlayer";
 import { TwitchPlayerControls } from "./TwitchPlayerControls";
+import { toggleFullscreen } from "features/players/utils/toggleFullscreen";
 
 // TODO: Adjust duration UI so it reflects projected time, not playing catch up with getCurrentTime calls
 
@@ -12,6 +13,7 @@ interface TwitchPlayerProps {
 
 export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
   const playerDivRef = React.useRef<HTMLDivElement | null>(null);
+  const wrapperRef = React.useRef<HTMLDivElement | null>(null);
   const [theaterMode, setTheaterMode] = useState(false);
 
   // Use local state to avoid the long delays of an API call to check muted state when toggling icons and UI
@@ -33,7 +35,6 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
   // When this is not null, it implies we are currently performing a seek() call.
   const [projectedTime, setProjectedTime] = React.useState<null | number>(null);
 
-  // Adds the Twitch Iframe to the div#player returned below
   const { player } = useTwitchPlayer(videoId, playerDivRef);
 
   // Ensure the local playerState state is set on play/pause events. This ensures other elements modify with each of the changes as needed
@@ -145,23 +146,6 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
     }
   }, [player]);
 
-  // Call this function to switch the iframe/wrapper in and out of fullscreen mode. Esc key press will work as intended without explicitly adding this functionality
-  const toggleFullscreen = () => {
-    const wrapper: HTMLDivElement | null = document.querySelector("#wrapper");
-
-    // These are async functions, but we are not particularly interested in error handling. This is mainyl to avoid linting errors
-    if (!document.fullscreenElement && wrapper) {
-      wrapper.requestFullscreen().catch((err) => console.error(err));
-    } else {
-      document.exitFullscreen().catch((err) => console.error(err));
-    }
-
-    // Move focus to the parent wrapper rather than remaining on the toggleFullscreen btn. This is the extected UX interaction
-    if (wrapper) {
-      wrapper.focus();
-    }
-  };
-
   // Use this to toggle between theater mode. Can be attached to a button or keypress as needed
   const toggleTheater = () => {
     setTheaterMode((prevState) => !prevState);
@@ -204,7 +188,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
           signalUserActivity();
           break;
         case "f":
-          toggleFullscreen();
+          toggleFullscreen(wrapperRef.current);
           break;
         case "t":
           toggleTheater();
@@ -252,6 +236,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
         data-testid="wrapper"
         onMouseLeave={() => setUserActive(false)}
         tabIndex={0}
+        ref={wrapperRef}
       >
         <div id="player" ref={playerDivRef}></div>
         <div
@@ -259,7 +244,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
             userActive || playerPaused ? "" : styles.overlayInactive
           } ${disableControls ? styles.overlayDisabled : ""}`}
           onClick={playOrPauseVideo}
-          onDoubleClick={toggleFullscreen}
+          onDoubleClick={() => toggleFullscreen(wrapperRef.current)}
           onMouseMove={throttleMousemove}
           data-testid="overlay"
         ></div>
@@ -275,7 +260,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
             <TwitchPlayerControls
               player={player}
               playerPaused={playerPaused}
-              toggleFullscreen={toggleFullscreen}
+              toggleFullscreen={() => toggleFullscreen(wrapperRef.current)}
               toggleTheater={toggleTheater}
               togglePlay={playOrPauseVideo}
               toggleMute={toggleMute}
