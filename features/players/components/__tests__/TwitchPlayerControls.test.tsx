@@ -24,7 +24,7 @@ const playerMock = {
   setQuality: jest.fn,
 };
 
-let playerStateMock = -1;
+let playerPausedMock = false;
 const toggleFullscreenMock = jest.fn();
 const toggleTheaterMock = jest.fn();
 const togglePlayMock = jest.fn();
@@ -43,7 +43,7 @@ describe("YouTube video controls icons and label toggles", () => {
       <TwitchPlayerControls
         // @ts-expect-error a complete Player object is not required for these tests
         player={playerMock}
-        playerState={playerStateMock}
+        playerPaused={playerPausedMock}
         playerMuted={playerMutedMock}
         toggleFullscreen={toggleFullscreenMock}
         togglePlay={togglePlayMock}
@@ -56,16 +56,8 @@ describe("YouTube video controls icons and label toggles", () => {
     );
   };
 
-  it("Shows correct play icon and aria-label when video is unstarted", () => {
-    setup();
-    const playBtn = screen.getByRole("button", { name: "Play video" });
-    const playIcon = screen.getByTestId(/playIcon/i);
-    expect(playBtn).toBeInTheDocument();
-    expect(playIcon).toBeInTheDocument();
-  });
-
   it("Shows correct pause icon and aria-label when video is playing", () => {
-    playerStateMock = 1;
+    playerPausedMock = false;
     setup();
     const pauseBtn = screen.getByRole("button", { name: "Pause video" });
     const pauseIcon = screen.getByTestId(/pauseIcon/i);
@@ -74,7 +66,7 @@ describe("YouTube video controls icons and label toggles", () => {
   });
 
   it("Shows correct play icon and aria-label when video is paused", () => {
-    playerStateMock = 2;
+    playerPausedMock = true;
     setup();
     const playBtn = screen.getByRole("button", { name: "Play video" });
     const playIcon = screen.getByTestId(/playIcon/i);
@@ -125,7 +117,7 @@ describe("YouTube video controls functionality", () => {
       <TwitchPlayerControls
         // @ts-expect-error a complete Player object is not required for these tests
         player={playerMock}
-        playerState={playerStateMock}
+        playerPaused={playerPausedMock}
         playerMuted={playerMutedMock}
         toggleFullscreen={toggleFullscreenMock}
         togglePlay={togglePlayMock}
@@ -145,7 +137,7 @@ describe("YouTube video controls functionality", () => {
   });
 
   it("Pause button calls play/pause function on click", async () => {
-    playerStateMock = 1; // "play" the video
+    playerPausedMock = false; // "play" the video
     setup();
     const pauseBtn = screen.getByRole("button", { name: "Pause video" });
     await userEvent.click(pauseBtn);
@@ -249,7 +241,7 @@ describe("Settings menu display tests", () => {
       <TwitchPlayerControls
         // @ts-expect-error a complete Player object is not required for these tests
         player={playerMock}
-        playerState={playerStateMock}
+        playerPaused={playerPausedMock}
         playerMuted={playerMutedMock}
         toggleFullscreen={toggleFullscreenMock}
         togglePlay={togglePlayMock}

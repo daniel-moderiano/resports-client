@@ -12,7 +12,7 @@ const setVolumeMock = jest.fn();
 let getPlayerStateMock: () => number;
 
 // Provide channel data and other UI states via this mock of the channel search API call
-jest.mock("../../hooks/useYouTubeIframe", () => ({
+jest.mock("features/players/api/useYouTubeIframe", () => ({
   // Make sure a player object is returned here to trigger the functions requiring a truthy player object
   useYouTubeIframe: () => ({
     player: {

@@ -11,7 +11,7 @@ const setMutedMock = jest.fn();
 let isPausedMock: () => boolean;
 
 // Provide channel data and other UI states via this mock of the channel search API call
-jest.mock("../../hooks/useTwitchPlayer", () => ({
+jest.mock("features/players/api/useTwitchPlayer", () => ({
   // Make sure a player object is returned here to trigger the functions requiring a truthy player object
   useTwitchPlayer: () => ({
     player: {
