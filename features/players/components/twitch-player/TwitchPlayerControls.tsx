@@ -20,7 +20,7 @@ import * as React from "react";
 
 interface TwitchPlayerControlsProps {
   player: Twitch.Player;
-  playerState: number;
+  playerPaused: boolean;
   toggleFullscreen: () => void;
   toggleTheater: () => void;
   togglePlay: () => void;
@@ -35,7 +35,7 @@ export const TwitchPlayerControls = ({
   player,
   toggleFullscreen,
   toggleTheater,
-  playerState,
+  playerPaused,
   togglePlay,
   toggleMute,
   skipBackward,
@@ -84,19 +84,19 @@ export const TwitchPlayerControls = ({
           className={styles.controlsBtn}
           onClick={togglePlay}
           id="playBtn"
-          aria-label={playerState === 1 ? "Pause video" : "Play video"}
+          aria-label={playerPaused ? "Play video" : "Pause video"}
         >
-          {playerState === 1 ? (
-            <PauseIcon
-              className={styles.icons32}
-              fill="#FFFFFF"
-              testId="pauseIcon"
-            />
-          ) : (
+          {playerPaused ? (
             <PlayIcon
               className={styles.icons32}
               fill="#FFFFFF"
               testId="playIcon"
+            />
+          ) : (
+            <PauseIcon
+              className={styles.icons32}
+              fill="#FFFFFF"
+              testId="pauseIcon"
             />
           )}
         </button>

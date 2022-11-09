@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "features/players/components/styles/TwitchPlayer.module.css";
 import * as React from "react";
-import { useTwitchPlayer } from "features/players/hooks/useTwitchPlayer";
+import { useTwitchPlayer } from "features/players/api/useTwitchPlayer";
 import { TwitchPlayerControls } from "./TwitchPlayerControls";
 
 // TODO: Adjust duration UI so it reflects projected time, not playing catch up with getCurrentTime calls
@@ -14,7 +14,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
   const playerDivRef = React.useRef<HTMLDivElement | null>(null);
   const [theaterMode, setTheaterMode] = useState(false);
 
-  // This local state is used to avoid the long delays of an API call to check muted state when toggling icons and UI
+  // Use local state to avoid the long delays of an API call to check muted state when toggling icons and UI
   const [playerMuted, setPlayerMuted] = useState(true);
 
   // useRef must be used here to avoid losing reference to timeout IDs as the component re-renders between hiding/showing controls
@@ -27,9 +27,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
   // The user should be able to manually disable the overlay to interact with the player in certain circumstances, e.g. mature content, reloading player, etc.
   const [disableControls, setDisableControls] = useState(false);
 
-  // TODO: Consider changing this to isPaused boolean to reflect Twitch API
-  // Initialise playerState in the PAUSED state, represented by 2 (playing state is 1)
-  const [playerState, setPlayerState] = useState(-1);
+  const [playerPaused, setPlayerPaused] = useState(false);
 
   // The currently projected time (in seconds) that the player should be at once the currently queued seek completes.
   // When this is not null, it implies we are currently performing a seek() call.
@@ -42,11 +40,11 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
   React.useEffect(() => {
     if (player) {
       player.addEventListener("play", () => {
-        setPlayerState(1);
+        setPlayerPaused(false);
       });
 
       player.addEventListener("pause", () => {
-        setPlayerState(2);
+        setPlayerPaused(true);
       });
 
       // Ensure projectedTime is reset to null to avoid infinite loop seeking or video freezing at fixed time
@@ -258,7 +256,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
         <div id="player" ref={playerDivRef}></div>
         <div
           className={`${styles.overlay} ${
-            userActive || playerState === 2 ? "" : styles.overlayInactive
+            userActive || playerPaused ? "" : styles.overlayInactive
           } ${disableControls ? styles.overlayDisabled : ""}`}
           onClick={playOrPauseVideo}
           onDoubleClick={toggleFullscreen}
@@ -269,14 +267,14 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
         {player && (
           <div
             className={`${styles.controls} ${
-              userActive || playerState === 2 ? "" : styles.controlsHide
+              userActive || playerPaused ? "" : styles.controlsHide
             } ${disableControls ? styles.controlsDisabled : ""}`}
             onMouseMove={throttleMousemove}
             data-testid="customControls"
           >
             <TwitchPlayerControls
               player={player}
-              playerState={playerState}
+              playerPaused={playerPaused}
               toggleFullscreen={toggleFullscreen}
               toggleTheater={toggleTheater}
               togglePlay={playOrPauseVideo}
@@ -291,7 +289,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
 
         <div
           className={`${styles.gradient} ${
-            userActive || playerState === 2 ? "" : styles.gradientHide
+            userActive || playerPaused ? "" : styles.gradientHide
           } ${disableControls ? styles.gradientHide : ""}`}
           data-testid="gradient"
         ></div>

@@ -1,4 +1,4 @@
-import { useYouTubeIframe } from "features/players/hooks/useYouTubeIframe";
+import { useYouTubeIframe } from "features/players/api/useYouTubeIframe";
 import { useState } from "react";
 import styles from "features/players/components/styles/YouTubePlayer.module.css";
 import { YouTubeVideoControls } from "./YouTubeVideoControls";
