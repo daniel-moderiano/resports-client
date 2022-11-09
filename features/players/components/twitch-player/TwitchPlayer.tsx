@@ -5,6 +5,7 @@ import { useTwitchPlayer } from "features/players/api/useTwitchPlayer";
 import { TwitchPlayerControls } from "./TwitchPlayerControls";
 import { toggleFullscreen } from "features/players/utils/toggleFullscreen";
 import { throttle } from "utils/throttle";
+import { useUserActivity } from "features/players/hooks/useUserActivity";
 
 // TODO: Adjust duration UI so it reflects projected time, not playing catch up with getCurrentTime calls
 
@@ -25,7 +26,8 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
   const enableCall = React.useRef(true);
 
   // Indicates whether the user is moving their mouse over the video (i.e. user is active)
-  const [userActive, setUserActive] = useState(false);
+  // const [userActive, setUserActive] = useState(false);
+  const { userActive, setUserActive, signalUserActivity } = useUserActivity();
 
   // The user should be able to manually disable the overlay to interact with the player in certain circumstances, e.g. mature content, reloading player, etc.
   const [disableControls, setDisableControls] = useState(false);
@@ -64,16 +66,6 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
       }, 500);
     }
   }, [projectedTime, player]);
-
-  // A general user activity function. Use this whenever the user performs an 'active' action and it will signal the user is interacting with the video, which then enables other features such as showing controls
-  const signalUserActivity = () => {
-    setUserActive(true);
-    clearTimeout(inactivityTimeout.current as NodeJS.Timeout);
-
-    inactivityTimeout.current = setTimeout(function () {
-      setUserActive(false);
-    }, 3000);
-  };
 
   const throttleMousemove = throttle(signalUserActivity, 500);
 
@@ -213,6 +205,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
     toggleMute,
     scheduleSkipForward,
     scheduleSkipBackward,
+    signalUserActivity,
   ]);
 
   return (
