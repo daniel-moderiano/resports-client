@@ -4,9 +4,7 @@ export const useTwitchPlayer = (
   videoId: string,
   playerDivRef: React.RefObject<HTMLDivElement | null>
 ) => {
-  const [player, setPlayer] = React.useState<Twitch.Player | undefined>(
-    undefined
-  );
+  const [player, setPlayer] = React.useState<Twitch.Player | null>(null);
 
   React.useEffect(() => {
     const tag = document.createElement("script");
@@ -18,19 +16,18 @@ export const useTwitchPlayer = (
     }
 
     const createPlayer = () => {
+      // Automatically seeks out a <div> with ID of "player" to append an <iframe> to.
       const player = new Twitch.Player("player", {
         video: videoId,
-        width: 800,
-        height: 450,
         autoplay: true,
         controls: false,
       });
 
-      setPlayer(player);
+      return player;
     };
 
     // Do not attempt to create the Player until the 3rd party Twitch API has loaded and the global Twitch var is ready.
-    tag.onload = () => {
+    const handleTwitchScriptLoad = () => {
       if (!playerDivRef.current) {
         console.error("No containing <div> for <iframe>!");
         return;
@@ -38,9 +35,11 @@ export const useTwitchPlayer = (
 
       // This avoids rendering multiple stacked iframes within the containing player <div>.
       if (!playerDivRef.current.hasChildNodes()) {
-        createPlayer();
+        setPlayer(createPlayer());
       }
     };
+
+    tag.onload = handleTwitchScriptLoad;
 
     return () => {
       tag.remove();
