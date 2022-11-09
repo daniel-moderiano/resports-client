@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "features/players/components/styles/TwitchPlayer.module.css";
 import * as React from "react";
 import { useTwitchPlayer } from "features/players/api/useTwitchPlayer";
@@ -7,8 +6,6 @@ import { toggleFullscreen } from "features/players/utils/toggleFullscreen";
 import { throttle } from "utils/throttle";
 import { useUserActivity } from "features/players/hooks/useUserActivity";
 import VideoContainer from "../VideoContainer";
-
-// TODO: Adjust duration UI so it reflects projected time, not playing catch up with getCurrentTime calls
 
 interface TwitchPlayerProps {
   videoId: string;
@@ -19,14 +16,14 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
   const { userActive, setUserActive, signalUserActivity } = useUserActivity();
   const { player } = useTwitchPlayer(videoId, playerDivRef);
-  const [theaterMode, setTheaterMode] = useState(false);
+  const [theaterMode, setTheaterMode] = React.useState(false);
 
   // Use local state to avoid the long delays of an API call to check muted state when toggling icons and UI
-  const [playerMuted, setPlayerMuted] = useState(true);
-  const [playerPaused, setPlayerPaused] = useState(false);
+  const [playerMuted, setPlayerMuted] = React.useState(true);
+  const [playerPaused, setPlayerPaused] = React.useState(false);
 
   // The user should be able to manually disable the overlay to interact with the player in certain circumstances, e.g. mature content, reloading player, etc.
-  const [disableControls, setDisableControls] = useState(false);
+  const [disableControls, setDisableControls] = React.useState(false);
 
   // The currently projected time (in seconds) that the player should be at once the currently queued seek completes.
   // When this is not null, it implies we are currently performing a seek() call.
@@ -51,29 +48,40 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
   }, [player]);
 
   // A critical effect hook that essentially performs the seek functions scheduled by user clicks and key presses. The 500 ms timeout enables the compound seeking to still work when the seek is 'instant' to a pre-buffered section of video
-  React.useEffect(() => {
-    if (projectedTime && player) {
-      setTimeout(() => {
-        player.seek(projectedTime);
-      }, 500);
-    }
-  }, [projectedTime, player]);
+  // React.useEffect(() => {
+  //   if (projectedTime && player) {
+  //     setTimeout(() => {
+  //       player.seek(projectedTime);
+  //     }, 500);
+  //   }
+  // }, [projectedTime, player]);
 
   const throttleMousemove = throttle(signalUserActivity, 500);
 
   const scheduleSkipForward = React.useCallback(
     (timeToSkipInSeconds: number) => {
+      // if (player) {
+      //   let currentTime = player.getCurrentTime();
+      //   if (projectedTime) {
+      //     // A projected time implies we are currently mid-seek
+      //     // Adjust current time using projected time as the base, rather than a getCurrentTime call, thus queuing the calls. E.g. user rapidly clicks +10 min 5 times -> this will ensure we skip back 50 mins
+      //     currentTime = projectedTime;
+      //   }
+      //   setProjectedTime(currentTime + timeToSkipInSeconds);
+      // }
+
       if (player) {
         let currentTime = player.getCurrentTime();
-        if (projectedTime) {
-          // A projected time implies we are currently mid-seek
-          // Adjust current time using projected time as the base, rather than a getCurrentTime call, thus queuing the calls. E.g. user rapidly clicks +10 min 5 times -> this will ensure we skip back 50 mins
-          currentTime = projectedTime;
-        }
         setProjectedTime(currentTime + timeToSkipInSeconds);
+
+        setTimeout(() => {
+          console.log("Performing seek");
+          player.seek(currentTime + timeToSkipInSeconds);
+          // setProjectedTime(null);
+        }, 1000);
       }
     },
-    [player, projectedTime]
+    [player]
   );
 
   const scheduleSkipBackward = React.useCallback(
