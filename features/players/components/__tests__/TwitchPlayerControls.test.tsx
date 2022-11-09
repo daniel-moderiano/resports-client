@@ -26,7 +26,7 @@ const playerMock = {
 
 let playerPausedMock = false;
 const toggleFullscreenMock = jest.fn();
-const toggleTheaterMock = jest.fn();
+const toggleTheaterModeMock = jest.fn();
 const togglePlayMock = jest.fn();
 const toggleMuteMock = jest.fn();
 const skipForwardMock = jest.fn();
@@ -47,7 +47,7 @@ describe("YouTube video controls icons and label toggles", () => {
         playerMuted={playerMutedMock}
         toggleFullscreen={toggleFullscreenMock}
         togglePlay={togglePlayMock}
-        toggleTheater={toggleTheaterMock}
+        toggleTheaterMode={toggleTheaterModeMock}
         skipForward={skipForwardMock}
         skipBackward={skipBackwardMock}
         toggleMute={toggleMuteMock}
@@ -121,7 +121,7 @@ describe("YouTube video controls functionality", () => {
         playerMuted={playerMutedMock}
         toggleFullscreen={toggleFullscreenMock}
         togglePlay={togglePlayMock}
-        toggleTheater={toggleTheaterMock}
+        toggleTheaterMode={toggleTheaterModeMock}
         skipForward={skipForwardMock}
         skipBackward={skipBackwardMock}
         toggleMute={toggleMuteMock}
@@ -177,7 +177,7 @@ describe("YouTube video controls functionality", () => {
       name: "Switch to theater mode",
     });
     await userEvent.click(theaterBtn);
-    expect(toggleTheaterMock).toBeCalled();
+    expect(toggleTheaterModeMock).toBeCalled();
   });
 
   it("Calls skip forward function with 1 minute equivalent input on forward 1 btn click", async () => {
@@ -245,7 +245,7 @@ describe("Settings menu display tests", () => {
         playerMuted={playerMutedMock}
         toggleFullscreen={toggleFullscreenMock}
         togglePlay={togglePlayMock}
-        toggleTheater={toggleTheaterMock}
+        toggleTheaterMode={toggleTheaterModeMock}
         skipForward={skipForwardMock}
         skipBackward={skipBackwardMock}
         toggleMute={toggleMuteMock}

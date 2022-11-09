@@ -146,14 +146,12 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
     }
   }, [player]);
 
-  // Use this to toggle between theater mode. Can be attached to a button or keypress as needed
-  const toggleTheater = () => {
+  const toggleTheaterMode = () => {
     setTheaterMode((prevState) => !prevState);
 
-    // Move focus to the parent wrapper rather than remaining on the toggleFullscreen btn. This is the extected UX interaction
-    const wrapper: HTMLDivElement | null = document.querySelector("#wrapper");
-    if (wrapper) {
-      wrapper.focus();
+    // Move focus to the parent wrapper rather than remaining on the theater btn. This is the extected UX interaction
+    if (wrapperRef.current) {
+      wrapperRef.current.focus();
     }
   };
 
@@ -191,7 +189,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
           toggleFullscreen(wrapperRef.current);
           break;
         case "t":
-          toggleTheater();
+          toggleTheaterMode();
           break;
         case "Down": // IE/Edge specific value
         case "ArrowDown":
@@ -261,7 +259,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
               player={player}
               playerPaused={playerPaused}
               toggleFullscreen={() => toggleFullscreen(wrapperRef.current)}
-              toggleTheater={toggleTheater}
+              toggleTheaterMode={toggleTheaterMode}
               togglePlay={playOrPauseVideo}
               toggleMute={toggleMute}
               playerMuted={playerMuted}

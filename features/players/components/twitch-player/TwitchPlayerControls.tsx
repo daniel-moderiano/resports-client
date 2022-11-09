@@ -22,7 +22,7 @@ interface TwitchPlayerControlsProps {
   player: Twitch.Player;
   playerPaused: boolean;
   toggleFullscreen: () => void;
-  toggleTheater: () => void;
+  toggleTheaterMode: () => void;
   togglePlay: () => void;
   toggleMute: () => void;
   skipForward: (timeToSkipInSeconds: number) => void;
@@ -34,7 +34,7 @@ interface TwitchPlayerControlsProps {
 export const TwitchPlayerControls = ({
   player,
   toggleFullscreen,
-  toggleTheater,
+  toggleTheaterMode,
   playerPaused,
   togglePlay,
   toggleMute,
@@ -223,7 +223,7 @@ export const TwitchPlayerControls = ({
 
         <button
           className={styles.controlsBtn}
-          onClick={toggleTheater}
+          onClick={toggleTheaterMode}
           data-testid="theater"
           aria-label="Switch to theater mode"
         >
