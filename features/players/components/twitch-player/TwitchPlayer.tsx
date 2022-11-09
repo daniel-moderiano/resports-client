@@ -4,6 +4,7 @@ import * as React from "react";
 import { useTwitchPlayer } from "features/players/api/useTwitchPlayer";
 import { TwitchPlayerControls } from "./TwitchPlayerControls";
 import { toggleFullscreen } from "features/players/utils/toggleFullscreen";
+import { throttle } from "utils/throttle";
 
 // TODO: Adjust duration UI so it reflects projected time, not playing catch up with getCurrentTime calls
 
@@ -74,17 +75,9 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
     }, 3000);
   };
 
-  // Use this to limit how many times the mousemove handler is called. Note this function itself will still be called every time
-  const throttleMousemove = () => {
-    if (!enableCall.current) {
-      return;
-    }
-
-    enableCall.current = false;
+  const throttleMousemove = throttle(() => {
     signalUserActivity();
-    // Unsure exactly which throttle timeout will work best, but 500 seems adequate for now
-    setTimeout(() => (enableCall.current = true), 500);
-  };
+  }, 500);
 
   const scheduleSkipForward = React.useCallback(
     (timeToSkipInSeconds: number) => {
