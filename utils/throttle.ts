@@ -1,15 +1,15 @@
-export const throttle = (func: Function, delay: number) => {
+export function throttle<T>(func: (...args: T[]) => void, delay: number) {
   let enableCall = true;
 
-  return () => {
+  return (...args: T[]) => {
     if (!enableCall) {
       return;
     }
 
-    func();
+    func(...args);
     enableCall = false;
     setTimeout(() => {
       enableCall = true;
     }, delay);
   };
-};
+}

@@ -75,9 +75,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
     }, 3000);
   };
 
-  const throttleMousemove = throttle(() => {
-    signalUserActivity();
-  }, 500);
+  const throttleMousemove = throttle(signalUserActivity, 500);
 
   const scheduleSkipForward = React.useCallback(
     (timeToSkipInSeconds: number) => {
