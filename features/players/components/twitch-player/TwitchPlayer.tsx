@@ -6,6 +6,7 @@ import { TwitchPlayerControls } from "./TwitchPlayerControls";
 import { toggleFullscreen } from "features/players/utils/toggleFullscreen";
 import { throttle } from "utils/throttle";
 import { useUserActivity } from "features/players/hooks/useUserActivity";
+import VideoContainer from "../VideoContainer";
 
 // TODO: Adjust duration UI so it reflects projected time, not playing catch up with getCurrentTime calls
 
@@ -16,29 +17,20 @@ interface TwitchPlayerProps {
 export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
   const playerDivRef = React.useRef<HTMLDivElement | null>(null);
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
+  const { userActive, setUserActive, signalUserActivity } = useUserActivity();
+  const { player } = useTwitchPlayer(videoId, playerDivRef);
   const [theaterMode, setTheaterMode] = useState(false);
 
   // Use local state to avoid the long delays of an API call to check muted state when toggling icons and UI
   const [playerMuted, setPlayerMuted] = useState(true);
-
-  // useRef must be used here to avoid losing reference to timeout IDs as the component re-renders between hiding/showing controls
-  const inactivityTimeout = React.useRef<null | NodeJS.Timeout>(null);
-  const enableCall = React.useRef(true);
-
-  // Indicates whether the user is moving their mouse over the video (i.e. user is active)
-  // const [userActive, setUserActive] = useState(false);
-  const { userActive, setUserActive, signalUserActivity } = useUserActivity();
+  const [playerPaused, setPlayerPaused] = useState(false);
 
   // The user should be able to manually disable the overlay to interact with the player in certain circumstances, e.g. mature content, reloading player, etc.
   const [disableControls, setDisableControls] = useState(false);
 
-  const [playerPaused, setPlayerPaused] = useState(false);
-
   // The currently projected time (in seconds) that the player should be at once the currently queued seek completes.
   // When this is not null, it implies we are currently performing a seek() call.
   const [projectedTime, setProjectedTime] = React.useState<null | number>(null);
-
-  const { player } = useTwitchPlayer(videoId, playerDivRef);
 
   // Ensure the local playerState state is set on play/pause events. This ensures other elements modify with each of the changes as needed
   React.useEffect(() => {
@@ -112,7 +104,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
       setPlayerMuted(true);
       player.setMuted(true);
     }
-  }, [player]);
+  }, [player, signalUserActivity]);
 
   // Use this function to play a paused video, or pause a playing video. Intended to activate on clicking the video, or pressing spacebar
   const playOrPauseVideo = React.useCallback(() => {
@@ -127,7 +119,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
         player.pause();
       }
     }
-  }, [player]);
+  }, [player, setUserActive]);
 
   const toggleTheaterMode = () => {
     setTheaterMode((prevState) => !prevState);
@@ -210,15 +202,10 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
 
   return (
     <div>
-      <div
-        id="wrapper"
-        className={`${styles.wrapper} ${
-          theaterMode ? styles.wrapperTheater : styles.wrapperNormal
-        } ${player ? "" : styles.wrapperInitial}`}
-        data-testid="wrapper"
-        onMouseLeave={() => setUserActive(false)}
-        tabIndex={0}
-        ref={wrapperRef}
+      <VideoContainer
+        setUserActive={setUserActive}
+        theaterMode={theaterMode}
+        wrapperRef={wrapperRef}
       >
         <div id="player" ref={playerDivRef}></div>
         <div
@@ -260,7 +247,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
           } ${disableControls ? styles.gradientHide : ""}`}
           data-testid="gradient"
         ></div>
-      </div>
+      </VideoContainer>
       <button onClick={() => setDisableControls((prevState) => !prevState)}>
         Toggle custom controls
       </button>
