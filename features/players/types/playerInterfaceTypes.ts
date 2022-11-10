@@ -101,11 +101,6 @@ export interface PlayerWrapper {
   getCurrentTime: () => number;
 
   /**
-   * @returns True if the live stream or VOD has ended; otherwise, false.
-   */
-  getEnded(): boolean;
-
-  /**
    * @returns The available video qualities.
    */
   getQualities?(): Twitch.VideoQualityObject[];
@@ -114,11 +109,6 @@ export interface PlayerWrapper {
    * @returns The current quality of video playback.
    */
   getQuality?: () => string;
-
-  /**
-   * @returns The video ID. Works only for VODs, not livestreams.
-   */
-  getVideo: () => string;
 
   /**
    * @returns True if the video is paused; otherwise false. Bufferring or seeking is considered playing.
