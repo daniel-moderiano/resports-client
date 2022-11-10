@@ -1,9 +1,10 @@
+import { PlayerWrapper } from "features/players/types/playerInterfaceTypes";
 import { useKeyboardNavigation } from "hooks/useKeyboardMenuNavigation";
 import { useMenuCloseEvents } from "hooks/useMenuCloseEvents";
 
 interface TwitchPlayerSettingsMenuProps {
   closeMenu: () => void;
-  player: Twitch.Player;
+  player: PlayerWrapper;
 }
 
 // Currently this menu only supports quality settings, but may be adapted later to include playback rate and caption settings

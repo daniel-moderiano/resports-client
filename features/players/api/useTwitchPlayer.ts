@@ -1,10 +1,13 @@
 import * as React from "react";
+import { PlayerWrapper } from "../types/playerInterfaceTypes";
+import { Player } from "./player";
+import { TwitchPlayerWrapper } from "./twitchPlayerWrapper";
 
 export const useTwitchPlayer = (
   videoId: string,
   playerDivRef: React.RefObject<HTMLDivElement | null>
 ) => {
-  const [player, setPlayer] = React.useState<Twitch.Player | null>(null);
+  const [player, setPlayer] = React.useState<PlayerWrapper | null>(null);
 
   React.useEffect(() => {
     const tag = document.createElement("script");
@@ -23,7 +26,8 @@ export const useTwitchPlayer = (
         controls: false,
       });
 
-      return player;
+      const twitchPlayerWrapper = new TwitchPlayerWrapper(player);
+      return new Player(twitchPlayerWrapper);
     };
 
     // Do not attempt to create the Player until the 3rd party Twitch API has loaded and the global Twitch var is ready.

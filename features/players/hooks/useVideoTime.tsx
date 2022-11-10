@@ -1,10 +1,11 @@
 import * as React from "react";
 import { formatElapsedTime } from "utils/videoDurationConversion";
+import { PlayerWrapper } from "../types/playerInterfaceTypes";
 
 // Controls all aspects of video duration and returns a single duration that can be used as UI for video time
 // Player agnostic, but only because both players have a getCurrentTime method. This tightly couples to these APIs, however passing in a 'getCurrentTime' function alone adds a layer of delay and causes jumpy UI durations.
 export const useVideoTime = (
-  player: Twitch.Player | YT.Player,
+  player: PlayerWrapper,
   projectedTime: number | null
 ) => {
   const durationInterval = React.useRef<null | NodeJS.Timer>(null);
