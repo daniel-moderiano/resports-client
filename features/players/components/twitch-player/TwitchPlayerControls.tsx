@@ -54,12 +54,6 @@ export const TwitchPlayerControls = ({
     }
   };
 
-  useEffect(() => {
-    if (projectedTime) {
-      console.log(projectedTime);
-    }
-  }, [projectedTime]);
-
   return (
     <div className={styles.controlsContainer}>
       <div className={styles.leftControls}>
@@ -110,7 +104,7 @@ export const TwitchPlayerControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(600);
+            skipBackward(-600);
             releaseFocus();
           }}
           aria-label="Skip backward ten minutes"
@@ -121,7 +115,7 @@ export const TwitchPlayerControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(300);
+            skipBackward(-300);
             releaseFocus();
           }}
           aria-label="Skip backward five minutes"
@@ -132,7 +126,7 @@ export const TwitchPlayerControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(60);
+            skipBackward(-60);
             releaseFocus();
           }}
           aria-label="Skip backward one minute"

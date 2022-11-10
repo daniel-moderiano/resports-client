@@ -51,29 +51,10 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
     }
   }, [player]);
 
-  // A critical effect hook that essentially performs the seek functions scheduled by user clicks and key presses. The 500 ms timeout enables the compound seeking to still work when the seek is 'instant' to a pre-buffered section of video
-  // React.useEffect(() => {
-  //   if (projectedTime && player) {
-  //     setTimeout(() => {
-  //       player.seek(projectedTime);
-  //     }, 500);
-  //   }
-  // }, [projectedTime, player]);
-
   const throttleMousemove = throttle(signalUserActivity, 500);
 
-  const scheduleSkipForward = React.useCallback(
+  const scheduleSeek = React.useCallback(
     (timeToSkipInSeconds: number) => {
-      // if (player) {
-      //   let currentTime = player.getCurrentTime();
-      //   if (projectedTime) {
-      //     // A projected time implies we are currently mid-seek
-      //     // Adjust current time using projected time as the base, rather than a getCurrentTime call, thus queuing the calls. E.g. user rapidly clicks +10 min 5 times -> this will ensure we skip back 50 mins
-      //     currentTime = projectedTime;
-      //   }
-      //   setProjectedTime(currentTime + timeToSkipInSeconds);
-      // }
-
       if (player) {
         clearTimeout(seekTimer.current as NodeJS.Timeout);
         let currentTime = player.getCurrentTime();
@@ -83,11 +64,11 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
         } else {
           updatedProjection = currentTime + timeToSkipInSeconds;
         }
+
         setProjectedTime(updatedProjection);
-        console.log(`Seek requested to ${updatedProjection}`);
 
         seekTimer.current = setTimeout(() => {
-          console.log(`Performing seek to ${updatedProjection}`);
+          // Use the temp updatedProjection variable to ensure an accurate seek is performed rather than hoping setProjectedTime always resolves before this timeout assignment.
           player.seek(updatedProjection);
         }, 1000);
       }
@@ -95,20 +76,20 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
     [player, projectedTime]
   );
 
-  const scheduleSkipBackward = React.useCallback(
-    (timeToSkipInSeconds: number) => {
-      if (player) {
-        let currentTime = player.getCurrentTime();
-        if (projectedTime) {
-          // A projected time implies we are currently mid-seek
-          // Adjust current time using projected time as the base, rather than a getCurrentTime call, thus queuing the calls.
-          currentTime = projectedTime;
-        }
-        setProjectedTime(currentTime - timeToSkipInSeconds);
-      }
-    },
-    [player, projectedTime]
-  );
+  // const scheduleSkipBackward = React.useCallback(
+  //   (timeToSkipInSeconds: number) => {
+  //     if (player) {
+  //       let currentTime = player.getCurrentTime();
+  //       if (projectedTime) {
+  //         // A projected time implies we are currently mid-seek
+  //         // Adjust current time using projected time as the base, rather than a getCurrentTime call, thus queuing the calls.
+  //         currentTime = projectedTime;
+  //       }
+  //       setProjectedTime(currentTime - timeToSkipInSeconds);
+  //     }
+  //   },
+  //   [player, projectedTime]
+  // );
 
   // This function is distinct to manually setting a specific volume level, but counts as user activity
   const toggleMute = React.useCallback(() => {
@@ -195,11 +176,11 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
           break;
         case "Left": // IE/Edge specific value
         case "ArrowLeft":
-          scheduleSkipBackward(10);
+          scheduleSeek(-10);
           break;
         case "Right": // IE/Edge specific value
         case "ArrowRight":
-          scheduleSkipForward(10);
+          scheduleSeek(10);
           break;
         default:
           return; // Quit when this doesn't handle the key event.
@@ -210,14 +191,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [
-    playOrPauseVideo,
-    player,
-    toggleMute,
-    scheduleSkipForward,
-    scheduleSkipBackward,
-    signalUserActivity,
-  ]);
+  }, [playOrPauseVideo, player, toggleMute, signalUserActivity, scheduleSeek]);
 
   return (
     <div>
@@ -253,8 +227,8 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
               togglePlay={playOrPauseVideo}
               toggleMute={toggleMute}
               playerMuted={playerMuted}
-              skipForward={scheduleSkipForward}
-              skipBackward={scheduleSkipBackward}
+              skipForward={scheduleSeek}
+              skipBackward={scheduleSeek}
               projectedTime={projectedTime}
             />
           </div>
