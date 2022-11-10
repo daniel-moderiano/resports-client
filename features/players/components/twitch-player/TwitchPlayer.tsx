@@ -6,7 +6,6 @@ import { toggleFullscreen } from "features/players/utils/toggleFullscreen";
 import { throttle } from "utils/throttle";
 import { useUserActivity } from "features/players/hooks/useUserActivity";
 import VideoContainer from "../VideoContainer";
-import { debounce } from "utils/debounce";
 
 interface TwitchPlayerProps {
   videoId: string;
@@ -75,21 +74,6 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
     },
     [player, projectedTime]
   );
-
-  // const scheduleSkipBackward = React.useCallback(
-  //   (timeToSkipInSeconds: number) => {
-  //     if (player) {
-  //       let currentTime = player.getCurrentTime();
-  //       if (projectedTime) {
-  //         // A projected time implies we are currently mid-seek
-  //         // Adjust current time using projected time as the base, rather than a getCurrentTime call, thus queuing the calls.
-  //         currentTime = projectedTime;
-  //       }
-  //       setProjectedTime(currentTime - timeToSkipInSeconds);
-  //     }
-  //   },
-  //   [player, projectedTime]
-  // );
 
   // This function is distinct to manually setting a specific volume level, but counts as user activity
   const toggleMute = React.useCallback(() => {
