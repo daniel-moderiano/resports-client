@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "features/players/components/styles/YouTubeVideoControls.module.css";
 import MutedIcon from "icons/MutedIcon";
 import VolumeIcon from "icons/VolumeIcon";
@@ -53,6 +53,12 @@ export const TwitchPlayerControls = ({
       wrapper.focus();
     }
   };
+
+  useEffect(() => {
+    if (projectedTime) {
+      console.log(projectedTime);
+    }
+  }, [projectedTime]);
 
   return (
     <div className={styles.controlsContainer}>

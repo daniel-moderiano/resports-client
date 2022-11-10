@@ -6,6 +6,7 @@ import { toggleFullscreen } from "features/players/utils/toggleFullscreen";
 import { throttle } from "utils/throttle";
 import { useUserActivity } from "features/players/hooks/useUserActivity";
 import VideoContainer from "../VideoContainer";
+import { debounce } from "utils/debounce";
 
 interface TwitchPlayerProps {
   videoId: string;
@@ -14,6 +15,7 @@ interface TwitchPlayerProps {
 export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
   const playerDivRef = React.useRef<HTMLDivElement | null>(null);
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
+  const seekTimer = React.useRef<NodeJS.Timeout | null>(null);
   const { userActive, setUserActive, signalUserActivity } = useUserActivity();
   const { player } = useTwitchPlayer(videoId, playerDivRef);
   const [theaterMode, setTheaterMode] = React.useState(false);
@@ -42,6 +44,8 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
 
       // Ensure projectedTime is reset to null to avoid infinite loop seeking or video freezing at fixed time
       player.addEventListener("seek", () => {
+        console.log("Seek performed");
+
         setProjectedTime(null);
       });
     }
@@ -71,17 +75,24 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
       // }
 
       if (player) {
+        clearTimeout(seekTimer.current as NodeJS.Timeout);
         let currentTime = player.getCurrentTime();
-        setProjectedTime(currentTime + timeToSkipInSeconds);
+        let updatedProjection: number;
+        if (projectedTime) {
+          updatedProjection = projectedTime + timeToSkipInSeconds;
+        } else {
+          updatedProjection = currentTime + timeToSkipInSeconds;
+        }
+        setProjectedTime(updatedProjection);
+        console.log(`Seek requested to ${updatedProjection}`);
 
-        setTimeout(() => {
-          console.log("Performing seek");
-          player.seek(currentTime + timeToSkipInSeconds);
-          // setProjectedTime(null);
+        seekTimer.current = setTimeout(() => {
+          console.log(`Performing seek to ${updatedProjection}`);
+          player.seek(updatedProjection);
         }, 1000);
       }
     },
-    [player]
+    [player, projectedTime]
   );
 
   const scheduleSkipBackward = React.useCallback(
