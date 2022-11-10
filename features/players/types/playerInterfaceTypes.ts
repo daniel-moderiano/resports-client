@@ -48,7 +48,7 @@ export type PlayerEvent =
    */
   | "seek";
 
-// Define the methods we need by a player API wrapper to ensure it covers all our code needs
+// Define the methods needed by a player API wrapper to ensure it covers all our code needs
 export interface PlayerWrapper {
   /**
    * Plays the specified video.
@@ -71,7 +71,7 @@ export interface PlayerWrapper {
    * Sets the quality of the video.
    * @param quality   Video quality (string) from the available values
    */
-  setQuality?: (quality: Twitch.VideoQuality) => void;
+  setQuality: (quality: Twitch.VideoQuality) => void;
 
   /**
    * Sets the player volume.
@@ -103,12 +103,7 @@ export interface PlayerWrapper {
   /**
    * @returns The available video qualities.
    */
-  getQualities?(): Twitch.VideoQualityObject[];
-
-  /**
-   * @returns The current quality of video playback.
-   */
-  getQuality?: () => string;
+  getQualities(): Twitch.VideoQualityObject[];
 
   /**
    * @returns True if the video is paused; otherwise false. Bufferring or seeking is considered playing.
