@@ -10,37 +10,51 @@ export class TwitchPlayerWrapper implements PlayerWrapper {
     this.player = player;
   }
 
-  play() {}
-
-  pause() {}
-
-  seek(timestamp: number) {}
-
-  setQuality(quality: Twitch.VideoQuality) {}
-
-  setVolume(volumeLevel: number) {}
-
-  getVolume() {
-    return 0;
+  play() {
+    this.player.play();
   }
 
-  setMuted(muted: boolean) {}
+  pause() {
+    this.player.pause();
+  }
+
+  seek(timestamp: number) {
+    this.player.seek(timestamp);
+  }
+
+  setQuality(quality: Twitch.VideoQuality) {
+    this.player.setQuality(quality);
+  }
+
+  setVolume(volumeLevel: number) {
+    this.player.setVolume(volumeLevel);
+  }
+
+  getVolume() {
+    return this.player.getVolume();
+  }
+
+  setMuted(muted: boolean) {
+    this.player.setMuted(muted);
+  }
 
   getMuted() {
-    return true;
+    return this.player.getMuted();
   }
 
   getCurrentTime() {
-    return 0;
+    return this.player.getCurrentTime();
   }
 
   getQualities() {
-    return [];
+    return this.player.getQualities();
   }
 
   isPaused() {
-    return true;
+    return this.player.isPaused();
   }
 
-  addEventListener(event: PlayerEvent, callback: () => void) {}
+  addEventListener(event: PlayerEvent, callback: () => void) {
+    this.player.addEventListener(event, callback);
+  }
 }
