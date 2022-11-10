@@ -1,5 +1,4 @@
-import { formatElapsedTime } from "utils/videoDurationConversion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "features/players/components/styles/YouTubeVideoControls.module.css";
 import MutedIcon from "icons/MutedIcon";
 import VolumeIcon from "icons/VolumeIcon";
@@ -16,7 +15,6 @@ import PlayIcon from "icons/PlayIcon";
 import PauseIcon from "icons/PauseIcon";
 import SettingsGearIcon from "icons/SettingsGearIcon";
 import { TwitchPlayerSettingsMenu } from "./TwitchPlayerSettingsMenu";
-import * as React from "react";
 import { useVideoTime } from "features/players/hooks/useVideoTime";
 
 interface TwitchPlayerControlsProps {
@@ -46,8 +44,6 @@ export const TwitchPlayerControls = ({
 }: TwitchPlayerControlsProps) => {
   // Controls display of video quality settings menu
   const [showSettingsMenu, setShowSettingsMenu] = useState(false);
-  const durationInterval = React.useRef<null | NodeJS.Timer>(null);
-
   const { elapsedDuration } = useVideoTime(player, projectedTime);
 
   // Use this function in any position where the user's focus should return to the video
