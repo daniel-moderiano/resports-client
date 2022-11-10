@@ -24,9 +24,9 @@ const playerMock = {
   setQuality: jest.fn,
 };
 
-let playerStateMock = -1;
+let playerPausedMock = false;
 const toggleFullscreenMock = jest.fn();
-const toggleTheaterMock = jest.fn();
+const toggleTheaterModeMock = jest.fn();
 const togglePlayMock = jest.fn();
 const toggleMuteMock = jest.fn();
 const skipForwardMock = jest.fn();
@@ -43,11 +43,11 @@ describe("YouTube video controls icons and label toggles", () => {
       <TwitchPlayerControls
         // @ts-expect-error a complete Player object is not required for these tests
         player={playerMock}
-        playerState={playerStateMock}
+        playerPaused={playerPausedMock}
         playerMuted={playerMutedMock}
         toggleFullscreen={toggleFullscreenMock}
         togglePlay={togglePlayMock}
-        toggleTheater={toggleTheaterMock}
+        toggleTheaterMode={toggleTheaterModeMock}
         skipForward={skipForwardMock}
         skipBackward={skipBackwardMock}
         toggleMute={toggleMuteMock}
@@ -56,16 +56,8 @@ describe("YouTube video controls icons and label toggles", () => {
     );
   };
 
-  it("Shows correct play icon and aria-label when video is unstarted", () => {
-    setup();
-    const playBtn = screen.getByRole("button", { name: "Play video" });
-    const playIcon = screen.getByTestId(/playIcon/i);
-    expect(playBtn).toBeInTheDocument();
-    expect(playIcon).toBeInTheDocument();
-  });
-
   it("Shows correct pause icon and aria-label when video is playing", () => {
-    playerStateMock = 1;
+    playerPausedMock = false;
     setup();
     const pauseBtn = screen.getByRole("button", { name: "Pause video" });
     const pauseIcon = screen.getByTestId(/pauseIcon/i);
@@ -74,7 +66,7 @@ describe("YouTube video controls icons and label toggles", () => {
   });
 
   it("Shows correct play icon and aria-label when video is paused", () => {
-    playerStateMock = 2;
+    playerPausedMock = true;
     setup();
     const playBtn = screen.getByRole("button", { name: "Play video" });
     const playIcon = screen.getByTestId(/playIcon/i);
@@ -125,11 +117,11 @@ describe("YouTube video controls functionality", () => {
       <TwitchPlayerControls
         // @ts-expect-error a complete Player object is not required for these tests
         player={playerMock}
-        playerState={playerStateMock}
+        playerPaused={playerPausedMock}
         playerMuted={playerMutedMock}
         toggleFullscreen={toggleFullscreenMock}
         togglePlay={togglePlayMock}
-        toggleTheater={toggleTheaterMock}
+        toggleTheaterMode={toggleTheaterModeMock}
         skipForward={skipForwardMock}
         skipBackward={skipBackwardMock}
         toggleMute={toggleMuteMock}
@@ -145,7 +137,7 @@ describe("YouTube video controls functionality", () => {
   });
 
   it("Pause button calls play/pause function on click", async () => {
-    playerStateMock = 1; // "play" the video
+    playerPausedMock = false; // "play" the video
     setup();
     const pauseBtn = screen.getByRole("button", { name: "Pause video" });
     await userEvent.click(pauseBtn);
@@ -185,7 +177,7 @@ describe("YouTube video controls functionality", () => {
       name: "Switch to theater mode",
     });
     await userEvent.click(theaterBtn);
-    expect(toggleTheaterMock).toBeCalled();
+    expect(toggleTheaterModeMock).toBeCalled();
   });
 
   it("Calls skip forward function with 1 minute equivalent input on forward 1 btn click", async () => {
@@ -221,7 +213,7 @@ describe("YouTube video controls functionality", () => {
       name: "Skip backward one minute",
     });
     await userEvent.click(skipOne);
-    expect(skipBackwardMock).toBeCalledWith(60);
+    expect(skipBackwardMock).toBeCalledWith(-60);
   });
 
   it("Calls skip backward function with 5 minute equivalent input on backward 5 btn click", async () => {
@@ -230,7 +222,7 @@ describe("YouTube video controls functionality", () => {
       name: "Skip backward five minutes",
     });
     await userEvent.click(skipFive);
-    expect(skipBackwardMock).toBeCalledWith(300);
+    expect(skipBackwardMock).toBeCalledWith(-300);
   });
 
   it("Calls skip backward function with 10 minute equivalent input on backward 10 btn click", async () => {
@@ -239,7 +231,7 @@ describe("YouTube video controls functionality", () => {
       name: "Skip backward ten minutes",
     });
     await userEvent.click(skipTen);
-    expect(skipBackwardMock).toBeCalledWith(600);
+    expect(skipBackwardMock).toBeCalledWith(-600);
   });
 });
 
@@ -249,11 +241,11 @@ describe("Settings menu display tests", () => {
       <TwitchPlayerControls
         // @ts-expect-error a complete Player object is not required for these tests
         player={playerMock}
-        playerState={playerStateMock}
+        playerPaused={playerPausedMock}
         playerMuted={playerMutedMock}
         toggleFullscreen={toggleFullscreenMock}
         togglePlay={togglePlayMock}
-        toggleTheater={toggleTheaterMock}
+        toggleTheaterMode={toggleTheaterModeMock}
         skipForward={skipForwardMock}
         skipBackward={skipBackwardMock}
         toggleMute={toggleMuteMock}

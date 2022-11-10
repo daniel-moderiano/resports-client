@@ -1,4 +1,3 @@
-import { formatElapsedTime } from "utils/videoDurationConversion";
 import { useEffect, useState } from "react";
 import styles from "features/players/components/styles/YouTubeVideoControls.module.css";
 import MutedIcon from "icons/MutedIcon";
@@ -16,13 +15,13 @@ import PlayIcon from "icons/PlayIcon";
 import PauseIcon from "icons/PauseIcon";
 import SettingsGearIcon from "icons/SettingsGearIcon";
 import { TwitchPlayerSettingsMenu } from "./TwitchPlayerSettingsMenu";
-import * as React from "react";
+import { useVideoTime } from "features/players/hooks/useVideoTime";
 
 interface TwitchPlayerControlsProps {
   player: Twitch.Player;
-  playerState: number;
+  playerPaused: boolean;
   toggleFullscreen: () => void;
-  toggleTheater: () => void;
+  toggleTheaterMode: () => void;
   togglePlay: () => void;
   toggleMute: () => void;
   skipForward: (timeToSkipInSeconds: number) => void;
@@ -34,8 +33,8 @@ interface TwitchPlayerControlsProps {
 export const TwitchPlayerControls = ({
   player,
   toggleFullscreen,
-  toggleTheater,
-  playerState,
+  toggleTheaterMode,
+  playerPaused,
   togglePlay,
   toggleMute,
   skipBackward,
@@ -43,31 +42,9 @@ export const TwitchPlayerControls = ({
   playerMuted,
   projectedTime,
 }: TwitchPlayerControlsProps) => {
-  const durationInterval = React.useRef<null | NodeJS.Timer>(null);
-
-  // A constantly updated duration state to provide a video duration elapsed to the UI
-  const [elapsedDuration, setElapsedDuration] = useState("");
-
   // Controls display of video quality settings menu
   const [showSettingsMenu, setShowSettingsMenu] = useState(false);
-
-  // An initial render effect only to avoid a 1 second delay in showing elapsed time
-  useEffect(() => {
-    const elapsedTime = player.getCurrentTime();
-    setElapsedDuration(formatElapsedTime(elapsedTime));
-  }, [player]);
-
-  useEffect(() => {
-    if (projectedTime) {
-      clearInterval(durationInterval.current as NodeJS.Timer);
-      setElapsedDuration(formatElapsedTime(projectedTime));
-    } else {
-      durationInterval.current = setInterval(() => {
-        const elapsedTime = player.getCurrentTime();
-        setElapsedDuration(formatElapsedTime(elapsedTime));
-      }, 1000);
-    }
-  }, [player, projectedTime]);
+  const { elapsedDuration } = useVideoTime(player, projectedTime);
 
   // Use this function in any position where the user's focus should return to the video
   const releaseFocus = () => {
@@ -84,19 +61,19 @@ export const TwitchPlayerControls = ({
           className={styles.controlsBtn}
           onClick={togglePlay}
           id="playBtn"
-          aria-label={playerState === 1 ? "Pause video" : "Play video"}
+          aria-label={playerPaused ? "Play video" : "Pause video"}
         >
-          {playerState === 1 ? (
-            <PauseIcon
-              className={styles.icons32}
-              fill="#FFFFFF"
-              testId="pauseIcon"
-            />
-          ) : (
+          {playerPaused ? (
             <PlayIcon
               className={styles.icons32}
               fill="#FFFFFF"
               testId="playIcon"
+            />
+          ) : (
+            <PauseIcon
+              className={styles.icons32}
+              fill="#FFFFFF"
+              testId="pauseIcon"
             />
           )}
         </button>
@@ -127,7 +104,7 @@ export const TwitchPlayerControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(600);
+            skipBackward(-600);
             releaseFocus();
           }}
           aria-label="Skip backward ten minutes"
@@ -138,7 +115,7 @@ export const TwitchPlayerControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(300);
+            skipBackward(-300);
             releaseFocus();
           }}
           aria-label="Skip backward five minutes"
@@ -149,7 +126,7 @@ export const TwitchPlayerControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(60);
+            skipBackward(-60);
             releaseFocus();
           }}
           aria-label="Skip backward one minute"
@@ -223,7 +200,7 @@ export const TwitchPlayerControls = ({
 
         <button
           className={styles.controlsBtn}
-          onClick={toggleTheater}
+          onClick={toggleTheaterMode}
           data-testid="theater"
           aria-label="Switch to theater mode"
         >

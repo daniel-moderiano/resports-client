@@ -1,116 +1,75 @@
-import { useState } from "react";
 import styles from "features/players/components/styles/TwitchPlayer.module.css";
 import * as React from "react";
-import { useTwitchPlayer } from "features/players/hooks/useTwitchPlayer";
+import { useTwitchPlayer } from "features/players/api/useTwitchPlayer";
 import { TwitchPlayerControls } from "./TwitchPlayerControls";
-
-// TODO: Adjust duration UI so it reflects projected time, not playing catch up with getCurrentTime calls
+import { toggleFullscreen } from "features/players/utils/toggleFullscreen";
+import { throttle } from "utils/throttle";
+import { useUserActivity } from "features/players/hooks/useUserActivity";
+import VideoContainer from "../VideoContainer";
 
 interface TwitchPlayerProps {
   videoId: string;
 }
 
 export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
-  const [theaterMode, setTheaterMode] = useState(false);
+  const playerDivRef = React.useRef<HTMLDivElement | null>(null);
+  const wrapperRef = React.useRef<HTMLDivElement | null>(null);
+  const seekTimer = React.useRef<NodeJS.Timeout | null>(null);
+  const { userActive, setUserActive, signalUserActivity } = useUserActivity();
+  const { player } = useTwitchPlayer(videoId, playerDivRef);
+  const [theaterMode, setTheaterMode] = React.useState(false);
 
-  // This local state is used to avoid the long delays of an API call to check muted state when toggling icons and UI
-  const [playerMuted, setPlayerMuted] = useState(true);
-
-  // useRef must be used here to avoid losing reference to timeout IDs as the component re-renders between hiding/showing controls
-  const inactivityTimeout = React.useRef<null | NodeJS.Timeout>(null);
-  const enableCall = React.useRef(true);
-
-  // Indicates whether the user is moving their mouse over the video (i.e. user is active)
-  const [userActive, setUserActive] = useState(false);
+  // Use local state to avoid the long delays of an API call to check muted state when toggling icons and UI
+  const [playerMuted, setPlayerMuted] = React.useState(true);
+  const [playerPaused, setPlayerPaused] = React.useState(false);
 
   // The user should be able to manually disable the overlay to interact with the player in certain circumstances, e.g. mature content, reloading player, etc.
-  const [disableControls, setDisableControls] = useState(false);
-
-  // TODO: Consider changing this to isPaused boolean to reflect Twitch API
-  // Initialise playerState in the PAUSED state, represented by 2 (playing state is 1)
-  const [playerState, setPlayerState] = useState(-1);
+  const [disableControls, setDisableControls] = React.useState(false);
 
   // The currently projected time (in seconds) that the player should be at once the currently queued seek completes.
   // When this is not null, it implies we are currently performing a seek() call.
   const [projectedTime, setProjectedTime] = React.useState<null | number>(null);
 
-  // Adds the YT Iframe to the div#player returned below
-  const { player } = useTwitchPlayer(videoId);
-
   // Ensure the local playerState state is set on play/pause events. This ensures other elements modify with each of the changes as needed
   React.useEffect(() => {
     if (player) {
       player.addEventListener("play", () => {
-        setPlayerState(1);
+        setPlayerPaused(false);
       });
 
       player.addEventListener("pause", () => {
-        setPlayerState(2);
+        setPlayerPaused(true);
       });
 
       // Ensure projectedTime is reset to null to avoid infinite loop seeking or video freezing at fixed time
       player.addEventListener("seek", () => {
+        console.log("Seek performed");
+
         setProjectedTime(null);
       });
     }
   }, [player]);
 
-  // A critical effect hook that essentially performs the seek functions scheduled by user clicks and key presses. The 500 ms timeout enables the compound seeking to still work when the seek is 'instant' to a pre-buffered section of video
-  React.useEffect(() => {
-    if (projectedTime && player) {
-      setTimeout(() => {
-        player.seek(projectedTime);
-      }, 500);
-    }
-  }, [projectedTime, player]);
+  const throttleMousemove = throttle(signalUserActivity, 500);
 
-  // A general user activity function. Use this whenever the user performs an 'active' action and it will signal the user is interacting with the video, which then enables other features such as showing controls
-  const signalUserActivity = () => {
-    setUserActive(true);
-    clearTimeout(inactivityTimeout.current as NodeJS.Timeout);
-
-    inactivityTimeout.current = setTimeout(function () {
-      setUserActive(false);
-    }, 3000);
-  };
-
-  // Use this to limit how many times the mousemove handler is called. Note this function itself will still be called every time
-  const throttleMousemove = () => {
-    if (!enableCall.current) {
-      return;
-    }
-
-    enableCall.current = false;
-    signalUserActivity();
-    // Unsure exactly which throttle timeout will work best, but 500 seems adequate for now
-    setTimeout(() => (enableCall.current = true), 500);
-  };
-
-  const scheduleSkipForward = React.useCallback(
+  const scheduleSeek = React.useCallback(
     (timeToSkipInSeconds: number) => {
       if (player) {
+        clearTimeout(seekTimer.current as NodeJS.Timeout);
         let currentTime = player.getCurrentTime();
+        let updatedProjection: number;
         if (projectedTime) {
-          // A projected time implies we are currently mid-seek
-          // Adjust current time using projected time as the base, rather than a getCurrentTime call, thus queuing the calls. E.g. user rapidly clicks +10 min 5 times -> this will ensure we skip back 50 mins
-          currentTime = projectedTime;
+          updatedProjection = projectedTime + timeToSkipInSeconds;
+        } else {
+          updatedProjection = currentTime + timeToSkipInSeconds;
         }
-        setProjectedTime(currentTime + timeToSkipInSeconds);
-      }
-    },
-    [player, projectedTime]
-  );
 
-  const scheduleSkipBackward = React.useCallback(
-    (timeToSkipInSeconds: number) => {
-      if (player) {
-        let currentTime = player.getCurrentTime();
-        if (projectedTime) {
-          // A projected time implies we are currently mid-seek
-          // Adjust current time using projected time as the base, rather than a getCurrentTime call, thus queuing the calls.
-          currentTime = projectedTime;
-        }
-        setProjectedTime(currentTime - timeToSkipInSeconds);
+        setProjectedTime(updatedProjection);
+
+        seekTimer.current = setTimeout(() => {
+          // Use the temp updatedProjection variable to ensure an accurate seek is performed rather than hoping setProjectedTime always resolves before this timeout assignment.
+          player.seek(updatedProjection);
+        }, 1000);
       }
     },
     [player, projectedTime]
@@ -129,7 +88,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
       setPlayerMuted(true);
       player.setMuted(true);
     }
-  }, [player]);
+  }, [player, signalUserActivity]);
 
   // Use this function to play a paused video, or pause a playing video. Intended to activate on clicking the video, or pressing spacebar
   const playOrPauseVideo = React.useCallback(() => {
@@ -144,33 +103,14 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
         player.pause();
       }
     }
-  }, [player]);
+  }, [player, setUserActive]);
 
-  // Call this function to switch the iframe/wrapper in and out of fullscreen mode. Esc key press will work as intended without explicitly adding this functionality
-  const toggleFullscreen = () => {
-    const wrapper: HTMLDivElement | null = document.querySelector("#wrapper");
-
-    // These are async functions, but we are not particularly interested in error handling. This is mainyl to avoid linting errors
-    if (!document.fullscreenElement && wrapper) {
-      wrapper.requestFullscreen().catch((err) => console.error(err));
-    } else {
-      document.exitFullscreen().catch((err) => console.error(err));
-    }
-
-    // Move focus to the parent wrapper rather than remaining on the toggleFullscreen btn. This is the extected UX interaction
-    if (wrapper) {
-      wrapper.focus();
-    }
-  };
-
-  // Use this to toggle between theater mode. Can be attached to a button or keypress as needed
-  const toggleTheater = () => {
+  const toggleTheaterMode = () => {
     setTheaterMode((prevState) => !prevState);
 
-    // Move focus to the parent wrapper rather than remaining on the toggleFullscreen btn. This is the extected UX interaction
-    const wrapper: HTMLDivElement | null = document.querySelector("#wrapper");
-    if (wrapper) {
-      wrapper.focus();
+    // Move focus to the parent wrapper rather than remaining on the theater btn. This is the extected UX interaction
+    if (wrapperRef.current) {
+      wrapperRef.current.focus();
     }
   };
 
@@ -205,10 +145,10 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
           signalUserActivity();
           break;
         case "f":
-          toggleFullscreen();
+          toggleFullscreen(wrapperRef.current);
           break;
         case "t":
-          toggleTheater();
+          toggleTheaterMode();
           break;
         case "Down": // IE/Edge specific value
         case "ArrowDown":
@@ -220,11 +160,11 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
           break;
         case "Left": // IE/Edge specific value
         case "ArrowLeft":
-          scheduleSkipBackward(10);
+          scheduleSeek(-10);
           break;
         case "Right": // IE/Edge specific value
         case "ArrowRight":
-          scheduleSkipForward(10);
+          scheduleSeek(10);
           break;
         default:
           return; // Quit when this doesn't handle the key event.
@@ -235,32 +175,22 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [
-    playOrPauseVideo,
-    player,
-    toggleMute,
-    scheduleSkipForward,
-    scheduleSkipBackward,
-  ]);
+  }, [playOrPauseVideo, player, toggleMute, signalUserActivity, scheduleSeek]);
 
   return (
     <div>
-      <div
-        id="wrapper"
-        className={`${styles.wrapper} ${
-          theaterMode ? styles.wrapperTheater : styles.wrapperNormal
-        } ${player ? "" : styles.wrapperInitial}`}
-        data-testid="wrapper"
-        onMouseLeave={() => setUserActive(false)}
-        tabIndex={0}
+      <VideoContainer
+        setUserActive={setUserActive}
+        theaterMode={theaterMode}
+        wrapperRef={wrapperRef}
       >
-        <div id="player"></div>
+        <div id="player" ref={playerDivRef}></div>
         <div
           className={`${styles.overlay} ${
-            userActive || playerState === 2 ? "" : styles.overlayInactive
+            userActive || playerPaused ? "" : styles.overlayInactive
           } ${disableControls ? styles.overlayDisabled : ""}`}
           onClick={playOrPauseVideo}
-          onDoubleClick={toggleFullscreen}
+          onDoubleClick={() => toggleFullscreen(wrapperRef.current)}
           onMouseMove={throttleMousemove}
           data-testid="overlay"
         ></div>
@@ -268,21 +198,21 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
         {player && (
           <div
             className={`${styles.controls} ${
-              userActive || playerState === 2 ? "" : styles.controlsHide
+              userActive || playerPaused ? "" : styles.controlsHide
             } ${disableControls ? styles.controlsDisabled : ""}`}
             onMouseMove={throttleMousemove}
             data-testid="customControls"
           >
             <TwitchPlayerControls
               player={player}
-              playerState={playerState}
-              toggleFullscreen={toggleFullscreen}
-              toggleTheater={toggleTheater}
+              playerPaused={playerPaused}
+              toggleFullscreen={() => toggleFullscreen(wrapperRef.current)}
+              toggleTheaterMode={toggleTheaterMode}
               togglePlay={playOrPauseVideo}
               toggleMute={toggleMute}
               playerMuted={playerMuted}
-              skipForward={scheduleSkipForward}
-              skipBackward={scheduleSkipBackward}
+              skipForward={scheduleSeek}
+              skipBackward={scheduleSeek}
               projectedTime={projectedTime}
             />
           </div>
@@ -290,11 +220,11 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
 
         <div
           className={`${styles.gradient} ${
-            userActive || playerState === 2 ? "" : styles.gradientHide
+            userActive || playerPaused ? "" : styles.gradientHide
           } ${disableControls ? styles.gradientHide : ""}`}
           data-testid="gradient"
         ></div>
-      </div>
+      </VideoContainer>
       <button onClick={() => setDisableControls((prevState) => !prevState)}>
         Toggle custom controls
       </button>
