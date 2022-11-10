@@ -1,30 +1,28 @@
 import * as React from "react";
 import { formatElapsedTime } from "utils/videoDurationConversion";
 
-// This hook is used to capture user activity on videos, which can then direct things like showing/hiding controls.
+// Controls all aspects of video duration and returns a single duration that can be used as UI for video time
+// Player agnostic, but only because both players have a getCurrentTime method. This tightly couples to these APIs, however passing in a 'getCurrentTime' function alone adds a layer of delay and causes jumpy UI durations.
 export const useVideoTime = (
-  player: Twitch.Player,
+  player: Twitch.Player | YT.Player,
   projectedTime: number | null
 ) => {
   const durationInterval = React.useRef<null | NodeJS.Timer>(null);
-
-  // A constantly updated duration state to provide a video duration elapsed to the UI
   const [elapsedDuration, setElapsedDuration] = React.useState("");
 
-  // An initial render effect only to avoid a 1 second delay in showing elapsed time
+  // This runs once only on first render to avoid an initial 1 second delay in showing elapsed time
   React.useEffect(() => {
     const elapsedTime = player.getCurrentTime();
     setElapsedDuration(formatElapsedTime(elapsedTime));
   }, [player]);
 
   React.useEffect(() => {
+    // Must use top level clearInterval to avoid accumulating multiple intervals
     clearInterval(durationInterval.current as NodeJS.Timer);
     if (projectedTime) {
       setElapsedDuration(formatElapsedTime(projectedTime));
     } else {
       durationInterval.current = setInterval(() => {
-        console.log(`Running interval ${durationInterval.current}`);
-
         const elapsedTime = player.getCurrentTime();
         setElapsedDuration(formatElapsedTime(elapsedTime));
       }, 1000);

@@ -17,7 +17,7 @@ import PauseIcon from "icons/PauseIcon";
 import SettingsGearIcon from "icons/SettingsGearIcon";
 import { TwitchPlayerSettingsMenu } from "./TwitchPlayerSettingsMenu";
 import * as React from "react";
-import { useVideoTime } from "features/players/hooks/useVideoTimer";
+import { useVideoTime } from "features/players/hooks/useVideoTime";
 
 interface TwitchPlayerControlsProps {
   player: Twitch.Player;
