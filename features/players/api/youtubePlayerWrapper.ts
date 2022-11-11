@@ -84,7 +84,9 @@ export class YouTubePlayerWrapper implements PlayerWrapper {
         break;
 
       // We are replicating a seek event by listening to a PLAYING event because a switch from BUFFERRING to PLAYING occurs at the end of a seek.
-      case "seek" || "play" || "playing":
+      case "seek":
+      case "play":
+      case "playing":
         this.player.addEventListener(
           "onStateChange",
           (event: YT.OnStateChangeEvent) => {

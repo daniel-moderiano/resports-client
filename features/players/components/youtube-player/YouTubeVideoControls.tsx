@@ -1,5 +1,3 @@
-import { formatElapsedTime } from "utils/videoDurationConversion";
-import { useEffect, useState } from "react";
 import styles from "features/players/components/styles/YouTubeVideoControls.module.css";
 import MutedIcon from "icons/MutedIcon";
 import VolumeIcon from "icons/VolumeIcon";
@@ -15,10 +13,12 @@ import TheaterIcon from "icons/TheaterIcon";
 import PlayIcon from "icons/PlayIcon";
 import PauseIcon from "icons/PauseIcon";
 import * as React from "react";
+import { Player } from "features/players/api/player";
+import { useVideoTime } from "features/players/hooks/useVideoTime";
 
 interface YouTubeVideoControlsProps {
-  player: YT.Player;
-  playerState: number;
+  player: Player;
+  playerPaused: boolean;
   toggleFullscreen: () => void;
   toggleTheater: () => void;
   togglePlay: () => void;
@@ -33,7 +33,7 @@ export const YouTubeVideoControls = ({
   player,
   toggleFullscreen,
   toggleTheater,
-  playerState,
+  playerPaused,
   togglePlay,
   toggleMute,
   skipBackward,
@@ -41,28 +41,7 @@ export const YouTubeVideoControls = ({
   playerMuted,
   projectedTime,
 }: YouTubeVideoControlsProps) => {
-  const durationInterval = React.useRef<null | NodeJS.Timer>(null);
-
-  // A constantly updated duration state to provide a video duration elapsed to the UI
-  const [elapsedDuration, setElapsedDuration] = useState("");
-
-  // An initial render effect only to avoid a 1 second delay in showing elapsed time
-  useEffect(() => {
-    const elapsedTime = player.getCurrentTime();
-    setElapsedDuration(formatElapsedTime(elapsedTime));
-  }, [player]);
-
-  useEffect(() => {
-    if (projectedTime) {
-      clearInterval(durationInterval.current as NodeJS.Timer);
-      setElapsedDuration(formatElapsedTime(projectedTime));
-    } else {
-      durationInterval.current = setInterval(() => {
-        const elapsedTime = player.getCurrentTime();
-        setElapsedDuration(formatElapsedTime(elapsedTime));
-      }, 1000);
-    }
-  }, [player, projectedTime]);
+  const { elapsedDuration } = useVideoTime(player, projectedTime);
 
   // Use this function in any position where the user's focus should return to the video
   const releaseFocus = () => {
@@ -79,19 +58,19 @@ export const YouTubeVideoControls = ({
           className={styles.controlsBtn}
           onClick={togglePlay}
           id="playBtn"
-          aria-label={playerState === 1 ? "Pause video" : "Play video"}
+          aria-label={playerPaused ? "Play video" : "Pause video"}
         >
-          {playerState === 1 ? (
-            <PauseIcon
-              className={styles.icons32}
-              fill="#FFFFFF"
-              testId="pauseIcon"
-            />
-          ) : (
+          {playerPaused ? (
             <PlayIcon
               className={styles.icons32}
               fill="#FFFFFF"
               testId="playIcon"
+            />
+          ) : (
+            <PauseIcon
+              className={styles.icons32}
+              fill="#FFFFFF"
+              testId="pauseIcon"
             />
           )}
         </button>
@@ -122,7 +101,7 @@ export const YouTubeVideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(600);
+            skipBackward(-600);
             releaseFocus();
           }}
           aria-label="Skip backward ten minutes"
@@ -133,7 +112,7 @@ export const YouTubeVideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(300);
+            skipBackward(-300);
             releaseFocus();
           }}
           aria-label="Skip backward five minutes"
@@ -144,7 +123,7 @@ export const YouTubeVideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(60);
+            skipBackward(-60);
             releaseFocus();
           }}
           aria-label="Skip backward one minute"

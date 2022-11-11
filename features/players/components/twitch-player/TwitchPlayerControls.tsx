@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "features/players/components/styles/YouTubeVideoControls.module.css";
 import MutedIcon from "icons/MutedIcon";
 import VolumeIcon from "icons/VolumeIcon";

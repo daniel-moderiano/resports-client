@@ -43,8 +43,6 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
 
       // Ensure projectedTime is reset to null to avoid infinite loop seeking or video freezing at fixed time
       player.addEventListener("seek", () => {
-        console.log("Seek performed");
-
         setProjectedTime(null);
       });
     }

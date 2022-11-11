@@ -3,13 +3,12 @@ import userEvent from "@testing-library/user-event";
 import { YouTubeCustomPlayer } from "features/players";
 
 // Named mocks to test player functions being called
-const muteMock = jest.fn();
-const unMuteMock = jest.fn();
 const playMock = jest.fn();
 const pauseMock = jest.fn();
-const seekToMock = jest.fn();
+const seekMock = jest.fn();
 const setVolumeMock = jest.fn();
-let getPlayerStateMock: () => number;
+const setMutedMock = jest.fn();
+let isPausedMock: () => boolean;
 
 // Provide channel data and other UI states via this mock of the channel search API call
 jest.mock("features/players/api/useYouTubeIframe", () => ({
@@ -17,15 +16,15 @@ jest.mock("features/players/api/useYouTubeIframe", () => ({
   useYouTubeIframe: () => ({
     player: {
       getCurrentTime: () => 100,
-      isMuted: () => false,
-      mute: muteMock,
-      unMute: unMuteMock,
-      playVideo: playMock,
-      pauseVideo: pauseMock,
-      getPlayerState: getPlayerStateMock,
-      seekTo: seekToMock,
+      getMuted: () => false,
+      setMuted: setMutedMock,
+      isPaused: isPausedMock,
+      play: playMock,
+      pause: pauseMock,
+      seek: seekMock,
       setVolume: setVolumeMock,
       getVolume: jest.fn,
+      addEventListener: jest.fn,
     },
   }),
 }));
@@ -74,8 +73,8 @@ describe("YouTube player styling and modes", () => {
     expect(customControls).toBeInTheDocument();
   });
 
-  it("Shows clear overlay when the video is playing", async () => {
-    getPlayerStateMock = () => 2; // 'pause' the video
+  it("Shows clear inactive overlay when the video is playing", async () => {
+    isPausedMock = () => true; // 'pause' the video
     render(<YouTubeCustomPlayer videoId="1234" />);
     const wrapper = screen.getByTestId("wrapper");
 
@@ -89,25 +88,8 @@ describe("YouTube player styling and modes", () => {
     });
 
     const overlay = screen.getByTestId("overlay");
-    expect(overlay).toHaveClass("overlayPlaying");
-  });
-
-  it("Shows blocking overlay when the video is paused", async () => {
-    getPlayerStateMock = () => 1; // 'play' the video
-    render(<YouTubeCustomPlayer videoId="1234" />);
-    const wrapper = screen.getByTestId("wrapper");
-
-    // First enable custom controls, then focus the wrapper to ensure the keypress is captured correctly
-    wrapper.focus();
-    await userEvent.keyboard("k");
-
-    // Allow time for the timout to expire before pausing video
-    await act(async () => {
-      await new Promise((res) => setTimeout(res, 500));
-    });
-
-    const overlay = screen.getByTestId("overlay");
-    expect(overlay).toHaveClass("overlayPaused");
+    expect(overlay).toHaveClass("overlayInactive");
+    expect(overlay).toHaveClass("overlay");
   });
 });
 
@@ -152,11 +134,11 @@ describe("YouTube player keyboard shortcuts", () => {
     await userEvent.keyboard("m");
 
     // The mock iframe hook sets the initial mute state to 'unmuted', hence the mute mock should be called
-    expect(muteMock).toBeCalled();
+    expect(setMutedMock).toBeCalled();
   });
 
   it('Plays a paused video on "k" key press', async () => {
-    getPlayerStateMock = () => 2; // 'pause' the video
+    isPausedMock = () => true; // 'pause' the video
     render(<YouTubeCustomPlayer videoId="1234" />);
     const wrapper = screen.getByTestId("wrapper");
 
@@ -173,7 +155,7 @@ describe("YouTube player keyboard shortcuts", () => {
   });
 
   it('Pauses a playing video on "k" key press', async () => {
-    getPlayerStateMock = () => 1; // 'play' the video
+    isPausedMock = () => false; // 'play' the video
     render(<YouTubeCustomPlayer videoId="1234" />);
     const wrapper = screen.getByTestId("wrapper");
 
@@ -190,7 +172,7 @@ describe("YouTube player keyboard shortcuts", () => {
   });
 
   it('Plays a paused video on "k" key press', async () => {
-    getPlayerStateMock = () => 2; // 'pause' the video
+    isPausedMock = () => true; // 'pause' the video
     render(<YouTubeCustomPlayer videoId="1234" />);
     const wrapper = screen.getByTestId("wrapper");
 
@@ -207,7 +189,7 @@ describe("YouTube player keyboard shortcuts", () => {
   });
 
   it('Pauses a playing video on "k" key press', async () => {
-    getPlayerStateMock = () => 1; // 'play' the video
+    isPausedMock = () => false; // 'play' the video
     render(<YouTubeCustomPlayer videoId="1234" />);
     const wrapper = screen.getByTestId("wrapper");
 
@@ -248,7 +230,7 @@ describe("YouTube player keyboard shortcuts", () => {
       await new Promise((res) => setTimeout(res, 1000));
     });
 
-    expect(seekToMock).toBeCalled();
+    expect(seekMock).toBeCalled();
   });
 
   it("Seeks backward on left arrow key press", async () => {
@@ -264,6 +246,6 @@ describe("YouTube player keyboard shortcuts", () => {
       await new Promise((res) => setTimeout(res, 1000));
     });
 
-    expect(seekToMock).toBeCalled();
+    expect(seekMock).toBeCalled();
   });
 });
