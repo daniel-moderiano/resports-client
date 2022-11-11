@@ -10,15 +10,15 @@ const playerMock = {
   getQualities: () => [
     {
       name: "Auto",
-      group: "auto",
+      level: "auto",
     },
     {
       name: "1080p60",
-      group: "chunked",
+      level: "chunked",
     },
     {
       name: "720p60",
-      group: "720p60",
+      level: "720p60",
     },
   ],
   setQuality: jest.fn,
@@ -32,7 +32,7 @@ const toggleMuteMock = jest.fn();
 const skipForwardMock = jest.fn();
 const skipBackwardMock = jest.fn();
 let playerMutedMock = true;
-let projectedTime: number | null = null;
+const projectedTime: number | null = null;
 
 // The max test timeout should be increase to deal with waiting for timeout intervals in certain tests
 jest.setTimeout(10000);

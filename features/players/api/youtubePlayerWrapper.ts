@@ -4,8 +4,7 @@ import {
   VideoQualityObject,
 } from "features/players/types/playerInterfaceTypes";
 
-// export class YouTubePlayerWrapper implements PlayerWrapper {
-export class YouTubePlayerWrapper {
+export class YouTubePlayerWrapper implements PlayerWrapper {
   player: YT.Player;
 
   constructor(player: YT.Player) {

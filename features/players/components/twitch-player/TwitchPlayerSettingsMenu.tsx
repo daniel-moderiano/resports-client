@@ -16,8 +16,6 @@ export const TwitchPlayerSettingsMenu = ({
   useMenuCloseEvents("twitchSettingsMenu", closeMenu);
   useKeyboardNavigation("twitchSettingsMenu");
 
-  console.log(player.getQualities());
-
   return (
     <ul
       id="twitchSettingsMenu"
@@ -35,7 +33,10 @@ export const TwitchPlayerSettingsMenu = ({
               closeMenu();
             }}
           >
-            {quality.name}
+            {/* Indicate the source quality option for the user*/}
+            {quality.level === "chunked"
+              ? `${quality.name} (Source)`
+              : `${quality.name}`}
           </button>
         </li>
       ))}
