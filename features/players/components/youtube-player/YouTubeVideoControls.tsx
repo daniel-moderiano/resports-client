@@ -101,7 +101,7 @@ export const YouTubeVideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(600);
+            skipBackward(-600);
             releaseFocus();
           }}
           aria-label="Skip backward ten minutes"
@@ -112,7 +112,7 @@ export const YouTubeVideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(300);
+            skipBackward(-300);
             releaseFocus();
           }}
           aria-label="Skip backward five minutes"
@@ -123,7 +123,7 @@ export const YouTubeVideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(60);
+            skipBackward(-60);
             releaseFocus();
           }}
           aria-label="Skip backward one minute"
