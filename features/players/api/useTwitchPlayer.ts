@@ -11,10 +11,10 @@ export const useTwitchPlayer = (
 
   React.useEffect(() => {
     const tag = document.createElement("script");
+    tag.src = "https://player.twitch.tv/js/embed/v1.js";
 
     // Avoid duplicating script tags in the DOM.
-    if (!window.Twitch) {
-      tag.src = "https://player.twitch.tv/js/embed/v1.js";
+    if (!document.contains(tag)) {
       document.body.appendChild(tag);
     }
 
