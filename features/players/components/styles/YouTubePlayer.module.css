@@ -41,30 +41,6 @@
   opacity: 0;
 }
 
-.overlayPaused {
-  opacity: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(0, 0, 0, 1) 88%
-  );
-  transition: opacity 350ms;
-}
-
-.overlayPlaying {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(0, 0, 0, 1) 88%
-  );
-  opacity: 0;
-  transition: opacity 500ms;
-}
-
-.overlayEnd {
-  background-color: black;
-}
-
 .overlayInactive {
   cursor: none;
 }

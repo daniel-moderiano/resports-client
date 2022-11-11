@@ -187,8 +187,8 @@ export const YouTubePlayer = ({ videoId }: YouTubePlayerProps) => {
         {!showYTControls && (
           <div
             className={`${styles.overlay} ${
-              playerPaused ? styles.overlayPaused : styles.overlayPlaying
-            }  ${userActive || playerPaused ? "" : styles.overlayInactive}`}
+              userActive || playerPaused ? "" : styles.overlayInactive
+            }`}
             onClick={playOrPauseVideo}
             onDoubleClick={() => toggleFullscreen(wrapperRef.current)}
             onMouseMove={throttleMousemove}
