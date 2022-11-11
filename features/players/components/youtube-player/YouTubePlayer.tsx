@@ -31,27 +31,18 @@ export const YouTubePlayer = ({ videoId }: YouTubePlayerProps) => {
   // When this is not null, it implies we are currently performing a seek() call.
   const [projectedTime, setProjectedTime] = React.useState<null | number>(null);
 
-  const onPlayerStateChange = React.useCallback(
-    (event: YT.OnStateChangeEvent) => {
-      if (event.data === 1) {
-        // playing has commenced, e.g. after a successful seek
-        setProjectedTime(null);
-      }
-    },
-    []
-  );
-
   // Adds the YT Iframe to the div#player returned below
-  const { player } = useYouTubeIframe(videoId, false, onPlayerStateChange);
+  const { player } = useYouTubeIframe(videoId, false);
 
-  // A critical effect hook that essentially performs the seek functions scheduled by user clicks and key presses. The 500 ms timeout enables the compound seeking to still work when the seek is 'instant' to a pre-buffered section of video
+  // Ensure the local playerState state is set on play/pause events. This ensures other elements modify with each of the changes as needed
   React.useEffect(() => {
-    if (projectedTime && player) {
-      setTimeout(() => {
-        player.seek(projectedTime, true);
-      }, 500);
+    if (player) {
+      // Ensure projectedTime is reset to null to avoid infinite loop seeking or video freezing at fixed time
+      player.addEventListener("seek", () => {
+        setProjectedTime(null);
+      });
     }
-  }, [projectedTime, player]);
+  }, [player]);
 
   const throttleMousemove = throttle(signalUserActivity, 500);
 
