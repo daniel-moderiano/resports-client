@@ -56,7 +56,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
     (timeToSkipInSeconds: number) => {
       if (player) {
         clearTimeout(seekTimer.current as NodeJS.Timeout);
-        let currentTime = player.getCurrentTime();
+        const currentTime = player.getCurrentTime();
         let updatedProjection: number;
         if (projectedTime) {
           updatedProjection = projectedTime + timeToSkipInSeconds;

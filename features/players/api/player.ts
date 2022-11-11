@@ -1,4 +1,8 @@
-import { PlayerEvent, PlayerWrapper } from "../types/playerInterfaceTypes";
+import {
+  PlayerEvent,
+  PlayerWrapper,
+  VideoQuality,
+} from "../types/playerInterfaceTypes";
 
 export class Player implements PlayerWrapper {
   playerWrapper: PlayerWrapper;
@@ -19,8 +23,8 @@ export class Player implements PlayerWrapper {
     this.playerWrapper.seek(timestamp);
   }
 
-  setQuality(quality: Twitch.VideoQuality) {
-    this.playerWrapper.setQuality(quality);
+  setQuality(quality: VideoQuality) {
+    return this.playerWrapper.setQuality(quality);
   }
 
   setVolume(volumeLevel: number) {

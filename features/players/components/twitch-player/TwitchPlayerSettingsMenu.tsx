@@ -29,7 +29,7 @@ export const TwitchPlayerSettingsMenu = ({
           <button
             role="menuitem"
             onClick={() => {
-              player.setQuality(quality.group as Twitch.VideoQuality);
+              // player.setQuality(quality.group);
               closeMenu();
             }}
           >

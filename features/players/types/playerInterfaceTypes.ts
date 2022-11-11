@@ -1,3 +1,17 @@
+export type VideoQuality =
+  | "160p"
+  | "160p30"
+  | "360p"
+  | "360p30"
+  | "480p"
+  | "480p30"
+  | "720p"
+  | "720p60"
+  | "1080p"
+  | "1080p60"
+  | "auto"
+  | "max";
+
 export type PlayerEvent =
   /**
    * Closed captions are found in the video content being played.
@@ -64,14 +78,16 @@ export interface PlayerWrapper {
    * Seeks to a specified time in the video.
    *
    * @param timestamp   Timestamp, in seconds from the beginning of the video.
+   * @param allowSeekAhead — Whether the player is allowed to make a new request for unbuffered data.
    */
-  seek: (timestamp: number) => void;
+  seek: (timestamp: number, allowSeekAhead?: boolean) => void;
 
   /**
    * Sets the quality of the video.
    * @param quality   Video quality (string) from the available values
    */
-  setQuality: (quality: Twitch.VideoQuality) => void;
+  // setQuality: (quality: Twitch.VideoQuality) => void;
+  setQuality: (quality: VideoQuality) => void;
 
   /**
    * Sets the player volume.
@@ -103,7 +119,7 @@ export interface PlayerWrapper {
   /**
    * @returns The available video qualities.
    */
-  getQualities(): Twitch.VideoQualityObject[];
+  getQualities: () => Twitch.VideoQualityObject[];
 
   /**
    * @returns True if the video is paused; otherwise false. Bufferring or seeking is considered playing.
