@@ -15,9 +15,10 @@ import TheaterIcon from "icons/TheaterIcon";
 import PlayIcon from "icons/PlayIcon";
 import PauseIcon from "icons/PauseIcon";
 import * as React from "react";
+import { Player } from "features/players/api/player";
 
 interface YouTubeVideoControlsProps {
-  player: YT.Player;
+  player: Player;
   playerState: number;
   toggleFullscreen: () => void;
   toggleTheater: () => void;

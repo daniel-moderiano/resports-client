@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import * as React from "react";
+import { Player } from "./player";
+import { YouTubePlayerWrapper } from "./youtubePlayerWrapper";
 
 export const useYouTubeIframe = (
   videoId: string,
   enableControls: boolean,
   onPlayerStateChange?: (event: YT.OnStateChangeEvent) => void
 ) => {
-  const [player, setPlayer] = React.useState<YT.Player | undefined>(undefined);
+  const [player, setPlayer] = React.useState<Player | undefined>(undefined);
 
   useEffect(() => {
     const tag = document.createElement("script");
@@ -20,9 +22,6 @@ export const useYouTubeIframe = (
       // ! Adding a reload here causes an infinite loop with
       window.location.reload();
     }
-
-    // This function/property fires only once the API has loaded. This is different to the window.YT object simply becoming 'available'. However, within this function, YT can be called directly, vs calling window.YT
-    window.onYouTubeIframeAPIReady = createPlayer;
 
     function createPlayer() {
       // Create the player (which will add the YT iFrame to the div#player)
@@ -42,16 +41,24 @@ export const useYouTubeIframe = (
           autoplay: 1,
         },
 
-        events: {
-          onReady: () => {
-            // By setting the player here, we can ensure that the player state always returns a fully initialised player that is able to have its methods called.
-            setPlayer(player);
-            // onPlayerReady
-          },
-          onStateChange: onPlayerStateChange,
-        },
+        // events: {
+        //   onReady: () => {
+        //     // By setting the player here, we can ensure that the player state always returns a fully initialised player that is able to have its methods called.
+        //     setPlayer(player);
+        //     // onPlayerReady
+        //   },
+        //   onStateChange: onPlayerStateChange,
+        // },
       });
+
+      const youtubePlayerWrapper = new YouTubePlayerWrapper(player);
+      return new Player(youtubePlayerWrapper);
     }
+
+    // This function/property fires only once the API has loaded. This is different to the window.YT object simply becoming 'available'. However, within this function, YT can be called directly, vs calling window.YT
+    window.onYouTubeIframeAPIReady = () => {
+      setPlayer(createPlayer());
+    };
 
     return () => {
       // ensure script tags are cleaned on dismount

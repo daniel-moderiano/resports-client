@@ -15,8 +15,12 @@ export class Player implements PlayerWrapper {
     this.playerWrapper.pause();
   }
 
-  seek(timestamp: number) {
-    this.playerWrapper.seek(timestamp);
+  seek(timestamp: number, allowSeekAhead?: boolean) {
+    if (allowSeekAhead) {
+      this.playerWrapper.seek(timestamp, allowSeekAhead);
+    } else {
+      this.playerWrapper.seek(timestamp);
+    }
   }
 
   setQuality(quality: string) {

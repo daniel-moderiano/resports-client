@@ -55,7 +55,7 @@ export const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
   React.useEffect(() => {
     if (projectedTime && player) {
       setTimeout(() => {
-        player.seekTo(projectedTime, true);
+        player.seek(projectedTime, true);
       }, 500);
     }
   }, [projectedTime, player]);
@@ -108,26 +108,26 @@ export const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
     if (!player) {
       return;
     }
-    if (player.isMuted()) {
+    if (player.getMuted()) {
       setPlayerMuted(false);
-      player.unMute();
+      player.setMuted(false);
     } else {
       setPlayerMuted(true);
-      player.mute();
+      player.setMuted(true);
     }
   }, [player]);
 
   // Use this function to play a paused video, or pause a playing video. Intended to activate on clicking the video, or pressing spacebar
   const playOrPauseVideo = React.useCallback(() => {
     if (player) {
-      if (player.getPlayerState() === 1) {
+      if (!player.isPaused()) {
         setPlayerState(2);
         setTimeout(() => {
           // Give the gradient time to fade in so you can be sure the YT controls are hidden
-          player.pauseVideo();
+          player.pause();
         }, 350);
       } else {
-        player.playVideo();
+        player.play();
 
         setTimeout(() => {
           // Give the gradient time to fade so you can be sure the YT controls are hidden
