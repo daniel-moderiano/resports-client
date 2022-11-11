@@ -71,7 +71,7 @@ describe("YouTube player styling and modes", () => {
     expect(overlay).not.toBeInTheDocument();
   });
 
-  it("Shows clear overlay when the video is playing (custom mode)", async () => {
+  it("Shows clear, inactive overlay when the video is playing", async () => {
     isPausedMock = () => false; // 'play' the video
     render(<YouTubePlayer videoId="1234" />);
     const hideYTBtn = screen.getByRole("button", { name: /hide YT controls/i });
@@ -88,27 +88,8 @@ describe("YouTube player styling and modes", () => {
     });
 
     const overlay = screen.getByTestId("overlay");
-    expect(overlay).toHaveClass("overlayPlaying");
-  });
-
-  it("Shows blocking overlay when the video is paused", async () => {
-    isPausedMock = () => true; // 'pause' the video
-    render(<YouTubePlayer videoId="1234" />);
-    const hideYTBtn = screen.getByRole("button", { name: /hide YT controls/i });
-    const wrapper = screen.getByTestId("wrapper");
-
-    // First enable custom controls, then focus the wrapper to ensure the keypress is captured correctly
-    await userEvent.click(hideYTBtn);
-    wrapper.focus();
-    await userEvent.keyboard("k");
-
-    // Allow time for the timout to expire before pausing video
-    await act(async () => {
-      await new Promise((res) => setTimeout(res, 500));
-    });
-
-    const overlay = screen.getByTestId("overlay");
-    expect(overlay).toHaveClass("overlayPaused");
+    expect(overlay).toHaveClass("overlayInactive");
+    expect(overlay).toHaveClass("overlay");
   });
 });
 

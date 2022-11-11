@@ -73,7 +73,7 @@ describe("YouTube player styling and modes", () => {
     expect(customControls).toBeInTheDocument();
   });
 
-  it("Shows clear overlay when the video is playing", async () => {
+  it("Shows clear inactive overlay when the video is playing", async () => {
     isPausedMock = () => true; // 'pause' the video
     render(<YouTubeCustomPlayer videoId="1234" />);
     const wrapper = screen.getByTestId("wrapper");
@@ -88,25 +88,8 @@ describe("YouTube player styling and modes", () => {
     });
 
     const overlay = screen.getByTestId("overlay");
-    expect(overlay).toHaveClass("overlayPlaying");
-  });
-
-  it("Shows blocking overlay when the video is paused", async () => {
-    isPausedMock = () => false; // 'play' the video
-    render(<YouTubeCustomPlayer videoId="1234" />);
-    const wrapper = screen.getByTestId("wrapper");
-
-    // First enable custom controls, then focus the wrapper to ensure the keypress is captured correctly
-    wrapper.focus();
-    await userEvent.keyboard("k");
-
-    // Allow time for the timout to expire before pausing video
-    await act(async () => {
-      await new Promise((res) => setTimeout(res, 500));
-    });
-
-    const overlay = screen.getByTestId("overlay");
-    expect(overlay).toHaveClass("overlayPaused");
+    expect(overlay).toHaveClass("overlayInactive");
+    expect(overlay).toHaveClass("overlay");
   });
 });
 
