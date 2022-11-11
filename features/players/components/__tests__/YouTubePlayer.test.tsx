@@ -3,29 +3,28 @@ import userEvent from "@testing-library/user-event";
 import { YouTubePlayer } from "features/players";
 
 // Named mocks to test player functions being called
-const muteMock = jest.fn();
-const unMuteMock = jest.fn();
 const playMock = jest.fn();
 const pauseMock = jest.fn();
-const seekToMock = jest.fn();
+const seekMock = jest.fn();
 const setVolumeMock = jest.fn();
-let getPlayerStateMock: () => number;
+const setMutedMock = jest.fn();
+let isPausedMock: () => boolean;
 
 // Provide channel data and other UI states via this mock of the channel search API call
 jest.mock("features/players/api/useYouTubeIframe", () => ({
   // Make sure a player object is returned here to trigger the functions requiring a truthy player object
   useYouTubeIframe: () => ({
     player: {
-      getCurrentTime: () => 100, // Ensure the skipBackward functions work as intended
-      isMuted: () => false,
-      mute: muteMock,
-      unMute: unMuteMock,
-      playVideo: playMock,
-      pauseVideo: pauseMock,
-      getPlayerState: getPlayerStateMock,
-      seekTo: seekToMock,
+      getCurrentTime: () => 100,
+      getMuted: () => false,
+      setMuted: setMutedMock,
+      isPaused: isPausedMock,
+      play: playMock,
+      pause: pauseMock,
+      seek: seekMock,
       setVolume: setVolumeMock,
       getVolume: jest.fn,
+      addEventListener: jest.fn,
     },
   }),
 }));
@@ -73,7 +72,7 @@ describe("YouTube player styling and modes", () => {
   });
 
   it("Shows clear overlay when the video is playing (custom mode)", async () => {
-    getPlayerStateMock = () => 2; // 'play' the video
+    isPausedMock = () => false; // 'play' the video
     render(<YouTubePlayer videoId="1234" />);
     const hideYTBtn = screen.getByRole("button", { name: /hide YT controls/i });
     const wrapper = screen.getByTestId("wrapper");
@@ -93,7 +92,7 @@ describe("YouTube player styling and modes", () => {
   });
 
   it("Shows blocking overlay when the video is paused", async () => {
-    getPlayerStateMock = () => 1; // 'pause' the video
+    isPausedMock = () => true; // 'pause' the video
     render(<YouTubePlayer videoId="1234" />);
     const hideYTBtn = screen.getByRole("button", { name: /hide YT controls/i });
     const wrapper = screen.getByTestId("wrapper");
@@ -154,7 +153,7 @@ describe("YouTube player control toggles", () => {
     expect(customControls).not.toBeInTheDocument();
   });
 
-  it("Renders custom controls hidden when hiding YT controls", async () => {
+  it("Renders custom controls when hiding YT controls", async () => {
     render(<YouTubePlayer videoId="1234" />);
     const hideYTBtn = screen.getByRole("button", { name: /hide YT controls/i });
 
@@ -162,7 +161,7 @@ describe("YouTube player control toggles", () => {
     await userEvent.click(hideYTBtn);
 
     const customControls = screen.getByTestId("customControls");
-    expect(customControls).toHaveClass("controlsHide");
+    expect(customControls).toHaveClass("controls");
     expect(customControls).toBeInTheDocument();
   });
 
@@ -207,11 +206,11 @@ describe("YouTube player keyboard shortcuts", () => {
     await userEvent.keyboard("m");
 
     // The mock iframe hook sets the initial mute state to 'unmuted', hence the mute mock should be called
-    expect(muteMock).toBeCalled();
+    expect(setMutedMock).toBeCalled();
   });
 
   it('Plays a paused video on "k" key press', async () => {
-    getPlayerStateMock = () => 2; // 'pause' the video
+    isPausedMock = () => true; // 'pause' the video
     render(<YouTubePlayer videoId="1234" />);
     const hideYTBtn = screen.getByRole("button", { name: /hide YT controls/i });
     const wrapper = screen.getByTestId("wrapper");
@@ -230,7 +229,7 @@ describe("YouTube player keyboard shortcuts", () => {
   });
 
   it('Pauses a playing video on "k" key press', async () => {
-    getPlayerStateMock = () => 1; // 'play' the video
+    isPausedMock = () => false; // 'play' the video
     render(<YouTubePlayer videoId="1234" />);
     const hideYTBtn = screen.getByRole("button", { name: /hide YT controls/i });
     const wrapper = screen.getByTestId("wrapper");
@@ -277,7 +276,7 @@ describe("YouTube player keyboard shortcuts", () => {
     await act(async () => {
       await new Promise((res) => setTimeout(res, 1000));
     });
-    expect(seekToMock).toBeCalled();
+    expect(seekMock).toBeCalled();
   });
 
   it("Seeks backward on left arrow key press", async () => {
@@ -295,6 +294,6 @@ describe("YouTube player keyboard shortcuts", () => {
     await act(async () => {
       await new Promise((res) => setTimeout(res, 1000));
     });
-    expect(seekToMock).toBeCalled();
+    expect(seekMock).toBeCalled();
   });
 });

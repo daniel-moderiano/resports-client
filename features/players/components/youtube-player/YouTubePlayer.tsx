@@ -189,13 +189,12 @@ export const YouTubePlayer = ({ videoId }: YouTubePlayerProps) => {
         wrapperRef={wrapperRef}
       >
         <div id="player"></div>
-        {!showYTControls && (
+        {!showYTControls && player && (
           <div
             className={`${styles.overlay} ${
-              playerState === 1 ? styles.overlayPlaying : ""
-            } ${playerState === 2 ? styles.overlayPaused : ""} ${
-              playerState === 0 ? styles.overlayEnd : ""
-            } ${userActive || playerState === 2 ? "" : styles.overlayInactive}`}
+              !player.isPaused() ? styles.overlayPlaying : ""
+            } ${player.isPaused() ? styles.overlayPaused : ""}
+            } ${userActive || player.isPaused() ? "" : styles.overlayInactive}`}
             onClick={playOrPauseVideo}
             onDoubleClick={() => toggleFullscreen(wrapperRef.current)}
             onMouseMove={throttleMousemove}
@@ -206,7 +205,7 @@ export const YouTubePlayer = ({ videoId }: YouTubePlayerProps) => {
         {!showYTControls && player && (
           <div
             className={`${styles.controls} ${
-              userActive || playerState === 2 ? "" : styles.controlsHide
+              userActive || player.isPaused() ? "" : styles.controlsHide
             }`}
             onMouseMove={throttleMousemove}
             data-testid="customControls"
@@ -226,10 +225,10 @@ export const YouTubePlayer = ({ videoId }: YouTubePlayerProps) => {
           </div>
         )}
 
-        {!showYTControls && (
+        {!showYTControls && player && (
           <div
             className={`${styles.gradient} ${
-              userActive || playerState === 2 ? "" : styles.gradientHide
+              userActive || player.isPaused() ? "" : styles.gradientHide
             }`}
             data-testid="gradient"
           ></div>
