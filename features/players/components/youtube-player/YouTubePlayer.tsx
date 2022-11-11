@@ -18,7 +18,7 @@ export const YouTubePlayer = ({ videoId }: YouTubePlayerProps) => {
   const seekTimer = React.useRef<NodeJS.Timeout | null>(null);
 
   // This local state is used to avoid the long delays of an API call to check muted state when toggling icons and UI
-  const [playerMuted, setPlayerMuted] = useState(false);
+  const [playerMuted, setPlayerMuted] = useState(true);
   const { userActive, setUserActive, signalUserActivity } = useUserActivity();
 
   // Initialise playerState in the UNSTARTED state, whose code is -1. This way we can detect an initial change if necessary
