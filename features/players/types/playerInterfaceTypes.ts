@@ -7,6 +7,11 @@ export type VideoQuality =
   | "1080p60"
   | "auto";
 
+export interface VideoQualityObject {
+  name: string;
+  level: string;
+}
+
 export type PlayerEvent =
   /**
    * Closed captions are found in the video content being played.
@@ -113,7 +118,7 @@ export interface PlayerWrapper {
   /**
    * @returns The available video qualities.
    */
-  getQualities: () => string[];
+  getQualities: () => VideoQualityObject[];
 
   /**
    * @returns True if the video is paused; otherwise false. Bufferring or seeking is considered playing.

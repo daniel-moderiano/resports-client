@@ -2,6 +2,7 @@ import {
   PlayerEvent,
   PlayerWrapper,
   VideoQuality,
+  VideoQualityObject,
 } from "features/players/types/playerInterfaceTypes";
 
 export enum TwitchVideoQualityMap {
@@ -61,13 +62,18 @@ export class TwitchPlayerWrapper implements PlayerWrapper {
     return this.player.getCurrentTime();
   }
 
-  getQualities(): string[] {
-    const avaiableQualities: string[] = [];
+  getQualities(): VideoQualityObject[] {
+    const videoQualities: VideoQualityObject[] = [];
 
     this.player.getQualities().forEach((quality) => {
-      avaiableQualities.push(quality.group);
+      const qualityObject: VideoQualityObject = {
+        name: quality.name,
+        level: quality.group,
+      };
+
+      videoQualities.push(qualityObject);
     });
-    return avaiableQualities;
+    return videoQualities;
   }
 
   isPaused() {

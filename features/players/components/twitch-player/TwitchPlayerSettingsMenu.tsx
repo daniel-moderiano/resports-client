@@ -13,8 +13,8 @@ export const TwitchPlayerSettingsMenu = ({
   player,
 }: TwitchPlayerSettingsMenuProps) => {
   // Handles typical accessibility and UX concerns
-  // useMenuCloseEvents("twitchSettingsMenu", closeMenu);
-  // useKeyboardNavigation("twitchSettingsMenu");
+  useMenuCloseEvents("twitchSettingsMenu", closeMenu);
+  useKeyboardNavigation("twitchSettingsMenu");
 
   console.log(player.getQualities());
 
@@ -27,15 +27,15 @@ export const TwitchPlayerSettingsMenu = ({
       data-testid="twitchSettingsMenu"
     >
       {player.getQualities().map((quality) => (
-        <li role="none" key={quality}>
+        <li role="none" key={quality.name}>
           <button
             role="menuitem"
             onClick={() => {
-              player.setQuality(quality);
+              player.setQuality(quality.level);
               closeMenu();
             }}
           >
-            {quality}
+            {quality.name}
           </button>
         </li>
       ))}
