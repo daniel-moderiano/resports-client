@@ -4,23 +4,8 @@ import {
   VideoQuality,
 } from "features/players/types/playerInterfaceTypes";
 
-enum YouTubeVideoQualityMap {
-  ["160p"] = "small",
-  ["160p30"] = "small",
-  ["360p"] = "medium",
-  ["360p30"] = "medium",
-  ["480p"] = "large",
-  ["480p30"] = "large",
-  ["720p"] = "hd720",
-  ["720p60"] = "hd720",
-  ["1080p"] = "hd1080",
-  ["1080p60"] = "hd1080",
-  ["auto"] = "default",
-  ["max"] = "highres",
-}
-
-// export class YouTubePlayerWrapper implements PlayerWrapper {
 export class YouTubePlayerWrapper {
+  // export class YouTubePlayerWrapper {
   player: YT.Player;
 
   constructor(player: YT.Player) {
@@ -40,8 +25,8 @@ export class YouTubePlayerWrapper {
   }
 
   // ! Deprecated functionality
-  setQuality(quality: VideoQuality) {
-    this.player.setPlaybackQuality(YouTubeVideoQualityMap[quality]);
+  setQuality(quality: string) {
+    this.player.setPlaybackQuality(quality);
   }
 
   setVolume(volumeLevel: number) {
@@ -68,9 +53,9 @@ export class YouTubePlayerWrapper {
     return this.player.getCurrentTime();
   }
 
-  // getQualities() {
-  //   return this.player.getAvailableQualityLevels();
-  // }
+  getQualities() {
+    return this.player.getAvailableQualityLevels();
+  }
 
   isPaused() {
     return this.player.getPlayerState() === 2;

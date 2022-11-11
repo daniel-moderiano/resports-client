@@ -4,19 +4,14 @@ import {
   VideoQuality,
 } from "features/players/types/playerInterfaceTypes";
 
-enum TwitchVideoQualityMap {
-  ["160p"] = "160p",
-  ["160p30"] = "160p30",
+export enum TwitchVideoQualityMap {
   ["360p"] = "360p",
-  ["360p30"] = "360p30",
   ["480p"] = "480p",
-  ["480p30"] = "480p30",
   ["720p"] = "720p",
   ["720p60"] = "720p60",
   ["1080p"] = "1080p",
   ["1080p60"] = "1080p60",
   ["auto"] = "auto",
-  ["max"] = "chunked",
 }
 
 export class TwitchPlayerWrapper implements PlayerWrapper {
@@ -34,12 +29,16 @@ export class TwitchPlayerWrapper implements PlayerWrapper {
     this.player.pause();
   }
 
+  hasQualityAdjustment() {
+    return true;
+  }
+
   seek(timestamp: number) {
     this.player.seek(timestamp);
   }
 
-  setQuality(quality: VideoQuality) {
-    this.player.setQuality(TwitchVideoQualityMap[quality]);
+  setQuality(quality: string) {
+    this.player.setQuality(quality);
   }
 
   setVolume(volumeLevel: number) {
@@ -62,8 +61,13 @@ export class TwitchPlayerWrapper implements PlayerWrapper {
     return this.player.getCurrentTime();
   }
 
-  getQualities(): Twitch.VideoQualityObject[] {
-    return this.player.getQualities();
+  getQualities(): string[] {
+    const avaiableQualities: string[] = [];
+
+    this.player.getQualities().forEach((quality) => {
+      avaiableQualities.push(quality.group);
+    });
+    return avaiableQualities;
   }
 
   isPaused() {

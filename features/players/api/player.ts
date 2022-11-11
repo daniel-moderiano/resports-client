@@ -23,7 +23,7 @@ export class Player implements PlayerWrapper {
     this.playerWrapper.seek(timestamp);
   }
 
-  setQuality(quality: VideoQuality) {
+  setQuality(quality: string) {
     return this.playerWrapper.setQuality(quality);
   }
 

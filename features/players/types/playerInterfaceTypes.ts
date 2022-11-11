@@ -1,16 +1,11 @@
 export type VideoQuality =
-  | "160p"
-  | "160p30"
   | "360p"
-  | "360p30"
   | "480p"
-  | "480p30"
   | "720p"
   | "720p60"
   | "1080p"
   | "1080p60"
-  | "auto"
-  | "max";
+  | "auto";
 
 export type PlayerEvent =
   /**
@@ -86,8 +81,7 @@ export interface PlayerWrapper {
    * Sets the quality of the video.
    * @param quality   Video quality (string) from the available values
    */
-  // setQuality: (quality: Twitch.VideoQuality) => void;
-  setQuality: (quality: VideoQuality) => void;
+  setQuality: (quality: string) => void;
 
   /**
    * Sets the player volume.
@@ -119,7 +113,7 @@ export interface PlayerWrapper {
   /**
    * @returns The available video qualities.
    */
-  getQualities: () => Twitch.VideoQualityObject[];
+  getQualities: () => string[];
 
   /**
    * @returns True if the video is paused; otherwise false. Bufferring or seeking is considered playing.

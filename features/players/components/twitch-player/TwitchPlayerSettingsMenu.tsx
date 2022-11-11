@@ -13,8 +13,10 @@ export const TwitchPlayerSettingsMenu = ({
   player,
 }: TwitchPlayerSettingsMenuProps) => {
   // Handles typical accessibility and UX concerns
-  useMenuCloseEvents("twitchSettingsMenu", closeMenu);
-  useKeyboardNavigation("twitchSettingsMenu");
+  // useMenuCloseEvents("twitchSettingsMenu", closeMenu);
+  // useKeyboardNavigation("twitchSettingsMenu");
+
+  console.log(player.getQualities());
 
   return (
     <ul
@@ -25,18 +27,15 @@ export const TwitchPlayerSettingsMenu = ({
       data-testid="twitchSettingsMenu"
     >
       {player.getQualities().map((quality) => (
-        <li role="none" key={quality.name}>
+        <li role="none" key={quality}>
           <button
             role="menuitem"
             onClick={() => {
-              // player.setQuality(quality.group);
+              player.setQuality(quality);
               closeMenu();
             }}
           >
-            {/* Indicate the source quality option for the user*/}
-            {quality.group === "chunked"
-              ? `${quality.name} (Source)`
-              : `${quality.name}`}
+            {quality}
           </button>
         </li>
       ))}
