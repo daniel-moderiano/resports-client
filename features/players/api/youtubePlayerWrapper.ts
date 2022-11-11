@@ -71,7 +71,45 @@ export class YouTubePlayerWrapper {
     return this.player.getPlayerState() === 2;
   }
 
-  // addEventListener(event: PlayerEvent, callback: () => void) {
-  //   this.player.addEventListener(event, callback);
-  // }
+  addEventListener(event: PlayerEvent, callback: () => void) {
+    switch (event) {
+      case "pause":
+        this.player.addEventListener(
+          "onStateChange",
+          (event: YT.OnStateChangeEvent) => {
+            if (event.data === 2) {
+              callback();
+            }
+          }
+        );
+        break;
+
+      // We are replicating a seek event by listening to a PLAYING event because a switch from BUFFERRING to PLAYING occurs at the end of a seek.
+      case "seek" || "play" || "playing":
+        this.player.addEventListener(
+          "onStateChange",
+          (event: YT.OnStateChangeEvent) => {
+            if (event.data === 1) {
+              callback();
+            }
+          }
+        );
+        break;
+
+      case "ended":
+        this.player.addEventListener(
+          "onStateChange",
+          (event: YT.OnStateChangeEvent) => {
+            if (event.data === 0) {
+              callback();
+            }
+          }
+        );
+        break;
+
+      case "ready":
+        this.player.addEventListener("onReady", callback);
+        break;
+    }
+  }
 }

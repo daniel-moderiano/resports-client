@@ -5,14 +5,10 @@ export interface VideoQualityObject {
 
 export type PlayerEvent =
   /**
-   * Closed captions are found in the video content being played.
-   */
-  | "captions"
-
-  /**
    * Video or stream ends.
    */
   | "ended"
+
   /**
    * Player is paused. Buffering and seeking is not considered paused.
    */
@@ -24,24 +20,9 @@ export type PlayerEvent =
   | "play"
 
   /**
-   * Player playback was blocked. Usually fired after an unmuted autoplay or unmuted programmatic call on play().
-   */
-  | "playback_blocked"
-
-  /**
    * 	Player started video playback.
    */
   | "playing"
-
-  /**
-   * Loaded channel goes offline.
-   */
-  | "offline"
-
-  /**
-   * Loaded channel goes online.
-   */
-  | "online"
 
   /**
    * Player is ready to accept function calls.
