@@ -56,7 +56,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
     (timeToSkipInSeconds: number) => {
       if (player) {
         clearTimeout(seekTimer.current as NodeJS.Timeout);
-        let currentTime = player.getCurrentTime();
+        const currentTime = player.getCurrentTime();
         let updatedProjection: number;
         if (projectedTime) {
           updatedProjection = projectedTime + timeToSkipInSeconds;
@@ -69,7 +69,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
         seekTimer.current = setTimeout(() => {
           // Use the temp updatedProjection variable to ensure an accurate seek is performed rather than hoping setProjectedTime always resolves before this timeout assignment.
           player.seek(updatedProjection);
-        }, 1000);
+        }, 500);
       }
     },
     [player, projectedTime]

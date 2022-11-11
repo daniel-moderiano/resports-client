@@ -16,9 +16,10 @@ import PauseIcon from "icons/PauseIcon";
 import SettingsGearIcon from "icons/SettingsGearIcon";
 import { TwitchPlayerSettingsMenu } from "./TwitchPlayerSettingsMenu";
 import { useVideoTime } from "features/players/hooks/useVideoTime";
+import { PlayerWrapper } from "features/players/types/playerInterfaceTypes";
 
 interface TwitchPlayerControlsProps {
-  player: Twitch.Player;
+  player: PlayerWrapper;
   playerPaused: boolean;
   toggleFullscreen: () => void;
   toggleTheaterMode: () => void;
