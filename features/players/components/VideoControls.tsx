@@ -194,7 +194,7 @@ export const VideoControls = ({
         </button>
 
         {showSettingsMenu && (
-          <div>
+          <div data-testid="settingsMenu">
             <div>General Settings</div>
             {hasQualitySettings && <div>Quality Settings</div>}
           </div>
