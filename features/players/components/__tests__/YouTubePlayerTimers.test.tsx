@@ -9,7 +9,6 @@ const pauseMock = jest.fn();
 const seekMock = jest.fn();
 const setVolumeMock = jest.fn();
 const setMutedMock = jest.fn();
-let isPausedMock: () => boolean;
 
 // Provide channel data and other UI states via this mock of the channel search API call
 jest.mock("features/players/api/useYouTubeIframe", () => ({
@@ -19,7 +18,7 @@ jest.mock("features/players/api/useYouTubeIframe", () => ({
       getCurrentTime: () => 100,
       getMuted: () => false,
       setMuted: setMutedMock,
-      isPaused: isPausedMock,
+      isPaused: jest.fn,
       play: playMock,
       pause: pauseMock,
       seek: seekMock,
