@@ -16,13 +16,10 @@ export const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
   const [theaterMode, setTheaterMode] = useState(false);
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
   const seekTimer = React.useRef<NodeJS.Timeout | null>(null);
-
+  const { userActive, setUserActive, signalUserActivity } = useUserActivity();
   // This local state is used to avoid the long delays of an API call to check muted state when toggling icons and UI
   const [playerMuted, setPlayerMuted] = useState(true);
-  const { userActive, setUserActive, signalUserActivity } = useUserActivity();
-
-  // Initialise playerState in the UNSTARTED state, whose code is -1. This way we can detect an initial change if necessary
-  const [playerState, setPlayerState] = useState(-1);
+  const [playerPaused, setPlayerPaused] = React.useState(false);
 
   // The currently projected time (in seconds) that the player should be at once the currently queued seek completes.
   // When this is not null, it implies we are currently performing a seek() call.
@@ -34,6 +31,16 @@ export const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
   // Ensure the local playerState state is set on play/pause events. This ensures other elements modify with each of the changes as needed
   React.useEffect(() => {
     if (player) {
+      player.addEventListener("play", () => {
+        console.log("play event");
+
+        setPlayerPaused(false);
+      });
+
+      player.addEventListener("pause", () => {
+        setPlayerPaused(true);
+      });
+
       // Ensure projectedTime is reset to null to avoid infinite loop seeking or video freezing at fixed time
       player.addEventListener("seek", () => {
         setProjectedTime(null);
@@ -81,27 +88,16 @@ export const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
     }
   }, [player, signalUserActivity]);
 
-  // Use this function to play a paused video, or pause a playing video. Intended to activate on clicking the video, or pressing spacebar
   const playOrPauseVideo = React.useCallback(() => {
     if (player) {
-      if (!player.isPaused()) {
-        setPlayerState(2);
-        setTimeout(() => {
-          // Give the gradient time to fade in so you can be sure the YT controls are hidden
-          player.pause();
-        }, 350);
-      } else {
+      if (player.isPaused()) {
         player.play();
-
-        setTimeout(() => {
-          // Give the gradient time to fade so you can be sure the YT controls are hidden
-          setPlayerState(1);
-        }, 100);
-
         // A longer timeout is used here because it can be quite anti-user experience to have controls and cursor fade almost immediately after pressing play.
         setTimeout(() => {
           setUserActive(false); // ensure video controls fade
         }, 1000);
+      } else {
+        player.pause();
       }
     }
   }, [player, setUserActive]);
@@ -189,10 +185,8 @@ export const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
 
         <div
           className={`${styles.overlay} ${
-            playerState === 1 ? styles.overlayPlaying : ""
-          } ${playerState === 2 ? styles.overlayPaused : ""} ${
-            playerState === 0 ? styles.overlayEnd : ""
-          } ${userActive || playerState === 2 ? "" : styles.overlayInactive}`}
+            playerPaused ? styles.overlayPaused : styles.overlayPlaying
+          }  ${userActive || playerPaused ? "" : styles.overlayInactive}`}
           onClick={playOrPauseVideo}
           onDoubleClick={() => toggleFullscreen(wrapperRef.current)}
           onMouseMove={throttleMousemove}
@@ -202,14 +196,14 @@ export const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
         {player && (
           <div
             className={`${styles.controls} ${
-              userActive || playerState === 2 ? "" : styles.controlsHide
+              userActive || playerPaused ? "" : styles.controlsHide
             }`}
             onMouseMove={throttleMousemove}
             data-testid="customControls"
           >
             <YouTubeVideoControls
               player={player}
-              playerState={playerState}
+              playerPaused={playerPaused}
               toggleFullscreen={() => toggleFullscreen(wrapperRef.current)}
               toggleTheater={toggleTheaterMode}
               togglePlay={playOrPauseVideo}
@@ -224,7 +218,7 @@ export const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
 
         <div
           className={`${styles.gradient} ${
-            userActive || playerState === 2 ? "" : styles.gradientHide
+            userActive || playerPaused ? "" : styles.gradientHide
           }`}
           data-testid="gradient"
         ></div>

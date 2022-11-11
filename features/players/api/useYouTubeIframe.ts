@@ -45,6 +45,9 @@ export const useYouTubeIframe = (videoId: string, enableControls: boolean) => {
             // By setting the player here, we can ensure that the player state always returns a fully initialised player that is able to have its methods called.
             handlePlayerReady(player);
           },
+          onStateChange: (event: YT.OnStateChangeEvent) => {
+            console.log(event.data);
+          },
         },
       });
     }

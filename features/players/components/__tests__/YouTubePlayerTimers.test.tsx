@@ -3,16 +3,28 @@ import userEvent from "@testing-library/user-event";
 import { YouTubePlayer } from "features/players";
 import { act } from "react-dom/test-utils";
 
+// Named mocks to test player functions being called
+const playMock = jest.fn();
+const pauseMock = jest.fn();
+const seekMock = jest.fn();
+const setVolumeMock = jest.fn();
+const setMutedMock = jest.fn();
+let isPausedMock: () => boolean;
+
 // Provide channel data and other UI states via this mock of the channel search API call
 jest.mock("features/players/api/useYouTubeIframe", () => ({
   // Make sure a player object is returned here to trigger the functions requiring a truthy player object
   useYouTubeIframe: () => ({
     player: {
-      getCurrentTime: () => 0,
-      isMuted: jest.fn,
-      mute: jest.fn,
-      unMute: jest.fn,
-      getPlayerState: jest.fn,
+      getCurrentTime: () => 100,
+      getMuted: () => false,
+      setMuted: setMutedMock,
+      isPaused: isPausedMock,
+      play: playMock,
+      pause: pauseMock,
+      seek: seekMock,
+      setVolume: setVolumeMock,
+      getVolume: jest.fn,
       addEventListener: jest.fn,
     },
   }),

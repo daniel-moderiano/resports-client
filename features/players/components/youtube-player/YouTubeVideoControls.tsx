@@ -18,7 +18,7 @@ import { useVideoTime } from "features/players/hooks/useVideoTime";
 
 interface YouTubeVideoControlsProps {
   player: Player;
-  playerState: number;
+  playerPaused: boolean;
   toggleFullscreen: () => void;
   toggleTheater: () => void;
   togglePlay: () => void;
@@ -33,7 +33,7 @@ export const YouTubeVideoControls = ({
   player,
   toggleFullscreen,
   toggleTheater,
-  playerState,
+  playerPaused,
   togglePlay,
   toggleMute,
   skipBackward,
@@ -58,19 +58,19 @@ export const YouTubeVideoControls = ({
           className={styles.controlsBtn}
           onClick={togglePlay}
           id="playBtn"
-          aria-label={playerState === 1 ? "Pause video" : "Play video"}
+          aria-label={playerPaused ? "Play video" : "Pause video"}
         >
-          {playerState === 1 ? (
-            <PauseIcon
-              className={styles.icons32}
-              fill="#FFFFFF"
-              testId="pauseIcon"
-            />
-          ) : (
+          {playerPaused ? (
             <PlayIcon
               className={styles.icons32}
               fill="#FFFFFF"
               testId="playIcon"
+            />
+          ) : (
+            <PauseIcon
+              className={styles.icons32}
+              fill="#FFFFFF"
+              testId="pauseIcon"
             />
           )}
         </button>
