@@ -1,8 +1,4 @@
-import {
-  PlayerEvent,
-  PlayerWrapper,
-  VideoQuality,
-} from "../types/playerInterfaceTypes";
+import { PlayerEvent, PlayerWrapper } from "../types/playerInterfaceTypes";
 
 export class Player implements PlayerWrapper {
   playerWrapper: PlayerWrapper;

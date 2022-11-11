@@ -1,12 +1,3 @@
-export type VideoQuality =
-  | "360p"
-  | "480p"
-  | "720p"
-  | "720p60"
-  | "1080p"
-  | "1080p60"
-  | "auto";
-
 export interface VideoQualityObject {
   name: string;
   level: string;

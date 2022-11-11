@@ -1,19 +1,8 @@
 import {
   PlayerEvent,
   PlayerWrapper,
-  VideoQuality,
   VideoQualityObject,
 } from "features/players/types/playerInterfaceTypes";
-
-export enum TwitchVideoQualityMap {
-  ["360p"] = "360p",
-  ["480p"] = "480p",
-  ["720p"] = "720p",
-  ["720p60"] = "720p60",
-  ["1080p"] = "1080p",
-  ["1080p60"] = "1080p60",
-  ["auto"] = "auto",
-}
 
 export class TwitchPlayerWrapper implements PlayerWrapper {
   player: Twitch.Player;

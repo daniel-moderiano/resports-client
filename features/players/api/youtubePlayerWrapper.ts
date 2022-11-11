@@ -1,11 +1,11 @@
 import {
   PlayerEvent,
   PlayerWrapper,
-  VideoQuality,
+  VideoQualityObject,
 } from "features/players/types/playerInterfaceTypes";
 
+// export class YouTubePlayerWrapper implements PlayerWrapper {
 export class YouTubePlayerWrapper {
-  // export class YouTubePlayerWrapper {
   player: YT.Player;
 
   constructor(player: YT.Player) {
@@ -54,7 +54,17 @@ export class YouTubePlayerWrapper {
   }
 
   getQualities() {
-    return this.player.getAvailableQualityLevels();
+    const videoQualities: VideoQualityObject[] = [];
+
+    this.player.getAvailableQualityLevels().forEach((quality) => {
+      const qualityObject: VideoQualityObject = {
+        name: quality,
+        level: quality,
+      };
+
+      videoQualities.push(qualityObject);
+    });
+    return videoQualities;
   }
 
   isPaused() {
