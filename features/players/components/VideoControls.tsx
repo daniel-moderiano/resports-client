@@ -24,11 +24,9 @@ interface VideoControlsProps {
   toggleTheaterMode: () => void;
   togglePlay: () => void;
   toggleMute: () => void;
-  skipForward: (timeToSkipInSeconds: number) => void;
-  skipBackward: (timeToSkipInSeconds: number) => void;
+  seek: (timeToSkipInSeconds: number) => void;
   playerMuted: boolean;
   projectedTime: number | null;
-  hasQualitySettings: boolean;
 }
 
 export const VideoControls = ({
@@ -38,8 +36,7 @@ export const VideoControls = ({
   playerPaused,
   togglePlay,
   toggleMute,
-  skipBackward,
-  skipForward,
+  seek,
   playerMuted,
   projectedTime,
 }: VideoControlsProps) => {
@@ -105,7 +102,7 @@ export const VideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(-600);
+            seek(-600);
             releaseFocus();
           }}
           aria-label="Skip backward ten minutes"
@@ -116,7 +113,7 @@ export const VideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(-300);
+            seek(-300);
             releaseFocus();
           }}
           aria-label="Skip backward five minutes"
@@ -127,7 +124,7 @@ export const VideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(-60);
+            seek(-60);
             releaseFocus();
           }}
           aria-label="Skip backward one minute"
@@ -150,7 +147,7 @@ export const VideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipForward(60);
+            seek(60);
             releaseFocus();
           }}
           aria-label="Skip forward one minute"
@@ -161,7 +158,7 @@ export const VideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipForward(300);
+            seek(300);
             releaseFocus();
           }}
           aria-label="Skip forward five minutes"
@@ -172,7 +169,7 @@ export const VideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipForward(600);
+            seek(600);
             releaseFocus();
           }}
           aria-label="Skip forward ten minutes"

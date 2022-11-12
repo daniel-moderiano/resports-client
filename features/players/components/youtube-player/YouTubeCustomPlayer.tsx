@@ -7,6 +7,7 @@ import VideoContainer from "../VideoContainer";
 import { toggleFullscreen } from "features/players/utils/toggleFullscreen";
 import { throttle } from "utils/throttle";
 import { useUserActivity } from "features/players/hooks/useUserActivity";
+import { VideoControls } from "../VideoControls";
 
 interface YouTubeCustomPlayerProps {
   videoId: string;
@@ -201,16 +202,15 @@ export const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
             onMouseMove={throttleMousemove}
             data-testid="customControls"
           >
-            <YouTubeVideoControls
+            <VideoControls
               player={player}
               playerPaused={playerPaused}
               toggleFullscreen={() => toggleFullscreen(wrapperRef.current)}
-              toggleTheater={toggleTheaterMode}
+              toggleTheaterMode={toggleTheaterMode}
               togglePlay={playOrPauseVideo}
               toggleMute={toggleMute}
               playerMuted={playerMuted}
-              skipForward={scheduleSeek}
-              skipBackward={scheduleSeek}
+              seek={scheduleSeek}
               projectedTime={projectedTime}
             />
           </div>
