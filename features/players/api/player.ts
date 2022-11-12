@@ -15,6 +15,10 @@ export class Player implements PlayerWrapper {
     this.playerWrapper.pause();
   }
 
+  hasQualitySettings() {
+    return this.playerWrapper.hasQualitySettings();
+  }
+
   seek(timestamp: number, allowSeekAhead?: boolean) {
     if (allowSeekAhead) {
       this.playerWrapper.seek(timestamp, allowSeekAhead);

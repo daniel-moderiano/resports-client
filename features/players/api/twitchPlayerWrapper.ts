@@ -19,7 +19,7 @@ export class TwitchPlayerWrapper implements PlayerWrapper {
     this.player.pause();
   }
 
-  hasQualityAdjustment() {
+  hasQualitySettings() {
     return true;
   }
 

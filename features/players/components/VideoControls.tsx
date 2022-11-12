@@ -42,7 +42,6 @@ export const VideoControls = ({
   skipForward,
   playerMuted,
   projectedTime,
-  hasQualitySettings,
 }: VideoControlsProps) => {
   // Controls display of video quality settings menu
   const [showSettingsMenu, setShowSettingsMenu] = useState(false);
@@ -188,7 +187,7 @@ export const VideoControls = ({
           aria-haspopup="menu"
           aria-label="Open video settings menu"
           onClick={() => setShowSettingsMenu((prevState) => !prevState)}
-          data-id="twitchSettingsMenu"
+          data-id="settingsMenu"
         >
           <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
         </button>
@@ -196,7 +195,7 @@ export const VideoControls = ({
         {showSettingsMenu && (
           <div data-testid="settingsMenu">
             <div>General Settings</div>
-            {hasQualitySettings && <div>Quality Settings</div>}
+            {player.hasQualitySettings() && <div>Quality Settings</div>}
           </div>
         )}
 
