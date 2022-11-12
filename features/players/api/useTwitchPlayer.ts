@@ -1,5 +1,4 @@
 import * as React from "react";
-import { PlayerWrapper } from "../types/playerInterfaceTypes";
 import { Player } from "./player";
 import { TwitchPlayerWrapper } from "./twitchPlayerWrapper";
 

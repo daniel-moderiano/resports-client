@@ -8,9 +8,8 @@ import { VideoControls } from "features/players";
 import { Player } from "../api/player";
 
 interface VideoPlayerProps {
-  player: Player;
-  playerDivRef: React.MutableRefObject<HTMLDivElement | null>;
-
+  player: Player | null;
+  playerDivRef?: React.MutableRefObject<HTMLDivElement | null>;
   disableControls: boolean;
 }
 

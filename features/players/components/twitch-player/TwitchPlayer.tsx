@@ -15,13 +15,11 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
 
   return (
     <div>
-      {player && (
-        <VideoPlayer
-          player={player}
-          playerDivRef={playerDivRef}
-          disableControls={disableControls}
-        />
-      )}
+      <VideoPlayer
+        player={player}
+        playerDivRef={playerDivRef}
+        disableControls={disableControls}
+      />
       <button onClick={() => setDisableControls((prevState) => !prevState)}>
         Toggle custom controls
       </button>
