@@ -16,6 +16,7 @@ import PauseIcon from "icons/PauseIcon";
 import SettingsGearIcon from "icons/SettingsGearIcon";
 import { useVideoTime } from "features/players/hooks/useVideoTime";
 import { Player } from "../api/player";
+import { VideoSettings } from "./VideoSettings";
 
 interface VideoControlsProps {
   player: Player;
@@ -41,7 +42,7 @@ export const VideoControls = ({
   projectedTime,
 }: VideoControlsProps) => {
   // Controls display of video quality settings menu
-  const [showSettingsMenu, setShowSettingsMenu] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const { elapsedDuration } = useVideoTime(player, projectedTime);
 
   // Use this function in any position where the user's focus should return to the video
@@ -183,17 +184,17 @@ export const VideoControls = ({
           className={styles.controlsBtn}
           aria-haspopup="menu"
           aria-label="Open video settings menu"
-          onClick={() => setShowSettingsMenu((prevState) => !prevState)}
+          onClick={() => setShowSettings((prevState) => !prevState)}
           data-id="settingsMenu"
         >
           <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
         </button>
 
-        {showSettingsMenu && (
-          <div data-testid="settingsMenu">
-            <div>General Settings</div>
-            {player.hasQualitySettings() && <div>Quality Settings</div>}
-          </div>
+        {player.hasQualitySettings() && showSettings && (
+          <VideoSettings
+            player={player}
+            closeMenu={() => setShowSettings(false)}
+          />
         )}
 
         <button
