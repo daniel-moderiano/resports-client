@@ -1,12 +1,12 @@
 import { useYouTubeIframe } from "features/players/api/useYouTubeIframe";
 import { useState } from "react";
 import styles from "features/players/components/styles/YouTubePlayer.module.css";
-import { YouTubeVideoControls } from "./YouTubeVideoControls";
 import * as React from "react";
 import { throttle } from "utils/throttle";
 import { useUserActivity } from "features/players/hooks/useUserActivity";
 import VideoContainer from "../VideoContainer";
 import { toggleFullscreen } from "features/players/utils/toggleFullscreen";
+import { VideoControls } from "features/players";
 
 interface YouTubePlayerProps {
   videoId: string;
@@ -204,16 +204,15 @@ export const YouTubePlayer = ({ videoId }: YouTubePlayerProps) => {
             onMouseMove={throttleMousemove}
             data-testid="customControls"
           >
-            <YouTubeVideoControls
+            <VideoControls
               player={player}
               playerPaused={playerPaused}
               toggleFullscreen={() => toggleFullscreen(wrapperRef.current)}
-              toggleTheater={toggleTheaterMode}
+              toggleTheaterMode={toggleTheaterMode}
               togglePlay={playOrPauseVideo}
               toggleMute={toggleMute}
               playerMuted={playerMuted}
-              skipForward={scheduleSeek}
-              skipBackward={scheduleSeek}
+              seek={scheduleSeek}
               projectedTime={projectedTime}
             />
           </div>
