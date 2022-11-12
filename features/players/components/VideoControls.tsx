@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styles from "features/players/components/styles/YouTubeVideoControls.module.css";
 import MutedIcon from "icons/MutedIcon";
 import VolumeIcon from "icons/VolumeIcon";
@@ -12,35 +13,36 @@ import EnterFullscreenIcon from "icons/EnterFullscreenIcon";
 import TheaterIcon from "icons/TheaterIcon";
 import PlayIcon from "icons/PlayIcon";
 import PauseIcon from "icons/PauseIcon";
-import * as React from "react";
-import { Player } from "features/players/api/player";
+import SettingsGearIcon from "icons/SettingsGearIcon";
 import { useVideoTime } from "features/players/hooks/useVideoTime";
+import { Player } from "../api/player";
+import { VideoSettings } from "./VideoSettings";
 
-interface YouTubeVideoControlsProps {
+interface VideoControlsProps {
   player: Player;
   playerPaused: boolean;
   toggleFullscreen: () => void;
-  toggleTheater: () => void;
+  toggleTheaterMode: () => void;
   togglePlay: () => void;
   toggleMute: () => void;
-  skipForward: (timeToSkipInSeconds: number) => void;
-  skipBackward: (timeToSkipInSeconds: number) => void;
+  seek: (timeToSkipInSeconds: number) => void;
   playerMuted: boolean;
   projectedTime: number | null;
 }
 
-export const YouTubeVideoControls = ({
+export const VideoControls = ({
   player,
   toggleFullscreen,
-  toggleTheater,
+  toggleTheaterMode,
   playerPaused,
   togglePlay,
   toggleMute,
-  skipBackward,
-  skipForward,
+  seek,
   playerMuted,
   projectedTime,
-}: YouTubeVideoControlsProps) => {
+}: VideoControlsProps) => {
+  // Controls display of video quality settings menu
+  const [showSettings, setShowSettings] = useState(false);
   const { elapsedDuration } = useVideoTime(player, projectedTime);
 
   // Use this function in any position where the user's focus should return to the video
@@ -101,7 +103,7 @@ export const YouTubeVideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(-600);
+            seek(-600);
             releaseFocus();
           }}
           aria-label="Skip backward ten minutes"
@@ -112,7 +114,7 @@ export const YouTubeVideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(-300);
+            seek(-300);
             releaseFocus();
           }}
           aria-label="Skip backward five minutes"
@@ -123,7 +125,7 @@ export const YouTubeVideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipBackward(-60);
+            seek(-60);
             releaseFocus();
           }}
           aria-label="Skip backward one minute"
@@ -146,7 +148,7 @@ export const YouTubeVideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipForward(60);
+            seek(60);
             releaseFocus();
           }}
           aria-label="Skip forward one minute"
@@ -157,7 +159,7 @@ export const YouTubeVideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipForward(300);
+            seek(300);
             releaseFocus();
           }}
           aria-label="Skip forward five minutes"
@@ -168,7 +170,7 @@ export const YouTubeVideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={() => {
-            skipForward(600);
+            seek(600);
             releaseFocus();
           }}
           aria-label="Skip forward ten minutes"
@@ -180,7 +182,24 @@ export const YouTubeVideoControls = ({
       <div className={styles.rightControls}>
         <button
           className={styles.controlsBtn}
-          onClick={toggleTheater}
+          aria-haspopup="menu"
+          aria-label="Open video settings menu"
+          onClick={() => setShowSettings((prevState) => !prevState)}
+          data-id="settingsMenu"
+        >
+          <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
+        </button>
+
+        {player.hasQualitySettings() && showSettings && (
+          <VideoSettings
+            player={player}
+            closeMenu={() => setShowSettings(false)}
+          />
+        )}
+
+        <button
+          className={styles.controlsBtn}
+          onClick={toggleTheaterMode}
           data-testid="theater"
           aria-label="Switch to theater mode"
         >

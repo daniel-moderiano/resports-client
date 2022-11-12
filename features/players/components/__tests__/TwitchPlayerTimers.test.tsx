@@ -13,6 +13,7 @@ jest.mock("features/players/api/useTwitchPlayer", () => ({
       setMuted: jest.fn,
       isPaused: () => false,
       addEventListener: jest.fn,
+      hasQualitySettings: jest.fn,
     },
   }),
 }));

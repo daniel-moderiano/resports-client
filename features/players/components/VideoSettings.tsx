@@ -1,28 +1,25 @@
-import { PlayerWrapper } from "features/players/types/playerInterfaceTypes";
 import { useKeyboardNavigation } from "hooks/useKeyboardMenuNavigation";
 import { useMenuCloseEvents } from "hooks/useMenuCloseEvents";
+import { Player } from "../api/player";
 
-interface TwitchPlayerSettingsMenuProps {
+interface VideoSettingsProps {
   closeMenu: () => void;
-  player: PlayerWrapper;
+  player: Player;
 }
 
 // Currently this menu only supports quality settings, but may be adapted later to include playback rate and caption settings
-export const TwitchPlayerSettingsMenu = ({
-  closeMenu,
-  player,
-}: TwitchPlayerSettingsMenuProps) => {
+export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
   // Handles typical accessibility and UX concerns
-  useMenuCloseEvents("twitchSettingsMenu", closeMenu);
-  useKeyboardNavigation("twitchSettingsMenu");
+  useMenuCloseEvents("settingsMenu", closeMenu);
+  useKeyboardNavigation("settingsMenu");
 
   return (
     <ul
-      id="twitchSettingsMenu"
-      data-id="twitchSettingsMenu"
+      id="settingsMenu"
+      data-id="settingsMenu"
       role="menu"
       aria-label="Video settings menu"
-      data-testid="twitchSettingsMenu"
+      data-testid="settingsMenu"
     >
       {player.getQualities().map((quality) => (
         <li role="none" key={quality.name}>

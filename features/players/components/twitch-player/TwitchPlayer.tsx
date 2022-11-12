@@ -1,11 +1,11 @@
 import styles from "features/players/components/styles/TwitchPlayer.module.css";
 import * as React from "react";
 import { useTwitchPlayer } from "features/players/api/useTwitchPlayer";
-import { TwitchPlayerControls } from "./TwitchPlayerControls";
 import { toggleFullscreen } from "features/players/utils/toggleFullscreen";
 import { throttle } from "utils/throttle";
 import { useUserActivity } from "features/players/hooks/useUserActivity";
 import VideoContainer from "../VideoContainer";
+import { VideoControls } from "features/players";
 
 interface TwitchPlayerProps {
   videoId: string;
@@ -201,7 +201,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
             onMouseMove={throttleMousemove}
             data-testid="customControls"
           >
-            <TwitchPlayerControls
+            <VideoControls
               player={player}
               playerPaused={playerPaused}
               toggleFullscreen={() => toggleFullscreen(wrapperRef.current)}
@@ -209,8 +209,7 @@ export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
               togglePlay={playOrPauseVideo}
               toggleMute={toggleMute}
               playerMuted={playerMuted}
-              skipForward={scheduleSeek}
-              skipBackward={scheduleSeek}
+              seek={scheduleSeek}
               projectedTime={projectedTime}
             />
           </div>

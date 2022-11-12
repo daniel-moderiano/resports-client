@@ -23,6 +23,10 @@ export class YouTubePlayerWrapper implements PlayerWrapper {
     this.player.seekTo(timestamp, true);
   }
 
+  hasQualitySettings() {
+    return false;
+  }
+
   // ! Deprecated functionality
   setQuality(quality: string) {
     this.player.setPlaybackQuality(quality);

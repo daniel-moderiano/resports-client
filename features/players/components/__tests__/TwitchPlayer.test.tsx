@@ -25,6 +25,7 @@ jest.mock("features/players/api/useTwitchPlayer", () => ({
       setVolume: setVolumeMock,
       getVolume: jest.fn,
       addEventListener: jest.fn,
+      hasQualitySettings: jest.fn,
     },
   }),
 }));

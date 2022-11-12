@@ -7,7 +7,7 @@ export const useTwitchPlayer = (
   videoId: string,
   playerDivRef: React.RefObject<HTMLDivElement | null>
 ) => {
-  const [player, setPlayer] = React.useState<PlayerWrapper | null>(null);
+  const [player, setPlayer] = React.useState<Player | null>(null);
 
   React.useEffect(() => {
     const tag = document.createElement("script");

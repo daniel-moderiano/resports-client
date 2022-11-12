@@ -55,6 +55,11 @@ export interface PlayerWrapper {
   seek: (timestamp: number, allowSeekAhead?: boolean) => void;
 
   /**
+   * Identifies whether the player allows manual setting of video quality
+   */
+  hasQualitySettings: () => boolean;
+
+  /**
    * Sets the quality of the video.
    * @param quality   Video quality (string) from the available values
    */

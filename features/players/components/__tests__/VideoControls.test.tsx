@@ -1,8 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { TwitchPlayerControls } from "features/players";
+import { VideoControls } from "features/players";
 
 // Named mocks to test player functions being called
+const hasQualitySettingsMock = () => true;
+
 const playerMock = {
   getCurrentTime: () => 1,
   isMuted: () => false,
@@ -22,6 +24,7 @@ const playerMock = {
     },
   ],
   setQuality: jest.fn,
+  hasQualitySettings: hasQualitySettingsMock,
 };
 
 let playerPausedMock = false;
@@ -29,33 +32,31 @@ const toggleFullscreenMock = jest.fn();
 const toggleTheaterModeMock = jest.fn();
 const togglePlayMock = jest.fn();
 const toggleMuteMock = jest.fn();
-const skipForwardMock = jest.fn();
-const skipBackwardMock = jest.fn();
+const seekMock = jest.fn();
 let playerMutedMock = true;
 const projectedTime: number | null = null;
 
 // The max test timeout should be increase to deal with waiting for timeout intervals in certain tests
 jest.setTimeout(10000);
 
-describe("YouTube video controls icons and label toggles", () => {
-  const setup = () => {
-    render(
-      <TwitchPlayerControls
-        // @ts-expect-error a complete Player object is not required for these tests
-        player={playerMock}
-        playerPaused={playerPausedMock}
-        playerMuted={playerMutedMock}
-        toggleFullscreen={toggleFullscreenMock}
-        togglePlay={togglePlayMock}
-        toggleTheaterMode={toggleTheaterModeMock}
-        skipForward={skipForwardMock}
-        skipBackward={skipBackwardMock}
-        toggleMute={toggleMuteMock}
-        projectedTime={projectedTime}
-      />
-    );
-  };
+const setup = () => {
+  render(
+    <VideoControls
+      // @ts-expect-error we don't require most player methods for testing, so a partial implementation is fine
+      player={playerMock}
+      playerPaused={playerPausedMock}
+      playerMuted={playerMutedMock}
+      toggleFullscreen={toggleFullscreenMock}
+      togglePlay={togglePlayMock}
+      toggleTheaterMode={toggleTheaterModeMock}
+      seek={seekMock}
+      toggleMute={toggleMuteMock}
+      projectedTime={projectedTime}
+    />
+  );
+};
 
+describe("YouTube video controls icons and label toggles", () => {
   it("Shows correct pause icon and aria-label when video is playing", () => {
     playerPausedMock = false;
     setup();
@@ -112,23 +113,6 @@ describe("YouTube video controls icons and label toggles", () => {
 });
 
 describe("YouTube video controls functionality", () => {
-  const setup = () => {
-    render(
-      <TwitchPlayerControls
-        // @ts-expect-error a complete Player object is not required for these tests
-        player={playerMock}
-        playerPaused={playerPausedMock}
-        playerMuted={playerMutedMock}
-        toggleFullscreen={toggleFullscreenMock}
-        togglePlay={togglePlayMock}
-        toggleTheaterMode={toggleTheaterModeMock}
-        skipForward={skipForwardMock}
-        skipBackward={skipBackwardMock}
-        toggleMute={toggleMuteMock}
-      />
-    );
-  };
-
   it("Play button calls play/pause function on click", async () => {
     setup();
     const playBtn = screen.getByRole("button", { name: "Play video" });
@@ -186,7 +170,7 @@ describe("YouTube video controls functionality", () => {
       name: "Skip forward one minute",
     });
     await userEvent.click(skipOne);
-    expect(skipForwardMock).toBeCalledWith(60);
+    expect(seekMock).toBeCalledWith(60);
   });
 
   it("Calls skip forward function with 5 minute equivalent input on forward 5 btn click", async () => {
@@ -195,7 +179,7 @@ describe("YouTube video controls functionality", () => {
       name: "Skip forward five minutes",
     });
     await userEvent.click(skipFive);
-    expect(skipForwardMock).toBeCalledWith(300);
+    expect(seekMock).toBeCalledWith(300);
   });
 
   it("Calls skip forward function with 10 minute equivalent input on forward 10 btn click", async () => {
@@ -204,7 +188,7 @@ describe("YouTube video controls functionality", () => {
       name: "Skip forward ten minutes",
     });
     await userEvent.click(skipTen);
-    expect(skipForwardMock).toBeCalledWith(600);
+    expect(seekMock).toBeCalledWith(600);
   });
 
   it("Calls skip backward function with 1 minute equivalent input on backward 1 btn click", async () => {
@@ -213,7 +197,7 @@ describe("YouTube video controls functionality", () => {
       name: "Skip backward one minute",
     });
     await userEvent.click(skipOne);
-    expect(skipBackwardMock).toBeCalledWith(-60);
+    expect(seekMock).toBeCalledWith(-60);
   });
 
   it("Calls skip backward function with 5 minute equivalent input on backward 5 btn click", async () => {
@@ -222,7 +206,7 @@ describe("YouTube video controls functionality", () => {
       name: "Skip backward five minutes",
     });
     await userEvent.click(skipFive);
-    expect(skipBackwardMock).toBeCalledWith(-300);
+    expect(seekMock).toBeCalledWith(-300);
   });
 
   it("Calls skip backward function with 10 minute equivalent input on backward 10 btn click", async () => {
@@ -231,31 +215,14 @@ describe("YouTube video controls functionality", () => {
       name: "Skip backward ten minutes",
     });
     await userEvent.click(skipTen);
-    expect(skipBackwardMock).toBeCalledWith(-600);
+    expect(seekMock).toBeCalledWith(-600);
   });
 });
 
 describe("Settings menu display tests", () => {
-  const setup = () => {
-    render(
-      <TwitchPlayerControls
-        // @ts-expect-error a complete Player object is not required for these tests
-        player={playerMock}
-        playerPaused={playerPausedMock}
-        playerMuted={playerMutedMock}
-        toggleFullscreen={toggleFullscreenMock}
-        togglePlay={togglePlayMock}
-        toggleTheaterMode={toggleTheaterModeMock}
-        skipForward={skipForwardMock}
-        skipBackward={skipBackwardMock}
-        toggleMute={toggleMuteMock}
-      />
-    );
-  };
-
   it("Hides settings menu by default", () => {
     setup();
-    const menu = screen.queryByTestId("twitchSettingsMenu");
+    const menu = screen.queryByTestId("settingsMenu");
     expect(menu).not.toBeInTheDocument();
   });
 
@@ -266,7 +233,7 @@ describe("Settings menu display tests", () => {
     });
     await userEvent.click(settingsBtn);
 
-    const menu = screen.queryByTestId("twitchSettingsMenu");
+    const menu = screen.queryByTestId("settingsMenu");
     expect(menu).toBeInTheDocument();
   });
 
@@ -279,23 +246,7 @@ describe("Settings menu display tests", () => {
     await userEvent.click(settingsBtn);
     await userEvent.click(settingsBtn);
 
-    const menu = screen.queryByTestId("twitchSettingsMenu");
-    expect(menu).not.toBeInTheDocument();
-  });
-
-  it("Closes menu when any quality option (menuitem) is selected", async () => {
-    setup();
-    // Open menu
-    const settingsBtn = screen.getByRole("button", {
-      name: /open video settings menu/i,
-    });
-    await userEvent.click(settingsBtn);
-
-    // Click menu item/option
-    const menuItem = screen.getByRole("menuitem", { name: /1080p60/i });
-    await userEvent.click(menuItem);
-
-    const menu = screen.queryByTestId("twitchSettingsMenu");
+    const menu = screen.queryByTestId("settingsMenu");
     expect(menu).not.toBeInTheDocument();
   });
 
@@ -312,7 +263,7 @@ describe("Settings menu display tests", () => {
     const theatreBtn = screen.getByRole("button", { name: /theater/i });
     await userEvent.click(theatreBtn);
 
-    const menu = screen.queryByTestId("twitchSettingsMenu");
+    const menu = screen.queryByTestId("settingsMenu");
     expect(menu).not.toBeInTheDocument();
   });
 
@@ -326,7 +277,7 @@ describe("Settings menu display tests", () => {
 
     await userEvent.keyboard("[Escape]");
 
-    const menu = screen.queryByTestId("twitchSettingsMenu");
+    const menu = screen.queryByTestId("settingsMenu");
     expect(menu).not.toBeInTheDocument();
   });
 
@@ -338,20 +289,8 @@ describe("Settings menu display tests", () => {
     });
     await userEvent.click(settingsBtn);
 
-    const menu = screen.getByTestId("twitchSettingsMenu");
+    const menu = screen.getByTestId("settingsMenu");
     await userEvent.click(menu);
     expect(menu).toBeInTheDocument();
-  });
-
-  it("Indicates source/chunked quality option among quality options", async () => {
-    setup();
-    // Open menu
-    const settingsBtn = screen.getByRole("button", {
-      name: /open video settings menu/i,
-    });
-    await userEvent.click(settingsBtn);
-
-    const sourceQuality = screen.getByText("1080p60 (Source)");
-    expect(sourceQuality).toBeInTheDocument();
   });
 });
