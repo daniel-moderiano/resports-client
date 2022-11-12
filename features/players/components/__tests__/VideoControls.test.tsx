@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { VideoControls } from "features/players";
 
 // Named mocks to test player functions being called
-const hasQualitySettingsMock = () => false;
+const hasQualitySettingsMock = () => true;
 
 const playerMock = {
   getCurrentTime: () => 1,
