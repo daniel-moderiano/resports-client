@@ -1,32 +1,36 @@
-import { useYouTubeIframe } from "features/players/api/useYouTubeIframe";
-import { useState } from "react";
-import styles from "features/players/components/styles/YouTubePlayer.module.css";
+import styles from "features/players/components/styles/TwitchPlayer.module.css";
 import * as React from "react";
-import VideoContainer from "../VideoContainer";
 import { toggleFullscreen } from "features/players/utils/toggleFullscreen";
 import { throttle } from "utils/throttle";
 import { useUserActivity } from "features/players/hooks/useUserActivity";
-import { VideoControls } from "../VideoControls";
+import VideoContainer from "./VideoContainer";
+import { VideoControls } from "features/players";
+import { Player } from "../api/player";
 
-interface YouTubeCustomPlayerProps {
-  videoId: string;
+interface VideoPlayerProps {
+  player: Player;
+  playerDivRef: React.MutableRefObject<HTMLDivElement | null>;
+
+  disableControls: boolean;
 }
 
-export const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
-  const [theaterMode, setTheaterMode] = useState(false);
+export const VideoPlayer = ({
+  player,
+  playerDivRef,
+  disableControls,
+}: VideoPlayerProps) => {
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
   const seekTimer = React.useRef<NodeJS.Timeout | null>(null);
   const { userActive, setUserActive, signalUserActivity } = useUserActivity();
-  // This local state is used to avoid the long delays of an API call to check muted state when toggling icons and UI
-  const [playerMuted, setPlayerMuted] = useState(true);
+  const [theaterMode, setTheaterMode] = React.useState(false);
+
+  // Use local state to avoid the long delays of an API call to check muted state when toggling icons and UI
+  const [playerMuted, setPlayerMuted] = React.useState(true);
   const [playerPaused, setPlayerPaused] = React.useState(false);
 
   // The currently projected time (in seconds) that the player should be at once the currently queued seek completes.
   // When this is not null, it implies we are currently performing a seek() call.
   const [projectedTime, setProjectedTime] = React.useState<null | number>(null);
-
-  // Adds the YT Iframe to the div#player returned below
-  const { player } = useYouTubeIframe(videoId, false);
 
   // Ensure the local playerState state is set on play/pause events. This ensures other elements modify with each of the changes as needed
   React.useEffect(() => {
@@ -86,6 +90,7 @@ export const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
     }
   }, [player, signalUserActivity]);
 
+  // Use this function to play a paused video, or pause a playing video. Intended to activate on clicking the video, or pressing spacebar
   const playOrPauseVideo = React.useCallback(() => {
     if (player) {
       if (player.isPaused()) {
@@ -113,6 +118,7 @@ export const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
   React.useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       const focusedElement = event.target as HTMLElement;
+
       // Ensure these key actions do not mess with normal button expectations and functionality
       if (
         focusedElement.nodeName === "BUTTON" ||
@@ -172,53 +178,50 @@ export const YouTubeCustomPlayer = ({ videoId }: YouTubeCustomPlayerProps) => {
   }, [playOrPauseVideo, player, toggleMute, signalUserActivity, scheduleSeek]);
 
   return (
-    <div>
-      <VideoContainer
-        setUserActive={setUserActive}
-        theaterMode={theaterMode}
-        wrapperRef={wrapperRef}
-      >
-        <div id="player"></div>
+    <VideoContainer
+      setUserActive={setUserActive}
+      theaterMode={theaterMode}
+      wrapperRef={wrapperRef}
+    >
+      <div id="player" ref={playerDivRef}></div>
+      <div
+        className={`${styles.overlay} ${
+          userActive || playerPaused ? "" : styles.overlayInactive
+        } ${disableControls ? styles.overlayDisabled : ""}`}
+        onClick={playOrPauseVideo}
+        onDoubleClick={() => toggleFullscreen(wrapperRef.current)}
+        onMouseMove={throttleMousemove}
+        data-testid="overlay"
+      ></div>
 
+      {player && (
         <div
-          className={`${styles.overlay} ${
-            userActive || playerPaused ? "" : styles.overlayInactive
-          }`}
-          onClick={playOrPauseVideo}
-          onDoubleClick={() => toggleFullscreen(wrapperRef.current)}
+          className={`${styles.controls} ${
+            userActive || playerPaused ? "" : styles.controlsHide
+          } ${disableControls ? styles.controlsDisabled : ""}`}
           onMouseMove={throttleMousemove}
-          data-testid="overlay"
-        ></div>
+          data-testid="customControls"
+        >
+          <VideoControls
+            player={player}
+            playerPaused={playerPaused}
+            toggleFullscreen={() => toggleFullscreen(wrapperRef.current)}
+            toggleTheaterMode={toggleTheaterMode}
+            togglePlay={playOrPauseVideo}
+            toggleMute={toggleMute}
+            playerMuted={playerMuted}
+            seek={scheduleSeek}
+            projectedTime={projectedTime}
+          />
+        </div>
+      )}
 
-        {player && (
-          <div
-            className={`${styles.controls} ${
-              userActive || playerPaused ? "" : styles.controlsHide
-            }`}
-            onMouseMove={throttleMousemove}
-            data-testid="customControls"
-          >
-            <VideoControls
-              player={player}
-              playerPaused={playerPaused}
-              toggleFullscreen={() => toggleFullscreen(wrapperRef.current)}
-              toggleTheaterMode={toggleTheaterMode}
-              togglePlay={playOrPauseVideo}
-              toggleMute={toggleMute}
-              playerMuted={playerMuted}
-              seek={scheduleSeek}
-              projectedTime={projectedTime}
-            />
-          </div>
-        )}
-
-        <div
-          className={`${styles.gradient} ${
-            userActive || playerPaused ? "" : styles.gradientHide
-          }`}
-          data-testid="gradient"
-        ></div>
-      </VideoContainer>
-    </div>
+      <div
+        className={`${styles.gradient} ${
+          userActive || playerPaused ? "" : styles.gradientHide
+        } ${disableControls ? styles.gradientHide : ""}`}
+        data-testid="gradient"
+      ></div>
+    </VideoContainer>
   );
 };
