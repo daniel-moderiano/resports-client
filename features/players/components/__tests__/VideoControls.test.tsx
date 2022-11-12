@@ -3,6 +3,8 @@ import userEvent from "@testing-library/user-event";
 import { VideoControls } from "features/players";
 
 // Named mocks to test player functions being called
+const hasQualitySettingsMock = () => false;
+
 const playerMock = {
   getCurrentTime: () => 1,
   isMuted: () => false,
@@ -22,6 +24,7 @@ const playerMock = {
     },
   ],
   setQuality: jest.fn,
+  hasQualitySettings: hasQualitySettingsMock,
 };
 
 let playerPausedMock = false;
@@ -29,8 +32,7 @@ const toggleFullscreenMock = jest.fn();
 const toggleTheaterModeMock = jest.fn();
 const togglePlayMock = jest.fn();
 const toggleMuteMock = jest.fn();
-const skipForwardMock = jest.fn();
-const skipBackwardMock = jest.fn();
+const seekMock = jest.fn();
 let playerMutedMock = true;
 const projectedTime: number | null = null;
 
@@ -47,8 +49,7 @@ const setup = () => {
       toggleFullscreen={toggleFullscreenMock}
       togglePlay={togglePlayMock}
       toggleTheaterMode={toggleTheaterModeMock}
-      skipForward={skipForwardMock}
-      skipBackward={skipBackwardMock}
+      seek={seekMock}
       toggleMute={toggleMuteMock}
       projectedTime={projectedTime}
     />
@@ -169,7 +170,7 @@ describe("YouTube video controls functionality", () => {
       name: "Skip forward one minute",
     });
     await userEvent.click(skipOne);
-    expect(skipForwardMock).toBeCalledWith(60);
+    expect(seekMock).toBeCalledWith(60);
   });
 
   it("Calls skip forward function with 5 minute equivalent input on forward 5 btn click", async () => {
@@ -178,7 +179,7 @@ describe("YouTube video controls functionality", () => {
       name: "Skip forward five minutes",
     });
     await userEvent.click(skipFive);
-    expect(skipForwardMock).toBeCalledWith(300);
+    expect(seekMock).toBeCalledWith(300);
   });
 
   it("Calls skip forward function with 10 minute equivalent input on forward 10 btn click", async () => {
@@ -187,7 +188,7 @@ describe("YouTube video controls functionality", () => {
       name: "Skip forward ten minutes",
     });
     await userEvent.click(skipTen);
-    expect(skipForwardMock).toBeCalledWith(600);
+    expect(seekMock).toBeCalledWith(600);
   });
 
   it("Calls skip backward function with 1 minute equivalent input on backward 1 btn click", async () => {
@@ -196,7 +197,7 @@ describe("YouTube video controls functionality", () => {
       name: "Skip backward one minute",
     });
     await userEvent.click(skipOne);
-    expect(skipBackwardMock).toBeCalledWith(-60);
+    expect(seekMock).toBeCalledWith(-60);
   });
 
   it("Calls skip backward function with 5 minute equivalent input on backward 5 btn click", async () => {
@@ -205,7 +206,7 @@ describe("YouTube video controls functionality", () => {
       name: "Skip backward five minutes",
     });
     await userEvent.click(skipFive);
-    expect(skipBackwardMock).toBeCalledWith(-300);
+    expect(seekMock).toBeCalledWith(-300);
   });
 
   it("Calls skip backward function with 10 minute equivalent input on backward 10 btn click", async () => {
@@ -214,7 +215,7 @@ describe("YouTube video controls functionality", () => {
       name: "Skip backward ten minutes",
     });
     await userEvent.click(skipTen);
-    expect(skipBackwardMock).toBeCalledWith(-600);
+    expect(seekMock).toBeCalledWith(-600);
   });
 });
 

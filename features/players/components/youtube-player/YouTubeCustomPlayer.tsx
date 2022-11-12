@@ -1,7 +1,6 @@
 import { useYouTubeIframe } from "features/players/api/useYouTubeIframe";
 import { useState } from "react";
 import styles from "features/players/components/styles/YouTubePlayer.module.css";
-import { YouTubeVideoControls } from "./YouTubeVideoControls";
 import * as React from "react";
 import VideoContainer from "../VideoContainer";
 import { toggleFullscreen } from "features/players/utils/toggleFullscreen";
