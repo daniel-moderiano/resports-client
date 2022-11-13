@@ -1,6 +1,6 @@
 import { useKeyboardNavigation } from "hooks/useKeyboardMenuNavigation";
 import { useMenuCloseEvents } from "hooks/useMenuCloseEvents";
-import { Player } from "../api/player";
+import { Player } from "features/players";
 
 interface VideoSettingsProps {
   closeMenu: () => void;

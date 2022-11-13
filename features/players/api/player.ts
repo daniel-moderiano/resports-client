@@ -1,9 +1,9 @@
-import { PlayerEvent, PlayerWrapper } from "../types/playerInterfaceTypes";
+import { PlayerEvent, PlayerClass } from "../types/playerTypes";
 
-export class Player implements PlayerWrapper {
-  playerWrapper: PlayerWrapper;
+export class Player implements PlayerClass {
+  playerWrapper: PlayerClass;
 
-  constructor(playerWrapper: PlayerWrapper) {
+  constructor(playerWrapper: PlayerClass) {
     this.playerWrapper = playerWrapper;
   }
 

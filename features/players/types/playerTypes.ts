@@ -30,12 +30,12 @@ export type PlayerEvent =
   | "ready"
 
   /**
-   * 	User has used the player controls to seek a VOD, the seek() method has been called, or live playback has seeked to sync up after being paused.
+   * 	User has used the player controls to seek a VOD, specifically when the video resumes playback after successful seek.
    */
   | "seek";
 
 // Define the methods needed by a player API wrapper to ensure it covers all our code needs
-export interface PlayerWrapper {
+export interface PlayerClass {
   /**
    * Plays the specified video.
    */

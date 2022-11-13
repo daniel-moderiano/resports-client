@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import * as React from "react";
-import { Player } from "./player";
+import { Player } from "features/players";
 import { YouTubePlayerWrapper } from "./youtubePlayerWrapper";
 
-export const useYouTubeIframe = (videoId: string, enableControls: boolean) => {
-  const [player, setPlayer] = React.useState<Player | undefined>(undefined);
+export const useYouTubeIframe = (videoId: string, enableControls = false) => {
+  const [player, setPlayer] = React.useState<Player | null>(null);
 
   useEffect(() => {
     const tag = document.createElement("script");
@@ -44,9 +44,6 @@ export const useYouTubeIframe = (videoId: string, enableControls: boolean) => {
           onReady: () => {
             // By setting the player here, we can ensure that the player state always returns a fully initialised player that is able to have its methods called.
             handlePlayerReady(player);
-          },
-          onStateChange: (event: YT.OnStateChangeEvent) => {
-            console.log(event.data);
           },
         },
       });

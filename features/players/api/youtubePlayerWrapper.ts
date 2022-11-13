@@ -1,10 +1,10 @@
 import {
   PlayerEvent,
-  PlayerWrapper,
+  PlayerClass,
   VideoQualityObject,
-} from "features/players/types/playerInterfaceTypes";
+} from "features/players/types/playerTypes";
 
-export class YouTubePlayerWrapper implements PlayerWrapper {
+export class YouTubePlayerWrapper implements PlayerClass {
   player: YT.Player;
 
   constructor(player: YT.Player) {
