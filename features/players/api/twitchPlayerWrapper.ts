@@ -1,10 +1,10 @@
 import {
+  PlayerClass,
   PlayerEvent,
-  PlayerWrapper,
   VideoQualityObject,
-} from "features/players/types/playerInterfaceTypes";
+} from "features/players/types/playerTypes";
 
-export class TwitchPlayerWrapper implements PlayerWrapper {
+export class TwitchPlayerWrapper implements PlayerClass {
   player: Twitch.Player;
 
   constructor(player: Twitch.Player) {

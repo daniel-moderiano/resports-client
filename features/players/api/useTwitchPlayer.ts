@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Player } from "./player";
-import { TwitchPlayerWrapper } from "./twitchPlayerWrapper";
+import { Player } from "features/players";
+import { TwitchPlayerWrapper } from "features/players";
 
 export const useTwitchPlayer = (videoId: string) => {
   const [player, setPlayer] = React.useState<Player | null>(null);

@@ -1,7 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Player } from "features/players/api/player";
-import { PlayerWrapper } from "features/players/types/playerInterfaceTypes";
+import { Player } from "features/players";
+import { PlayerClass } from "features/players/types/playerTypes";
 import { VideoPlayer } from "../VideoPlayer";
 
 const playMock = jest.fn();
@@ -10,7 +10,7 @@ const seekMock = jest.fn();
 const setVolumeMock = jest.fn();
 const setMutedMock = jest.fn();
 
-const playerWrapperPlaying: PlayerWrapper = {
+const playerWrapperPlaying: PlayerClass = {
   getCurrentTime: () => 100,
   getMuted: () => false,
   setMuted: setMutedMock,
@@ -32,7 +32,7 @@ const playerWrapperPlaying: PlayerWrapper = {
   },
 };
 
-const playerWrapperPaused: PlayerWrapper = {
+const playerWrapperPaused: PlayerClass = {
   ...playerWrapperPlaying,
   isPaused: () => true,
 };

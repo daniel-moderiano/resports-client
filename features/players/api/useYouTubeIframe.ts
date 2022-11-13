@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import * as React from "react";
-import { Player } from "./player";
+import { Player } from "features/players";
 import { YouTubePlayerWrapper } from "./youtubePlayerWrapper";
 
 export const useYouTubeIframe = (videoId: string, enableControls = false) => {
