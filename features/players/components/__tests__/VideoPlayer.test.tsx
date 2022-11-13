@@ -35,6 +35,9 @@ const playerWrapper: PlayerWrapper = {
 
 const player = new Player(playerWrapper);
 
+// The max test timeout should be increase to deal with waiting for timeout intervals in certain tests
+jest.setTimeout(10000);
+
 describe("YouTube player styling and modes", () => {
   it("Begins in normal (non-theater) mode", () => {
     render(<VideoPlayer player={player} />);
@@ -75,16 +78,6 @@ describe("YouTube player styling and modes", () => {
     expect(overlay).toBeInTheDocument();
     expect(customControls).toBeInTheDocument();
   });
-
-  it("Overlay is disabled when disable toggle is used", async () => {
-    render(<VideoPlayer player={player} />);
-    const overlay = screen.getByTestId("overlay");
-    const toggle = screen.getByRole("button", { name: /toggle/i });
-
-    // Disable the overlay manually
-    await userEvent.click(toggle);
-    expect(overlay).toHaveClass("overlayDisabled");
-  });
 });
 
 describe("YouTube player control toggles", () => {
@@ -102,21 +95,6 @@ describe("YouTube player control toggles", () => {
 
     const customControls = screen.getByTestId("customControls");
     expect(customControls).not.toHaveClass("controlsHide");
-  });
-
-  it("Controls do not appear when disabled manually", async () => {
-    render(<VideoPlayer player={player} />);
-    const overlay = screen.getByTestId("overlay");
-    const toggle = screen.getByRole("button", { name: /toggle/i });
-
-    // Disable the controls manually
-    await userEvent.click(toggle);
-    await userEvent.hover(overlay);
-
-    const customControls = screen.getByTestId("customControls");
-    const gradient = screen.getByTestId("gradient");
-    expect(customControls).toHaveClass("controlsDisabled");
-    expect(gradient).toHaveClass("gradientHide");
   });
 
   it("Shows gradient alongside custom controls", async () => {
