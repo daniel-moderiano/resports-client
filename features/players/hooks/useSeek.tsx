@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Player } from "features/players";
 
+// Provide a customised version of VOD seeking that lets the user queue seeks if pressing player controls within time limit of previous seek request.
 export const useSeek = (player: Player | null) => {
   // The currently projected time (in seconds) that the player should be at once the currently queued seek completes.
   // When this is not null, it implies we are currently performing a seek() call.

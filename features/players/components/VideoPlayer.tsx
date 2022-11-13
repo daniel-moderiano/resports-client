@@ -14,15 +14,14 @@ interface VideoPlayerProps {
 }
 
 export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
-  const wrapperRef = React.useRef<HTMLDivElement | null>(null);
   const { userActive, setUserActive, signalUserActivity } = useUserActivity();
-  const [theaterMode, setTheaterMode] = React.useState(false);
-
   const { scheduleSeek, projectedTime } = useSeek(player);
+  const wrapperRef = React.useRef<HTMLDivElement | null>(null);
 
   // Use local state to avoid the long delays of an API call to check muted state when toggling icons and UI
   const [playerMuted, setPlayerMuted] = React.useState(true);
   const [playerPaused, setPlayerPaused] = React.useState(false);
+  const [theaterMode, setTheaterMode] = React.useState(false);
 
   // Ensure the local playerState state is set on play/pause events. This ensures other elements modify with each of the changes as needed
   React.useEffect(() => {
@@ -71,8 +70,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
 
   const toggleTheaterMode = () => {
     setTheaterMode((prevState) => !prevState);
-
-    // Move focus to the parent wrapper rather than remaining on the theater btn. This is the extected UX interaction
+    // Move focus to the parent wrapper rather than remaining on the theater btn. This is the expected UX behaviour for video controls.
     if (wrapperRef.current) {
       wrapperRef.current.focus();
     }
@@ -80,19 +78,26 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
 
   // A global keypress handler to allow the user to control the video regardless of where they are on the page.
   React.useEffect(() => {
+    const activeUserKeys = [
+      "m",
+      "ArrowDown",
+      "ArrowUp",
+      "ArrowLeft",
+      "ArrowRight",
+    ];
+
     const handleKeyPress = (event: KeyboardEvent) => {
-      const focusedElement = event.target as HTMLElement;
+      const { nodeName, className } = event.target as HTMLElement;
 
       // Ensure these key actions do not mess with normal button expectations and functionality
-      if (
-        focusedElement.nodeName === "BUTTON" ||
-        focusedElement.nodeName === "INPUT"
-      ) {
-        if (focusedElement.className.includes("controlsBtn")) {
-          // user is interacting with video controls
+      if (nodeName === "BUTTON" || nodeName === "INPUT") {
+        if (className.includes("controlsBtn")) {
           signalUserActivity();
-        }
-        return;
+        } else return;
+      }
+
+      if (activeUserKeys.includes(event.key)) {
+        signalUserActivity();
       }
 
       if (!player) {
@@ -106,7 +111,6 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
           break;
         case "m":
           toggleMute();
-          signalUserActivity();
           break;
         case "f":
           toggleFullscreen(wrapperRef.current);
@@ -114,19 +118,15 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         case "t":
           toggleTheaterMode();
           break;
-        case "Down": // IE/Edge specific value
         case "ArrowDown":
           player.setVolume(player.getVolume() - 0.05);
           break;
-        case "Up": // IE/Edge specific value
         case "ArrowUp":
           player.setVolume(player.getVolume() + 0.05);
           break;
-        case "Left": // IE/Edge specific value
         case "ArrowLeft":
           scheduleSeek(-10);
           break;
-        case "Right": // IE/Edge specific value
         case "ArrowRight":
           scheduleSeek(10);
           break;
