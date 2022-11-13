@@ -9,31 +9,35 @@ const pauseMock = jest.fn();
 const seekMock = jest.fn();
 const setVolumeMock = jest.fn();
 const setMutedMock = jest.fn();
-let isPausedMock: () => boolean = jest.fn();
 
-const playerWrapper: PlayerWrapper = {
+const playerWrapperPlaying: PlayerWrapper = {
   getCurrentTime: () => 100,
   getMuted: () => false,
   setMuted: setMutedMock,
-  isPaused: isPausedMock,
-  play: () => playMock,
-  pause: () => pauseMock,
-  seek: () => seekMock,
-  setVolume: () => setVolumeMock,
+  isPaused: () => false,
+  play: playMock,
+  pause: pauseMock,
+  seek: seekMock,
+  setVolume: setVolumeMock,
   getVolume: () => {
     return 0;
   },
-  addEventListener: () => jest.fn,
+  addEventListener: jest.fn,
   hasQualitySettings: () => {
     return false;
   },
-  setQuality: () => jest.fn,
+  setQuality: jest.fn,
   getQualities: () => {
     return [];
   },
 };
 
-const player = new Player(playerWrapper);
+const playerWrapperPaused: PlayerWrapper = {
+  ...playerWrapperPlaying,
+  isPaused: () => true,
+};
+
+const player = new Player(playerWrapperPlaying);
 
 // The max test timeout should be increase to deal with waiting for timeout intervals in certain tests
 jest.setTimeout(10000);
@@ -125,7 +129,7 @@ describe("YouTube player keyboard shortcuts", () => {
   });
 
   it('Plays a paused video on "k" key press', async () => {
-    isPausedMock = () => true; // 'pause' the video
+    const player = new Player(playerWrapperPaused);
     render(<VideoPlayer player={player} />);
     const wrapper = screen.getByTestId("wrapper");
 
@@ -142,7 +146,7 @@ describe("YouTube player keyboard shortcuts", () => {
   });
 
   it('Pauses a playing video on "k" key press', async () => {
-    isPausedMock = () => false; // 'play' the video
+    const player = new Player(playerWrapperPlaying);
     render(<VideoPlayer player={player} />);
     const wrapper = screen.getByTestId("wrapper");
 
