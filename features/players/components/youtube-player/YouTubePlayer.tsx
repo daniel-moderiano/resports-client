@@ -1,18 +1,34 @@
 import { useYouTubeIframe } from "features/players/api/useYouTubeIframe";
 import * as React from "react";
 import { VideoPlayer } from "../VideoPlayer";
+import styles from "features/players/components/styles/YouTubePlayer.module.css";
 
 interface YouTubePlayerProps {
   videoId: string;
 }
 
 export const YouTubePlayer = ({ videoId }: YouTubePlayerProps) => {
-  const { player } = useYouTubeIframe(videoId);
-  const [showYTControls, setShowYTControls] = React.useState(false);
+  const { player } = useYouTubeIframe(videoId, true);
+  const [showYTControls, setShowYTControls] = React.useState(true);
 
   return (
     <div>
-      <VideoPlayer player={player} />
+      <div>
+        <VideoPlayer player={player} />
+        {showYTControls && (
+          <div
+            className={styles.YTcontrolsBlocker}
+            data-testid="controlsBlocker"
+          >
+            <div className={styles.YTprogressBlocker}></div>
+            <div className={styles.blockersContainer}>
+              <div className={styles.leftControlsBlocker}></div>
+              <div className={styles.rightControlsBlocker}></div>
+            </div>
+          </div>
+        )}
+      </div>
+
       <div className="playerMode">
         <button
           onClick={() => {
