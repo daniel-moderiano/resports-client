@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Player } from "features/players";
 
-export const useSeek = (player: Player) => {
+export const useSeek = (player: Player | null) => {
   // The currently projected time (in seconds) that the player should be at once the currently queued seek completes.
   // When this is not null, it implies we are currently performing a seek() call.
   const [projectedTime, setProjectedTime] = React.useState<null | number>(null);
@@ -31,15 +31,16 @@ export const useSeek = (player: Player) => {
   );
 
   React.useEffect(() => {
-    // Ensure projectedTime is reset to null to avoid infinite loop seeking or video freezing at fixed time
-    player.addEventListener("seek", () => {
-      setProjectedTime(null);
-    });
+    if (player) {
+      // Ensure projectedTime is reset to null to avoid infinite loop seeking or video freezing at fixed time
+      player.addEventListener("seek", () => {
+        setProjectedTime(null);
+      });
+    }
   }, [player]);
 
   return {
     scheduleSeek,
     projectedTime,
-    setProjectedTime,
   };
 };
