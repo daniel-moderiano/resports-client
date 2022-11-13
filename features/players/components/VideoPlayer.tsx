@@ -9,15 +9,10 @@ import { Player } from "../api/player";
 
 interface VideoPlayerProps {
   player: Player | null;
-  playerDivRef?: React.MutableRefObject<HTMLDivElement | null>;
-  disableControls: boolean;
+  disableControls?: boolean;
 }
 
-export const VideoPlayer = ({
-  player,
-  playerDivRef,
-  disableControls,
-}: VideoPlayerProps) => {
+export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
   const seekTimer = React.useRef<NodeJS.Timeout | null>(null);
   const { userActive, setUserActive, signalUserActivity } = useUserActivity();
@@ -182,7 +177,7 @@ export const VideoPlayer = ({
       theaterMode={theaterMode}
       wrapperRef={wrapperRef}
     >
-      <div id="player" ref={playerDivRef}></div>
+      <div id="player"></div>
       <div
         className={`${styles.overlay} ${
           userActive || playerPaused ? "" : styles.overlayInactive

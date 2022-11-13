@@ -2,10 +2,7 @@ import * as React from "react";
 import { Player } from "./player";
 import { TwitchPlayerWrapper } from "./twitchPlayerWrapper";
 
-export const useTwitchPlayer = (
-  videoId: string,
-  playerDivRef: React.RefObject<HTMLDivElement | null>
-) => {
+export const useTwitchPlayer = (videoId: string) => {
   const [player, setPlayer] = React.useState<Player | null>(null);
 
   React.useEffect(() => {
@@ -31,13 +28,16 @@ export const useTwitchPlayer = (
 
     // Do not attempt to create the Player until the 3rd party Twitch API has loaded and the global Twitch var is ready.
     const handleTwitchScriptLoad = () => {
-      if (!playerDivRef.current) {
+      const playerDiv = document.querySelector("#player");
+      console.log(playerDiv);
+
+      if (!playerDiv) {
         console.error("No containing <div> for <iframe>!");
         return;
       }
 
       // This avoids rendering multiple stacked iframes within the containing player <div>.
-      if (!playerDivRef.current.hasChildNodes()) {
+      if (!playerDiv.hasChildNodes()) {
         setPlayer(createPlayer());
       }
     };
@@ -47,7 +47,7 @@ export const useTwitchPlayer = (
     return () => {
       tag.remove();
     };
-  }, [videoId, playerDivRef]);
+  }, [videoId]);
 
   return {
     player,

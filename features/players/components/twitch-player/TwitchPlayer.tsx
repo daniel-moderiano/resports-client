@@ -7,19 +7,13 @@ interface TwitchPlayerProps {
 }
 
 export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
-  const playerDivRef = React.useRef<HTMLDivElement | null>(null);
-
   // The user should be able to manually disable the overlay to interact with the player in certain circumstances, e.g. mature content, reloading player, etc.
   const [disableControls, setDisableControls] = React.useState(false);
-  const { player } = useTwitchPlayer(videoId, playerDivRef);
+  const { player } = useTwitchPlayer(videoId);
 
   return (
     <div>
-      <VideoPlayer
-        player={player}
-        playerDivRef={playerDivRef}
-        disableControls={disableControls}
-      />
+      <VideoPlayer player={player} disableControls={disableControls} />
       <button onClick={() => setDisableControls((prevState) => !prevState)}>
         Toggle custom controls
       </button>
