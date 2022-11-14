@@ -1,2 +1,2 @@
 export { YouTubeCustomPlayer } from "./YouTubeCustomPlayer";
-export { YouTubePlayer } from "./YouTubePlayer";
+export { YouTubeEnabledPlayer } from "./YouTubeEnabledPlayer";
