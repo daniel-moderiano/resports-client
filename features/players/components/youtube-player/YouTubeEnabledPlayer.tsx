@@ -21,7 +21,7 @@ export const YouTubeEnabledPlayer = ({ videoId }: YouTubePlayerProps) => {
   const [playerMuted, setPlayerMuted] = React.useState(true);
   const [playerPaused, setPlayerPaused] = React.useState(false);
   const [theaterMode, setTheaterMode] = React.useState(false);
-  const [showYTControls, setShowYTControls] = React.useState(false);
+  const [showYTControls, setShowYTControls] = React.useState(true);
 
   // Ensure the local playerState state is set on play/pause events. This ensures other elements modify with each of the changes as needed
   React.useEffect(() => {
@@ -56,14 +56,24 @@ export const YouTubeEnabledPlayer = ({ videoId }: YouTubePlayerProps) => {
   // Use this function to play a paused video, or pause a playing video. Intended to activate on clicking the video, or pressing spacebar
   const playOrPauseVideo = React.useCallback(() => {
     if (player) {
-      if (player.isPaused()) {
+      if (!player.isPaused()) {
+        setPlayerPaused(true);
+        setTimeout(() => {
+          // Give the gradient time to fade in so you can be sure the YT controls are hidden
+          player.pause();
+        }, 350);
+      } else {
         player.play();
+
+        setTimeout(() => {
+          // Give the gradient time to fade so you can be sure the YT controls are hidden
+          setPlayerPaused(false);
+        }, 100);
+
         // A longer timeout is used here because it can be quite anti-user experience to have controls and cursor fade almost immediately after pressing play.
         setTimeout(() => {
           setUserActive(false); // ensure video controls fade
         }, 1000);
-      } else {
-        player.pause();
       }
     }
   }, [player, setUserActive]);
@@ -149,17 +159,19 @@ export const YouTubeEnabledPlayer = ({ videoId }: YouTubePlayerProps) => {
         wrapperRef={wrapperRef}
       >
         <div id="player"></div>
-        <div
-          className={`${styles.overlay} ${
-            userActive || playerPaused ? "" : styles.overlayInactive
-          }`}
-          onClick={playOrPauseVideo}
-          onDoubleClick={() => toggleFullscreen(wrapperRef.current)}
-          onMouseMove={throttleMousemove}
-          data-testid="overlay"
-        ></div>
+        {!showYTControls && (
+          <div
+            className={`${styles.overlay} ${
+              userActive || playerPaused ? "" : styles.overlayInactive
+            } ${playerPaused ? styles.overlayPaused : styles.overlayPlaying}`}
+            onClick={playOrPauseVideo}
+            onDoubleClick={() => toggleFullscreen(wrapperRef.current)}
+            onMouseMove={throttleMousemove}
+            data-testid="overlay"
+          ></div>
+        )}
 
-        {player && (
+        {!showYTControls && player && (
           <div
             className={`${styles.controls} ${
               userActive || playerPaused ? "" : styles.controlsHide
@@ -181,12 +193,15 @@ export const YouTubeEnabledPlayer = ({ videoId }: YouTubePlayerProps) => {
           </div>
         )}
 
-        <div
-          className={`${styles.gradient} ${
-            userActive || playerPaused ? "" : styles.gradientHide
-          }`}
-          data-testid="gradient"
-        ></div>
+        {!showYTControls && (
+          <div
+            className={`${styles.gradient} ${
+              userActive || playerPaused ? "" : styles.gradientHide
+            }`}
+            data-testid="gradient"
+          ></div>
+        )}
+
         {showYTControls && (
           <div
             className={styles.YTcontrolsBlocker}
@@ -205,9 +220,9 @@ export const YouTubeEnabledPlayer = ({ videoId }: YouTubePlayerProps) => {
           onClick={() => {
             setShowYTControls(true);
             // If the user switches controls while paused, then pauses the video on YT controls, then switches back to custom controls while paused, the overlay is still in play mode. This happens because the setPlayerState is not called with YT native pause/play. Hence it is manually called here
-            // if (player && player.isPaused()) {
-            //   setPlayerPaused(true);
-            // }
+            if (player && player.isPaused()) {
+              setPlayerPaused(true);
+            }
           }}
         >
           Show YT Controls
@@ -216,9 +231,9 @@ export const YouTubeEnabledPlayer = ({ videoId }: YouTubePlayerProps) => {
           onClick={() => {
             setShowYTControls(false);
             // If the user switches controls while paused, then plays the video on YT controls, then switches back to custom controls while playing, the overlay is still in pause mode. This happens because the setPlayerState is not called with YT native pause/play. Hence it is manually called here
-            // if (player && !player.isPaused()) {
-            //   setPlayerPaused(false);
-            // }
+            if (player && !player.isPaused()) {
+              setPlayerPaused(false);
+            }
           }}
         >
           Hide YT Controls
