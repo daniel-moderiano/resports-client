@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { YouTubeEnabledPlayer } from "features/players";
+import { YouTubeNativePlayer } from "features/players";
 
 jest.mock("features/players/api/useYouTubeIframe", () => ({
   // Make sure a player object is returned here to trigger the functions requiring a truthy player object
@@ -23,19 +23,19 @@ jest.mock("features/players/api/useYouTubeIframe", () => ({
 
 describe("YouTube player control toggles", () => {
   it("Initialises video without custom controls", () => {
-    render(<YouTubeEnabledPlayer videoId="1234" />);
+    render(<YouTubeNativePlayer videoId="1234" />);
     const customControls = screen.queryByTestId("customControls");
     expect(customControls).not.toBeInTheDocument();
   });
 
   it("Initialises video with YT controls blocker in place", () => {
-    render(<YouTubeEnabledPlayer videoId="1234" />);
+    render(<YouTubeNativePlayer videoId="1234" />);
     const controlsBlocker = screen.getByTestId("controlsBlocker");
     expect(controlsBlocker).toBeInTheDocument();
   });
 
   it("Toggles controls on respective button press", async () => {
-    render(<YouTubeEnabledPlayer videoId="1234" />);
+    render(<YouTubeNativePlayer videoId="1234" />);
     const hideYTBtn = screen.getByRole("button", { name: /hide YT controls/i });
 
     // This should hide the YT controls blocker
@@ -48,7 +48,7 @@ describe("YouTube player control toggles", () => {
   });
 
   it("Shows gradient alongside custom controls", async () => {
-    render(<YouTubeEnabledPlayer videoId="1234" />);
+    render(<YouTubeNativePlayer videoId="1234" />);
     const hideYTBtn = screen.getByRole("button", { name: /hide YT controls/i });
 
     // First enable custom controls, then hover the relevant div to trigger user activity/controls to show

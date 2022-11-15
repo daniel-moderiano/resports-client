@@ -7,11 +7,11 @@ import VideoContainer from "../VideoContainer";
 import { useYouTubeIframe, VideoControls } from "features/players";
 import { useSeek } from "features/players/hooks/useSeek";
 
-interface YouTubePlayerProps {
+interface YouTubeNativePlayerProps {
   videoId: string;
 }
 
-export const YouTubeEnabledPlayer = ({ videoId }: YouTubePlayerProps) => {
+export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
   const { player } = useYouTubeIframe(videoId, true);
   const { userActive, setUserActive, signalUserActivity } = useUserActivity();
   const { scheduleSeek, projectedTime } = useSeek(player);
