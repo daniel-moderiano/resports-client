@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import { sanitiseVideoQuery } from "utils/queryHandling";
-import { YouTubeCustomPlayer } from "features/players";
+import { YouTubePlayer } from "features/players";
 import Link from "next/link";
 
 interface VideoProps {
@@ -16,8 +16,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Video = ({ videoId }: VideoProps) => {
   return (
     <div>
-      <YouTubeCustomPlayer videoId={videoId} />
-      <Link href={`/youtube/video/${videoId}/yt-enabled`}>
+      <YouTubePlayer videoId={videoId} />
+      <Link href={`/youtube/video/${videoId}/native-player`}>
         YT-enabled player
       </Link>
     </div>

@@ -1,19 +1,18 @@
-import styles from "features/players/components/styles/TwitchPlayer.module.css";
+import styles from "features/players/components/styles/YouTubePlayer.module.css";
 import * as React from "react";
 import { toggleFullscreen } from "features/players/utils/toggleFullscreen";
 import { throttle } from "utils/throttle";
 import { useUserActivity } from "features/players/hooks/useUserActivity";
-import VideoContainer from "./VideoContainer";
-import { VideoControls } from "features/players";
-import { Player } from "../api/player";
-import { useSeek } from "../hooks/useSeek";
+import VideoContainer from "../VideoContainer";
+import { useYouTubeIframe, VideoControls } from "features/players";
+import { useSeek } from "features/players/hooks/useSeek";
 
-interface VideoPlayerProps {
-  player: Player | null;
-  disableControls?: boolean;
+interface YouTubeNativePlayerProps {
+  videoId: string;
 }
 
-export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
+export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
+  const { player } = useYouTubeIframe(videoId, true);
   const { userActive, setUserActive, signalUserActivity } = useUserActivity();
   const { scheduleSeek, projectedTime } = useSeek(player);
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
@@ -22,6 +21,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
   const [playerMuted, setPlayerMuted] = React.useState(true);
   const [playerPaused, setPlayerPaused] = React.useState(false);
   const [theaterMode, setTheaterMode] = React.useState(false);
+  const [showYTControls, setShowYTControls] = React.useState(true);
 
   // Ensure the local playerState state is set on play/pause events. This ensures other elements modify with each of the changes as needed
   React.useEffect(() => {
@@ -56,14 +56,24 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
   // Use this function to play a paused video, or pause a playing video. Intended to activate on clicking the video, or pressing spacebar
   const playOrPauseVideo = React.useCallback(() => {
     if (player) {
-      if (player.isPaused()) {
+      if (!player.isPaused()) {
+        setPlayerPaused(true);
+        setTimeout(() => {
+          // Give the gradient time to fade in so you can be sure the YT controls are hidden
+          player.pause();
+        }, 350);
+      } else {
         player.play();
+
+        setTimeout(() => {
+          // Give the gradient time to fade so you can be sure the YT controls are hidden
+          setPlayerPaused(false);
+        }, 100);
+
         // A longer timeout is used here because it can be quite anti-user experience to have controls and cursor fade almost immediately after pressing play.
         setTimeout(() => {
           setUserActive(false); // ensure video controls fade
         }, 1000);
-      } else {
-        player.pause();
       }
     }
   }, [player, setUserActive]);
@@ -142,50 +152,94 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
   }, [playOrPauseVideo, player, toggleMute, signalUserActivity, scheduleSeek]);
 
   return (
-    <VideoContainer
-      setUserActive={setUserActive}
-      theaterMode={theaterMode}
-      wrapperRef={wrapperRef}
-    >
-      <div id="player"></div>
-      <div
-        className={`${styles.overlay} ${
-          userActive || playerPaused ? "" : styles.overlayInactive
-        } ${disableControls ? styles.overlayDisabled : ""}`}
-        onClick={playOrPauseVideo}
-        onDoubleClick={() => toggleFullscreen(wrapperRef.current)}
-        onMouseMove={throttleMousemove}
-        data-testid="overlay"
-      ></div>
+    <div>
+      <VideoContainer
+        setUserActive={setUserActive}
+        theaterMode={theaterMode}
+        wrapperRef={wrapperRef}
+      >
+        <div id="player"></div>
+        {!showYTControls && (
+          <div
+            className={`${styles.overlay} ${
+              userActive || playerPaused ? "" : styles.overlayInactive
+            } ${playerPaused ? styles.overlayPaused : styles.overlayPlaying}`}
+            onClick={playOrPauseVideo}
+            onDoubleClick={() => toggleFullscreen(wrapperRef.current)}
+            onMouseMove={throttleMousemove}
+            data-testid="overlay"
+          ></div>
+        )}
 
-      {player && (
-        <div
-          className={`${styles.controls} ${
-            userActive || playerPaused ? "" : styles.controlsHide
-          } ${disableControls ? styles.controlsDisabled : ""}`}
-          onMouseMove={throttleMousemove}
-          data-testid="customControls"
+        {!showYTControls && player && (
+          <div
+            className={`${styles.controls} ${
+              userActive || playerPaused ? "" : styles.controlsHide
+            }`}
+            onMouseMove={throttleMousemove}
+            data-testid="customControls"
+          >
+            <VideoControls
+              player={player}
+              playerPaused={playerPaused}
+              toggleFullscreen={() => toggleFullscreen(wrapperRef.current)}
+              toggleTheaterMode={toggleTheaterMode}
+              togglePlay={playOrPauseVideo}
+              toggleMute={toggleMute}
+              playerMuted={playerMuted}
+              seek={scheduleSeek}
+              projectedTime={projectedTime}
+            />
+          </div>
+        )}
+
+        {!showYTControls && (
+          <div
+            className={`${styles.gradient} ${
+              userActive || playerPaused ? "" : styles.gradientHide
+            }`}
+            data-testid="gradient"
+          ></div>
+        )}
+
+        {showYTControls && (
+          <div
+            className={styles.YTcontrolsBlocker}
+            data-testid="controlsBlocker"
+          >
+            <div className={styles.YTprogressBlocker}></div>
+            <div className={styles.blockersContainer}>
+              <div className={styles.leftControlsBlocker}></div>
+              <div className={styles.rightControlsBlocker}></div>
+            </div>
+          </div>
+        )}
+      </VideoContainer>
+      <div className="playerMode">
+        <button
+          onClick={() => {
+            setShowYTControls(true);
+            // If the user switches controls while paused, then pauses the video on YT controls, then switches back to custom controls while paused, the overlay is still in play mode. This happens because the setPlayerState is not called with YT native pause/play. Hence it is manually called here
+            if (player && player.isPaused()) {
+              setPlayerPaused(true);
+            }
+          }}
         >
-          <VideoControls
-            player={player}
-            playerPaused={playerPaused}
-            toggleFullscreen={() => toggleFullscreen(wrapperRef.current)}
-            toggleTheaterMode={toggleTheaterMode}
-            togglePlay={playOrPauseVideo}
-            toggleMute={toggleMute}
-            playerMuted={playerMuted}
-            seek={scheduleSeek}
-            projectedTime={projectedTime}
-          />
-        </div>
-      )}
-
-      <div
-        className={`${styles.gradient} ${
-          userActive || playerPaused ? "" : styles.gradientHide
-        } ${disableControls ? styles.gradientHide : ""}`}
-        data-testid="gradient"
-      ></div>
-    </VideoContainer>
+          Show YT Controls
+        </button>
+        <button
+          onClick={() => {
+            setShowYTControls(false);
+            // If the user switches controls while paused, then plays the video on YT controls, then switches back to custom controls while playing, the overlay is still in pause mode. This happens because the setPlayerState is not called with YT native pause/play. Hence it is manually called here
+            if (player && !player.isPaused()) {
+              setPlayerPaused(false);
+            }
+          }}
+        >
+          Hide YT Controls
+        </button>
+        <p>{showYTControls ? "YouTube mode" : "Custom mode"}</p>
+      </div>
+    </div>
   );
 };
