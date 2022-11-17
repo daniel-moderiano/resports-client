@@ -31,7 +31,6 @@ const playerWrapperPlaying: PlayerClass = {
     return [];
   },
   hasPlaybackSpeedSettings: () => true,
-  hasCaptionSettings: () => true,
 };
 
 const playerWrapperPaused: PlayerClass = {

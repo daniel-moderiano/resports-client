@@ -65,11 +65,6 @@ export interface PlayerClass {
   hasPlaybackSpeedSettings: () => boolean;
 
   /**
-   * Identifies whether the player allows manual adding/removing of closed captions
-   */
-  hasCaptionSettings: () => boolean;
-
-  /**
    * Sets the quality of the video.
    * @param quality   Video quality (string) from the available values
    */

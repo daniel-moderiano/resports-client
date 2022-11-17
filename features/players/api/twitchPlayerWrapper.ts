@@ -23,10 +23,6 @@ export class TwitchPlayerWrapper implements PlayerClass {
     return true;
   }
 
-  hasCaptionSettings() {
-    return true;
-  }
-
   hasPlaybackSpeedSettings() {
     return false;
   }

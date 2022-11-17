@@ -27,10 +27,6 @@ export class YouTubePlayerWrapper implements PlayerClass {
     return false;
   }
 
-  hasCaptionSettings() {
-    return true;
-  }
-
   hasPlaybackSpeedSettings() {
     return true;
   }

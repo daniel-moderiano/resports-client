@@ -19,10 +19,6 @@ export class Player implements PlayerClass {
     return this.playerWrapper.hasQualitySettings();
   }
 
-  hasCaptionSettings() {
-    return this.playerWrapper.hasQualitySettings();
-  }
-
   hasPlaybackSpeedSettings() {
     return this.playerWrapper.hasQualitySettings();
   }
