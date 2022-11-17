@@ -20,6 +20,9 @@ const playerMock = {
   setQuality: jest.fn,
   hasQualitySettings: () => true,
   hasPlaybackSpeedSettings: () => true,
+  getPlaybackSpeed: () => 1,
+  getAvailablePlaybackSpeeds: () => [0.5, 1, 2],
+  setPlaybackSpeed: jest.fn,
 };
 
 const setup = () => {
@@ -39,11 +42,7 @@ describe("Video settings menu", () => {
     const speedSettings = screen.getByRole("menuitem", {
       name: /playback speed/i,
     });
-    const subtitleSettings = screen.getByRole("menuitem", {
-      name: /subtitles/i,
-    });
     expect(qualitySettings).toBeInTheDocument();
-    expect(subtitleSettings).toBeInTheDocument();
     expect(speedSettings).toBeInTheDocument();
   });
 
@@ -56,11 +55,7 @@ describe("Video settings menu", () => {
     const speedSettings = screen.getByRole("menuitem", {
       name: /playback speed/i,
     });
-    const subtitleSettings = screen.getByRole("menuitem", {
-      name: /subtitles/i,
-    });
     expect(qualitySettings).not.toBeInTheDocument();
-    expect(subtitleSettings).toBeInTheDocument();
     expect(speedSettings).toBeInTheDocument();
   });
 });

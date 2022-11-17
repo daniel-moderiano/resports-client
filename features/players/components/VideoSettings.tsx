@@ -10,7 +10,7 @@ interface VideoSettingsProps {
 // Currently this menu only supports quality settings, but may be adapted later to include playback rate and caption settings
 export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
   // Handles typical accessibility and UX concerns
-  // useMenuCloseEvents("settingsMenu", closeMenu);
+  useMenuCloseEvents("settingsMenu", closeMenu);
   // useKeyboardNavigation("settingsMenu");
 
   return (
