@@ -21,7 +21,7 @@ const playerMock = {
   hasQualitySettings: () => true,
   hasPlaybackSpeedSettings: () => true,
   getPlaybackSpeed: () => 1,
-  getAvailablePlaybackSpeeds: () => [0.5, 1, 2],
+  getAvailablePlaybackSpeeds: () => [1, 2],
   setPlaybackSpeed: jest.fn,
 };
 
@@ -57,5 +57,25 @@ describe("Video settings menu", () => {
     });
     expect(qualitySettings).not.toBeInTheDocument();
     expect(speedSettings).toBeInTheDocument();
+  });
+
+  it("Shows all available qualities if that setting is present", () => {
+    playerMock.hasQualitySettings = () => true;
+    setup();
+    const auto = screen.getByText(/auto/i);
+    const hd720 = screen.getByText(/720p/i);
+    const hd1080 = screen.getByText(/1080p/i);
+    expect(auto).toBeInTheDocument();
+    expect(hd720).toBeInTheDocument();
+    expect(hd1080).toBeInTheDocument();
+  });
+
+  it("Shows all available playback speeds if that setting is present", () => {
+    playerMock.hasQualitySettings = () => false;
+    setup();
+    const one = screen.getByText(/1/i);
+    const two = screen.getByText(/2/i);
+    expect(one).toBeInTheDocument();
+    expect(two).toBeInTheDocument();
   });
 });
