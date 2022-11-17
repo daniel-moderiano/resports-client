@@ -31,6 +31,18 @@ export class YouTubePlayerWrapper implements PlayerClass {
     return true;
   }
 
+  getPlaybackSpeed() {
+    return this.player.getPlaybackRate();
+  }
+
+  getAvailablePlaybackSpeeds() {
+    return this.player.getAvailablePlaybackRates();
+  }
+
+  setPlaybackSpeed(playbackSpeed: number) {
+    this.player.setPlaybackRate(playbackSpeed);
+  }
+
   // ! Deprecated functionality
   setQuality(quality: string) {
     this.player.setPlaybackQuality(quality);

@@ -71,6 +71,22 @@ export interface PlayerClass {
   setQuality: (quality: string) => void;
 
   /**
+   * Sets the playback speed of the video.
+   * @param playbackSpeed   Playback speed of the video, may include values like 0.25, 0.5, 1, 1.5, and 2.
+   */
+  setPlaybackSpeed: (playbackSpeed: number) => void;
+
+  /**
+   * Retrieves the playback speed of the currently playing video.
+   */
+  getPlaybackSpeed: () => number;
+
+  /**
+   * Retrieves the set of playback speed available to the video.
+   */
+  getAvailablePlaybackSpeeds: () => number[];
+
+  /**
    * Sets the player volume.
    * @param volumeLevel   A number between 0 and 1.0.
    */

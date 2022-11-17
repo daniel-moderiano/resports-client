@@ -27,6 +27,19 @@ export class TwitchPlayerWrapper implements PlayerClass {
     return false;
   }
 
+  // ! All playback speed functionality does not exist on Twitch Player API
+  getPlaybackSpeed() {
+    return 1;
+  }
+
+  getAvailablePlaybackSpeeds() {
+    return [1];
+  }
+
+  setPlaybackSpeed() {
+    return;
+  }
+
   seek(timestamp: number) {
     this.player.seek(timestamp);
   }
