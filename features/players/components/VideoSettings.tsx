@@ -21,22 +21,33 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
       aria-label="Video settings menu"
       data-testid="settingsMenu"
     >
-      {player.getQualities().map((quality) => (
-        <li role="none" key={quality.name}>
-          <button
-            role="menuitem"
-            onClick={() => {
-              player.setQuality(quality.level);
-              closeMenu();
-            }}
-          >
-            {/* Indicate the source quality option for the user*/}
-            {quality.level === "chunked"
-              ? `${quality.name} (Source)`
-              : `${quality.name}`}
-          </button>
+      {player.hasQualitySettings() && (
+        <li>
+          <button role="menuitem">Quality</button>
+          <ul>
+            {player.getQualities().map((quality) => (
+              <li role="none" key={quality.name}>
+                <button
+                  role="menuitem"
+                  onClick={() => {
+                    player.setQuality(quality.level);
+                    closeMenu();
+                  }}
+                >
+                  {quality.name}
+                </button>
+              </li>
+            ))}
+          </ul>
         </li>
-      ))}
+      )}
+      <li>
+        <button role="menuitem">Subtitles</button>
+      </li>
+
+      <li>
+        <button role="menuitem">Playback Speed</button>
+      </li>
     </ul>
   );
 };

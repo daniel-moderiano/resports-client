@@ -190,7 +190,7 @@ export const VideoControls = ({
           <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
         </button>
 
-        {player.hasQualitySettings() && showSettings && (
+        {showSettings && (
           <VideoSettings
             player={player}
             closeMenu={() => setShowSettings(false)}

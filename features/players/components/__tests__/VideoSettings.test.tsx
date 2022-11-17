@@ -2,13 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { VideoSettings } from "features/players";
 
-// Named mocks to test player functions being called
-const hasQualitySettingsMock = () => true;
-
 const playerMock = {
-  getCurrentTime: () => 1,
-  isMuted: () => false,
-  getVolume: jest.fn,
   getQualities: () => [
     {
       name: "Auto",
@@ -24,11 +18,8 @@ const playerMock = {
     },
   ],
   setQuality: jest.fn,
-  hasQualitySettings: hasQualitySettingsMock,
+  hasQualitySettings: () => true,
 };
-
-// The max test timeout should be increase to deal with waiting for timeout intervals in certain tests
-jest.setTimeout(10000);
 
 const setup = () => {
   render(
@@ -43,12 +34,12 @@ const setup = () => {
 describe("Video settings menu", () => {
   it("Shows all relevant settings where they are all available", () => {
     setup();
-    const qualitySettings = screen.getByRole("button", { name: /quality/ });
-    const speedSettings = screen.getByRole("button", {
-      name: /playback speed/,
+    const qualitySettings = screen.getByRole("menuitem", { name: /quality/i });
+    const speedSettings = screen.getByRole("menuitem", {
+      name: /playback speed/i,
     });
-    const subtitleSettings = screen.getByRole("button", {
-      name: /playback speed/,
+    const subtitleSettings = screen.getByRole("menuitem", {
+      name: /subtitles/i,
     });
     expect(qualitySettings).toBeInTheDocument();
     expect(subtitleSettings).toBeInTheDocument();
@@ -56,14 +47,16 @@ describe("Video settings menu", () => {
   });
 
   it("Does not show settings that are not available for the video/platform", () => {
-    // TODO: Use different mock settings here for a YT replica
+    playerMock.hasQualitySettings = () => false;
     setup();
-    const qualitySettings = screen.queryByRole("button", { name: /quality/ });
-    const speedSettings = screen.getByRole("button", {
-      name: /playback speed/,
+    const qualitySettings = screen.queryByRole("menuitem", {
+      name: /quality/i,
     });
-    const subtitleSettings = screen.getByRole("button", {
-      name: /playback speed/,
+    const speedSettings = screen.getByRole("menuitem", {
+      name: /playback speed/i,
+    });
+    const subtitleSettings = screen.getByRole("menuitem", {
+      name: /subtitles/i,
     });
     expect(qualitySettings).not.toBeInTheDocument();
     expect(subtitleSettings).toBeInTheDocument();
