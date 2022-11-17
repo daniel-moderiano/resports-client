@@ -41,8 +41,32 @@ const setup = () => {
 };
 
 describe("Video settings menu", () => {
-  it("Shows all settings", () => {
+  it("Shows all relevant settings where they are all available", () => {
     setup();
-    expect(true).toBe(true);
+    const qualitySettings = screen.getByRole("button", { name: /quality/ });
+    const speedSettings = screen.getByRole("button", {
+      name: /playback speed/,
+    });
+    const subtitleSettings = screen.getByRole("button", {
+      name: /playback speed/,
+    });
+    expect(qualitySettings).toBeInTheDocument();
+    expect(subtitleSettings).toBeInTheDocument();
+    expect(speedSettings).toBeInTheDocument();
+  });
+
+  it("Does not show settings that are not available for the video/platform", () => {
+    // TODO: Use different mock settings here for a YT replica
+    setup();
+    const qualitySettings = screen.queryByRole("button", { name: /quality/ });
+    const speedSettings = screen.getByRole("button", {
+      name: /playback speed/,
+    });
+    const subtitleSettings = screen.getByRole("button", {
+      name: /playback speed/,
+    });
+    expect(qualitySettings).not.toBeInTheDocument();
+    expect(subtitleSettings).toBeInTheDocument();
+    expect(speedSettings).toBeInTheDocument();
   });
 });
