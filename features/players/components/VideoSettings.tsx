@@ -10,8 +10,8 @@ interface VideoSettingsProps {
 // Currently this menu only supports quality settings, but may be adapted later to include playback rate and caption settings
 export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
   // Handles typical accessibility and UX concerns
-  useMenuCloseEvents("settingsMenu", closeMenu);
-  useKeyboardNavigation("settingsMenu");
+  // useMenuCloseEvents("settingsMenu", closeMenu);
+  // useKeyboardNavigation("settingsMenu");
 
   return (
     <ul
@@ -41,13 +41,26 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
           </ul>
         </li>
       )}
-      <li>
-        <button role="menuitem">Subtitles</button>
-      </li>
-
-      <li>
-        <button role="menuitem">Playback Speed</button>
-      </li>
+      {player.hasPlaybackSpeedSettings() && (
+        <li>
+          <button role="menuitem">Playback Speed</button>
+          <ul>
+            {player.getAvailablePlaybackSpeeds().map((speed) => (
+              <li role="none" key={speed}>
+                <button
+                  role="menuitem"
+                  onClick={() => {
+                    player.setPlaybackSpeed(speed);
+                    closeMenu();
+                  }}
+                >
+                  {speed}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </li>
+      )}
     </ul>
   );
 };

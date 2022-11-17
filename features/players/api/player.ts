@@ -20,7 +20,7 @@ export class Player implements PlayerClass {
   }
 
   hasPlaybackSpeedSettings() {
-    return this.playerWrapper.hasQualitySettings();
+    return this.playerWrapper.hasPlaybackSpeedSettings();
   }
 
   getPlaybackSpeed() {
