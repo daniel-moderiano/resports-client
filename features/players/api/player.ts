@@ -19,6 +19,14 @@ export class Player implements PlayerClass {
     return this.playerWrapper.hasQualitySettings();
   }
 
+  hasCaptionSettings() {
+    return this.playerWrapper.hasQualitySettings();
+  }
+
+  hasPlaybackSpeedSettings() {
+    return this.playerWrapper.hasQualitySettings();
+  }
+
   seek(timestamp: number, allowSeekAhead?: boolean) {
     if (allowSeekAhead) {
       this.playerWrapper.seek(timestamp, allowSeekAhead);

@@ -27,6 +27,14 @@ export class YouTubePlayerWrapper implements PlayerClass {
     return false;
   }
 
+  hasCaptionSettings() {
+    return true;
+  }
+
+  hasPlaybackSpeedSettings() {
+    return true;
+  }
+
   // ! Deprecated functionality
   setQuality(quality: string) {
     this.player.setPlaybackQuality(quality);

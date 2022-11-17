@@ -19,6 +19,8 @@ const playerMock = {
   ],
   setQuality: jest.fn,
   hasQualitySettings: () => true,
+  hasPlaybackSpeedSettings: () => true,
+  hasCaptionSettings: () => true,
 };
 
 const setup = () => {

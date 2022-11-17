@@ -25,6 +25,8 @@ const playerMock = {
   ],
   setQuality: jest.fn,
   hasQualitySettings: hasQualitySettingsMock,
+  hasPlaybackSpeedSettings: () => true,
+  hasCaptionSettings: () => true,
 };
 
 let playerPausedMock = false;

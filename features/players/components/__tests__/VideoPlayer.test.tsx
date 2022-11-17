@@ -30,6 +30,8 @@ const playerWrapperPlaying: PlayerClass = {
   getQualities: () => {
     return [];
   },
+  hasPlaybackSpeedSettings: () => true,
+  hasCaptionSettings: () => true,
 };
 
 const playerWrapperPaused: PlayerClass = {

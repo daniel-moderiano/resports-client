@@ -23,6 +23,14 @@ export class TwitchPlayerWrapper implements PlayerClass {
     return true;
   }
 
+  hasCaptionSettings() {
+    return true;
+  }
+
+  hasPlaybackSpeedSettings() {
+    return false;
+  }
+
   seek(timestamp: number) {
     this.player.seek(timestamp);
   }
