@@ -183,6 +183,7 @@ export const VideoControls = ({
         <button
           className={styles.controlsBtn}
           aria-haspopup="menu"
+          aria-expanded={showSettings}
           aria-label="Open video settings menu"
           onClick={() => setShowSettings((prevState) => !prevState)}
           data-id="settingsMenu"

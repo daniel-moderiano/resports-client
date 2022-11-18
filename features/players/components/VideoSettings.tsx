@@ -14,7 +14,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
   // useKeyboardNavigation("settingsMenu");
 
   return (
-    <ul
+    <div
       id="settingsMenu"
       data-id="settingsMenu"
       role="menu"
@@ -22,45 +22,49 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
       data-testid="settingsMenu"
     >
       {player.hasQualitySettings() && (
-        <li>
-          <button role="menuitem">Quality</button>
-          <ul>
+        <div>
+          <button role="menuitem" aria-haspopup="true">
+            Quality
+          </button>
+          <div role="menu">
             {player.getQualities().map((quality) => (
-              <li role="none" key={quality.name}>
-                <button
-                  role="menuitem"
-                  onClick={() => {
-                    player.setQuality(quality.level);
-                    closeMenu();
-                  }}
-                >
-                  {quality.name}
-                </button>
-              </li>
+              <button
+                key={quality.name}
+                role="menuitem"
+                tabIndex={-1}
+                onClick={() => {
+                  player.setQuality(quality.level);
+                  closeMenu();
+                }}
+              >
+                {quality.name}
+              </button>
             ))}
-          </ul>
-        </li>
+          </div>
+        </div>
       )}
       {player.hasPlaybackSpeedSettings() && (
-        <li>
-          <button role="menuitem">Playback Speed</button>
-          <ul>
+        <div>
+          <button role="menuitem" aria-haspopup="true">
+            Quality
+          </button>
+          <div role="menu">
             {player.getAvailablePlaybackSpeeds().map((speed) => (
-              <li role="none" key={speed}>
-                <button
-                  role="menuitem"
-                  onClick={() => {
-                    player.setPlaybackSpeed(speed);
-                    closeMenu();
-                  }}
-                >
-                  {speed}
-                </button>
-              </li>
+              <button
+                key={speed}
+                role="menuitem"
+                tabIndex={-1}
+                onClick={() => {
+                  player.setPlaybackSpeed(speed);
+                  closeMenu();
+                }}
+              >
+                {speed}
+              </button>
             ))}
-          </ul>
-        </li>
+          </div>
+        </div>
       )}
-    </ul>
+    </div>
   );
 };
