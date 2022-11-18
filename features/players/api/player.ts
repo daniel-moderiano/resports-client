@@ -20,7 +20,8 @@ export class Player implements PlayerClass {
   }
 
   hasPlaybackSpeedSettings() {
-    return this.playerWrapper.hasPlaybackSpeedSettings();
+    // return this.playerWrapper.hasPlaybackSpeedSettings();
+    return true;
   }
 
   getPlaybackSpeed() {
@@ -28,7 +29,8 @@ export class Player implements PlayerClass {
   }
 
   getAvailablePlaybackSpeeds() {
-    return this.playerWrapper.getAvailablePlaybackSpeeds();
+    // return this.playerWrapper.getAvailablePlaybackSpeeds();
+    return [0.25, 0.5, 1, 1.5, 2];
   }
 
   setPlaybackSpeed(playbackSpeed: number) {

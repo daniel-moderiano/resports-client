@@ -12,9 +12,34 @@ interface VideoSettingsProps {
 export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
   // Handles typical accessibility and UX concerns
   useMenuCloseEvents("settingsMenuContainer", closeMenu);
-  // useKeyboardNavigation("settingsMenu");
+  const { menuRef: primaryMenu } = useKeyboardNavigation();
+  const { menuRef: qualitySubMenu } = useKeyboardNavigation();
+  const { menuRef: playbackSpeedSubMenu } = useKeyboardNavigation();
+
   const [showPlaybackSpeedMenu, setShowPlaybackSpeedMenu] = useState(false);
   const [showQualityMenu, setShowQualityMenu] = useState(false);
+
+  const handlePrimaryMenuKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    callback: () => void
+  ) => {
+    if (event.key === "ArrowRight") {
+      callback();
+    }
+
+    return;
+  };
+
+  const handleSubMenuKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    callback: () => void
+  ) => {
+    if (event.key === "ArrowLeft") {
+      callback();
+    }
+
+    return;
+  };
 
   const qualityMenuItems = player.getQualities().map((quality) => (
     <button
@@ -25,6 +50,9 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
         player.setQuality(quality.level);
         closeMenu();
       }}
+      onKeyDown={(event) =>
+        handleSubMenuKeyDown(event, () => setShowQualityMenu(false))
+      }
     >
       {quality.name}
     </button>
@@ -39,6 +67,9 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
         player.setPlaybackSpeed(speed);
         closeMenu();
       }}
+      onKeyDown={(event) =>
+        handleSubMenuKeyDown(event, () => setShowPlaybackSpeedMenu(false))
+      }
     >
       {speed}
     </button>
@@ -50,6 +81,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
       role="menu"
       aria-label="Video settings menu"
       data-testid="settingsMenu"
+      ref={primaryMenu}
     >
       {player.hasQualitySettings() && (
         <div>
@@ -60,10 +92,17 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
             onClick={() => {
               setShowQualityMenu((prevState) => !prevState);
             }}
+            onKeyDown={(event) =>
+              handlePrimaryMenuKeyDown(event, () => setShowQualityMenu(true))
+            }
           >
             Quality
           </button>
-          {showQualityMenu && <div role="menu">{qualityMenuItems}</div>}
+          {showQualityMenu && (
+            <div role="menu" ref={qualitySubMenu}>
+              {qualityMenuItems}
+            </div>
+          )}
         </div>
       )}
       {player.hasPlaybackSpeedSettings() && (
@@ -73,10 +112,19 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
             aria-haspopup="true"
             aria-expanded={showPlaybackSpeedMenu}
             onClick={() => setShowPlaybackSpeedMenu((prevState) => !prevState)}
+            onKeyDown={(event) =>
+              handlePrimaryMenuKeyDown(event, () =>
+                setShowPlaybackSpeedMenu(true)
+              )
+            }
           >
             Playback speed
           </button>
-          {showPlaybackSpeedMenu && <div role="menu">{playbackMenuItems}</div>}
+          {showPlaybackSpeedMenu && (
+            <div role="menu" ref={playbackSpeedSubMenu}>
+              {playbackMenuItems}
+            </div>
+          )}
         </div>
       )}
     </div>

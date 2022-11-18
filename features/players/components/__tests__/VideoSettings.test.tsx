@@ -94,6 +94,7 @@ describe("Options rendering and submenus", () => {
 });
 
 describe("Keyboard accessibility", () => {
+  playerMock.hasQualitySettings = () => true;
   // Menu should be of the form
   // - Quality
   //      - Auto
@@ -107,7 +108,7 @@ describe("Keyboard accessibility", () => {
     const playbackSpeedButton = screen.getByRole("menuitem", {
       name: /playback/i,
     });
-    await userEvent.keyboard("ArrowDown");
+    await userEvent.keyboard("{ArrowDown}");
     expect(playbackSpeedButton).toHaveFocus();
   });
 
@@ -116,13 +117,13 @@ describe("Keyboard accessibility", () => {
     const playbackSpeedButton = screen.getByRole("menuitem", {
       name: /playback/i,
     });
-    await userEvent.keyboard("Tab");
+    await userEvent.keyboard("{Tab}");
     expect(playbackSpeedButton).toHaveFocus();
   });
 
   it("Allows users to open submenus with RightArrow press", async () => {
     setup();
-    await userEvent.keyboard("ArrowRight");
+    await userEvent.keyboard("{ArrowRight}");
     // Looking for a specific submenu item
     const qualityOption = screen.getByRole("menuitem", {
       name: /1080p/i,
@@ -136,7 +137,7 @@ describe("Keyboard accessibility", () => {
       name: /quality/i,
     });
     await userEvent.click(qualityButton);
-    await userEvent.keyboard("ArrowDown");
+    await userEvent.keyboard("{ArrowDown}");
     // Second in submenu list
     const hd1080p = screen.getByRole("menuitem", {
       name: /1080p/i,
@@ -150,7 +151,7 @@ describe("Keyboard accessibility", () => {
       name: /quality/i,
     });
     await userEvent.click(qualityButton);
-    await userEvent.keyboard("Tab");
+    await userEvent.keyboard("{Tab}");
     // Second in submenu list
     const hd1080p = screen.getByRole("menuitem", {
       name: /1080p/i,
@@ -164,7 +165,7 @@ describe("Keyboard accessibility", () => {
       name: /quality/i,
     });
     await userEvent.click(qualityButton);
-    await userEvent.keyboard("ArrowLeft");
+    await userEvent.keyboard("{ArrowLeft}");
 
     const hd1080p = screen.queryByRole("menuitem", {
       name: /1080p/i,
