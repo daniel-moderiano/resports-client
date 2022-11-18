@@ -8,6 +8,7 @@ const nextConfig = {
       "yt3.ggpht.com",
       "lh3.googleusercontent.com",
       "i.ytimg.com",
+      "vod-secure.twitch.tv",
     ],
   },
 };
