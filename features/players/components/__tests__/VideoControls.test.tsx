@@ -284,7 +284,7 @@ describe("Settings menu display tests", () => {
     expect(menu).toBeInTheDocument();
   });
 
-  it("Does not close settings menu when clicking submenu button", async () => {
+  it("Does not close settings menu when clicking primary menu button", async () => {
     setup();
     const settingsBtn = screen.getByRole("button", {
       name: /open video settings menu/i,
@@ -294,7 +294,7 @@ describe("Settings menu display tests", () => {
     const qualityButton = screen.getByRole("menuitem", { name: /quality/i });
     userEvent.click(qualityButton);
 
-    const menu = screen.getAllByTestId("settingsMenu");
+    const menu = screen.getByTestId("settingsMenu");
     expect(menu).toBeInTheDocument();
   });
 

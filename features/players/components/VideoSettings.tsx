@@ -16,6 +16,32 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
   const [showPlaybackSpeedMenu, setShowPlaybackSpeedMenu] = useState(false);
   const [showQualityMenu, setShowQualityMenu] = useState(false);
 
+  const qualityMenuItems = player.getQualities().map((quality) => (
+    <button
+      key={quality.name}
+      role="menuitem"
+      tabIndex={-1}
+      onClick={() => {
+        player.setQuality(quality.level);
+      }}
+    >
+      {quality.name}
+    </button>
+  ));
+
+  const playbackMenuItems = player.getAvailablePlaybackSpeeds().map((speed) => (
+    <button
+      key={speed}
+      role="menuitem"
+      tabIndex={-1}
+      onClick={() => {
+        player.setPlaybackSpeed(speed);
+      }}
+    >
+      {speed}
+    </button>
+  ));
+
   return (
     <div
       id="settingsMenu"
@@ -34,23 +60,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
           >
             Quality
           </button>
-          {showQualityMenu && (
-            <div role="menu">
-              {player.getQualities().map((quality) => (
-                <button
-                  key={quality.name}
-                  role="menuitem"
-                  tabIndex={-1}
-                  onClick={() => {
-                    player.setQuality(quality.level);
-                    closeMenu();
-                  }}
-                >
-                  {quality.name}
-                </button>
-              ))}
-            </div>
-          )}
+          {showQualityMenu && <div role="menu">{qualityMenuItems}</div>}
         </div>
       )}
       {player.hasPlaybackSpeedSettings() && (
@@ -63,23 +73,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
           >
             Playback speed
           </button>
-          {showPlaybackSpeedMenu && (
-            <div role="menu">
-              {player.getAvailablePlaybackSpeeds().map((speed) => (
-                <button
-                  key={speed}
-                  role="menuitem"
-                  tabIndex={-1}
-                  onClick={() => {
-                    player.setPlaybackSpeed(speed);
-                    closeMenu();
-                  }}
-                >
-                  {speed}
-                </button>
-              ))}
-            </div>
-          )}
+          {showPlaybackSpeedMenu && <div role="menu">{playbackMenuItems}</div>}
         </div>
       )}
     </div>
