@@ -11,7 +11,7 @@ interface VideoSettingsProps {
 export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
   // Handles typical accessibility and UX concerns
   useMenuCloseEvents("settingsMenu", closeMenu);
-  useKeyboardNavigation("settingsMenu");
+  // useKeyboardNavigation("settingsMenu");
 
   return (
     <ul
@@ -21,22 +21,46 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
       aria-label="Video settings menu"
       data-testid="settingsMenu"
     >
-      {player.getQualities().map((quality) => (
-        <li role="none" key={quality.name}>
-          <button
-            role="menuitem"
-            onClick={() => {
-              player.setQuality(quality.level);
-              closeMenu();
-            }}
-          >
-            {/* Indicate the source quality option for the user*/}
-            {quality.level === "chunked"
-              ? `${quality.name} (Source)`
-              : `${quality.name}`}
-          </button>
+      {player.hasQualitySettings() && (
+        <li>
+          <button role="menuitem">Quality</button>
+          <ul>
+            {player.getQualities().map((quality) => (
+              <li role="none" key={quality.name}>
+                <button
+                  role="menuitem"
+                  onClick={() => {
+                    player.setQuality(quality.level);
+                    closeMenu();
+                  }}
+                >
+                  {quality.name}
+                </button>
+              </li>
+            ))}
+          </ul>
         </li>
-      ))}
+      )}
+      {player.hasPlaybackSpeedSettings() && (
+        <li>
+          <button role="menuitem">Playback Speed</button>
+          <ul>
+            {player.getAvailablePlaybackSpeeds().map((speed) => (
+              <li role="none" key={speed}>
+                <button
+                  role="menuitem"
+                  onClick={() => {
+                    player.setPlaybackSpeed(speed);
+                    closeMenu();
+                  }}
+                >
+                  {speed}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </li>
+      )}
     </ul>
   );
 };

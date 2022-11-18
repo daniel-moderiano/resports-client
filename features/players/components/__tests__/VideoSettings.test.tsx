@@ -1,0 +1,81 @@
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { VideoSettings } from "features/players";
+
+const playerMock = {
+  getQualities: () => [
+    {
+      name: "Auto",
+      level: "auto",
+    },
+    {
+      name: "1080p60",
+      level: "chunked",
+    },
+    {
+      name: "720p60",
+      level: "720p60",
+    },
+  ],
+  setQuality: jest.fn,
+  hasQualitySettings: () => true,
+  hasPlaybackSpeedSettings: () => true,
+  getPlaybackSpeed: () => 1,
+  getAvailablePlaybackSpeeds: () => [1, 2],
+  setPlaybackSpeed: jest.fn,
+};
+
+const setup = () => {
+  render(
+    <VideoSettings
+      // @ts-expect-error we don't require most player methods for testing, so a partial implementation is fine
+      player={playerMock}
+      closeMenu={jest.fn}
+    />
+  );
+};
+
+describe("Video settings menu", () => {
+  it("Shows all relevant settings where they are all available", () => {
+    setup();
+    const qualitySettings = screen.getByRole("menuitem", { name: /quality/i });
+    const speedSettings = screen.getByRole("menuitem", {
+      name: /playback speed/i,
+    });
+    expect(qualitySettings).toBeInTheDocument();
+    expect(speedSettings).toBeInTheDocument();
+  });
+
+  it("Does not show settings that are not available for the video/platform", () => {
+    playerMock.hasQualitySettings = () => false;
+    setup();
+    const qualitySettings = screen.queryByRole("menuitem", {
+      name: /quality/i,
+    });
+    const speedSettings = screen.getByRole("menuitem", {
+      name: /playback speed/i,
+    });
+    expect(qualitySettings).not.toBeInTheDocument();
+    expect(speedSettings).toBeInTheDocument();
+  });
+
+  it("Shows all available qualities if that setting is present", () => {
+    playerMock.hasQualitySettings = () => true;
+    setup();
+    const auto = screen.getByText(/auto/i);
+    const hd720 = screen.getByText(/720p/i);
+    const hd1080 = screen.getByText(/1080p/i);
+    expect(auto).toBeInTheDocument();
+    expect(hd720).toBeInTheDocument();
+    expect(hd1080).toBeInTheDocument();
+  });
+
+  it("Shows all available playback speeds if that setting is present", () => {
+    playerMock.hasQualitySettings = () => false;
+    setup();
+    const one = screen.getByText(/1/i);
+    const two = screen.getByText(/2/i);
+    expect(one).toBeInTheDocument();
+    expect(two).toBeInTheDocument();
+  });
+});

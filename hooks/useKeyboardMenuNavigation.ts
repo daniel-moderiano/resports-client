@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 // Trap focus within a dropdown menu and handle arrow navigation (still allow user to tab out of menu)
-// ! The menu must have accessible menuitem roles, and be in hte form ul>li>button
+// ! The menu must have accessible menuitem roles, and be in the form ul>li>button
 export const useKeyboardNavigation = (elementId: string) => {
   useEffect(() => {
     const menu: HTMLUListElement | null = document.querySelector(
