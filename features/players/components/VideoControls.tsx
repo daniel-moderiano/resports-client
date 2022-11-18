@@ -180,23 +180,24 @@ export const VideoControls = ({
       </div>
 
       <div className={styles.rightControls}>
-        <button
-          className={styles.controlsBtn}
-          aria-haspopup="menu"
-          aria-expanded={showSettings}
-          aria-label="Open video settings menu"
-          onClick={() => setShowSettings((prevState) => !prevState)}
-          data-id="settingsMenu"
-        >
-          <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
-        </button>
+        <div id="settingsMenuContainer">
+          <button
+            className={styles.controlsBtn}
+            aria-haspopup="menu"
+            aria-expanded={showSettings}
+            aria-label="Open video settings menu"
+            onClick={() => setShowSettings((prevState) => !prevState)}
+          >
+            <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
+          </button>
 
-        {showSettings && (
-          <VideoSettings
-            player={player}
-            closeMenu={() => setShowSettings(false)}
-          />
-        )}
+          {showSettings && (
+            <VideoSettings
+              player={player}
+              closeMenu={() => setShowSettings(false)}
+            />
+          )}
+        </div>
 
         <button
           className={styles.controlsBtn}

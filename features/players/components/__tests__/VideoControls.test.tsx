@@ -292,7 +292,7 @@ describe("Settings menu display tests", () => {
     await userEvent.click(settingsBtn);
 
     const qualityButton = screen.getByRole("menuitem", { name: /quality/i });
-    userEvent.click(qualityButton);
+    await userEvent.click(qualityButton);
 
     const menu = screen.getByTestId("settingsMenu");
     expect(menu).toBeInTheDocument();
@@ -306,10 +306,10 @@ describe("Settings menu display tests", () => {
     await userEvent.click(settingsBtn);
 
     const qualityButton = screen.getByRole("menuitem", { name: /quality/i });
-    userEvent.click(qualityButton);
+    await userEvent.click(qualityButton);
 
     const qualityOption = screen.getByRole("menuitem", { name: /1080p/i });
-    userEvent.click(qualityOption);
+    await userEvent.click(qualityOption);
 
     const menu = screen.queryByTestId("settingsMenu");
     expect(menu).not.toBeInTheDocument();

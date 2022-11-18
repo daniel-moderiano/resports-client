@@ -11,7 +11,7 @@ interface VideoSettingsProps {
 // Currently this menu only supports quality settings, but may be adapted later to include playback rate and caption settings
 export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
   // Handles typical accessibility and UX concerns
-  // useMenuCloseEvents("settingsMenu", closeMenu);
+  useMenuCloseEvents("settingsMenuContainer", closeMenu);
   // useKeyboardNavigation("settingsMenu");
   const [showPlaybackSpeedMenu, setShowPlaybackSpeedMenu] = useState(false);
   const [showQualityMenu, setShowQualityMenu] = useState(false);
@@ -23,6 +23,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
       tabIndex={-1}
       onClick={() => {
         player.setQuality(quality.level);
+        closeMenu();
       }}
     >
       {quality.name}
@@ -36,6 +37,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
       tabIndex={-1}
       onClick={() => {
         player.setPlaybackSpeed(speed);
+        closeMenu();
       }}
     >
       {speed}
@@ -45,7 +47,6 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
   return (
     <div
       id="settingsMenu"
-      data-id="settingsMenu"
       role="menu"
       aria-label="Video settings menu"
       data-testid="settingsMenu"
@@ -56,7 +57,9 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
             role="menuitem"
             aria-haspopup="true"
             aria-expanded={showQualityMenu}
-            onClick={() => setShowQualityMenu((prevState) => !prevState)}
+            onClick={() => {
+              setShowQualityMenu((prevState) => !prevState);
+            }}
           >
             Quality
           </button>
