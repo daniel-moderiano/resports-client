@@ -2,6 +2,8 @@ import { useKeyboardNavigation } from "hooks/useKeyboardMenuNavigation";
 import { useMenuCloseEvents } from "hooks/useMenuCloseEvents";
 import { Player } from "features/players";
 import { useState } from "react";
+import { QualitySettingsMenu } from "./video-settings/QualitySettingsMenu";
+import { PlaybackSpeedSettingsMenu } from "./video-settings/PlaybackSpeedSettingsMenu";
 
 interface VideoSettingsProps {
   closeMenu: () => void;
@@ -13,8 +15,6 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
   // Handles typical accessibility and UX concerns
   useMenuCloseEvents("settingsMenuContainer", closeMenu);
   const { menuRef: primaryMenu } = useKeyboardNavigation();
-  const { menuRef: qualitySubMenu } = useKeyboardNavigation();
-  const { menuRef: playbackSpeedSubMenu } = useKeyboardNavigation();
 
   const [showPlaybackSpeedMenu, setShowPlaybackSpeedMenu] = useState(false);
   const [showQualityMenu, setShowQualityMenu] = useState(false);
@@ -29,51 +29,6 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
 
     return;
   };
-
-  const handleSubMenuKeyDown = (
-    event: React.KeyboardEvent<HTMLButtonElement>,
-    callback: () => void
-  ) => {
-    if (event.key === "ArrowLeft") {
-      callback();
-    }
-
-    return;
-  };
-
-  const qualityMenuItems = player.getQualities().map((quality) => (
-    <button
-      key={quality.name}
-      role="menuitem"
-      tabIndex={-1}
-      onClick={() => {
-        player.setQuality(quality.level);
-        closeMenu();
-      }}
-      onKeyDown={(event) =>
-        handleSubMenuKeyDown(event, () => setShowQualityMenu(false))
-      }
-    >
-      {quality.name}
-    </button>
-  ));
-
-  const playbackMenuItems = player.getAvailablePlaybackSpeeds().map((speed) => (
-    <button
-      key={speed}
-      role="menuitem"
-      tabIndex={-1}
-      onClick={() => {
-        player.setPlaybackSpeed(speed);
-        closeMenu();
-      }}
-      onKeyDown={(event) =>
-        handleSubMenuKeyDown(event, () => setShowPlaybackSpeedMenu(false))
-      }
-    >
-      {speed}
-    </button>
-  ));
 
   return (
     <div
@@ -99,9 +54,11 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
             Quality
           </button>
           {showQualityMenu && (
-            <div role="menu" ref={qualitySubMenu}>
-              {qualityMenuItems}
-            </div>
+            <QualitySettingsMenu
+              player={player}
+              closeSelf={() => setShowQualityMenu(false)}
+              closePrimaryMenu={closeMenu}
+            />
           )}
         </div>
       )}
@@ -121,9 +78,11 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
             Playback speed
           </button>
           {showPlaybackSpeedMenu && (
-            <div role="menu" ref={playbackSpeedSubMenu}>
-              {playbackMenuItems}
-            </div>
+            <PlaybackSpeedSettingsMenu
+              player={player}
+              closeSelf={() => setShowPlaybackSpeedMenu(false)}
+              closePrimaryMenu={closeMenu}
+            />
           )}
         </div>
       )}
