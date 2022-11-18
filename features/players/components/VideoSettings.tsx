@@ -30,6 +30,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
             role="menuitem"
             aria-haspopup="true"
             aria-expanded={showQualityMenu}
+            onClick={() => setShowQualityMenu((prevState) => !prevState)}
           >
             Quality
           </button>
@@ -58,6 +59,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
             role="menuitem"
             aria-haspopup="true"
             aria-expanded={showPlaybackSpeedMenu}
+            onClick={() => setShowPlaybackSpeedMenu((prevState) => !prevState)}
           >
             Playback speed
           </button>
