@@ -35,7 +35,7 @@ const setup = () => {
   );
 };
 
-describe("Video settings menu", () => {
+describe("Options rendering and submenus", () => {
   it("Shows all relevant settings where they are all available", () => {
     setup();
     const qualitySettings = screen.getByRole("menuitem", { name: /quality/i });
@@ -90,5 +90,31 @@ describe("Video settings menu", () => {
     const two = screen.getByText(/2/i);
     expect(one).toBeInTheDocument();
     expect(two).toBeInTheDocument();
+  });
+});
+
+describe("Keyboard accessibility", () => {
+  it("Allows user to navigate primary menu options with up/down arrow keys", async () => {
+    setup();
+  });
+
+  it("Allows user to navigate primary menu options with tab key", async () => {
+    setup();
+  });
+
+  it("Allows users to open submenus with RightArrow press", async () => {
+    setup();
+  });
+
+  it("Allows user to navigate submenu options with up/down arrow keys", async () => {
+    setup();
+  });
+
+  it("Allows user to navigate submenu options with tab key", async () => {
+    setup();
+  });
+
+  it("Allows users to close submenus with LeftArrow press", async () => {
+    setup();
   });
 });

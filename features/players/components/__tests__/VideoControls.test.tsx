@@ -314,4 +314,15 @@ describe("Settings menu display tests", () => {
     const menu = screen.queryByTestId("settingsMenu");
     expect(menu).not.toBeInTheDocument();
   });
+
+  it("Automatically focuses the first available menu item for keyboard navigation", async () => {
+    setup();
+    const settingsBtn = screen.getByRole("button", {
+      name: /open video settings menu/i,
+    });
+    await userEvent.click(settingsBtn);
+
+    const qualityButton = screen.getByRole("menuitem", { name: /quality/i });
+    expect(qualityButton).toHaveFocus();
+  });
 });
