@@ -242,19 +242,6 @@ describe("Settings menu display tests", () => {
     expect(menu).toBeInTheDocument();
   });
 
-  it("Closes settings menu on click of settings btn if menu is already open", async () => {
-    setup();
-    // Open and close with double btn press
-    const settingsBtn = screen.getByRole("button", {
-      name: /open video settings menu/i,
-    });
-    await userEvent.click(settingsBtn);
-    await userEvent.click(settingsBtn);
-
-    const menu = screen.queryByTestId("settingsMenu");
-    expect(menu).not.toBeInTheDocument();
-  });
-
   it("Closes menu when outside click occurs", async () => {
     setup();
 
@@ -274,7 +261,6 @@ describe("Settings menu display tests", () => {
 
   it("Closes menu when Esc key is pressed", async () => {
     setup();
-    // Open menu
     const settingsBtn = screen.getByRole("button", {
       name: /open video settings menu/i,
     });
@@ -288,7 +274,6 @@ describe("Settings menu display tests", () => {
 
   it("Does not close menu when menu is clicked in a non-button area (e.g. menu background)", async () => {
     setup();
-    // Open menu
     const settingsBtn = screen.getByRole("button", {
       name: /open video settings menu/i,
     });
@@ -297,5 +282,36 @@ describe("Settings menu display tests", () => {
     const menu = screen.getByTestId("settingsMenu");
     await userEvent.click(menu);
     expect(menu).toBeInTheDocument();
+  });
+
+  it("Does not close settings menu when clicking submenu button", async () => {
+    setup();
+    const settingsBtn = screen.getByRole("button", {
+      name: /open video settings menu/i,
+    });
+    await userEvent.click(settingsBtn);
+
+    const qualityButton = screen.getByRole("menuitem", { name: /quality/i });
+    userEvent.click(qualityButton);
+
+    const menu = screen.getAllByTestId("settingsMenu");
+    expect(menu).toBeInTheDocument();
+  });
+
+  it("Closes menu when clicking option within submenu", async () => {
+    setup();
+    const settingsBtn = screen.getByRole("button", {
+      name: /open video settings menu/i,
+    });
+    await userEvent.click(settingsBtn);
+
+    const qualityButton = screen.getByRole("menuitem", { name: /quality/i });
+    userEvent.click(qualityButton);
+
+    const qualityOption = screen.getByRole("menuitem", { name: /1080p/i });
+    userEvent.click(qualityOption);
+
+    const menu = screen.queryByTestId("settingsMenu");
+    expect(menu).not.toBeInTheDocument();
   });
 });
