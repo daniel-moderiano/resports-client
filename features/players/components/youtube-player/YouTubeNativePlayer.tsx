@@ -6,14 +6,18 @@ import { useUserActivity } from "features/players/hooks/useUserActivity";
 import VideoContainer from "../VideoContainer";
 import { useYouTubeIframe, VideoControls } from "features/players";
 import { useSeek } from "features/players/hooks/useSeek";
-
 interface YouTubeNativePlayerProps {
   videoId: string;
 }
 
 export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
   const { player } = useYouTubeIframe(videoId, true);
-  const { userActive, setUserActive, signalUserActivity } = useUserActivity();
+  const {
+    userActive,
+    signalUserInactivity,
+    signalUserActivity,
+    setLockUserActive,
+  } = useUserActivity();
   const { scheduleSeek, projectedTime } = useSeek(player);
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -72,11 +76,11 @@ export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
 
         // A longer timeout is used here because it can be quite anti-user experience to have controls and cursor fade almost immediately after pressing play.
         setTimeout(() => {
-          setUserActive(false); // ensure video controls fade
+          signalUserInactivity; // ensure video controls fade
         }, 1000);
       }
     }
-  }, [player, setUserActive]);
+  }, [player, signalUserInactivity]);
 
   const toggleTheaterMode = () => {
     setTheaterMode((prevState) => !prevState);
@@ -154,7 +158,7 @@ export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
   return (
     <div>
       <VideoContainer
-        setUserActive={setUserActive}
+        signalUserInactivity={signalUserInactivity}
         theaterMode={theaterMode}
         wrapperRef={wrapperRef}
       >
@@ -189,6 +193,7 @@ export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
               playerMuted={playerMuted}
               seek={scheduleSeek}
               projectedTime={projectedTime}
+              setLockUserActive={setLockUserActive}
             />
           </div>
         )}

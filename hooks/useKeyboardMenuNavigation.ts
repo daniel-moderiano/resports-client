@@ -1,9 +1,13 @@
 import * as React from "react";
 
 // Trap focus within a dropdown menu and handle arrow navigation (still allow user to tab out of menu)
-// ! The menu must have accessible menuitem roles, and be in the form ul>li>button
+// ! Expose a public function that let's the user manually add/remove keyboard functionality to allow switching between sub and primary menus
+
 export const useKeyboardNavigation = () => {
   const menuRef = React.useRef<HTMLDivElement | null>(null);
+  const [enableKeyboardNavigation, setEnableKeyboardNavigation] =
+    React.useState(true);
+
   React.useEffect(() => {
     const menu = menuRef.current;
     // Grab all focusable elements within the menu
@@ -59,13 +63,18 @@ export const useKeyboardNavigation = () => {
       }
     };
 
-    menu.addEventListener("keydown", handleKeyPress);
+    if (enableKeyboardNavigation) {
+      menu.addEventListener("keydown", handleKeyPress);
+    } else {
+      menu.removeEventListener("keydown", handleKeyPress);
+    }
 
     return () => {
       menu.removeEventListener("keydown", handleKeyPress);
     };
-  }, []);
+  }, [enableKeyboardNavigation]);
   return {
     menuRef,
+    setEnableKeyboardNavigation,
   };
 };

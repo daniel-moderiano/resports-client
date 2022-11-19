@@ -14,7 +14,12 @@ interface VideoPlayerProps {
 }
 
 export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
-  const { userActive, setUserActive, signalUserActivity } = useUserActivity();
+  const {
+    userActive,
+    signalUserInactivity,
+    signalUserActivity,
+    setLockUserActive,
+  } = useUserActivity();
   const { scheduleSeek, projectedTime } = useSeek(player);
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -60,13 +65,13 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         player.play();
         // A longer timeout is used here because it can be quite anti-user experience to have controls and cursor fade almost immediately after pressing play.
         setTimeout(() => {
-          setUserActive(false); // ensure video controls fade
+          signalUserInactivity();
         }, 1000);
       } else {
         player.pause();
       }
     }
-  }, [player, setUserActive]);
+  }, [player, signalUserInactivity]);
 
   const toggleTheaterMode = () => {
     setTheaterMode((prevState) => !prevState);
@@ -143,7 +148,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
 
   return (
     <VideoContainer
-      setUserActive={setUserActive}
+      signalUserInactivity={signalUserInactivity}
       theaterMode={theaterMode}
       wrapperRef={wrapperRef}
     >
@@ -176,6 +181,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
             playerMuted={playerMuted}
             seek={scheduleSeek}
             projectedTime={projectedTime}
+            setLockUserActive={setLockUserActive}
           />
         </div>
       )}

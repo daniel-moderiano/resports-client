@@ -14,7 +14,8 @@ interface VideoSettingsProps {
 export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
   // Handles typical accessibility and UX concerns
   useMenuCloseEvents("settingsMenuContainer", closeMenu);
-  const { menuRef: primaryMenu } = useKeyboardNavigation();
+  const { menuRef: primaryMenu, setEnableKeyboardNavigation } =
+    useKeyboardNavigation();
 
   const [showPlaybackSpeedMenu, setShowPlaybackSpeedMenu] = useState(false);
   const [showQualityMenu, setShowQualityMenu] = useState(false);
@@ -48,7 +49,10 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
               setShowQualityMenu((prevState) => !prevState);
             }}
             onKeyDown={(event) =>
-              handlePrimaryMenuKeyDown(event, () => setShowQualityMenu(true))
+              handlePrimaryMenuKeyDown(event, () => {
+                setShowQualityMenu(true);
+                // setEnableKeyboardNavigation(false);
+              })
             }
           >
             Quality

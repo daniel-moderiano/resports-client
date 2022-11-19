@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styles from "features/players/components/styles/YouTubeVideoControls.module.css";
 import MutedIcon from "icons/MutedIcon";
 import VolumeIcon from "icons/VolumeIcon";
@@ -28,6 +28,7 @@ interface VideoControlsProps {
   seek: (timeToSkipInSeconds: number) => void;
   playerMuted: boolean;
   projectedTime: number | null;
+  setLockUserActive: Dispatch<SetStateAction<boolean>>;
 }
 
 export const VideoControls = ({
@@ -40,6 +41,7 @@ export const VideoControls = ({
   seek,
   playerMuted,
   projectedTime,
+  setLockUserActive,
 }: VideoControlsProps) => {
   // Controls display of video quality settings menu
   const [showSettings, setShowSettings] = useState(false);
@@ -52,6 +54,14 @@ export const VideoControls = ({
       wrapper.focus();
     }
   };
+
+  useEffect(() => {
+    if (showSettings) {
+      setLockUserActive(true);
+    } else {
+      setLockUserActive(false);
+    }
+  }, [showSettings, setLockUserActive]);
 
   return (
     <div className={styles.controlsContainer}>
