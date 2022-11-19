@@ -1,19 +1,19 @@
 import { Player } from "features/players";
-import { useKeyboardNavigation } from "hooks/useKeyboardMenuNavigation";
 
 interface PlaybackSpeedSettingsMenuProps {
   player: Player;
   closeSelf: () => void;
   closePrimaryMenu: () => void;
+
+  ref: React.MutableRefObject<HTMLDivElement | null>;
 }
 
 export const PlaybackSpeedSettingsMenu = ({
   player,
   closeSelf,
   closePrimaryMenu,
+  ref,
 }: PlaybackSpeedSettingsMenuProps) => {
-  const { menuRef: playbackSpeedSubMenu } = useKeyboardNavigation();
-
   const handleSubMenuKeyDown = (
     event: React.KeyboardEvent<HTMLButtonElement>,
     callback: () => void
@@ -26,7 +26,7 @@ export const PlaybackSpeedSettingsMenu = ({
   };
 
   return (
-    <div role="menu" ref={playbackSpeedSubMenu}>
+    <div role="menu" ref={ref}>
       {player.getAvailablePlaybackSpeeds().map((speed) => (
         <button
           key={speed}

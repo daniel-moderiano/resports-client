@@ -4,6 +4,7 @@ import { Player } from "features/players";
 import { useState } from "react";
 import { QualitySettingsMenu } from "./video-settings/QualitySettingsMenu";
 import { PlaybackSpeedSettingsMenu } from "./video-settings/PlaybackSpeedSettingsMenu";
+import * as React from "react";
 
 interface VideoSettingsProps {
   closeMenu: () => void;
@@ -14,11 +15,17 @@ interface VideoSettingsProps {
 export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
   // Handles typical accessibility and UX concerns
   useMenuCloseEvents("settingsMenuContainer", closeMenu);
-  const { menuRef: primaryMenu, setEnableKeyboardNavigation } =
-    useKeyboardNavigation();
+  const primaryMenu = React.useRef<HTMLDivElement | null>(null);
+  const playbackSpeedMenu = React.useRef<HTMLDivElement | null>(null);
+  const qualityMenu = React.useRef<HTMLDivElement | null>(null);
 
   const [showPlaybackSpeedMenu, setShowPlaybackSpeedMenu] = useState(false);
   const [showQualityMenu, setShowQualityMenu] = useState(false);
+  const [currentlyFocusedMenu, setCurrentlyFocusedMenu] =
+    React.useState(primaryMenu);
+
+  const { setEnableKeyboardNavigation } =
+    useKeyboardNavigation(currentlyFocusedMenu);
 
   const handlePrimaryMenuKeyDown = (
     event: React.KeyboardEvent<HTMLButtonElement>,
@@ -62,6 +69,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
               player={player}
               closeSelf={() => setShowQualityMenu(false)}
               closePrimaryMenu={closeMenu}
+              ref={qualityMenu}
             />
           )}
         </div>
@@ -86,6 +94,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
               player={player}
               closeSelf={() => setShowPlaybackSpeedMenu(false)}
               closePrimaryMenu={closeMenu}
+              ref={playbackSpeedMenu}
             />
           )}
         </div>

@@ -9,9 +9,8 @@ export const useUserActivity = () => {
   // An overriding user active state that is unaffected by inactivity timeouts
   const [lockUserActive, setLockUserActive] = React.useState(false);
 
+  // Prefer this over directly calling setUserActive, as that would bypass the userActivity lock
   const signalUserInactivity = React.useCallback(() => {
-    console.log("User inactive");
-
     if (!lockUserActive) {
       setUserActive(false);
     }
