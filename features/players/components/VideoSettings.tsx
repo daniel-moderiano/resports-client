@@ -24,8 +24,17 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
   const [currentlyFocusedMenu, setCurrentlyFocusedMenu] =
     React.useState(primaryMenu);
 
-  const { setEnableKeyboardNavigation } =
-    useKeyboardNavigation(currentlyFocusedMenu);
+  React.useEffect(() => {
+    if (showQualityMenu) {
+      setCurrentlyFocusedMenu(qualityMenu);
+    } else if (showPlaybackSpeedMenu) {
+      setCurrentlyFocusedMenu(playbackSpeedMenu);
+    } else {
+      setCurrentlyFocusedMenu(primaryMenu);
+    }
+  }, [showPlaybackSpeedMenu, showQualityMenu]);
+
+  useKeyboardNavigation(currentlyFocusedMenu);
 
   const handlePrimaryMenuKeyDown = (
     event: React.KeyboardEvent<HTMLButtonElement>,
@@ -58,7 +67,6 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
             onKeyDown={(event) =>
               handlePrimaryMenuKeyDown(event, () => {
                 setShowQualityMenu(true);
-                // setEnableKeyboardNavigation(false);
               })
             }
           >
@@ -82,9 +90,9 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
             aria-expanded={showPlaybackSpeedMenu}
             onClick={() => setShowPlaybackSpeedMenu((prevState) => !prevState)}
             onKeyDown={(event) =>
-              handlePrimaryMenuKeyDown(event, () =>
-                setShowPlaybackSpeedMenu(true)
-              )
+              handlePrimaryMenuKeyDown(event, () => {
+                setShowPlaybackSpeedMenu(true);
+              })
             }
           >
             Playback speed

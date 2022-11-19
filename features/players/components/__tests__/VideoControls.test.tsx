@@ -57,6 +57,7 @@ const setup = () => {
       seek={seekMock}
       toggleMute={toggleMuteMock}
       projectedTime={projectedTime}
+      setLockUserActive={jest.fn}
     />
   );
 };

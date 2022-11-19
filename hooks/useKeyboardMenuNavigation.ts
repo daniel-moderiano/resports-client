@@ -64,16 +64,18 @@ export const useKeyboardNavigation = (
       }
     };
 
-    if (enableKeyboardNavigation) {
-      menu.addEventListener("keydown", handleKeyPress);
-    } else {
-      menu.removeEventListener("keydown", handleKeyPress);
-    }
+    // if (enableKeyboardNavigation) {
+    //   menu.addEventListener("keydown", handleKeyPress);
+    // } else {
+    //   menu.removeEventListener("keydown", handleKeyPress);
+    // }
+
+    menu.addEventListener("keydown", handleKeyPress);
 
     return () => {
       menu.removeEventListener("keydown", handleKeyPress);
     };
-  }, [menuRef, enableKeyboardNavigation]);
+  }, [menuRef]);
   return {
     menuRef,
     setEnableKeyboardNavigation,
