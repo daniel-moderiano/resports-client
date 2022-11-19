@@ -29,7 +29,6 @@ export const QualitySettingsMenu = React.forwardRef(
           <button
             key={quality.name}
             role="menuitem"
-            tabIndex={-1}
             onClick={() => {
               player.setQuality(quality.level);
               closePrimaryMenu();

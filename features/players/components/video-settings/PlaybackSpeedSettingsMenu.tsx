@@ -29,7 +29,6 @@ export const PlaybackSpeedSettingsMenu = React.forwardRef(
           <button
             key={speed}
             role="menuitem"
-            tabIndex={-1}
             onClick={() => {
               player.setPlaybackSpeed(speed);
               closePrimaryMenu();
