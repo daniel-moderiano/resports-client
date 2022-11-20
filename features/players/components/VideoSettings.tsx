@@ -60,6 +60,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
       {player.hasQualitySettings() && (
         <div>
           <button
+            className={styles.menuButton}
             role="menuitem"
             aria-haspopup="true"
             aria-expanded={showQualityMenu}
@@ -87,6 +88,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
       {player.hasPlaybackSpeedSettings() && (
         <div>
           <button
+            className={styles.menuButton}
             role="menuitem"
             aria-haspopup="true"
             aria-expanded={showPlaybackSpeedMenu}

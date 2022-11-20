@@ -5,4 +5,14 @@
   opacity: 0.85;
   color: white;
   bottom: 52px;
+  right: -40px;
+  width: 16rem;
+}
+
+.menuButton {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  font-size: 0.85rem;
+  padding: 0.7rem;
 }
