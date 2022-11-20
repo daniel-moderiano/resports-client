@@ -3,14 +3,14 @@ import styles from "features/players/components/styles/TwitchPlayer.module.css";
 
 interface VideoContainerProps {
   children: React.ReactNode;
-  setUserActive: React.Dispatch<React.SetStateAction<boolean>>;
+  signalUserInactivity: () => void;
   theaterMode: boolean;
   wrapperRef: React.MutableRefObject<HTMLDivElement | null>;
 }
 
 const VideoContainer = ({
   children,
-  setUserActive,
+  signalUserInactivity,
   theaterMode,
   wrapperRef,
 }: VideoContainerProps) => {
@@ -21,7 +21,7 @@ const VideoContainer = ({
         theaterMode ? styles.wrapperTheater : styles.wrapperNormal
       }`}
       data-testid="wrapper"
-      onMouseLeave={() => setUserActive(false)}
+      onMouseLeave={signalUserInactivity}
       tabIndex={0}
       ref={wrapperRef}
     >

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styles from "features/players/components/styles/YouTubeVideoControls.module.css";
 import MutedIcon from "icons/MutedIcon";
 import VolumeIcon from "icons/VolumeIcon";
@@ -28,6 +28,7 @@ interface VideoControlsProps {
   seek: (timeToSkipInSeconds: number) => void;
   playerMuted: boolean;
   projectedTime: number | null;
+  setLockUserActive: Dispatch<SetStateAction<boolean>>;
 }
 
 export const VideoControls = ({
@@ -40,6 +41,7 @@ export const VideoControls = ({
   seek,
   playerMuted,
   projectedTime,
+  setLockUserActive,
 }: VideoControlsProps) => {
   // Controls display of video quality settings menu
   const [showSettings, setShowSettings] = useState(false);
@@ -52,6 +54,14 @@ export const VideoControls = ({
       wrapper.focus();
     }
   };
+
+  useEffect(() => {
+    if (showSettings) {
+      setLockUserActive(true);
+    } else {
+      setLockUserActive(false);
+    }
+  }, [showSettings, setLockUserActive]);
 
   return (
     <div className={styles.controlsContainer}>
@@ -180,22 +190,24 @@ export const VideoControls = ({
       </div>
 
       <div className={styles.rightControls}>
-        <button
-          className={styles.controlsBtn}
-          aria-haspopup="menu"
-          aria-label="Open video settings menu"
-          onClick={() => setShowSettings((prevState) => !prevState)}
-          data-id="settingsMenu"
-        >
-          <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
-        </button>
+        <div id="settingsMenuContainer">
+          <button
+            className={styles.controlsBtn}
+            aria-haspopup="menu"
+            aria-expanded={showSettings}
+            aria-label="Open video settings menu"
+            onClick={() => setShowSettings((prevState) => !prevState)}
+          >
+            <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
+          </button>
 
-        {showSettings && (
-          <VideoSettings
-            player={player}
-            closeMenu={() => setShowSettings(false)}
-          />
-        )}
+          {showSettings && (
+            <VideoSettings
+              player={player}
+              closeMenu={() => setShowSettings(false)}
+            />
+          )}
+        </div>
 
         <button
           className={styles.controlsBtn}
