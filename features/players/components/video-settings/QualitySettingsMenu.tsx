@@ -1,5 +1,6 @@
 import { Player } from "features/players";
 import * as React from "react";
+import styles from "features/players/components/styles/VideoSettings.module.css";
 
 interface QualitySettingsMenuProps {
   player: Player;
@@ -26,9 +27,14 @@ export const QualitySettingsMenu = ({
   };
 
   return (
-    <div role="menu" ref={innerRef}>
+    <div
+      role="menu"
+      ref={innerRef}
+      className={`${styles.menu}  ${styles.subMenu}`}
+    >
       {player.getQualities().map((quality) => (
         <button
+          className={`${styles.menuButton}`}
           key={quality.name}
           role="menuitem"
           onClick={() => {

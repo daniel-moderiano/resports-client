@@ -1,5 +1,6 @@
 import { Player } from "features/players";
 import * as React from "react";
+import styles from "features/players/components/styles/VideoSettings.module.css";
 
 interface PlaybackSpeedSettingsMenuProps {
   player: Player;
@@ -26,9 +27,10 @@ export const PlaybackSpeedSettingsMenu = ({
   };
 
   return (
-    <div role="menu" ref={innerRef}>
+    <div role="menu" ref={innerRef} className={styles.menu}>
       {player.getAvailablePlaybackSpeeds().map((speed) => (
         <button
+          className={styles.menuButton}
           key={speed}
           role="menuitem"
           onClick={() => {

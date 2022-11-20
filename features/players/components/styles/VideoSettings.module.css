@@ -1,12 +1,22 @@
-.primaryMenu {
-  position: absolute;
+.menu {
   border-radius: 0.5rem;
   background-color: black;
   opacity: 0.85;
   color: white;
+  width: 16rem;
+  padding: 0.25rem;
+}
+
+.primaryMenu {
+  position: absolute;
   bottom: 52px;
   right: -40px;
-  width: 16rem;
+}
+
+.subMenu {
+  position: absolute;
+  bottom: 0px;
+  /* right: -40px; */
 }
 
 .menuButton {
@@ -15,4 +25,11 @@
   font-weight: bold;
   font-size: 0.85rem;
   padding: 0.7rem;
+  width: 100%;
+  text-align: left;
+  border-radius: 0.25rem;
+}
+
+.menuButton:hover {
+  background-color: rgb(69, 69, 69);
 }

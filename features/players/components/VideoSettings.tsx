@@ -55,7 +55,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
       aria-label="Video settings menu"
       data-testid="settingsMenu"
       ref={primaryMenu}
-      className={styles.primaryMenu}
+      className={`${styles.menu} ${styles.primaryMenu}`}
     >
       {player.hasQualitySettings() && (
         <div>
