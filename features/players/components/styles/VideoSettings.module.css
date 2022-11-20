@@ -24,10 +24,11 @@
   color: white;
   font-weight: bold;
   font-size: 0.85rem;
-  padding: 0.7rem;
+  padding: 0.85rem;
   width: 100%;
   text-align: left;
   border-radius: 0.25rem;
+  border: 0;
 }
 
 .menuButton:hover {
@@ -48,17 +49,21 @@
   color: white;
   font-weight: bold;
   font-size: 0.85rem;
-  padding: 0.7rem;
+  /* padding: 0.7rem; */
   width: 100%;
   text-align: left;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  justify-content: space-between;
+  border-bottom: 1px solid rgb(56, 56, 56);
+  margin-bottom: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 .subMenuTitle {
-  margin-right: auto;
+  margin-right: 2.7rem;
+  width: 100%;
+  text-align: center;
 }
 
 .backButton {
@@ -68,8 +73,19 @@
   font-size: 0.85rem;
   text-align: left;
   border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin: 0 0 0 0.25rem; */
+  padding: 0.85rem;
+  border: 0px;
 }
 
 .backButton:hover {
   background-color: rgb(69, 69, 69);
+}
+
+.backIcon {
+  width: 1rem;
+  height: 1rem;
 }

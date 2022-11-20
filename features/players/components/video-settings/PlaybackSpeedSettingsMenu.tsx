@@ -27,25 +27,39 @@ export const PlaybackSpeedSettingsMenu = ({
   };
 
   return (
-    <div
-      role="menu"
-      ref={innerRef}
-      className={`${styles.menu} ${styles.subMenu}`}
-    >
-      {player.getAvailablePlaybackSpeeds().map((speed) => (
+    <div className={`${styles.menu} ${styles.subMenu}`}>
+      <div className={styles.subMenuHeader}>
+        <span className={styles.subMenuTitle}>Playback speed</span>
         <button
-          className={styles.menuButton}
-          key={speed}
-          role="menuitem"
-          onClick={() => {
-            player.setPlaybackSpeed(speed);
-            closePrimaryMenu();
+          data-testid="backButton"
+          className={styles.backButton}
+          onClick={(event) => {
+            closeSelf();
+            // This registers as an outside click despite clearly having the required ancestor. I cannot figure out why this is the case. The quick fix is stopping propagation.
+            event.stopPropagation();
           }}
-          onKeyDown={(event) => handleSubMenuKeyDown(event, () => closeSelf())}
         >
-          {speed}
+          Back
         </button>
-      ))}
+      </div>
+      <div role="menu" ref={innerRef}>
+        {player.getAvailablePlaybackSpeeds().map((speed) => (
+          <button
+            className={styles.menuButton}
+            key={speed}
+            role="menuitem"
+            onClick={() => {
+              player.setPlaybackSpeed(speed);
+              closePrimaryMenu();
+            }}
+            onKeyDown={(event) =>
+              handleSubMenuKeyDown(event, () => closeSelf())
+            }
+          >
+            {speed}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { Player } from "features/players";
 import * as React from "react";
 import styles from "features/players/components/styles/VideoSettings.module.css";
+import ArrowBackIcon from "icons/ArrowBackIcon";
 
 interface QualitySettingsMenuProps {
   player: Player;
@@ -35,10 +36,11 @@ export const QualitySettingsMenu = ({
           className={styles.backButton}
           onClick={(event) => {
             closeSelf();
+            // This registers as an outside click despite clearly having the required ancestor. I cannot figure out why this is the case. The quick fix is stopping propagation.
             event.stopPropagation();
           }}
         >
-          Back
+          <ArrowBackIcon className={styles.backIcon} />
         </button>
       </div>
       <div role="menu" ref={innerRef}>
