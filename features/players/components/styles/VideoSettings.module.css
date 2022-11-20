@@ -40,5 +40,36 @@
 }
 
 .hideButton {
-  display: none;
+  /* display: none; */
+  pointer-events: none;
+}
+
+.subMenuHeader {
+  color: white;
+  font-weight: bold;
+  font-size: 0.85rem;
+  padding: 0.7rem;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.subMenuTitle {
+  margin-right: auto;
+}
+
+.backButton {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  font-size: 0.85rem;
+  text-align: left;
+  border-radius: 0.25rem;
+}
+
+.backButton:hover {
+  background-color: rgb(69, 69, 69);
 }

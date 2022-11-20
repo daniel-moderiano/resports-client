@@ -316,6 +316,23 @@ describe("Settings menu display tests", () => {
     expect(menu).not.toBeInTheDocument();
   });
 
+  it("Reverts to primary menu when clicking the back button from within submenu (does not close menu)", async () => {
+    setup();
+    const settingsBtn = screen.getByRole("button", {
+      name: /open video settings menu/i,
+    });
+    await userEvent.click(settingsBtn);
+
+    const qualityButton = screen.getByRole("menuitem", { name: /quality/i });
+    await userEvent.click(qualityButton);
+
+    const backButton = screen.getByTestId("backButton");
+    await userEvent.click(backButton);
+
+    const menu = screen.getByTestId("settingsMenu");
+    expect(menu).toBeInTheDocument();
+  });
+
   it("Automatically focuses the first available menu item for keyboard navigation", async () => {
     setup();
     const settingsBtn = screen.getByRole("button", {

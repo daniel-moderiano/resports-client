@@ -91,21 +91,6 @@ describe("Options rendering and submenus", () => {
     expect(one).toBeInTheDocument();
     expect(two).toBeInTheDocument();
   });
-
-  it("Reverts to primary menu when clicking the back button from within submenu", async () => {
-    setup();
-    const qualityButton = screen.getByRole("menuitem", { name: /quality/i });
-    await userEvent.click(qualityButton);
-
-    const backButton = screen.getByTestId("backButton");
-    await userEvent.click(backButton);
-
-    // Option within submenu only
-    const auto = screen.getByText(/auto/i);
-
-    expect(auto).not.toBeInTheDocument();
-    expect(qualityButton).toBeInTheDocument();
-  });
 });
 
 describe("Keyboard accessibility", () => {

@@ -27,25 +27,38 @@ export const QualitySettingsMenu = ({
   };
 
   return (
-    <div
-      role="menu"
-      ref={innerRef}
-      className={`${styles.menu}  ${styles.subMenu}`}
-    >
-      {player.getQualities().map((quality) => (
+    <div className={`${styles.menu} ${styles.subMenu}`}>
+      <div className={styles.subMenuHeader}>
+        <span className={styles.subMenuTitle}>Quality settings</span>
         <button
-          className={`${styles.menuButton}`}
-          key={quality.name}
-          role="menuitem"
-          onClick={() => {
-            player.setQuality(quality.level);
-            closePrimaryMenu();
+          data-testid="backButton"
+          className={styles.backButton}
+          onClick={(event) => {
+            closeSelf();
+            event.stopPropagation();
           }}
-          onKeyDown={(event) => handleSubMenuKeyDown(event, () => closeSelf())}
         >
-          {quality.name}
+          Back
         </button>
-      ))}
+      </div>
+      <div role="menu" ref={innerRef}>
+        {player.getQualities().map((quality) => (
+          <button
+            className={`${styles.menuButton}`}
+            key={quality.name}
+            role="menuitem"
+            onClick={() => {
+              player.setQuality(quality.level);
+              closePrimaryMenu();
+            }}
+            onKeyDown={(event) =>
+              handleSubMenuKeyDown(event, () => closeSelf())
+            }
+          >
+            {quality.name}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
