@@ -27,7 +27,11 @@ export const PlaybackSpeedSettingsMenu = ({
   };
 
   return (
-    <div role="menu" ref={innerRef} className={styles.menu}>
+    <div
+      role="menu"
+      ref={innerRef}
+      className={`${styles.menu} ${styles.subMenu}`}
+    >
       {player.getAvailablePlaybackSpeeds().map((speed) => (
         <button
           className={styles.menuButton}

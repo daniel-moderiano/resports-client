@@ -1,7 +1,6 @@
 .menu {
   border-radius: 0.5rem;
   background-color: black;
-  opacity: 0.85;
   color: white;
   width: 16rem;
   padding: 0.25rem;
@@ -16,7 +15,7 @@
 .subMenu {
   position: absolute;
   bottom: 0px;
-  /* right: -40px; */
+  z-index: 10;
 }
 
 .menuButton {
@@ -32,4 +31,11 @@
 
 .menuButton:hover {
   background-color: rgb(69, 69, 69);
+}
+
+.showButton {
+}
+
+.hideButton {
+  display: none;
 }
