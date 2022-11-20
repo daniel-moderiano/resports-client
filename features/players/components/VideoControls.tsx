@@ -190,7 +190,7 @@ export const VideoControls = ({
       </div>
 
       <div className={styles.rightControls}>
-        <div id="settingsMenuContainer">
+        <div id="settingsMenuContainer" className={styles.settingsContainer}>
           <button
             className={styles.controlsBtn}
             aria-haspopup="menu"

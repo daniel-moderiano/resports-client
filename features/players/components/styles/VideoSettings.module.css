@@ -1,0 +1,8 @@
+.primaryMenu {
+  position: absolute;
+  border-radius: 0.5rem;
+  background-color: black;
+  opacity: 0.85;
+  color: white;
+  bottom: 52px;
+}

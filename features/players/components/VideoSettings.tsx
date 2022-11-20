@@ -5,6 +5,7 @@ import { useState } from "react";
 import { QualitySettingsMenu } from "./video-settings/QualitySettingsMenu";
 import { PlaybackSpeedSettingsMenu } from "./video-settings/PlaybackSpeedSettingsMenu";
 import * as React from "react";
+import styles from "features/players/components/styles/VideoSettings.module.css";
 
 interface VideoSettingsProps {
   closeMenu: () => void;
@@ -54,6 +55,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
       aria-label="Video settings menu"
       data-testid="settingsMenu"
       ref={primaryMenu}
+      className={styles.primaryMenu}
     >
       {player.hasQualitySettings() && (
         <div>

@@ -80,3 +80,7 @@
   width: 32px;
   pointer-events: none;
 }
+
+.settingsContainer {
+  position: relative;
+}
