@@ -91,6 +91,21 @@ describe("Options rendering and submenus", () => {
     expect(one).toBeInTheDocument();
     expect(two).toBeInTheDocument();
   });
+
+  it("Reverts to primary menu when clicking the back button from within submenu", async () => {
+    setup();
+    const qualityButton = screen.getByRole("menuitem", { name: /quality/i });
+    await userEvent.click(qualityButton);
+
+    const backButton = screen.getByTestId("backButton");
+    await userEvent.click(backButton);
+
+    // Option within submenu only
+    const auto = screen.getByText(/auto/i);
+
+    expect(auto).not.toBeInTheDocument();
+    expect(qualityButton).toBeInTheDocument();
+  });
 });
 
 describe("Keyboard accessibility", () => {
@@ -171,5 +186,24 @@ describe("Keyboard accessibility", () => {
       name: /1080p/i,
     });
     expect(hd1080p).not.toBeInTheDocument();
+  });
+});
+
+describe("Menu and submenu styling", () => {
+  it("Primary menu buttons initialise without hidden class", () => {
+    setup();
+    const playbackSpeedButton = screen.getByRole("menuitem", {
+      name: /playback/i,
+    });
+    expect(playbackSpeedButton).not.toHaveClass("hideButton");
+  });
+
+  it("Hides primary menu buttons when submenu is open", async () => {
+    setup();
+    const qualityButton = screen.getByRole("menuitem", {
+      name: /quality/i,
+    });
+    await userEvent.click(qualityButton);
+    expect(qualityButton).toHaveClass("hideButton");
   });
 });
