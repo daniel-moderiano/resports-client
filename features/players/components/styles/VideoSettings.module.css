@@ -41,6 +41,9 @@
   border-radius: 3px;
   border: 0;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .menuButton:hover {
@@ -105,4 +108,14 @@
 .backIcon {
   width: 1rem;
   height: 1rem;
+}
+
+.forwardIcon {
+  width: 0.8rem;
+  height: 0.8rem;
+  transform: rotate(180deg);
+}
+
+.currentData {
+  text-transform: capitalize;
 }

@@ -23,6 +23,10 @@ const playerMock = {
   getPlaybackSpeed: () => 1,
   getAvailablePlaybackSpeeds: () => [1, 2],
   setPlaybackSpeed: jest.fn,
+  getQuality: () => ({
+    name: "auto",
+    level: "auto",
+  }),
 };
 
 const setup = () => {

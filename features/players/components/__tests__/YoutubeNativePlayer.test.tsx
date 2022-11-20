@@ -17,6 +17,7 @@ jest.mock("features/players/api/useYouTubeIframe", () => ({
       getVolume: jest.fn,
       addEventListener: jest.fn,
       hasQualitySettings: jest.fn,
+      getQuality: jest.fn,
     },
   }),
 }));

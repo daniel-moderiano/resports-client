@@ -6,6 +6,7 @@ import { QualitySettingsMenu } from "./video-settings/QualitySettingsMenu";
 import { PlaybackSpeedSettingsMenu } from "./video-settings/PlaybackSpeedSettingsMenu";
 import * as React from "react";
 import styles from "features/players/components/styles/VideoSettings.module.css";
+import ArrowBackIcon from "icons/ArrowBackIcon";
 
 interface VideoSettingsProps {
   closeMenu: () => void;
@@ -19,6 +20,8 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
   const primaryMenu = React.useRef<HTMLDivElement | null>(null);
   const playbackSpeedMenu = React.useRef<HTMLDivElement | null>(null);
   const qualityMenu = React.useRef<HTMLDivElement | null>(null);
+
+  console.log(player.getQuality());
 
   const [showPlaybackSpeedMenu, setShowPlaybackSpeedMenu] = useState(false);
   const [showQualityMenu, setShowQualityMenu] = useState(false);
@@ -75,7 +78,13 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
               })
             }
           >
-            Quality
+            <span>Quality</span>
+            <div>
+              <span className={styles.currentData}>
+                {player.getQuality().level}
+              </span>
+              <ArrowBackIcon className={styles.forwardIcon} />
+            </div>
           </button>
           {showQualityMenu && (
             <QualitySettingsMenu
@@ -103,7 +112,10 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
               })
             }
           >
-            Playback speed
+            <span>Playback speed</span>
+            <div>
+              <ArrowBackIcon className={styles.forwardIcon} />
+            </div>
           </button>
           {showPlaybackSpeedMenu && (
             <PlaybackSpeedSettingsMenu

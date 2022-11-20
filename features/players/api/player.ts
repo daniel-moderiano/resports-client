@@ -73,6 +73,10 @@ export class Player implements PlayerClass {
     return this.playerWrapper.getQualities();
   }
 
+  getQuality() {
+    return this.playerWrapper.getQuality();
+  }
+
   isPaused() {
     return this.playerWrapper.isPaused();
   }

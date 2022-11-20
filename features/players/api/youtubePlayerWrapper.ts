@@ -86,6 +86,13 @@ export class YouTubePlayerWrapper implements PlayerClass {
     return videoQualities;
   }
 
+  getQuality() {
+    return {
+      name: this.player.getPlaybackQuality(),
+      level: this.player.getPlaybackQuality(),
+    };
+  }
+
   isPaused() {
     return this.player.getPlayerState() === 2;
   }

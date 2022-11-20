@@ -196,6 +196,7 @@ declare namespace Twitch {
     height: number;
     framerate: number;
     isDefault: boolean;
+    level: string;
   }
 
   /**
@@ -320,7 +321,7 @@ declare namespace Twitch {
     /**
      * @returns The current quality of video playback.
      */
-    getQuality(): string;
+    getQuality(): VideoQualityObject;
 
     /**
      * @returns The video ID. Works only for VODs, not livestreams.
