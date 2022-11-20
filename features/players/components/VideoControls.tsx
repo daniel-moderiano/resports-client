@@ -200,7 +200,6 @@ export const VideoControls = ({
           >
             <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
           </button>
-
           {showSettings && (
             <VideoSettings
               player={player}
