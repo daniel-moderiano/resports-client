@@ -30,7 +30,7 @@ export const QualitySettingsMenu = ({
   return (
     <div className={`${styles.menu} ${styles.subMenu}`}>
       <div className={styles.subMenuHeader}>
-        <span className={styles.subMenuTitle}>Quality settings</span>
+        <span className={styles.subMenuTitle}>Quality</span>
         <button
           data-testid="backButton"
           className={styles.backButton}

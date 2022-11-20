@@ -85,6 +85,11 @@
   background-color: rgb(69, 69, 69);
 }
 
+.backButton:focus-visible {
+  outline: 2px solid white;
+  outline-offset: -3px;
+}
+
 .backIcon {
   width: 1rem;
   height: 1rem;

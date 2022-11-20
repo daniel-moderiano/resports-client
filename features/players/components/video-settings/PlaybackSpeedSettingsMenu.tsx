@@ -1,6 +1,7 @@
 import { Player } from "features/players";
 import * as React from "react";
 import styles from "features/players/components/styles/VideoSettings.module.css";
+import ArrowBackIcon from "icons/ArrowBackIcon";
 
 interface PlaybackSpeedSettingsMenuProps {
   player: Player;
@@ -39,7 +40,7 @@ export const PlaybackSpeedSettingsMenu = ({
             event.stopPropagation();
           }}
         >
-          Back
+          <ArrowBackIcon className={styles.backIcon} />
         </button>
       </div>
       <div role="menu" ref={innerRef}>
