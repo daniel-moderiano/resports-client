@@ -1,10 +1,10 @@
 .menu {
-  border-radius: 0.5rem;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.8);
   color: white;
-  width: 16rem;
-  padding: 0.25rem;
+  width: 18rem;
+  padding: 0.4rem 0;
   position: absolute;
+  border-radius: 4px;
 }
 
 @keyframes fade-in {
@@ -31,29 +31,29 @@
 }
 
 .menuButton {
-  background-color: black;
+  background-color: transparent;
   color: white;
   font-weight: bold;
   font-size: 0.85rem;
-  padding: 0.85rem;
+  padding: 0.75rem 1.25rem;
   width: 100%;
   text-align: left;
-  border-radius: 0.25rem;
+  border-radius: 3px;
   border: 0;
   cursor: pointer;
 }
 
 .menuButton:hover {
-  background-color: rgb(69, 69, 69);
+  background-color: #666;
+  transition: background-color 0.2s ease-out;
 }
 
 .menuButton:focus-visible {
-  outline: 2px solid white;
+  outline: 2px solid #00adef;
   outline-offset: -3px;
 }
 
 .hideButton {
-  /* display: none; */
   pointer-events: none;
 }
 
@@ -61,7 +61,6 @@
   color: white;
   font-weight: bold;
   font-size: 0.85rem;
-  /* padding: 0.7rem; */
   width: 100%;
   text-align: left;
   display: flex;
@@ -73,33 +72,33 @@
 }
 
 .subMenuTitle {
-  margin-right: 2.7rem;
+  margin-right: 3.5rem;
   width: 100%;
   text-align: center;
 }
 
 .backButton {
-  background-color: black;
+  background-color: transparent;
   color: white;
   font-weight: bold;
   font-size: 0.85rem;
   text-align: left;
-  border-radius: 0.25rem;
+  border-radius: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* margin: 0 0 0 0.25rem; */
-  padding: 0.85rem;
+  padding: 0.75rem;
+  margin-left: 1rem;
   border: 0px;
   cursor: pointer;
 }
 
 .backButton:hover {
-  background-color: rgb(69, 69, 69);
+  background-color: #666;
 }
 
 .backButton:focus-visible {
-  outline: 2px solid white;
+  outline: 2px solid #00adef;
   outline-offset: -3px;
 }
 
