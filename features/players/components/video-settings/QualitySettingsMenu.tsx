@@ -5,44 +5,41 @@ interface QualitySettingsMenuProps {
   player: Player;
   closeSelf: () => void;
   closePrimaryMenu: () => void;
+  innerRef: React.MutableRefObject<HTMLDivElement | null>;
 }
 
-export const QualitySettingsMenu = React.forwardRef(
-  (
-    { player, closeSelf, closePrimaryMenu }: QualitySettingsMenuProps,
-    ref: React.ForwardedRef<HTMLDivElement>
+export const QualitySettingsMenu = ({
+  player,
+  closeSelf,
+  closePrimaryMenu,
+  innerRef,
+}: QualitySettingsMenuProps) => {
+  const handleSubMenuKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    callback: () => void
   ) => {
-    const handleSubMenuKeyDown = (
-      event: React.KeyboardEvent<HTMLButtonElement>,
-      callback: () => void
-    ) => {
-      if (event.key === "ArrowLeft") {
-        callback();
-      }
+    if (event.key === "ArrowLeft") {
+      callback();
+    }
 
-      return;
-    };
+    return;
+  };
 
-    return (
-      <div role="menu" ref={ref}>
-        {player.getQualities().map((quality) => (
-          <button
-            key={quality.name}
-            role="menuitem"
-            onClick={() => {
-              player.setQuality(quality.level);
-              closePrimaryMenu();
-            }}
-            onKeyDown={(event) =>
-              handleSubMenuKeyDown(event, () => closeSelf())
-            }
-          >
-            {quality.name}
-          </button>
-        ))}
-      </div>
-    );
-  }
-);
-
-QualitySettingsMenu.displayName = "QualitySettingsMenu";
+  return (
+    <div role="menu" ref={innerRef}>
+      {player.getQualities().map((quality) => (
+        <button
+          key={quality.name}
+          role="menuitem"
+          onClick={() => {
+            player.setQuality(quality.level);
+            closePrimaryMenu();
+          }}
+          onKeyDown={(event) => handleSubMenuKeyDown(event, () => closeSelf())}
+        >
+          {quality.name}
+        </button>
+      ))}
+    </div>
+  );
+};

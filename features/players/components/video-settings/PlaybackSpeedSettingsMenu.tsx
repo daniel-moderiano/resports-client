@@ -5,44 +5,41 @@ interface PlaybackSpeedSettingsMenuProps {
   player: Player;
   closeSelf: () => void;
   closePrimaryMenu: () => void;
+  innerRef: React.MutableRefObject<HTMLDivElement | null>;
 }
 
-export const PlaybackSpeedSettingsMenu = React.forwardRef(
-  (
-    { player, closeSelf, closePrimaryMenu }: PlaybackSpeedSettingsMenuProps,
-    ref: React.ForwardedRef<HTMLDivElement>
+export const PlaybackSpeedSettingsMenu = ({
+  player,
+  closeSelf,
+  closePrimaryMenu,
+  innerRef,
+}: PlaybackSpeedSettingsMenuProps) => {
+  const handleSubMenuKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    callback: () => void
   ) => {
-    const handleSubMenuKeyDown = (
-      event: React.KeyboardEvent<HTMLButtonElement>,
-      callback: () => void
-    ) => {
-      if (event.key === "ArrowLeft") {
-        callback();
-      }
+    if (event.key === "ArrowLeft") {
+      callback();
+    }
 
-      return;
-    };
+    return;
+  };
 
-    return (
-      <div role="menu" ref={ref}>
-        {player.getAvailablePlaybackSpeeds().map((speed) => (
-          <button
-            key={speed}
-            role="menuitem"
-            onClick={() => {
-              player.setPlaybackSpeed(speed);
-              closePrimaryMenu();
-            }}
-            onKeyDown={(event) =>
-              handleSubMenuKeyDown(event, () => closeSelf())
-            }
-          >
-            {speed}
-          </button>
-        ))}
-      </div>
-    );
-  }
-);
-
-PlaybackSpeedSettingsMenu.displayName = "PlaybackSpeedSettingsMenu";
+  return (
+    <div role="menu" ref={innerRef}>
+      {player.getAvailablePlaybackSpeeds().map((speed) => (
+        <button
+          key={speed}
+          role="menuitem"
+          onClick={() => {
+            player.setPlaybackSpeed(speed);
+            closePrimaryMenu();
+          }}
+          onKeyDown={(event) => handleSubMenuKeyDown(event, () => closeSelf())}
+        >
+          {speed}
+        </button>
+      ))}
+    </div>
+  );
+};

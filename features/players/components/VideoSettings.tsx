@@ -77,7 +77,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
               player={player}
               closeSelf={() => setShowQualityMenu(false)}
               closePrimaryMenu={closeMenu}
-              ref={qualityMenu}
+              innerRef={qualityMenu}
             />
           )}
         </div>
@@ -102,7 +102,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
               player={player}
               closeSelf={() => setShowPlaybackSpeedMenu(false)}
               closePrimaryMenu={closeMenu}
-              ref={playbackSpeedMenu}
+              innerRef={playbackSpeedMenu}
             />
           )}
         </div>
