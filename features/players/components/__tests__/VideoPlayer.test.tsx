@@ -34,6 +34,7 @@ const playerWrapperPlaying: PlayerClass = {
   getPlaybackSpeed: () => 1,
   getAvailablePlaybackSpeeds: () => [1],
   setPlaybackSpeed: jest.fn,
+  getQuality: () => "auto",
 };
 
 const playerWrapperPaused: PlayerClass = {

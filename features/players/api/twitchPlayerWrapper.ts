@@ -82,6 +82,18 @@ export class TwitchPlayerWrapper implements PlayerClass {
     return videoQualities;
   }
 
+  getQuality() {
+    const quality = this.player.getQuality();
+    // Auto quality is always at index 0
+    const topAvailableQuality = this.player.getQualities()[1];
+
+    if (quality === "chunked") {
+      return topAvailableQuality.name;
+    } else {
+      return quality;
+    }
+  }
+
   isPaused() {
     return this.player.isPaused();
   }

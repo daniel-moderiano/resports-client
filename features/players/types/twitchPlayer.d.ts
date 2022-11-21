@@ -196,6 +196,7 @@ declare namespace Twitch {
     height: number;
     framerate: number;
     isDefault: boolean;
+    level: string;
   }
 
   /**

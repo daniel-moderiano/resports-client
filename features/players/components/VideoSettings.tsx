@@ -5,6 +5,8 @@ import { useState } from "react";
 import { QualitySettingsMenu } from "./video-settings/QualitySettingsMenu";
 import { PlaybackSpeedSettingsMenu } from "./video-settings/PlaybackSpeedSettingsMenu";
 import * as React from "react";
+import styles from "features/players/components/styles/VideoSettings.module.css";
+import ArrowBackIcon from "icons/ArrowBackIcon";
 
 interface VideoSettingsProps {
   closeMenu: () => void;
@@ -54,10 +56,14 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
       aria-label="Video settings menu"
       data-testid="settingsMenu"
       ref={primaryMenu}
+      className={`${styles.menu} ${styles.primaryMenu}`}
     >
       {player.hasQualitySettings() && (
         <div>
           <button
+            className={`${styles.menuButton} ${
+              currentlyFocusedMenu !== primaryMenu ? styles.hideButton : ""
+            }`}
             role="menuitem"
             aria-haspopup="true"
             aria-expanded={showQualityMenu}
@@ -70,7 +76,13 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
               })
             }
           >
-            Quality
+            <span>Quality</span>
+            <div className={styles.currentDataContainer}>
+              <span className={styles.currentData} data-testid="currentQuality">
+                {player.getQuality()}
+              </span>
+              <ArrowBackIcon className={styles.forwardIcon} />
+            </div>
           </button>
           {showQualityMenu && (
             <QualitySettingsMenu
@@ -85,6 +97,9 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
       {player.hasPlaybackSpeedSettings() && (
         <div>
           <button
+            className={`${styles.menuButton} ${
+              currentlyFocusedMenu !== primaryMenu ? styles.hideButton : ""
+            }`}
             role="menuitem"
             aria-haspopup="true"
             aria-expanded={showPlaybackSpeedMenu}
@@ -95,7 +110,18 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
               })
             }
           >
-            Playback speed
+            <span>Playback speed</span>
+            <div className={styles.currentDataContainer}>
+              <span
+                className={styles.currentData}
+                data-testid="currentPlayback"
+              >
+                {player.getPlaybackSpeed() === 1
+                  ? "Normal"
+                  : `${player.getPlaybackSpeed()}x`}
+              </span>
+              <ArrowBackIcon className={styles.forwardIcon} />
+            </div>
           </button>
           {showPlaybackSpeedMenu && (
             <PlaybackSpeedSettingsMenu

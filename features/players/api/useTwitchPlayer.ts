@@ -29,8 +29,6 @@ export const useTwitchPlayer = (videoId: string) => {
     // Do not attempt to create the Player until the 3rd party Twitch API has loaded and the global Twitch var is ready.
     const handleTwitchScriptLoad = () => {
       const playerDiv = document.querySelector("#player");
-      console.log(playerDiv);
-
       if (!playerDiv) {
         console.error("No containing <div> for <iframe>!");
         return;

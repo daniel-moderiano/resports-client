@@ -1,0 +1,130 @@
+.menu {
+  background-color: rgba(31, 31, 35, 1);
+  color: white;
+  width: 18rem;
+  padding: 0.4rem 0;
+  position: absolute;
+  border-radius: 4px;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.primaryMenu {
+  position: absolute;
+  bottom: 48px;
+  right: -40px;
+  animation: fade-in 250ms;
+}
+
+.subMenu {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.menuButton {
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
+  font-size: 0.85rem;
+  padding: 0.75rem 1.25rem;
+  width: 100%;
+  text-align: left;
+  border-radius: 3px;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menuButton:hover {
+  background-color: #666;
+  transition: background-color 0.2s ease-out;
+}
+
+.menuButton:focus-visible {
+  outline: 2px solid #00adef;
+  outline-offset: -3px;
+}
+
+.hideButton {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.subMenuHeader {
+  color: white;
+  font-weight: bold;
+  font-size: 0.85rem;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  border-bottom: 1px solid rgb(56, 56, 56);
+  margin-bottom: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.subMenuTitle {
+  margin-right: 3.5rem;
+  width: 100%;
+  text-align: center;
+}
+
+.backButton {
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
+  font-size: 0.85rem;
+  text-align: left;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  margin-left: 1rem;
+  border: 0px;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background-color: #666;
+}
+
+.backButton:focus-visible {
+  outline: 2px solid #00adef;
+  outline-offset: -3px;
+}
+
+.backIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.forwardIcon {
+  width: 0.8rem;
+  height: 0.8rem;
+  transform: rotate(180deg);
+  margin-bottom: 0.1rem;
+}
+
+.currentDataContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.currentData {
+  text-transform: capitalize;
+  margin-right: 0.5rem;
+}
