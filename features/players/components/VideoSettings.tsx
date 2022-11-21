@@ -77,9 +77,9 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
             }
           >
             <span>Quality</span>
-            <div>
-              <span className={styles.currentData}>
-                {player.getQuality().level}
+            <div className={styles.currentDataContainer}>
+              <span className={styles.currentData} data-testid="currentQuality">
+                {player.getQuality()}
               </span>
               <ArrowBackIcon className={styles.forwardIcon} />
             </div>

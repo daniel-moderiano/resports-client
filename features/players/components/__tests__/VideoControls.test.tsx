@@ -30,10 +30,7 @@ const playerMock = {
   getPlaybackSpeed: () => 1,
   getAvailablePlaybackSpeeds: () => [0.5, 1, 2],
   setPlaybackSpeed: jest.fn,
-  getQuality: () => ({
-    name: "Auto",
-    level: "auto",
-  }),
+  getQuality: () => "auto",
 };
 
 let playerPausedMock = false;

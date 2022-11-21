@@ -23,10 +23,7 @@ const playerMock = {
   getPlaybackSpeed: () => 1,
   getAvailablePlaybackSpeeds: () => [1, 2],
   setPlaybackSpeed: jest.fn,
-  getQuality: () => ({
-    name: "auto",
-    level: "auto",
-  }),
+  getQuality: () => "4k",
 };
 
 const setup = () => {
@@ -98,7 +95,7 @@ describe("Options rendering and submenus", () => {
 
   it("Shows current quality in primary menu", () => {
     setup();
-    const currentQuality = screen.getByText(/auto/i);
+    const currentQuality = screen.getByText(/4k/i);
     expect(currentQuality).toBeInTheDocument();
   });
 

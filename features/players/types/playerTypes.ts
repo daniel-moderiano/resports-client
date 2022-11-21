@@ -121,7 +121,7 @@ export interface PlayerClass {
   /**
    * @returns The current quality of the video.
    */
-  getQuality: () => VideoQualityObject;
+  getQuality: () => string;
 
   /**
    * @returns True if the video is paused; otherwise false. Bufferring or seeking is considered playing.

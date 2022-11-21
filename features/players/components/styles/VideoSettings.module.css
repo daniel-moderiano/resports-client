@@ -116,6 +116,13 @@
   transform: rotate(180deg);
 }
 
+.currentDataContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .currentData {
   text-transform: capitalize;
+  margin-right: 0.5rem;
 }
