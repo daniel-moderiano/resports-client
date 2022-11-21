@@ -57,7 +57,7 @@ export const PlaybackSpeedSettingsMenu = ({
               handleSubMenuKeyDown(event, () => closeSelf())
             }
           >
-            {speed}
+            {speed === 1 ? "Normal" : `${speed}x`}
           </button>
         ))}
       </div>

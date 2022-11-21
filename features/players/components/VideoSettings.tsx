@@ -111,7 +111,15 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
             }
           >
             <span>Playback speed</span>
-            <div>
+            <div className={styles.currentDataContainer}>
+              <span
+                className={styles.currentData}
+                data-testid="currentPlayback"
+              >
+                {player.getPlaybackSpeed() === 1
+                  ? "Normal"
+                  : `${player.getPlaybackSpeed()}x`}
+              </span>
               <ArrowBackIcon className={styles.forwardIcon} />
             </div>
           </button>

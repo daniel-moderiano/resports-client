@@ -114,6 +114,7 @@
   width: 0.8rem;
   height: 0.8rem;
   transform: rotate(180deg);
+  margin-bottom: 0.1rem;
 }
 
 .currentDataContainer {
