@@ -83,10 +83,9 @@ export class TwitchPlayerWrapper implements PlayerClass {
   }
 
   getQuality() {
-    const quality: VideoQualityObject = this.player.getQuality();
     return {
-      name: quality.name,
-      level: quality.level,
+      name: this.player.getQuality(),
+      level: this.player.getQuality(),
     };
   }
 

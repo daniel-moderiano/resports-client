@@ -95,6 +95,18 @@ describe("Options rendering and submenus", () => {
     expect(one).toBeInTheDocument();
     expect(two).toBeInTheDocument();
   });
+
+  it("Shows current quality in primary menu", () => {
+    setup();
+    const currentQuality = screen.getByText(/auto/i);
+    expect(currentQuality).toBeInTheDocument();
+  });
+
+  it("Shows current playback speed in primary menu", () => {
+    setup();
+    const currentSpeed = screen.getByText(/1x/i);
+    expect(currentSpeed).toBeInTheDocument();
+  });
 });
 
 describe("Keyboard accessibility", () => {

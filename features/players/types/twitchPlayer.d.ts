@@ -321,7 +321,7 @@ declare namespace Twitch {
     /**
      * @returns The current quality of video playback.
      */
-    getQuality(): VideoQualityObject;
+    getQuality(): string;
 
     /**
      * @returns The video ID. Works only for VODs, not livestreams.

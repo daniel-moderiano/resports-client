@@ -21,8 +21,6 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
   const playbackSpeedMenu = React.useRef<HTMLDivElement | null>(null);
   const qualityMenu = React.useRef<HTMLDivElement | null>(null);
 
-  console.log(player.getQuality());
-
   const [showPlaybackSpeedMenu, setShowPlaybackSpeedMenu] = useState(false);
   const [showQualityMenu, setShowQualityMenu] = useState(false);
   const [currentlyFocusedMenu, setCurrentlyFocusedMenu] =
