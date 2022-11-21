@@ -21,7 +21,7 @@ const playerMock = {
   hasQualitySettings: () => true,
   hasPlaybackSpeedSettings: () => true,
   getPlaybackSpeed: () => 1,
-  getAvailablePlaybackSpeeds: () => [1, 2],
+  getAvailablePlaybackSpeeds: () => [0.5, 1, 2],
   setPlaybackSpeed: jest.fn,
   getQuality: () => "4k",
 };
@@ -87,9 +87,9 @@ describe("Options rendering and submenus", () => {
       name: /playback/i,
     });
     await userEvent.click(playbackSpeedButton);
-    const one = screen.getByText(/1/i);
-    const two = screen.getByText(/2/i);
-    expect(one).toBeInTheDocument();
+    const half = screen.getByText("0.5x");
+    const two = screen.getByText("2x");
+    expect(half).toBeInTheDocument();
     expect(two).toBeInTheDocument();
   });
 
@@ -101,7 +101,7 @@ describe("Options rendering and submenus", () => {
 
   it("Shows current playback speed in primary menu", () => {
     setup();
-    const currentSpeed = screen.getByText(/1x/i);
+    const currentSpeed = screen.getByText(/Normal/i);
     expect(currentSpeed).toBeInTheDocument();
   });
 });
