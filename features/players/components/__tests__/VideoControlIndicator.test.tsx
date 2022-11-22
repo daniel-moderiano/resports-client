@@ -7,6 +7,7 @@ describe("Control indicator rendering and prop handling", () => {
   it("Shows correct icon passed in via props", () => {
     render(
       <VideoControlIndicator
+        fadeOut={false}
         ariaLabel="Pause"
         icon={<PauseIcon testId="pauseIndicator" />}
       />
@@ -16,7 +17,13 @@ describe("Control indicator rendering and prop handling", () => {
   });
 
   it("Has correct accessible name and role", () => {
-    render(<VideoControlIndicator ariaLabel="Pause" icon={<PauseIcon />} />);
+    render(
+      <VideoControlIndicator
+        fadeOut={false}
+        ariaLabel="Pause"
+        icon={<PauseIcon />}
+      />
+    );
     const accessibleElement = screen.getByLabelText("Pause");
     expect(accessibleElement).toBeInTheDocument();
   });

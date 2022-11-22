@@ -29,6 +29,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
   const [playerMuted, setPlayerMuted] = React.useState(true);
   const [playerPaused, setPlayerPaused] = React.useState(false);
   const [theaterMode, setTheaterMode] = React.useState(false);
+  const [fadeControlIndicator, setFadeControlIndicator] = React.useState(false);
 
   // Ensure the local playerState state is set on play/pause events. This ensures other elements modify with each of the changes as needed
   React.useEffect(() => {
@@ -83,6 +84,13 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     }
   };
 
+  const triggerControlIndication = () => {
+    setFadeControlIndicator(true);
+    setTimeout(() => {
+      setFadeControlIndicator(false);
+    }, 450);
+  };
+
   // A global keypress handler to allow the user to control the video regardless of where they are on the page.
   React.useEffect(() => {
     const activeUserKeys = [
@@ -115,6 +123,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         case "k":
         case " ":
           playOrPauseVideo();
+          triggerControlIndication();
           break;
         case "m":
           toggleMute();
@@ -168,6 +177,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         <VideoControlIndicator
           ariaLabel="Pause"
           icon={<PauseIcon fill="#FFFFFF" />}
+          fadeOut={fadeControlIndicator}
         />
       </div>
 

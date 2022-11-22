@@ -8,9 +8,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 1;
 }
 
 .iconWrapper {
   width: 2.5rem;
   height: 2.5rem;
+}
+
+.fadeOut {
+  animation: fade-out 500ms linear;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+.hide {
+  display: none;
 }

@@ -3,14 +3,22 @@ import styles from "features/players/components/styles/VideoControlIndicator.mod
 interface VideoControlIndicatorProps {
   ariaLabel: string;
   icon: React.ReactNode;
+  fadeOut: boolean;
 }
 
 export const VideoControlIndicator = ({
   ariaLabel,
   icon,
+  fadeOut,
 }: VideoControlIndicatorProps) => {
   return (
-    <div className={styles.container} role="status" aria-label={ariaLabel}>
+    <div
+      className={`${styles.container} ${
+        fadeOut ? styles.fadeOut : styles.hide
+      }`}
+      role="status"
+      aria-label={ariaLabel}
+    >
       <div className={styles.iconWrapper}>{icon}</div>
     </div>
   );
