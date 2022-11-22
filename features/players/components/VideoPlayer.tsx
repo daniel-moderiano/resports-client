@@ -109,23 +109,47 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
   React.useEffect(() => {
     const activeUserKeys = [
       "m",
+      "k",
+      "f",
+      "t",
       "ArrowDown",
       "ArrowUp",
       "ArrowLeft",
       "ArrowRight",
     ];
 
+    const activeDOMKeys = ["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"];
+
     const handleKeyPress = (event: KeyboardEvent) => {
-      const { nodeName, className } = event.target as HTMLElement;
+      if (!(event.target instanceof Element)) {
+        return;
+      }
+
+      const { nodeName, className } = event.target;
+      const withinPlayer = event.target.closest("#wrapper");
 
       // Ensure these key actions do not mess with normal button expectations and functionality
       if (nodeName === "BUTTON" || nodeName === "INPUT") {
         if (className.includes("controlsBtn")) {
           signalUserActivity();
-        } else return;
+        }
+        return;
       }
 
-      if (activeUserKeys.includes(event.key)) {
+      // Avoid scrolling the page. Always prioritise play/pause functionality.
+      if (event.key === " ") {
+        event.preventDefault();
+      }
+
+      if (activeDOMKeys.includes(event.key) && !withinPlayer) {
+        return;
+      }
+
+      if (
+        activeUserKeys.includes(event.key) &&
+        wrapperRef.current === document.activeElement
+      ) {
+        event.preventDefault();
         signalUserActivity();
       }
 
