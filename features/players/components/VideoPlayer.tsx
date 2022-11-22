@@ -10,6 +10,22 @@ import { useSeek } from "../hooks/useSeek";
 import { VideoControlIndicator } from "./VideoControlIndicator";
 import PauseIcon from "icons/PauseIcon";
 
+type Action =
+  | "play"
+  | "pause"
+  | "volumeUp"
+  | "volumeDown"
+  | "mute"
+  | "unmute"
+  | "forwardOneMins"
+  | "forwardFiveMins"
+  | "forwardTenMins"
+  | "forwardTenSecs"
+  | "backOneMins"
+  | "backFiveMins"
+  | "backTenMins"
+  | "backTenSecs";
+
 interface VideoPlayerProps {
   player: Player | null;
   disableControls?: boolean;
@@ -29,7 +45,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
   const [playerMuted, setPlayerMuted] = React.useState(true);
   const [playerPaused, setPlayerPaused] = React.useState(false);
   const [theaterMode, setTheaterMode] = React.useState(false);
-  const [fadeControlIndicator, setFadeControlIndicator] = React.useState(false);
+  const [showControlIndicator, setShowControlIndicator] = React.useState(false);
 
   // Ensure the local playerState state is set on play/pause events. This ensures other elements modify with each of the changes as needed
   React.useEffect(() => {
@@ -66,12 +82,14 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     if (player) {
       if (player.isPaused()) {
         player.play();
+        triggerControlIndication("play");
         // A longer timeout is used here because it can be quite anti-user experience to have controls and cursor fade almost immediately after pressing play.
         setTimeout(() => {
           signalUserInactivity();
         }, 1000);
       } else {
         player.pause();
+        triggerControlIndication("pause");
       }
     }
   }, [player, signalUserInactivity]);
@@ -84,10 +102,12 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     }
   };
 
-  const triggerControlIndication = () => {
-    setFadeControlIndicator(true);
+  const triggerControlIndication = (action: Action) => {
+    setShowControlIndicator(true);
+    console.log(action);
+
     setTimeout(() => {
-      setFadeControlIndicator(false);
+      setShowControlIndicator(false);
     }, 450);
   };
 
@@ -123,7 +143,6 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         case "k":
         case " ":
           playOrPauseVideo();
-          triggerControlIndication();
           break;
         case "m":
           toggleMute();
@@ -177,7 +196,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         <VideoControlIndicator
           ariaLabel="Pause"
           icon={<PauseIcon fill="#FFFFFF" />}
-          triggerAnimation={fadeControlIndicator}
+          triggerAnimation={showControlIndicator}
         />
       </div>
 
