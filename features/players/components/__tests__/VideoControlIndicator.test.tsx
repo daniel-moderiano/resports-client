@@ -8,11 +8,11 @@ describe("Control indicator rendering and prop handling", () => {
     render(
       <VideoControlIndicator
         triggerAnimation={false}
-        ariaLabel="Pause"
-        icon={<PauseIcon testId="pauseIndicator" />}
+        ariaLabel="Play"
+        controlAction="play"
       />
     );
-    const icon = screen.getByTestId(/pauseIndicator/i);
+    const icon = screen.getByTestId(/playIcon/i);
     expect(icon).toBeInTheDocument();
   });
 
@@ -20,11 +20,11 @@ describe("Control indicator rendering and prop handling", () => {
     render(
       <VideoControlIndicator
         triggerAnimation={false}
-        ariaLabel="Pause"
-        icon={<PauseIcon />}
+        ariaLabel="Play"
+        controlAction="play"
       />
     );
-    const accessibleElement = screen.getByLabelText("Pause");
+    const accessibleElement = screen.getByLabelText("Play");
     expect(accessibleElement).toBeInTheDocument();
   });
 
@@ -32,8 +32,8 @@ describe("Control indicator rendering and prop handling", () => {
     render(
       <VideoControlIndicator
         triggerAnimation={false}
-        ariaLabel="Pause"
-        icon={<PauseIcon />}
+        ariaLabel="Play"
+        controlAction="play"
       />
     );
     const indicator = screen.getByRole("status");
@@ -44,8 +44,8 @@ describe("Control indicator rendering and prop handling", () => {
     render(
       <VideoControlIndicator
         triggerAnimation={true}
-        ariaLabel="Pause"
-        icon={<PauseIcon />}
+        ariaLabel="Play"
+        controlAction="play"
       />
     );
     const indicator = screen.getByRole("status");

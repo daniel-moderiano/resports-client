@@ -1,14 +1,31 @@
 import styles from "features/players/components/styles/VideoControlIndicator.module.css";
+import PlayIcon from "icons/PlayIcon";
+import { ControlAction } from "./VideoPlayer";
 
 interface VideoControlIndicatorProps {
   ariaLabel: string;
-  icon: React.ReactNode;
+  controlAction: ControlAction;
   triggerAnimation: boolean;
 }
 
+const selectIcon = (action: ControlAction) => {
+  let icon: JSX.Element | null = null;
+
+  switch (action) {
+    case "play":
+      icon = <PlayIcon testId="playIcon" />;
+      break;
+
+    default:
+      break;
+  }
+
+  return icon;
+};
+
 export const VideoControlIndicator = ({
   ariaLabel,
-  icon,
+  controlAction,
   triggerAnimation,
 }: VideoControlIndicatorProps) => {
   return (
@@ -19,7 +36,7 @@ export const VideoControlIndicator = ({
       role="status"
       aria-label={ariaLabel}
     >
-      <div className={styles.iconWrapper}>{icon}</div>
+      <div className={styles.iconWrapper}>{selectIcon(controlAction)}</div>
     </div>
   );
 };

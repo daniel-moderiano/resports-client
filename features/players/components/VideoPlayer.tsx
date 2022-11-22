@@ -10,7 +10,7 @@ import { useSeek } from "../hooks/useSeek";
 import { VideoControlIndicator } from "./VideoControlIndicator";
 import PauseIcon from "icons/PauseIcon";
 
-type Action =
+export type ControlAction =
   | "play"
   | "pause"
   | "volumeUp"
@@ -102,7 +102,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     }
   };
 
-  const triggerControlIndication = (action: Action) => {
+  const triggerControlIndication = (action: ControlAction) => {
     setShowControlIndicator(true);
     console.log(action);
 
@@ -194,8 +194,8 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
       ></div>
       <div className={styles.indicatorContainer}>
         <VideoControlIndicator
-          ariaLabel="Pause"
-          icon={<PauseIcon fill="#FFFFFF" />}
+          ariaLabel="Play"
+          controlAction="play"
           triggerAnimation={showControlIndicator}
         />
       </div>
