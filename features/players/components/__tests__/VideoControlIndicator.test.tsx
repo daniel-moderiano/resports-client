@@ -4,10 +4,10 @@ import PauseIcon from "icons/PauseIcon";
 import { VideoControlIndicator } from "../VideoControlIndicator";
 
 describe("Control indicator rendering and prop handling", () => {
-  it("Shows correct icon passed in via props", () => {
+  it("Render correct icon passed in via props", () => {
     render(
       <VideoControlIndicator
-        fadeOut={false}
+        triggerAnimation={false}
         ariaLabel="Pause"
         icon={<PauseIcon testId="pauseIndicator" />}
       />
@@ -19,12 +19,36 @@ describe("Control indicator rendering and prop handling", () => {
   it("Has correct accessible name and role", () => {
     render(
       <VideoControlIndicator
-        fadeOut={false}
+        triggerAnimation={false}
         ariaLabel="Pause"
         icon={<PauseIcon />}
       />
     );
     const accessibleElement = screen.getByLabelText("Pause");
     expect(accessibleElement).toBeInTheDocument();
+  });
+
+  it("Hides indicator by default", () => {
+    render(
+      <VideoControlIndicator
+        triggerAnimation={false}
+        ariaLabel="Pause"
+        icon={<PauseIcon />}
+      />
+    );
+    const indicator = screen.getByRole("status");
+    expect(indicator).toHaveClass("hide");
+  });
+
+  it("Shows indicator when trigger animation is active", () => {
+    render(
+      <VideoControlIndicator
+        triggerAnimation={true}
+        ariaLabel="Pause"
+        icon={<PauseIcon />}
+      />
+    );
+    const indicator = screen.getByRole("status");
+    expect(indicator).toHaveClass("triggerAnimation");
   });
 });

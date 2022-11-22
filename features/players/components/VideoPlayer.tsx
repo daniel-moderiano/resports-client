@@ -177,7 +177,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         <VideoControlIndicator
           ariaLabel="Pause"
           icon={<PauseIcon fill="#FFFFFF" />}
-          fadeOut={fadeControlIndicator}
+          triggerAnimation={fadeControlIndicator}
         />
       </div>
 

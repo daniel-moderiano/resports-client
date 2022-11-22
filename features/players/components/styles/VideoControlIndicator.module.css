@@ -16,7 +16,7 @@
   height: 2.5rem;
 }
 
-.fadeOut {
+.triggerAnimation {
   animation: fade-out 500ms linear;
 }
 
