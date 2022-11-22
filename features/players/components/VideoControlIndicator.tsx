@@ -1,6 +1,8 @@
 import styles from "features/players/components/styles/VideoControlIndicator.module.css";
+import MutedIcon from "icons/MutedIcon";
 import PauseIcon from "icons/PauseIcon";
 import PlayIcon from "icons/PlayIcon";
+import VolumeIcon from "icons/VolumeIcon";
 import { ControlAction } from "./VideoPlayer";
 
 interface VideoControlIndicatorProps {
@@ -20,6 +22,14 @@ const selectIcon = (action: ControlAction | null) => {
 
     case "pause":
       icon = <PauseIcon fill="#FFFFFF" />;
+      break;
+
+    case "mute":
+      icon = <MutedIcon fill="#FFFFFF" />;
+      break;
+
+    case "unmute":
+      icon = <VolumeIcon fill="none" />;
       break;
 
     default:

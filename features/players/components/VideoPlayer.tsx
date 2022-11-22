@@ -71,12 +71,14 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     }
     if (player.getMuted()) {
       setPlayerMuted(false);
+      triggerControlIndication("unmute");
       player.setMuted(false);
     } else {
       setPlayerMuted(true);
+      triggerControlIndication("mute");
       player.setMuted(true);
     }
-  }, [player, signalUserActivity]);
+  }, [player, signalUserActivity, triggerControlIndication]);
 
   // Use this function to play a paused video, or pause a playing video. Intended to activate on clicking the video, or pressing spacebar
   const playOrPauseVideo = React.useCallback(() => {

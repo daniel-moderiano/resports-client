@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import PauseIcon from "icons/PauseIcon";
 import { VideoControlIndicator } from "../VideoControlIndicator";
 
 describe("Control indicator rendering and prop handling", () => {
