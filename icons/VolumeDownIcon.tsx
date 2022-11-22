@@ -13,7 +13,8 @@ const VolumeDownIcon = ({ className, fill, testId }: VolumeDownIconProps) => {
       className={className ? className : undefined}
       data-testid={testId ? testId : undefined}
     >
-      <path d="M10 30V18h8L28 8v32L18 30Zm21 2.4V15.55q2.7.85 4.35 3.2Q37 21.1 37 24q0 2.95-1.65 5.25T31 32.4Zm-6-16.8L19.35 21H13v6h6.35L25 32.45ZM18.9 24Z" />
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z" />
     </svg>
   );
 };

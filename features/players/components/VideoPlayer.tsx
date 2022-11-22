@@ -149,9 +149,11 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
           break;
         case "ArrowDown":
           player.setVolume(player.getVolume() - 0.05);
+          triggerControlIndication("volumeDown");
           break;
         case "ArrowUp":
           player.setVolume(player.getVolume() + 0.05);
+          triggerControlIndication("volumeUp");
           break;
         case "ArrowLeft":
           scheduleSeek(-10);
@@ -168,7 +170,14 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [playOrPauseVideo, player, toggleMute, signalUserActivity, scheduleSeek]);
+  }, [
+    playOrPauseVideo,
+    player,
+    toggleMute,
+    signalUserActivity,
+    scheduleSeek,
+    triggerControlIndication,
+  ]);
 
   return (
     <VideoContainer
