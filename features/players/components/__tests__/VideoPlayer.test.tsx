@@ -307,3 +307,40 @@ describe("Video player controls/user activity timers", () => {
     expect(customControls).toHaveClass("controlsHide");
   });
 });
+
+describe("Video player control indicators", () => {
+  it("Shows then fades control indicator when pausing/playing video with keyboard", async () => {
+    render(<VideoPlayer player={player} />);
+    const wrapper = screen.getByTestId("wrapper");
+
+    // First focus the wrapper to ensure the keypress is captured correctly
+    wrapper.focus();
+    await userEvent.keyboard("k");
+
+    const playIndicator = screen.getByRole("status");
+
+    expect(playIndicator).toBeInTheDocument();
+    expect(playIndicator).toHaveClass("triggerAnimation");
+
+    // Allow time for the indicator to fade
+    await act(async () => {
+      await new Promise((res) => setTimeout(res, 600));
+    });
+
+    expect(playIndicator).toHaveClass("hide");
+  });
+
+  it("Does not show control indicator when playing/pausing video with control", async () => {
+    render(<VideoPlayer player={player} />);
+
+    // First hover the relevant div to trigger user activity/controls to show
+    const overlay = screen.getByTestId("overlay");
+    await userEvent.hover(overlay);
+
+    const playBtn = screen.getByLabelText(/pause video/i);
+    await userEvent.click(playBtn);
+
+    const playIndicator = screen.getByRole("status");
+    expect(playIndicator).toHaveClass("hide");
+  });
+});

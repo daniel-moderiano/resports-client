@@ -18,7 +18,7 @@ const selectIcon = (action: ControlAction | null) => {
   switch (action) {
     case "play":
       // Need at least one icon with an identifiable test icon for testing purposes
-      icon = <PlayIcon testId="playIcon" fill="#FFFFFF" />;
+      icon = <PlayIcon testId="playIndicator" fill="#FFFFFF" />;
       break;
 
     case "pause":

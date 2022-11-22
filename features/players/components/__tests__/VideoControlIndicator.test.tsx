@@ -11,7 +11,7 @@ describe("Control indicator rendering and prop handling", () => {
         controlAction="play"
       />
     );
-    const icon = screen.getByTestId(/playIcon/i);
+    const icon = screen.getByTestId(/playIndicator/i);
     expect(icon).toBeInTheDocument();
   });
 
