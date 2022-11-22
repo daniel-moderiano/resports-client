@@ -7,6 +7,8 @@ import VideoContainer from "./VideoContainer";
 import { VideoControls } from "features/players";
 import { Player } from "../api/player";
 import { useSeek } from "../hooks/useSeek";
+import { VideoControlIndicator } from "./VideoControlIndicator";
+import PauseIcon from "icons/PauseIcon";
 
 interface VideoPlayerProps {
   player: Player | null;
@@ -162,6 +164,12 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         onMouseMove={throttleMousemove}
         data-testid="overlay"
       ></div>
+      <div className={styles.indicatorContainer}>
+        <VideoControlIndicator
+          ariaLabel="Pause"
+          icon={<PauseIcon fill="#FFFFFF" />}
+        />
+      </div>
 
       {player && (
         <div

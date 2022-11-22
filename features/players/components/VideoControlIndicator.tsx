@@ -11,7 +11,7 @@ export const VideoControlIndicator = ({
 }: VideoControlIndicatorProps) => {
   return (
     <div className={styles.container} role="status" aria-label={ariaLabel}>
-      {icon}
+      <div className={styles.iconWrapper}>{icon}</div>
     </div>
   );
 };
