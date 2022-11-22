@@ -1,3 +1,5 @@
+import styles from "features/players/components/styles/VideoControlIndicator.module.css";
+
 interface VideoControlIndicatorProps {
   ariaLabel: string;
   icon: React.ReactNode;
@@ -8,7 +10,7 @@ export const VideoControlIndicator = ({
   icon,
 }: VideoControlIndicatorProps) => {
   return (
-    <div role="status" aria-label={ariaLabel}>
+    <div className={styles.container} role="status" aria-label={ariaLabel}>
       {icon}
     </div>
   );

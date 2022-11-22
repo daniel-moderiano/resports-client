@@ -5,9 +5,14 @@ import { VideoControlIndicator } from "../VideoControlIndicator";
 
 describe("Control indicator rendering and prop handling", () => {
   it("Shows correct icon passed in via props", () => {
-    render(<VideoControlIndicator ariaLabel="Pause" icon={<PauseIcon />} />);
-    const currentSpeed = screen.getByText(/Normal/i);
-    expect(currentSpeed).toBeInTheDocument();
+    render(
+      <VideoControlIndicator
+        ariaLabel="Pause"
+        icon={<PauseIcon testId="pauseIndicator" />}
+      />
+    );
+    const icon = screen.getByTestId(/pauseIndicator/i);
+    expect(icon).toBeInTheDocument();
   });
 
   it("Has correct accessible name and role", () => {
