@@ -173,9 +173,18 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
           break;
         case "ArrowDown":
           player.setVolume(player.getVolume() - 0.05);
-          triggerControlIndication("volumeDown");
+          if (player.getVolume() === 0) {
+            setPlayerMuted(true);
+            player.setMuted(true);
+            triggerControlIndication("mute");
+          } else {
+            triggerControlIndication("volumeDown");
+          }
+
           break;
         case "ArrowUp":
+          player.setMuted(false);
+          setPlayerMuted(false);
           player.setVolume(player.getVolume() + 0.05);
           triggerControlIndication("volumeUp");
           break;
