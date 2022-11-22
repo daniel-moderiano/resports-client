@@ -8,7 +8,7 @@ import { VideoControls } from "features/players";
 import { Player } from "../api/player";
 import { useSeek } from "../hooks/useSeek";
 import { VideoControlIndicator } from "./VideoControlIndicator";
-import PauseIcon from "icons/PauseIcon";
+import { useControlIndicators } from "../hooks/useControlIndicators";
 
 export type ControlAction =
   | "play"
@@ -39,13 +39,14 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     setLockUserActive,
   } = useUserActivity();
   const { scheduleSeek, projectedTime } = useSeek(player);
+  const { showControlIndicator, triggerControlIndication, controlAction } =
+    useControlIndicators();
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
 
   // Use local state to avoid the long delays of an API call to check muted state when toggling icons and UI
   const [playerMuted, setPlayerMuted] = React.useState(true);
   const [playerPaused, setPlayerPaused] = React.useState(false);
   const [theaterMode, setTheaterMode] = React.useState(false);
-  const [showControlIndicator, setShowControlIndicator] = React.useState(false);
 
   // Ensure the local playerState state is set on play/pause events. This ensures other elements modify with each of the changes as needed
   React.useEffect(() => {
@@ -92,7 +93,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         triggerControlIndication("pause");
       }
     }
-  }, [player, signalUserInactivity]);
+  }, [player, signalUserInactivity, triggerControlIndication]);
 
   const toggleTheaterMode = () => {
     setTheaterMode((prevState) => !prevState);
@@ -100,15 +101,6 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     if (wrapperRef.current) {
       wrapperRef.current.focus();
     }
-  };
-
-  const triggerControlIndication = (action: ControlAction) => {
-    setShowControlIndicator(true);
-    console.log(action);
-
-    setTimeout(() => {
-      setShowControlIndicator(false);
-    }, 450);
   };
 
   // A global keypress handler to allow the user to control the video regardless of where they are on the page.
@@ -195,7 +187,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
       <div className={styles.indicatorContainer}>
         <VideoControlIndicator
           ariaLabel="Play"
-          controlAction="play"
+          controlAction={controlAction}
           triggerAnimation={showControlIndicator}
         />
       </div>

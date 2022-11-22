@@ -1,19 +1,25 @@
 import styles from "features/players/components/styles/VideoControlIndicator.module.css";
+import PauseIcon from "icons/PauseIcon";
 import PlayIcon from "icons/PlayIcon";
 import { ControlAction } from "./VideoPlayer";
 
 interface VideoControlIndicatorProps {
   ariaLabel: string;
-  controlAction: ControlAction;
+  controlAction: ControlAction | null;
   triggerAnimation: boolean;
 }
 
-const selectIcon = (action: ControlAction) => {
+const selectIcon = (action: ControlAction | null) => {
   let icon: JSX.Element | null = null;
 
   switch (action) {
     case "play":
-      icon = <PlayIcon testId="playIcon" />;
+      // Need at least one icon with an identifiable test icon for testing purposes
+      icon = <PlayIcon testId="playIcon" fill="#FFFFFF" />;
+      break;
+
+    case "pause":
+      icon = <PauseIcon fill="#FFFFFF" />;
       break;
 
     default:
