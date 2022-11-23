@@ -54,23 +54,20 @@ export const VideoControlIndicator = ({
 }: VideoControlIndicatorProps) => {
   const indicator = React.useRef<HTMLDivElement | null>(null);
 
+  // Conceptually it makes sense to trigger the indicator animation with an effect.
   React.useEffect(() => {
-    if (!indicator.current || !triggerAnimation) {
-      return;
+    if (triggerAnimation && indicator.current !== null) {
+      indicator.current.classList.remove(styles.triggerAnimation);
+      // This triggers browser reflow, which is the only way to restart the CSS animation. It is a costly operation however, so keep this in mind if performance issues appear.
+      void indicator.current.offsetWidth;
+      indicator.current.classList.add(styles.triggerAnimation);
     }
-
-    indicator.current.classList.remove(styles.triggerAnimation);
-    // Triggers browser reflow, which is the only way to restart the CSS animation
-    void indicator.current.offsetWidth;
-    indicator.current.classList.add(styles.triggerAnimation);
   }, [triggerAnimation]);
 
-  const handleAnimationEnd = () => {
-    if (!indicator.current) {
-      return;
-    }
-    indicator.current.classList.remove(styles.triggerAnimation);
+  const handleAnimationEnd = (event: React.AnimationEvent<HTMLDivElement>) => {
+    event.currentTarget.classList.remove(styles.triggerAnimation);
   };
+
   return (
     <div
       className={`${styles.container}`}
