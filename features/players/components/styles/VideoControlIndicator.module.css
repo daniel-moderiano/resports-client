@@ -1,14 +1,12 @@
 .container {
   pointer-events: none;
   background-color: rgba(0, 0, 0, 0.5);
-  color: rgb(238, 238, 238);
   height: 3.25rem;
   width: 3.25rem;
   border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 1;
   display: none;
 }
 
