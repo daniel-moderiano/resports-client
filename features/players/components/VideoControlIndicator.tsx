@@ -4,8 +4,9 @@ import PauseIcon from "icons/PauseIcon";
 import PlayIcon from "icons/PlayIcon";
 import VolumeDownIcon from "icons/VolumeDownIcon";
 import VolumeIcon from "icons/VolumeIcon";
-import { ControlAction } from "./VideoPlayer";
+import { ControlAction } from "../types/playerTypes";
 import * as React from "react";
+
 interface VideoControlIndicatorProps {
   ariaLabel: string;
   controlAction: ControlAction | null;

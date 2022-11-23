@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ControlAction } from "../components/VideoPlayer";
+import { ControlAction } from "../types/playerTypes";
 
 // Use this hook to trigger control indicators whent he user activates certain player controls
 export const useControlIndicators = () => {

@@ -10,22 +10,6 @@ import { useSeek } from "../hooks/useSeek";
 import { VideoControlIndicator } from "./VideoControlIndicator";
 import { useControlIndicators } from "../hooks/useControlIndicators";
 
-export type ControlAction =
-  | "play"
-  | "pause"
-  | "volumeUp"
-  | "volumeDown"
-  | "mute"
-  | "unmute"
-  | "forwardOneMins"
-  | "forwardFiveMins"
-  | "forwardTenMins"
-  | "forwardTenSecs"
-  | "backOneMins"
-  | "backFiveMins"
-  | "backTenMins"
-  | "backTenSecs";
-
 interface VideoPlayerProps {
   player: Player | null;
   disableControls?: boolean;
