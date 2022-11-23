@@ -1,0 +1,32 @@
+.container {
+  pointer-events: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 3.25rem;
+  width: 3.25rem;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+.iconWrapper {
+  width: 2rem;
+  height: 2rem;
+}
+
+.triggerAnimation {
+  display: flex;
+  animation: fade-out 500ms linear;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}

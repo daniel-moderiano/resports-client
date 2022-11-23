@@ -7,6 +7,8 @@ import VideoContainer from "./VideoContainer";
 import { VideoControls } from "features/players";
 import { Player } from "../api/player";
 import { useSeek } from "../hooks/useSeek";
+import { VideoControlIndicator } from "./VideoControlIndicator";
+import { useControlIndicators } from "../hooks/useControlIndicators";
 
 interface VideoPlayerProps {
   player: Player | null;
@@ -21,6 +23,8 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     setLockUserActive,
   } = useUserActivity();
   const { scheduleSeek, projectedTime } = useSeek(player);
+  const { showControlIndicator, triggerControlIndication, controlAction } =
+    useControlIndicators();
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
 
   // Use local state to avoid the long delays of an API call to check muted state when toggling icons and UI
@@ -63,6 +67,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     if (player) {
       if (player.isPaused()) {
         player.play();
+
         // A longer timeout is used here because it can be quite anti-user experience to have controls and cursor fade almost immediately after pressing play.
         setTimeout(() => {
           signalUserInactivity();
@@ -85,23 +90,47 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
   React.useEffect(() => {
     const activeUserKeys = [
       "m",
+      "k",
+      "f",
+      "t",
       "ArrowDown",
       "ArrowUp",
       "ArrowLeft",
       "ArrowRight",
     ];
 
+    const activeDOMKeys = ["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"];
+
     const handleKeyPress = (event: KeyboardEvent) => {
-      const { nodeName, className } = event.target as HTMLElement;
+      if (!(event.target instanceof Element)) {
+        return;
+      }
+
+      const { nodeName, className } = event.target;
+      const withinPlayer = event.target.closest("#wrapper");
 
       // Ensure these key actions do not mess with normal button expectations and functionality
       if (nodeName === "BUTTON" || nodeName === "INPUT") {
         if (className.includes("controlsBtn")) {
           signalUserActivity();
-        } else return;
+        }
+        return;
       }
 
-      if (activeUserKeys.includes(event.key)) {
+      // Avoid scrolling the page. Always prioritise play/pause functionality.
+      if (event.key === " ") {
+        event.preventDefault();
+      }
+
+      if (activeDOMKeys.includes(event.key) && !withinPlayer) {
+        return;
+      }
+
+      if (
+        activeUserKeys.includes(event.key) &&
+        wrapperRef.current === document.activeElement
+      ) {
+        event.preventDefault();
         signalUserActivity();
       }
 
@@ -113,9 +142,19 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         case "k":
         case " ":
           playOrPauseVideo();
+          if (playerPaused) {
+            triggerControlIndication("play");
+          } else {
+            triggerControlIndication("pause");
+          }
           break;
         case "m":
           toggleMute();
+          if (playerMuted) {
+            triggerControlIndication("unmute");
+          } else {
+            triggerControlIndication("mute");
+          }
           break;
         case "f":
           toggleFullscreen(wrapperRef.current);
@@ -125,9 +164,19 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
           break;
         case "ArrowDown":
           player.setVolume(player.getVolume() - 0.05);
+          if (player.getVolume() === 0) {
+            setPlayerMuted(true);
+            player.setMuted(true);
+            triggerControlIndication("mute");
+          } else {
+            triggerControlIndication("volumeDown");
+          }
           break;
         case "ArrowUp":
+          player.setMuted(false);
+          setPlayerMuted(false);
           player.setVolume(player.getVolume() + 0.05);
+          triggerControlIndication("volumeUp");
           break;
         case "ArrowLeft":
           scheduleSeek(-10);
@@ -144,7 +193,16 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [playOrPauseVideo, player, toggleMute, signalUserActivity, scheduleSeek]);
+  }, [
+    playOrPauseVideo,
+    player,
+    toggleMute,
+    signalUserActivity,
+    scheduleSeek,
+    triggerControlIndication,
+    playerMuted,
+    playerPaused,
+  ]);
 
   return (
     <VideoContainer
@@ -157,11 +215,25 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         className={`${styles.overlay} ${
           userActive || playerPaused ? "" : styles.overlayInactive
         } ${disableControls ? styles.overlayDisabled : ""}`}
-        onClick={playOrPauseVideo}
+        onClick={() => {
+          playOrPauseVideo();
+          if (playerPaused) {
+            triggerControlIndication("play");
+          } else {
+            triggerControlIndication("pause");
+          }
+        }}
         onDoubleClick={() => toggleFullscreen(wrapperRef.current)}
         onMouseMove={throttleMousemove}
         data-testid="overlay"
       ></div>
+      <div className={styles.indicatorContainer}>
+        <VideoControlIndicator
+          ariaLabel="Play"
+          controlAction={controlAction}
+          triggerAnimation={showControlIndicator}
+        />
+      </div>
 
       {player && (
         <div

@@ -69,7 +69,6 @@ export const VideoControls = ({
         <button
           className={styles.controlsBtn}
           onClick={togglePlay}
-          id="playBtn"
           aria-label={playerPaused ? "Play video" : "Pause video"}
         >
           {playerPaused ? (

@@ -307,3 +307,46 @@ describe("Video player controls/user activity timers", () => {
     expect(customControls).toHaveClass("controlsHide");
   });
 });
+
+describe("Video player control indicators", () => {
+  it("Shows control indicator when pausing/playing video with keyboard", async () => {
+    render(<VideoPlayer player={player} />);
+    const wrapper = screen.getByTestId("wrapper");
+
+    // First focus the wrapper to ensure the keypress is captured correctly
+    wrapper.focus();
+    await userEvent.keyboard("k");
+
+    const indicator = screen.getByRole("status");
+
+    expect(indicator).toBeInTheDocument();
+    expect(indicator).toHaveClass("triggerAnimation");
+  });
+
+  it("Does not show control indicator when playing/pausing video with control", async () => {
+    render(<VideoPlayer player={player} />);
+
+    // First hover the relevant div to trigger user activity/controls to show
+    const overlay = screen.getByTestId("overlay");
+    await userEvent.hover(overlay);
+
+    const playBtn = screen.getByLabelText(/pause video/i);
+    await userEvent.click(playBtn);
+
+    const indicator = screen.getByRole("status");
+    expect(indicator).not.toHaveClass("triggerAnimation");
+  });
+
+  it("Shows control indicator when pausing/playing video by clicking on video overlay", async () => {
+    render(<VideoPlayer player={player} />);
+
+    // First hover the relevant div to trigger user activity/controls to show
+    const overlay = screen.getByTestId("overlay");
+    await userEvent.click(overlay);
+
+    const indicator = screen.getByRole("status");
+
+    expect(indicator).toBeInTheDocument();
+    expect(indicator).toHaveClass("triggerAnimation");
+  });
+});

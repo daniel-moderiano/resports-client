@@ -1,3 +1,19 @@
+export type ControlAction =
+  | "play"
+  | "pause"
+  | "volumeUp"
+  | "volumeDown"
+  | "mute"
+  | "unmute"
+  | "forwardOneMins"
+  | "forwardFiveMins"
+  | "forwardTenMins"
+  | "forwardTenSecs"
+  | "backOneMins"
+  | "backFiveMins"
+  | "backTenMins"
+  | "backTenSecs";
+
 export interface VideoQualityObject {
   name: string;
   level: string;
