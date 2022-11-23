@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: center;
   opacity: 1;
+  display: none;
 }
 
 .iconWrapper {
@@ -17,6 +18,7 @@
 }
 
 .triggerAnimation {
+  display: flex;
   animation: fade-out 500ms linear;
 }
 
@@ -29,8 +31,4 @@
     opacity: 0;
     transform: scale(2);
   }
-}
-
-.hide {
-  display: none;
 }

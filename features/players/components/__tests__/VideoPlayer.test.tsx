@@ -309,7 +309,7 @@ describe("Video player controls/user activity timers", () => {
 });
 
 describe("Video player control indicators", () => {
-  it("Shows then fades control indicator when pausing/playing video with keyboard", async () => {
+  it("Shows control indicator when pausing/playing video with keyboard", async () => {
     render(<VideoPlayer player={player} />);
     const wrapper = screen.getByTestId("wrapper");
 
@@ -321,13 +321,6 @@ describe("Video player control indicators", () => {
 
     expect(indicator).toBeInTheDocument();
     expect(indicator).toHaveClass("triggerAnimation");
-
-    // Allow time for the indicator to fade
-    await act(async () => {
-      await new Promise((res) => setTimeout(res, 600));
-    });
-
-    expect(indicator).toHaveClass("hide");
   });
 
   it("Does not show control indicator when playing/pausing video with control", async () => {
@@ -341,7 +334,7 @@ describe("Video player control indicators", () => {
     await userEvent.click(playBtn);
 
     const indicator = screen.getByRole("status");
-    expect(indicator).toHaveClass("hide");
+    expect(indicator).not.toHaveClass("triggerAnimation");
   });
 
   it("Shows control indicator when pausing/playing video by clicking on video overlay", async () => {
@@ -355,12 +348,5 @@ describe("Video player control indicators", () => {
 
     expect(indicator).toBeInTheDocument();
     expect(indicator).toHaveClass("triggerAnimation");
-
-    // Allow time for the indicator to fade
-    await act(async () => {
-      await new Promise((res) => setTimeout(res, 600));
-    });
-
-    expect(indicator).toHaveClass("hide");
   });
 });

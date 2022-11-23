@@ -167,9 +167,9 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         case "m":
           toggleMute();
           if (playerMuted) {
-            triggerControlIndication("mute");
-          } else {
             triggerControlIndication("unmute");
+          } else {
+            triggerControlIndication("mute");
           }
           break;
         case "f":

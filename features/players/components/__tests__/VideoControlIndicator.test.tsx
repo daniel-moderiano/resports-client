@@ -27,7 +27,7 @@ describe("Control indicator rendering and prop handling", () => {
     expect(accessibleElement).toBeInTheDocument();
   });
 
-  it("Hides indicator by default", () => {
+  it("Hides indicator when trigger animation is not required", () => {
     render(
       <VideoControlIndicator
         triggerAnimation={false}
@@ -36,10 +36,10 @@ describe("Control indicator rendering and prop handling", () => {
       />
     );
     const indicator = screen.getByRole("status");
-    expect(indicator).toHaveClass("hide");
+    expect(indicator).not.toHaveClass("triggerAnimation");
   });
 
-  it("Shows indicator when trigger animation is active", () => {
+  it("Shows indicator when trigger animation is required", () => {
     render(
       <VideoControlIndicator
         triggerAnimation={true}
