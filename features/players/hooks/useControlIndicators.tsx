@@ -12,10 +12,10 @@ export const useControlIndicators = () => {
       setShowControlIndicator(true);
       setControlAction(action);
 
-      // The delay here must be LOWER than the CSS animation associated, otherwise there is a flash of the control icon after the animation completes
-      setTimeout(() => {
+      // This gives us the quickest and most conceptually correct cancellation of triggering the indicator animation (as opposed to a setTimeout), and allows the animation to be restarted up to 60 times/second.
+      window.requestAnimationFrame(() => {
         setShowControlIndicator(false);
-      }, 450);
+      });
     },
     []
   );

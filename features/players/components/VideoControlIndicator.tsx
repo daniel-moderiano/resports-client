@@ -56,7 +56,10 @@ export const VideoControlIndicator = ({
 
   // Conceptually it makes sense to trigger the indicator animation with an effect.
   React.useEffect(() => {
-    if (triggerAnimation && indicator.current !== null) {
+    if (indicator.current === null) {
+      return;
+    }
+    if (triggerAnimation) {
       indicator.current.classList.remove(styles.triggerAnimation);
       // This triggers browser reflow, which is the only way to restart the CSS animation. It is a costly operation however, so keep this in mind if performance issues appear.
       void indicator.current.offsetWidth;
