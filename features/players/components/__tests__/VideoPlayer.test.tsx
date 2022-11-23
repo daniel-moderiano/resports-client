@@ -317,17 +317,17 @@ describe("Video player control indicators", () => {
     wrapper.focus();
     await userEvent.keyboard("k");
 
-    const playIndicator = screen.getByRole("status");
+    const indicator = screen.getByRole("status");
 
-    expect(playIndicator).toBeInTheDocument();
-    expect(playIndicator).toHaveClass("triggerAnimation");
+    expect(indicator).toBeInTheDocument();
+    expect(indicator).toHaveClass("triggerAnimation");
 
     // Allow time for the indicator to fade
     await act(async () => {
       await new Promise((res) => setTimeout(res, 600));
     });
 
-    expect(playIndicator).toHaveClass("hide");
+    expect(indicator).toHaveClass("hide");
   });
 
   it("Does not show control indicator when playing/pausing video with control", async () => {
@@ -340,7 +340,27 @@ describe("Video player control indicators", () => {
     const playBtn = screen.getByLabelText(/pause video/i);
     await userEvent.click(playBtn);
 
-    const playIndicator = screen.getByRole("status");
-    expect(playIndicator).toHaveClass("hide");
+    const indicator = screen.getByRole("status");
+    expect(indicator).toHaveClass("hide");
+  });
+
+  it("Shows control indicator when pausing/playing video by clicking on video overlay", async () => {
+    render(<VideoPlayer player={player} />);
+
+    // First hover the relevant div to trigger user activity/controls to show
+    const overlay = screen.getByTestId("overlay");
+    await userEvent.click(overlay);
+
+    const indicator = screen.getByRole("status");
+
+    expect(indicator).toBeInTheDocument();
+    expect(indicator).toHaveClass("triggerAnimation");
+
+    // Allow time for the indicator to fade
+    await act(async () => {
+      await new Promise((res) => setTimeout(res, 600));
+    });
+
+    expect(indicator).toHaveClass("hide");
   });
 });

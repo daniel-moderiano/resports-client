@@ -71,31 +71,28 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     }
     if (player.getMuted()) {
       setPlayerMuted(false);
-      triggerControlIndication("unmute");
       player.setMuted(false);
     } else {
       setPlayerMuted(true);
-      triggerControlIndication("mute");
       player.setMuted(true);
     }
-  }, [player, signalUserActivity, triggerControlIndication]);
+  }, [player, signalUserActivity]);
 
   // Use this function to play a paused video, or pause a playing video. Intended to activate on clicking the video, or pressing spacebar
   const playOrPauseVideo = React.useCallback(() => {
     if (player) {
       if (player.isPaused()) {
         player.play();
-        triggerControlIndication("play");
+
         // A longer timeout is used here because it can be quite anti-user experience to have controls and cursor fade almost immediately after pressing play.
         setTimeout(() => {
           signalUserInactivity();
         }, 1000);
       } else {
         player.pause();
-        triggerControlIndication("pause");
       }
     }
-  }, [player, signalUserInactivity, triggerControlIndication]);
+  }, [player, signalUserInactivity]);
 
   const toggleTheaterMode = () => {
     setTheaterMode((prevState) => !prevState);
@@ -161,9 +158,19 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         case "k":
         case " ":
           playOrPauseVideo();
+          if (playerPaused) {
+            triggerControlIndication("play");
+          } else {
+            triggerControlIndication("pause");
+          }
           break;
         case "m":
           toggleMute();
+          if (playerMuted) {
+            triggerControlIndication("mute");
+          } else {
+            triggerControlIndication("unmute");
+          }
           break;
         case "f":
           toggleFullscreen(wrapperRef.current);
@@ -180,7 +187,6 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
           } else {
             triggerControlIndication("volumeDown");
           }
-
           break;
         case "ArrowUp":
           player.setMuted(false);
@@ -210,6 +216,8 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     signalUserActivity,
     scheduleSeek,
     triggerControlIndication,
+    playerMuted,
+    playerPaused,
   ]);
 
   return (
@@ -223,7 +231,14 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         className={`${styles.overlay} ${
           userActive || playerPaused ? "" : styles.overlayInactive
         } ${disableControls ? styles.overlayDisabled : ""}`}
-        onClick={playOrPauseVideo}
+        onClick={() => {
+          playOrPauseVideo();
+          if (playerPaused) {
+            triggerControlIndication("play");
+          } else {
+            triggerControlIndication("pause");
+          }
+        }}
         onDoubleClick={() => toggleFullscreen(wrapperRef.current)}
         onMouseMove={throttleMousemove}
         data-testid="overlay"
