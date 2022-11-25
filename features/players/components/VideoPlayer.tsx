@@ -9,6 +9,7 @@ import { Player } from "../api/player";
 import { useSeek } from "../hooks/useSeek";
 import { VideoControlIndicator } from "./VideoControlIndicator";
 import { useControlIndicators } from "../hooks/useControlIndicators";
+import { VolumeLevelIndicator } from "./VolumeLevelIndicator";
 
 interface VideoPlayerProps {
   player: Player | null;
@@ -23,8 +24,13 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     setLockUserActive,
   } = useUserActivity();
   const { scheduleSeek, projectedTime } = useSeek(player);
-  const { showControlIndicator, triggerControlIndication, controlAction } =
-    useControlIndicators();
+  const {
+    showControlIndicator,
+    triggerControlIndication,
+    controlAction,
+    triggerVolumeLevelIndication,
+    showVolumeLevelIndicator,
+  } = useControlIndicators();
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
 
   // Use local state to avoid the long delays of an API call to check muted state when toggling icons and UI
@@ -171,12 +177,14 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
           } else {
             triggerControlIndication("volumeDown");
           }
+          triggerVolumeLevelIndication();
           break;
         case "ArrowUp":
           player.setMuted(false);
           setPlayerMuted(false);
           player.setVolume(player.getVolume() + 0.05);
           triggerControlIndication("volumeUp");
+          triggerVolumeLevelIndication();
           break;
         case "ArrowLeft":
           scheduleSeek(-10);
@@ -202,6 +210,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     triggerControlIndication,
     playerMuted,
     playerPaused,
+    triggerVolumeLevelIndication,
   ]);
 
   return (
@@ -228,6 +237,9 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         data-testid="overlay"
       ></div>
       <div className={styles.indicatorContainer}>
+        {showVolumeLevelIndicator && player && (
+          <VolumeLevelIndicator currentVolume={player.getVolume()} />
+        )}
         <VideoControlIndicator
           ariaLabel="Play"
           controlAction={controlAction}

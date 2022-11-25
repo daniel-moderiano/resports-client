@@ -1,3 +1,5 @@
+import styles from "features/players/components/styles/VolumeLevelIndicator.module.css";
+
 interface VolumeLevelIndicatorProps {
   currentVolume: number;
 }
@@ -8,7 +10,10 @@ export const VolumeLevelIndicator = ({
   const volumeAsPercentage = `${currentVolume * 100}%`;
 
   return (
-    <div aria-label={`Volume level ${volumeAsPercentage}`}>
+    <div
+      className={styles.container}
+      aria-label={`Volume level ${volumeAsPercentage}`}
+    >
       {volumeAsPercentage}
     </div>
   );

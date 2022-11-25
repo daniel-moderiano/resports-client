@@ -362,4 +362,22 @@ describe("Video player control indicators", () => {
 
     expect(indicator).toBeInTheDocument();
   });
+
+  it("Volume indicator disappears after certain time", async () => {
+    render(<VideoPlayer player={player} />);
+    const wrapper = screen.getByTestId("wrapper");
+
+    // First focus the wrapper to ensure the keypress is captured correctly
+    wrapper.focus();
+    await userEvent.keyboard("[ArrowUp]");
+
+    const indicator = screen.queryByText("50%");
+    expect(indicator).toBeInTheDocument();
+
+    await act(async () => {
+      await new Promise((res) => setTimeout(res, 600));
+    });
+
+    expect(indicator).not.toBeInTheDocument();
+  });
 });

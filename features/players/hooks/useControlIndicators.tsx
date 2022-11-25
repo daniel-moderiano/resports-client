@@ -6,6 +6,10 @@ export const useControlIndicators = () => {
   const [controlAction, setControlAction] =
     React.useState<ControlAction | null>(null);
   const [showControlIndicator, setShowControlIndicator] = React.useState(false);
+  const [showVolumeLevelIndicator, setShowVolumeLevelIndicator] =
+    React.useState(false);
+
+  const timer = React.useRef<NodeJS.Timeout | null>(null);
 
   const triggerControlIndication = React.useCallback(
     (action: ControlAction) => {
@@ -20,9 +24,20 @@ export const useControlIndicators = () => {
     []
   );
 
+  const triggerVolumeLevelIndication = React.useCallback(() => {
+    setShowVolumeLevelIndicator(true);
+    clearTimeout(timer.current as NodeJS.Timeout);
+
+    timer.current = setTimeout(() => {
+      setShowVolumeLevelIndicator(false);
+    }, 500);
+  }, []);
+
   return {
     controlAction,
     showControlIndicator,
     triggerControlIndication,
+    triggerVolumeLevelIndication,
+    showVolumeLevelIndicator,
   };
 };
