@@ -10,7 +10,7 @@ describe("Volume level indicator UI", () => {
 
   it("Has correct accessible description", () => {
     render(<VolumeLevelIndicator currentVolume={0.5} />);
-    const volumeLabel = screen.getByLabelText("Volume level is 50%");
+    const volumeLabel = screen.getByLabelText("Volume level 50%");
     expect(volumeLabel).toBeInTheDocument();
   });
 });

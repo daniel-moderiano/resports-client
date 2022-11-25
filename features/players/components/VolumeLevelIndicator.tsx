@@ -5,5 +5,11 @@ interface VolumeLevelIndicatorProps {
 export const VolumeLevelIndicator = ({
   currentVolume,
 }: VolumeLevelIndicatorProps) => {
-  return <div>{currentVolume}</div>;
+  const volumeAsPercentage = `${currentVolume * 100}%`;
+
+  return (
+    <div aria-label={`Volume level ${volumeAsPercentage}`}>
+      {volumeAsPercentage}
+    </div>
+  );
 };
