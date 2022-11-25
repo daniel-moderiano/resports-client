@@ -20,7 +20,7 @@ const playerWrapperPlaying: PlayerClass = {
   seek: seekMock,
   setVolume: setVolumeMock,
   getVolume: () => {
-    return 0;
+    return 0.5;
   },
   addEventListener: jest.fn,
   hasQualitySettings: () => {
@@ -348,5 +348,18 @@ describe("Video player control indicators", () => {
 
     expect(indicator).toBeInTheDocument();
     expect(indicator).toHaveClass("triggerAnimation");
+  });
+
+  it("Shows volume indicator when adjusting volume via keyboard (ArrowUp)", async () => {
+    render(<VideoPlayer player={player} />);
+    const wrapper = screen.getByTestId("wrapper");
+
+    // First focus the wrapper to ensure the keypress is captured correctly
+    wrapper.focus();
+    await userEvent.keyboard("[ArrowUp]");
+
+    const indicator = screen.getByText("50%");
+
+    expect(indicator).toBeInTheDocument();
   });
 });
