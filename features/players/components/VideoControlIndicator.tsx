@@ -8,7 +8,7 @@ import { ControlAction } from "../types/playerTypes";
 import * as React from "react";
 
 interface VideoControlIndicatorProps {
-  ariaLabel: string;
+  ariaLabel: string | null;
   controlAction: ControlAction | null;
   triggerAnimation: boolean;
 }
@@ -33,7 +33,6 @@ const selectIcon = (action: ControlAction | null) => {
       icon = <VolumeIcon fill="none" />;
       break;
 
-    // TODO: Remove aria labels for volume up/down an instead have this on the volume level indicator
     case "volumeDown":
       icon = <VolumeDownIcon fill="#FFFFFF" />;
       break;
@@ -56,6 +55,11 @@ export const VideoControlIndicator = ({
 }: VideoControlIndicatorProps) => {
   const indicator = React.useRef<HTMLDivElement | null>(null);
 
+  // For volume adjustments, the aria label will be on a separate volume indicator and shouldn't be duplicated elsewhere
+  const ariaLabelRequired = () => {
+    return !(controlAction == "volumeDown" || controlAction === "volumeUp");
+  };
+
   // Conceptually it makes sense to trigger the indicator animation with an effect.
   React.useEffect(() => {
     if (indicator.current === null) {
@@ -77,7 +81,9 @@ export const VideoControlIndicator = ({
     <div
       className={`${styles.container}`}
       role="status"
-      aria-label={ariaLabel}
+      aria-label={
+        ariaLabelRequired() && ariaLabel !== null ? ariaLabel : undefined
+      }
       ref={indicator}
       onAnimationEnd={handleAnimationEnd}
     >

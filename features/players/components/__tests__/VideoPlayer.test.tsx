@@ -20,7 +20,7 @@ const playerWrapperPlaying: PlayerClass = {
   seek: seekMock,
   setVolume: setVolumeMock,
   getVolume: () => {
-    return 0.5;
+    return 50;
   },
   addEventListener: jest.fn,
   hasQualitySettings: () => {

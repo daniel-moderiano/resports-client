@@ -241,7 +241,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
           <VolumeLevelIndicator currentVolume={player.getVolume()} />
         )}
         <VideoControlIndicator
-          ariaLabel="Play"
+          ariaLabel={controlAction}
           controlAction={controlAction}
           triggerAnimation={showControlIndicator}
         />

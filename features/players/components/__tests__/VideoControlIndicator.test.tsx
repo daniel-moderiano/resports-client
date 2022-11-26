@@ -6,7 +6,7 @@ describe("Control indicator rendering and prop handling", () => {
     render(
       <VideoControlIndicator
         triggerAnimation={false}
-        ariaLabel="Play"
+        ariaLabel="play"
         controlAction="play"
       />
     );
@@ -18,11 +18,11 @@ describe("Control indicator rendering and prop handling", () => {
     render(
       <VideoControlIndicator
         triggerAnimation={false}
-        ariaLabel="Play"
+        ariaLabel="play"
         controlAction="play"
       />
     );
-    const accessibleElement = screen.getByLabelText("Play");
+    const accessibleElement = screen.getByLabelText("play");
     expect(accessibleElement).toBeInTheDocument();
   });
 
@@ -30,7 +30,7 @@ describe("Control indicator rendering and prop handling", () => {
     render(
       <VideoControlIndicator
         triggerAnimation={false}
-        ariaLabel="Play"
+        ariaLabel="play"
         controlAction="play"
       />
     );
@@ -42,11 +42,23 @@ describe("Control indicator rendering and prop handling", () => {
     render(
       <VideoControlIndicator
         triggerAnimation={true}
-        ariaLabel="Play"
+        ariaLabel="play"
         controlAction="play"
       />
     );
     const indicator = screen.getByRole("status");
     expect(indicator).toHaveClass("triggerAnimation");
+  });
+
+  it("Avoid aria label for volume adjustments", () => {
+    render(
+      <VideoControlIndicator
+        triggerAnimation={true}
+        ariaLabel="volumeUp"
+        controlAction="volumeUp"
+      />
+    );
+    const indicator = screen.queryByLabelText("volumeUp");
+    expect(indicator).not.toBeInTheDocument();
   });
 });
