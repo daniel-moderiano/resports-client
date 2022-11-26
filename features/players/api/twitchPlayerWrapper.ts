@@ -49,6 +49,11 @@ export class TwitchPlayerWrapper implements PlayerClass {
   }
 
   setVolume(volumeLevel: number) {
+    // The Twitch API has an unusual bug that lets you exceed 100% volume when switching on and off mute. Limit this behaviour here.
+    if (volumeLevel > 100) {
+      return;
+    }
+
     this.player.setVolume(volumeLevel / 100);
   }
 
