@@ -49,11 +49,11 @@ export class YouTubePlayerWrapper implements PlayerClass {
   }
 
   setVolume(volumeLevel: number) {
-    this.player.setVolume(volumeLevel * 100);
+    this.player.setVolume(volumeLevel);
   }
 
   getVolume() {
-    return this.player.getVolume() / 100;
+    return this.player.getVolume();
   }
 
   setMuted(muted: boolean) {

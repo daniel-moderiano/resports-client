@@ -49,11 +49,11 @@ export class TwitchPlayerWrapper implements PlayerClass {
   }
 
   setVolume(volumeLevel: number) {
-    this.player.setVolume(volumeLevel);
+    this.player.setVolume(volumeLevel / 100);
   }
 
   getVolume() {
-    return this.player.getVolume();
+    return this.player.getVolume() * 100;
   }
 
   setMuted(muted: boolean) {

@@ -169,7 +169,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
           toggleTheaterMode();
           break;
         case "ArrowDown":
-          player.setVolume(player.getVolume() - 0.05);
+          player.setVolume(player.getVolume() - 5);
           if (player.getVolume() === 0) {
             setPlayerMuted(true);
             player.setMuted(true);
@@ -182,7 +182,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         case "ArrowUp":
           player.setMuted(false);
           setPlayerMuted(false);
-          player.setVolume(player.getVolume() + 0.05);
+          player.setVolume(player.getVolume() + 5);
           triggerControlIndication("volumeUp");
           triggerVolumeLevelIndication();
           break;
@@ -237,10 +237,9 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         data-testid="overlay"
       ></div>
       <div className={styles.indicatorContainer}>
-        {/* {showVolumeLevelIndicator && player && (
+        {showVolumeLevelIndicator && player && (
           <VolumeLevelIndicator currentVolume={player.getVolume()} />
-        )} */}
-        {player && <VolumeLevelIndicator currentVolume={player.getVolume()} />}
+        )}
         <VideoControlIndicator
           ariaLabel="Play"
           controlAction={controlAction}

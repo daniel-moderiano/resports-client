@@ -7,7 +7,7 @@ interface VolumeLevelIndicatorProps {
 export const VolumeLevelIndicator = ({
   currentVolume,
 }: VolumeLevelIndicatorProps) => {
-  const volumeAsPercentage = `${(currentVolume * 100).toFixed(0)}%`;
+  const volumeAsPercentage = `${currentVolume.toFixed(0)}%`;
 
   return (
     <div
