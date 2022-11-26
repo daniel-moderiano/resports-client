@@ -380,4 +380,15 @@ describe("Video player control indicators", () => {
 
     expect(indicator).not.toBeInTheDocument();
   });
+
+  it.todo("Shows seek indicator when seeking with the keyboard", async () => {
+    render(<VideoPlayer player={player} />);
+  });
+
+  it.todo(
+    "Shows seek indicator when seeking with the clickable controls",
+    async () => {
+      render(<VideoPlayer player={player} />);
+    }
+  );
 });
