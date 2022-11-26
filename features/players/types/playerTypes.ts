@@ -104,12 +104,12 @@ export interface PlayerClass {
 
   /**
    * Sets the player volume.
-   * @param volumeLevel   A number between 0 and 1.0.
+   * @param volumeLevel   A number between 0 and 100.
    */
   setVolume: (volumeLevel: number) => void;
 
   /**
-   * @returns Volume level, a number between 0 and 1.0.
+   * @returns Volume level, a number between 0 and 100.
    */
   getVolume: () => number;
 
