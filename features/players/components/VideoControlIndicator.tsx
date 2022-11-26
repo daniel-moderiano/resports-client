@@ -33,6 +33,7 @@ const selectIcon = (action: ControlAction | null) => {
       icon = <VolumeIcon fill="none" />;
       break;
 
+    // TODO: Remove aria labels for volume up/down an instead have this on the volume level indicator
     case "volumeDown":
       icon = <VolumeDownIcon fill="#FFFFFF" />;
       break;

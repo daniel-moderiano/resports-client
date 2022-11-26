@@ -237,9 +237,10 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         data-testid="overlay"
       ></div>
       <div className={styles.indicatorContainer}>
-        {showVolumeLevelIndicator && player && (
+        {/* {showVolumeLevelIndicator && player && (
           <VolumeLevelIndicator currentVolume={player.getVolume()} />
-        )}
+        )} */}
+        {player && <VolumeLevelIndicator currentVolume={player.getVolume()} />}
         <VideoControlIndicator
           ariaLabel="Play"
           controlAction={controlAction}
