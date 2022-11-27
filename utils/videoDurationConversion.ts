@@ -256,7 +256,7 @@ export const formatElapsedTime = (elapsedTimeInSeconds: number) => {
   return `${formattedHours}${formattedMinutes}:${formattedSeconds}`;
 };
 
-// Convert seconds to the human readable "x seconds" or "x minutes". Support is not required for hours at this stage, as this is only used in seeking videos forward/back
+// Convert seconds to the human readable "x seconds" or "x minutes". Support is not required for hours at this stage, as this is only used in seeking videos forward/back.
 export const convertSecondsToHumanReadable = (numberOfSeconds: number) => {
   const minutes = Math.floor(Math.abs(numberOfSeconds) / 60);
   const seconds = Math.abs(numberOfSeconds);

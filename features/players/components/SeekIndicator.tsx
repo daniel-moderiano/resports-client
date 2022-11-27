@@ -1,4 +1,5 @@
 import styles from "features/players/components/styles/SeekIndicator.module.css";
+import { convertSecondsToHumanReadable } from "utils/videoDurationConversion";
 
 interface SeekIndicatorProps {
   projectedSeekInSeconds: number;
@@ -7,12 +8,22 @@ interface SeekIndicatorProps {
 export const SeekIndicator = ({
   projectedSeekInSeconds,
 }: SeekIndicatorProps) => {
-  // TODO: Seek duration conversion using module operator
-  // TODO: Customise ariaLabel depending on forward/backward seek
-
+  const formattedSeconds = convertSecondsToHumanReadable(
+    projectedSeekInSeconds
+  );
   return (
-    <div className="" aria-label="">
-      {projectedSeekInSeconds}
+    <div
+      className={
+        projectedSeekInSeconds < 0 ? styles.seekBackward : styles.seekForward
+      }
+      aria-label={
+        projectedSeekInSeconds < 0
+          ? `Skip backward ${formattedSeconds}`
+          : `Skip forward ${formattedSeconds}`
+      }
+      role="status"
+    >
+      {formattedSeconds}
     </div>
   );
 };
