@@ -10,6 +10,7 @@ import { useSeek } from "../hooks/useSeek";
 import { VideoControlIndicator } from "./VideoControlIndicator";
 import { useControlIndicators } from "../hooks/useControlIndicators";
 import { VolumeLevelIndicator } from "./VolumeLevelIndicator";
+import { SeekIndicator } from "./SeekIndicator";
 
 interface VideoPlayerProps {
   player: Player | null;
@@ -23,7 +24,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     signalUserActivity,
     setLockUserActive,
   } = useUserActivity();
-  const { scheduleSeek, projectedTime } = useSeek(player);
+  const { scheduleSeek, projectedTime, seekAmount } = useSeek(player);
   const {
     showControlIndicator,
     triggerControlIndication,
@@ -91,6 +92,12 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
       wrapperRef.current.focus();
     }
   };
+
+  React.useEffect(() => {
+    addEventListener("performSeek", () => {
+      console.log("Seek performed");
+    });
+  }, []);
 
   // A global keypress handler to allow the user to control the video regardless of where they are on the page.
   React.useEffect(() => {
@@ -240,6 +247,11 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         {showVolumeLevelIndicator && player && (
           <VolumeLevelIndicator currentVolume={player.getVolume()} />
         )}
+
+        {seekAmount && player && (
+          <SeekIndicator projectedSeekInSeconds={seekAmount} />
+        )}
+
         <VideoControlIndicator
           ariaLabel={controlAction}
           controlAction={controlAction}

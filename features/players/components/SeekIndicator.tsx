@@ -11,11 +11,12 @@ export const SeekIndicator = ({
   const formattedSeconds = convertSecondsToHumanReadable(
     projectedSeekInSeconds
   );
+
   return (
     <div
-      className={
+      className={`${
         projectedSeekInSeconds < 0 ? styles.seekBackward : styles.seekForward
-      }
+      } ${styles.container}`}
       aria-label={
         projectedSeekInSeconds < 0
           ? `Skip backward ${formattedSeconds}`
