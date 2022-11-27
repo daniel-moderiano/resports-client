@@ -1,21 +1,21 @@
 .seekForward {
+  right: calc(10%);
 }
 
 .seekBackward {
+  left: calc(10%);
 }
 
 .container {
   pointer-events: none;
   background-color: rgba(0, 0, 0, 0.5);
+  height: 6rem;
+  width: 6rem;
+  color: white;
+  border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 3rem;
-  width: 5rem;
-  color: white;
-  font-size: 1.25rem;
-  border-radius: 5px;
   position: absolute;
-  top: calc(12.5%);
-  left: calc(50% - 2.5rem);
+  top: calc(50% - 3rem);
 }
