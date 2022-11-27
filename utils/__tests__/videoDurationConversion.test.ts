@@ -188,7 +188,7 @@ describe("Seconds to human readable conversions", () => {
   });
 
   it("Converts 60 seconds to single minute", () => {
-    expect(convertSecondsToHumanReadable(300)).toBe("1 minute");
+    expect(convertSecondsToHumanReadable(60)).toBe("1 minute");
   });
 
   it("Converts > 60 seconds to minutes", () => {
