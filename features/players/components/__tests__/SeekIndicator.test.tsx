@@ -2,15 +2,9 @@ import { render, screen } from "@testing-library/react";
 import { SeekIndicator } from "../SeekIndicator";
 
 describe("Seek indicator UI", () => {
-  it("Shows correct number of seconds to seek (for seek < 1 min)", () => {
+  it("Shows converted seek number", () => {
     render(<SeekIndicator projectedSeekInSeconds={10} />);
     const indicator = screen.getByText("10 seconds");
-    expect(indicator).toBeInTheDocument();
-  });
-
-  it("Shows correct number of minutes to seek (for seek > 1 min)", () => {
-    render(<SeekIndicator projectedSeekInSeconds={300} />);
-    const indicator = screen.getByText("5 minutes");
     expect(indicator).toBeInTheDocument();
   });
 
