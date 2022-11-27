@@ -381,14 +381,37 @@ describe("Video player control indicators", () => {
     expect(indicator).not.toBeInTheDocument();
   });
 
-  it.todo("Shows seek indicator when seeking with the keyboard", async () => {
-    render(<VideoPlayer player={player} />);
-  });
+  it.todo(
+    "Shows correct seek indicator when seeking with the keyboard",
+    async () => {
+      render(<VideoPlayer player={player} />);
+      const wrapper = screen.getByTestId("wrapper");
+
+      // First focus the wrapper to ensure the keypress is captured correctly
+      wrapper.focus();
+      await userEvent.keyboard("[ArrowRight]");
+
+      const indicator = screen.getByRole("status");
+      expect(indicator).toBeInTheDocument();
+      expect(indicator).toHaveClass("seekForward");
+    }
+  );
 
   it.todo(
     "Shows seek indicator when seeking with the clickable controls",
     async () => {
       render(<VideoPlayer player={player} />);
+
+      // First hover the relevant div to trigger user activity/controls to show
+      const overlay = screen.getByTestId("overlay");
+      await userEvent.hover(overlay);
+
+      const seekBtn = screen.getByLabelText(/skip forward one minute/i);
+      await userEvent.click(seekBtn);
+
+      const indicator = screen.getByRole("status");
+      expect(indicator).toBeInTheDocument();
+      expect(indicator).toHaveClass("seekForward");
     }
   );
 });
