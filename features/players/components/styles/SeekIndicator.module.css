@@ -20,6 +20,13 @@
   top: calc(50% - 3rem);
 }
 
+.innerContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .icon {
   height: 1.6rem;
   width: 1.6rem;
@@ -43,6 +50,12 @@
 
 .iconContainer {
   display: flex;
+  padding-bottom: 0.25rem;
+}
+
+.seekText {
+  font-size: 0.7rem;
+  font-weight: 500;
 }
 
 @keyframes fade-in-out {
