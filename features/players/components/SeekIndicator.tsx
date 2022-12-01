@@ -1,4 +1,5 @@
 import styles from "features/players/components/styles/SeekIndicator.module.css";
+import PlayIcon from "icons/PlayIcon";
 import { convertSecondsToHumanReadable } from "utils/videoDurationConversion";
 
 interface SeekIndicatorProps {
@@ -24,7 +25,23 @@ export const SeekIndicator = ({
       }
       role="status"
     >
-      {formattedSeconds}
+      <div className={styles.innerContent}>
+        <div className={styles.iconContainer}>
+          <PlayIcon
+            fill="#ebebeb"
+            className={`${styles.icon} ${styles.iconStart}`}
+          />
+          <PlayIcon
+            fill="#ebebeb"
+            className={`${styles.icon} ${styles.iconMiddle}`}
+          />
+          <PlayIcon
+            fill="#ebebeb"
+            className={`${styles.icon} ${styles.iconEnd}`}
+          />
+        </div>
+        <span className={styles.seekText}>{formattedSeconds}</span>
+      </div>
     </div>
   );
 };

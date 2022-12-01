@@ -19,3 +19,42 @@
   position: absolute;
   top: calc(50% - 3rem);
 }
+
+.icon {
+  height: 1.6rem;
+  width: 1.6rem;
+  padding: 0;
+  margin: 0 -0.1rem;
+  line-height: 0;
+  animation: infinite 900ms ease fade-in-out;
+}
+
+.iconStart {
+  animation-delay: 100ms;
+}
+
+.iconMiddle {
+  animation-delay: 200ms;
+}
+
+.iconEnd {
+  animation-delay: 300ms;
+}
+
+.iconContainer {
+  display: flex;
+}
+
+@keyframes fade-in-out {
+  0% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.1;
+  }
+}
