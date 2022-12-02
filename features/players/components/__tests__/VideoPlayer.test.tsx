@@ -380,4 +380,16 @@ describe("Video player control indicators", () => {
 
     expect(indicator).not.toBeInTheDocument();
   });
+
+  it("Shows correct seek indicator when seeking with the keyboard", async () => {
+    render(<VideoPlayer player={player} />);
+    const wrapper = screen.getByTestId("wrapper");
+
+    // First focus the wrapper to ensure the keypress is captured correctly
+    wrapper.focus();
+    await userEvent.keyboard("[ArrowRight]");
+
+    const indicator = screen.getByText("10 seconds");
+    expect(indicator).toBeInTheDocument();
+  });
 });

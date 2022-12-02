@@ -1,5 +1,6 @@
 import {
   convertISOToSeconds,
+  convertSecondsToHumanReadable,
   convertTwitchVideoDuration,
   convertYouTubeVideoDuration,
   formatElapsedTime,
@@ -174,5 +175,31 @@ describe("Elapsed duration conversions", () => {
 
   it("Handles negative duration inputs (from backwards skipping)", () => {
     expect(formatElapsedTime(-600)).toBe("0:00");
+  });
+});
+
+describe("Seconds to human readable conversions", () => {
+  it("Handles zero second input correctly", () => {
+    expect(convertSecondsToHumanReadable(0)).toBe("0 seconds");
+  });
+
+  it("Handles < 60 second input correctly", () => {
+    expect(convertSecondsToHumanReadable(10)).toBe("10 seconds");
+  });
+
+  it("Converts 60 seconds to single minute", () => {
+    expect(convertSecondsToHumanReadable(60)).toBe("1 minute");
+  });
+
+  it("Converts > 60 seconds to minutes", () => {
+    expect(convertSecondsToHumanReadable(300)).toBe("5 minutes");
+  });
+
+  it("Handles large numbers of seconds (up to 12 hours equivalent)", () => {
+    expect(convertSecondsToHumanReadable(43200)).toBe("720 minutes");
+  });
+
+  it("Handles negative number inputs", () => {
+    expect(convertSecondsToHumanReadable(-10)).toBe("10 seconds");
   });
 });
