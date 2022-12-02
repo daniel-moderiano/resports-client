@@ -9,8 +9,8 @@
 .container {
   pointer-events: none;
   background-color: rgba(0, 0, 0, 0.5);
-  height: 7rem;
-  width: 7rem;
+  height: 7.25rem;
+  width: 7.25rem;
   color: white;
   border-radius: 100%;
   display: flex;
@@ -59,7 +59,7 @@
 }
 
 .seekText {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 500;
 }
 
