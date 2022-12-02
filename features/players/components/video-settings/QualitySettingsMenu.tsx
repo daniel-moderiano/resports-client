@@ -3,7 +3,7 @@ import * as React from "react";
 import styles from "features/players/components/styles/VideoSettings.module.css";
 import ArrowBackIcon from "icons/ArrowBackIcon";
 import TickIcon from "icons/TickIcon";
-import { youTubeQualityNameMap } from "features/players/utils/youtubeQualityNameMap";
+import { qualityNamesMap } from "features/players/utils/qualityNamesMap";
 
 interface QualitySettingsMenuProps {
   player: Player;
@@ -62,10 +62,10 @@ export const QualitySettingsMenu = ({
             {player.getQuality() === quality.name ? (
               <div>
                 <TickIcon fill="#FFFFFF" className={styles.selectedIcon} />
-                <span>{youTubeQualityNameMap[quality.name]}</span>
+                <span>{qualityNamesMap[quality.level]}</span>
               </div>
             ) : (
-              <span>{youTubeQualityNameMap[quality.name]}</span>
+              <span>{qualityNamesMap[quality.level]}</span>
             )}
           </button>
         ))}

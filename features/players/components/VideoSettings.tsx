@@ -7,7 +7,7 @@ import { PlaybackSpeedSettingsMenu } from "./video-settings/PlaybackSpeedSetting
 import * as React from "react";
 import styles from "features/players/components/styles/VideoSettings.module.css";
 import ArrowBackIcon from "icons/ArrowBackIcon";
-import { youTubeQualityNameMap } from "features/players/utils/youtubeQualityNameMap";
+import { qualityNamesMap } from "features/players/utils/qualityNamesMap";
 
 interface VideoSettingsProps {
   closeMenu: () => void;
@@ -80,7 +80,7 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
           <span>Quality</span>
           <div className={styles.currentDataContainer}>
             <span className={styles.currentData} data-testid="currentQuality">
-              {youTubeQualityNameMap[player.getQuality()]}
+              {qualityNamesMap[player.getQuality()]}
             </span>
             {player.hasQualitySettings() && (
               <ArrowBackIcon className={styles.forwardIcon} />
