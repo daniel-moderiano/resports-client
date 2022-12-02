@@ -44,10 +44,10 @@ export const QualitySettingsMenu = ({
           <ArrowBackIcon className={styles.backIcon} />
         </button>
       </div>
-      <div role="menu" ref={innerRef}>
+      <div role="menu" ref={innerRef} className={styles.subMenuBody}>
         {player.getQualities().map((quality) => (
           <button
-            className={`${styles.menuButton}`}
+            className={`${styles.menuButton} ${styles.subMenuButton}`}
             key={quality.name}
             role="menuitem"
             onClick={() => {
@@ -59,7 +59,7 @@ export const QualitySettingsMenu = ({
             }
           >
             {player.getQuality() === quality.name ? (
-              <div className={styles.buttonSelected}>
+              <div>
                 <TickIcon fill="#FFFFFF" className={styles.selectedIcon} />
                 <span>{quality.name}</span>
               </div>
