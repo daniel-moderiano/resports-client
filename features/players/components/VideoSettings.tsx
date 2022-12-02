@@ -58,81 +58,81 @@ export const VideoSettings = ({ closeMenu, player }: VideoSettingsProps) => {
       ref={primaryMenu}
       className={`${styles.menu} ${styles.primaryMenu}`}
     >
-      {player.hasQualitySettings() && (
-        <div>
-          <button
-            className={`${styles.menuButton} ${
-              currentlyFocusedMenu !== primaryMenu ? styles.hideButton : ""
-            }`}
-            role="menuitem"
-            aria-haspopup="true"
-            aria-expanded={showQualityMenu}
-            onClick={() => {
-              setShowQualityMenu((prevState) => !prevState);
-            }}
-            onKeyDown={(event) =>
-              handlePrimaryMenuKeyDown(event, () => {
-                setShowQualityMenu(true);
-              })
-            }
-          >
-            <span>Quality</span>
-            <div className={styles.currentDataContainer}>
-              <span className={styles.currentData} data-testid="currentQuality">
-                {player.getQuality()}
-              </span>
+      <div>
+        <button
+          className={`${styles.menuButton} ${
+            currentlyFocusedMenu !== primaryMenu ? styles.hideButton : ""
+          }`}
+          role="menuitem"
+          aria-haspopup="true"
+          aria-expanded={showQualityMenu}
+          onClick={() => {
+            setShowQualityMenu((prevState) => !prevState);
+          }}
+          onKeyDown={(event) =>
+            handlePrimaryMenuKeyDown(event, () => {
+              setShowQualityMenu(true);
+            })
+          }
+          disabled={!player.hasQualitySettings()}
+        >
+          <span>Quality</span>
+          <div className={styles.currentDataContainer}>
+            <span className={styles.currentData} data-testid="currentQuality">
+              {player.getQuality()}
+            </span>
+            {player.hasQualitySettings() && (
               <ArrowBackIcon className={styles.forwardIcon} />
-            </div>
-          </button>
-          {showQualityMenu && (
-            <QualitySettingsMenu
-              player={player}
-              closeSelf={() => setShowQualityMenu(false)}
-              closePrimaryMenu={closeMenu}
-              innerRef={qualityMenu}
-            />
-          )}
-        </div>
-      )}
-      {player.hasPlaybackSpeedSettings() && (
-        <div>
-          <button
-            className={`${styles.menuButton} ${
-              currentlyFocusedMenu !== primaryMenu ? styles.hideButton : ""
-            }`}
-            role="menuitem"
-            aria-haspopup="true"
-            aria-expanded={showPlaybackSpeedMenu}
-            onClick={() => setShowPlaybackSpeedMenu((prevState) => !prevState)}
-            onKeyDown={(event) =>
-              handlePrimaryMenuKeyDown(event, () => {
-                setShowPlaybackSpeedMenu(true);
-              })
-            }
-          >
-            <span>Playback speed</span>
-            <div className={styles.currentDataContainer}>
-              <span
-                className={styles.currentData}
-                data-testid="currentPlayback"
-              >
-                {player.getPlaybackSpeed() === 1
-                  ? "Normal"
-                  : `${player.getPlaybackSpeed()}x`}
-              </span>
+            )}
+          </div>
+        </button>
+        {showQualityMenu && (
+          <QualitySettingsMenu
+            player={player}
+            closeSelf={() => setShowQualityMenu(false)}
+            closePrimaryMenu={closeMenu}
+            innerRef={qualityMenu}
+          />
+        )}
+      </div>
+
+      <div>
+        <button
+          className={`${styles.menuButton} ${
+            currentlyFocusedMenu !== primaryMenu ? styles.hideButton : ""
+          }`}
+          role="menuitem"
+          aria-haspopup="true"
+          aria-expanded={showPlaybackSpeedMenu}
+          onClick={() => setShowPlaybackSpeedMenu((prevState) => !prevState)}
+          onKeyDown={(event) =>
+            handlePrimaryMenuKeyDown(event, () => {
+              setShowPlaybackSpeedMenu(true);
+            })
+          }
+          disabled={!player.hasPlaybackSpeedSettings()}
+        >
+          <span>Playback speed</span>
+          <div className={styles.currentDataContainer}>
+            <span className={styles.currentData} data-testid="currentPlayback">
+              {player.getPlaybackSpeed() === 1
+                ? "Normal"
+                : `${player.getPlaybackSpeed()}x`}
+            </span>
+            {player.hasPlaybackSpeedSettings() && (
               <ArrowBackIcon className={styles.forwardIcon} />
-            </div>
-          </button>
-          {showPlaybackSpeedMenu && (
-            <PlaybackSpeedSettingsMenu
-              player={player}
-              closeSelf={() => setShowPlaybackSpeedMenu(false)}
-              closePrimaryMenu={closeMenu}
-              innerRef={playbackSpeedMenu}
-            />
-          )}
-        </div>
-      )}
+            )}
+          </div>
+        </button>
+        {showPlaybackSpeedMenu && (
+          <PlaybackSpeedSettingsMenu
+            player={player}
+            closeSelf={() => setShowPlaybackSpeedMenu(false)}
+            closePrimaryMenu={closeMenu}
+            innerRef={playbackSpeedMenu}
+          />
+        )}
+      </div>
     </div>
   );
 };

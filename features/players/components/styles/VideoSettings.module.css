@@ -57,6 +57,15 @@
   outline-offset: -3px;
 }
 
+.menuButton:disabled {
+  color: rgb(135, 135, 135);
+  cursor: not-allowed;
+}
+
+.menuButton:disabled:hover {
+  background-color: transparent;
+}
+
 .subMenuButton {
   padding-left: 2rem;
 }
