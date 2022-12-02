@@ -391,21 +391,5 @@ describe("Video player control indicators", () => {
 
     const indicator = screen.getByText("10 seconds");
     expect(indicator).toBeInTheDocument();
-    expect(indicator).toHaveClass("seekForward");
-  });
-
-  it("Shows seek indicator when seeking with the clickable controls", async () => {
-    render(<VideoPlayer player={player} />);
-
-    // First hover the relevant div to trigger user activity/controls to show
-    const overlay = screen.getByTestId("overlay");
-    await userEvent.hover(overlay);
-
-    const seekBtn = screen.getByLabelText(/skip forward one minute/i);
-    await userEvent.click(seekBtn);
-
-    const indicator = screen.getByText("1 minute");
-    expect(indicator).toBeInTheDocument();
-    expect(indicator).toHaveClass("seekForward");
   });
 });
