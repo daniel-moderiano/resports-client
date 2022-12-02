@@ -20,15 +20,25 @@ describe("Seek indicator UI", () => {
     expect(indicator).toBeInTheDocument();
   });
 
-  it("Renders right side indicator and facing icon for forward seek", () => {
+  it("Renders forward facing classes for forward seek", () => {
     render(<SeekIndicator projectedSeekInSeconds={10} />);
     const indicator = screen.getByRole("status");
+    const playIcons = screen.getAllByTestId("playIcon");
+
     expect(indicator).toHaveClass("seekForward");
+    playIcons.forEach((icon) => {
+      expect(icon).not.toHaveClass("iconBackward");
+    });
   });
 
-  it("Renders left side indicator and facing icon for backward seek", () => {
+  it("Renders backward facing classes for backward seek", () => {
     render(<SeekIndicator projectedSeekInSeconds={-10} />);
     const indicator = screen.getByRole("status");
+    const playIcons = screen.getAllByTestId("playIcon");
+
     expect(indicator).toHaveClass("seekBackward");
+    playIcons.forEach((icon) => {
+      expect(icon).toHaveClass("iconBackward");
+    });
   });
 });

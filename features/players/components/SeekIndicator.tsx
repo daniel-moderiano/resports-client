@@ -1,6 +1,5 @@
 import styles from "features/players/components/styles/SeekIndicator.module.css";
 import PlayIcon from "icons/PlayIcon";
-import { useEffect, useRef } from "react";
 import { convertSecondsToHumanReadable } from "utils/videoDurationConversion";
 
 interface SeekIndicatorProps {
@@ -37,6 +36,7 @@ export const SeekIndicator = ({
             className={`${styles.icon} ${styles.iconStart} ${
               projectedSeekInSeconds < 0 ? styles.iconBackward : ""
             }`}
+            testId="playIcon"
           />
           <PlayIcon
             fill="#ebebeb"
