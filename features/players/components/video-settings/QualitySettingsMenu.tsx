@@ -44,7 +44,7 @@ export const QualitySettingsMenu = ({
           <ArrowBackIcon className={styles.backIcon} />
         </button>
       </div>
-      <div role="menu" ref={innerRef} className={styles.subMenuBody}>
+      <div role="menu" ref={innerRef}>
         {player.getQualities().map((quality) => (
           <button
             className={`${styles.menuButton} ${styles.subMenuButton}`}
