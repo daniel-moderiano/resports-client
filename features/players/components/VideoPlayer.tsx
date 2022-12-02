@@ -248,9 +248,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
           <VolumeLevelIndicator currentVolume={player.getVolume()} />
         )}
 
-        {seekAmount && player && (
-          <SeekIndicator projectedSeekInSeconds={seekAmount} />
-        )}
+        {seekAmount && <SeekIndicator projectedSeekInSeconds={seekAmount} />}
 
         <VideoControlIndicator
           ariaLabel={controlAction}

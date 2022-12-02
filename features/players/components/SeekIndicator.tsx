@@ -1,5 +1,6 @@
 import styles from "features/players/components/styles/SeekIndicator.module.css";
 import PlayIcon from "icons/PlayIcon";
+import { useEffect, useRef } from "react";
 import { convertSecondsToHumanReadable } from "utils/videoDurationConversion";
 
 interface SeekIndicatorProps {
@@ -26,18 +27,28 @@ export const SeekIndicator = ({
       role="status"
     >
       <div className={styles.innerContent}>
-        <div className={styles.iconContainer}>
+        <div
+          className={`${styles.iconContainer} ${
+            projectedSeekInSeconds < 0 ? styles.iconsReverse : ""
+          }`}
+        >
           <PlayIcon
             fill="#ebebeb"
-            className={`${styles.icon} ${styles.iconStart}`}
+            className={`${styles.icon} ${styles.iconStart} ${
+              projectedSeekInSeconds < 0 ? styles.iconBackward : ""
+            }`}
           />
           <PlayIcon
             fill="#ebebeb"
-            className={`${styles.icon} ${styles.iconMiddle}`}
+            className={`${styles.icon} ${styles.iconMiddle} ${
+              projectedSeekInSeconds < 0 ? styles.iconBackward : ""
+            }`}
           />
           <PlayIcon
             fill="#ebebeb"
-            className={`${styles.icon} ${styles.iconEnd}`}
+            className={`${styles.icon} ${styles.iconEnd} ${
+              projectedSeekInSeconds < 0 ? styles.iconBackward : ""
+            }`}
           />
         </div>
         <span className={styles.seekText}>{formattedSeconds}</span>
