@@ -2,6 +2,7 @@ import { Player } from "features/players";
 import * as React from "react";
 import styles from "features/players/components/styles/VideoSettings.module.css";
 import ArrowBackIcon from "icons/ArrowBackIcon";
+import TickIcon from "icons/TickIcon";
 
 interface QualitySettingsMenuProps {
   player: Player;
@@ -57,7 +58,14 @@ export const QualitySettingsMenu = ({
               handleSubMenuKeyDown(event, () => closeSelf())
             }
           >
-            {quality.name}
+            {player.getQuality() === quality.name ? (
+              <div className={styles.buttonSelected}>
+                <TickIcon fill="#FFFFFF" className={styles.selectedIcon} />
+                <span>{quality.name}</span>
+              </div>
+            ) : (
+              <span>{quality.name}</span>
+            )}
           </button>
         ))}
       </div>
