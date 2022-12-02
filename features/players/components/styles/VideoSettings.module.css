@@ -44,6 +44,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 }
 
 .menuButton:hover {
@@ -54,6 +55,19 @@
 .menuButton:focus-visible {
   outline: 2px solid #00adef;
   outline-offset: -3px;
+}
+
+.menuButton:disabled {
+  color: rgb(135, 135, 135);
+  cursor: not-allowed;
+}
+
+.menuButton:disabled:hover {
+  background-color: transparent;
+}
+
+.subMenuButton {
+  padding-left: 2rem;
 }
 
 .hideButton {
@@ -127,4 +141,11 @@
 .currentData {
   text-transform: capitalize;
   margin-right: 0.5rem;
+}
+
+.selectedIcon {
+  width: 1rem;
+  left: 10px;
+  top: 0.7rem;
+  position: absolute;
 }

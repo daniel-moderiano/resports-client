@@ -2,6 +2,7 @@ import { Player } from "features/players";
 import * as React from "react";
 import styles from "features/players/components/styles/VideoSettings.module.css";
 import ArrowBackIcon from "icons/ArrowBackIcon";
+import TickIcon from "icons/TickIcon";
 
 interface PlaybackSpeedSettingsMenuProps {
   player: Player;
@@ -46,7 +47,7 @@ export const PlaybackSpeedSettingsMenu = ({
       <div role="menu" ref={innerRef}>
         {player.getAvailablePlaybackSpeeds().map((speed) => (
           <button
-            className={styles.menuButton}
+            className={`${styles.menuButton} ${styles.subMenuButton}`}
             key={speed}
             role="menuitem"
             onClick={() => {
@@ -57,7 +58,14 @@ export const PlaybackSpeedSettingsMenu = ({
               handleSubMenuKeyDown(event, () => closeSelf())
             }
           >
-            {speed === 1 ? "Normal" : `${speed}x`}
+            {player.getPlaybackSpeed() === speed ? (
+              <div>
+                <TickIcon fill="#FFFFFF" className={styles.selectedIcon} />
+                <span>{speed === 1 ? "Normal" : `${speed}x`}</span>
+              </div>
+            ) : (
+              <span>{speed === 1 ? "Normal" : `${speed}x`}</span>
+            )}
           </button>
         ))}
       </div>

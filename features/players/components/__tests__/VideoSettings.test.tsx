@@ -23,7 +23,7 @@ const playerMock = {
   getPlaybackSpeed: () => 1,
   getAvailablePlaybackSpeeds: () => [0.5, 1, 2],
   setPlaybackSpeed: jest.fn,
-  getQuality: () => "4k",
+  getQuality: () => "480p",
 };
 
 const setup = () => {
@@ -47,16 +47,16 @@ describe("Options rendering and submenus", () => {
     expect(speedSettings).toBeInTheDocument();
   });
 
-  it("Does not show settings that are not available for the video/platform", () => {
+  it("Shows settings that are not available for the video/platform, but disables menu button", () => {
     playerMock.hasQualitySettings = () => false;
     setup();
-    const qualitySettings = screen.queryByRole("menuitem", {
+    const qualitySettings = screen.getByRole("menuitem", {
       name: /quality/i,
     });
     const speedSettings = screen.getByRole("menuitem", {
       name: /playback speed/i,
     });
-    expect(qualitySettings).not.toBeInTheDocument();
+    expect(qualitySettings).toBeDisabled();
     expect(speedSettings).toBeInTheDocument();
   });
 
@@ -95,7 +95,7 @@ describe("Options rendering and submenus", () => {
 
   it("Shows current quality in primary menu", () => {
     setup();
-    const currentQuality = screen.getByText(/4k/i);
+    const currentQuality = screen.getByText(/480p/i);
     expect(currentQuality).toBeInTheDocument();
   });
 
