@@ -31,25 +31,16 @@ export const SeekIndicator = ({
             projectedSeekInSeconds < 0 ? styles.iconsReverse : ""
           }`}
         >
-          <PlayIcon
-            fill="#ebebeb"
-            className={`${styles.icon} ${styles.iconStart} ${
-              projectedSeekInSeconds < 0 ? styles.iconBackward : ""
-            }`}
-            testId="playIcon"
-          />
-          <PlayIcon
-            fill="#ebebeb"
-            className={`${styles.icon} ${styles.iconMiddle} ${
-              projectedSeekInSeconds < 0 ? styles.iconBackward : ""
-            }`}
-          />
-          <PlayIcon
-            fill="#ebebeb"
-            className={`${styles.icon} ${styles.iconEnd} ${
-              projectedSeekInSeconds < 0 ? styles.iconBackward : ""
-            }`}
-          />
+          {[0, 1, 2].map((element) => (
+            <PlayIcon
+              fill="#ebebeb"
+              className={`${styles.icon} ${
+                projectedSeekInSeconds < 0 ? styles.iconBackward : ""
+              }`}
+              testId="playIcon"
+              key={element}
+            />
+          ))}
         </div>
         <span className={styles.seekText}>{formattedSeconds}</span>
       </div>
