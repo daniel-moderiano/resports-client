@@ -20,16 +20,21 @@
   background-color: black;
   color: white;
   position: absolute;
-  top: -20px;
+  top: -1.5rem;
   opacity: 0;
 }
 
 .tooltip {
   pointer-events: none;
+  background-color: rgba(28, 28, 30, 0.9);
+  padding: 0.3rem 0.5rem;
+  white-space: nowrap;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .controlsBtn:hover .tooltip {
-  background-color: red;
   opacity: 1;
 }
 

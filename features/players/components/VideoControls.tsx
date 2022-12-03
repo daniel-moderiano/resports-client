@@ -137,6 +137,7 @@ export const VideoControls = ({
           aria-label="Skip backward five minutes"
         >
           <BackFiveIcon className={styles.icons30} fill="#FFFFFF" />
+          <span className={styles.tooltip}>Back 5 min</span>
         </button>
 
         <button
@@ -148,6 +149,7 @@ export const VideoControls = ({
           aria-label="Skip backward one minute"
         >
           <BackOneIcon className={styles.icons30} fill="#FFFFFF" />
+          <span className={styles.tooltip}>Back 1 min</span>
         </button>
 
         {/* These duration styles resize to ensure the text is always centered without constantly shifting adjacent divs */}
@@ -171,6 +173,7 @@ export const VideoControls = ({
           aria-label="Skip forward one minute"
         >
           <ForwardOneIcon className={styles.icons30} fill="#FFFFFF" />
+          <span className={styles.tooltip}>Forward 1 min</span>
         </button>
 
         <button
@@ -182,6 +185,7 @@ export const VideoControls = ({
           aria-label="Skip forward five minutes"
         >
           <ForwardFiveIcon className={styles.icons30} fill="#FFFFFF" />
+          <span className={styles.tooltip}>Forward 5 mins</span>
         </button>
 
         <button
@@ -193,6 +197,7 @@ export const VideoControls = ({
           aria-label="Skip forward ten minutes"
         >
           <ForwardTenIcon className={styles.icons30} fill="#FFFFFF" />
+          <span className={styles.tooltip}>Forward 10 mins</span>
         </button>
       </div>
 
@@ -223,6 +228,7 @@ export const VideoControls = ({
           aria-label="Switch to theater mode"
         >
           <TheaterIcon className={styles.icons24} fill="#FFFFFF" />
+          <span className={styles.tooltip}>Theatre mode</span>
         </button>
 
         <button
@@ -247,6 +253,7 @@ export const VideoControls = ({
               testId="enterFullscreenIcon"
             />
           )}
+          <span className={styles.tooltip}>Full screen</span>
         </button>
       </div>
     </div>
