@@ -1,7 +1,11 @@
 interface ControlTooltipProps {
-  text: string;
+  children: React.ReactNode;
+  className?: string;
 }
 
-export const ControlTooltip = ({ text }: ControlTooltipProps) => {
-  return <div>{text}</div>;
+export const ControlTooltip = ({
+  children,
+  className,
+}: ControlTooltipProps) => {
+  return <div className={className ? className : undefined}>{children}</div>;
 };

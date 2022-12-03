@@ -306,8 +306,10 @@ describe("Video player controls/user activity timers", () => {
     const customControls = screen.getByTestId("customControls");
     expect(customControls).toHaveClass("controlsHide");
   });
+});
 
-  it("Shows (correct) control tooltip when focusing a control button", async () => {
+describe("Video player control indicators", () => {
+  it("Shows control indicator when pausing/playing video with keyboard", async () => {
     render(<VideoPlayer player={player} />);
     const wrapper = screen.getByTestId("wrapper");
 
@@ -319,18 +321,6 @@ describe("Video player controls/user activity timers", () => {
 
     expect(indicator).toBeInTheDocument();
     expect(indicator).toHaveClass("triggerAnimation");
-  });
-});
-
-describe("Video player control indicators", () => {
-  it("Shows control indicator when pausing/playing video with keyboard", async () => {
-    render(<VideoPlayer player={player} />);
-
-    const settingsButton = screen.getByLabelText("Open video settings menu");
-    settingsButton.focus();
-
-    const tooltip = screen.getByText("Settings");
-    expect(tooltip).toBeInTheDocument();
   });
 
   it("Does not show control indicator when playing/pausing video with control", async () => {

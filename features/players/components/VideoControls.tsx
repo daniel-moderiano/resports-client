@@ -17,6 +17,7 @@ import SettingsGearIcon from "icons/SettingsGearIcon";
 import { useVideoTime } from "features/players/hooks/useVideoTime";
 import { Player } from "../api/player";
 import { VideoSettings } from "./VideoSettings";
+import { ControlTooltip } from "./ControlTooltip";
 
 interface VideoControlsProps {
   player: Player;
@@ -84,7 +85,7 @@ export const VideoControls = ({
               testId="pauseIcon"
             />
           )}
-          <span className={styles.tooltip}>Tooltip</span>
+          <ControlTooltip className={styles.tooltip}>Play</ControlTooltip>
         </button>
 
         <button
@@ -108,6 +109,7 @@ export const VideoControls = ({
               testId="volumeIcon"
             />
           )}
+          <span className={styles.tooltip}>Tooltip</span>
         </button>
 
         <button

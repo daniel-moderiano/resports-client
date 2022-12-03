@@ -3,7 +3,7 @@ import { ControlTooltip } from "features/players/components/ControlTooltip";
 
 describe("Control tooltip text and UI", () => {
   it("Shows correct text", () => {
-    render(<ControlTooltip text="Settings" />);
+    render(<ControlTooltip>Settings</ControlTooltip>);
     const tooltip = screen.getByText("Settings");
     expect(tooltip).toBeInTheDocument();
   });

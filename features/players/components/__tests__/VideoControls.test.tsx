@@ -117,6 +117,16 @@ describe("YouTube video controls icons and label toggles", () => {
     const duration = screen.getByText("0:01");
     expect(duration).toBeInTheDocument();
   });
+
+  it("Shows (correct) control tooltip when focusing a control button", async () => {
+    setup();
+
+    const settingsButton = screen.getByLabelText("Open video settings menu");
+    settingsButton.focus();
+
+    const tooltip = screen.getByText("Settings");
+    expect(tooltip).toBeInTheDocument();
+  });
 });
 
 describe("YouTube video controls functionality", () => {

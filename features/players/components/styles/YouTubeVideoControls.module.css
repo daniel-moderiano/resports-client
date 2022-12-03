@@ -24,6 +24,10 @@
   opacity: 0;
 }
 
+.tooltip {
+  pointer-events: none;
+}
+
 .controlsBtn:hover .tooltip {
   background-color: red;
   opacity: 1;
