@@ -8,10 +8,24 @@
   padding: 0;
   border: none;
   opacity: 0.9;
+  position: relative;
 }
 
 .controlsBtn:hover {
   cursor: pointer;
+  opacity: 1;
+}
+
+.tooltip {
+  background-color: black;
+  color: white;
+  position: absolute;
+  top: -20px;
+  opacity: 0;
+}
+
+.controlsBtn:hover .tooltip {
+  background-color: red;
   opacity: 1;
 }
 

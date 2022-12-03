@@ -62,10 +62,10 @@ export const QualitySettingsMenu = ({
             {player.getQuality() === quality.name ? (
               <div>
                 <TickIcon fill="#FFFFFF" className={styles.selectedIcon} />
-                <span>{qualityNamesMap[quality.level]}</span>
+                <span>{qualityNamesMap[quality.name]}</span>
               </div>
             ) : (
-              <span>{qualityNamesMap[quality.level]}</span>
+              <span>{qualityNamesMap[quality.name]}</span>
             )}
           </button>
         ))}

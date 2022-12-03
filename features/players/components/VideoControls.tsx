@@ -84,6 +84,7 @@ export const VideoControls = ({
               testId="pauseIcon"
             />
           )}
+          <span className={styles.tooltip}>Tooltip</span>
         </button>
 
         <button
