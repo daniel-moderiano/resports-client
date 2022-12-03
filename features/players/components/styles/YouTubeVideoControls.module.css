@@ -33,6 +33,16 @@
   opacity: 1;
 }
 
+.controlsBtn:focus .tooltip {
+  opacity: 0;
+  outline: none;
+}
+
+.controlsBtn:focus-visible .tooltip {
+  opacity: 1;
+  outline: none;
+}
+
 .controlsContainer {
   width: 100%;
   display: flex;

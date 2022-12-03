@@ -125,7 +125,7 @@ describe("YouTube video controls icons and label toggles", () => {
     settingsButton.focus();
 
     const tooltip = screen.getByText("Settings");
-    expect(tooltip).toBeInTheDocument();
+    expect(tooltip).toHaveStyle("opacity: 1");
   });
 });
 

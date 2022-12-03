@@ -85,7 +85,9 @@ export const VideoControls = ({
               testId="pauseIcon"
             />
           )}
-          <ControlTooltip className={styles.tooltip}>Play</ControlTooltip>
+          <span className={styles.tooltip}>
+            {playerPaused ? "Play" : "Pause"}
+          </span>
         </button>
 
         <button
@@ -109,7 +111,9 @@ export const VideoControls = ({
               testId="volumeIcon"
             />
           )}
-          <span className={styles.tooltip}>Tooltip</span>
+          <span className={styles.tooltip}>
+            {playerMuted ? "Unmute video" : "Mute video"}
+          </span>
         </button>
 
         <button
@@ -121,6 +125,7 @@ export const VideoControls = ({
           aria-label="Skip backward ten minutes"
         >
           <BackTenIcon className={styles.icons30} fill="#FFFFFF" />
+          <span className={styles.tooltip}>Back 10 min</span>
         </button>
 
         <button
@@ -201,6 +206,7 @@ export const VideoControls = ({
             onClick={() => setShowSettings((prevState) => !prevState)}
           >
             <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
+            <span className={styles.tooltip}>Settings</span>
           </button>
           {showSettings && (
             <VideoSettings
