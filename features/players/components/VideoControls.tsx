@@ -85,7 +85,7 @@ export const VideoControls = ({
               testId="pauseIcon"
             />
           )}
-          <span className={styles.tooltip}>
+          <span className={`${styles.tooltip} ${styles.playPauseTooltip}`}>
             {playerPaused ? "Play" : "Pause"}
           </span>
         </button>
@@ -253,7 +253,9 @@ export const VideoControls = ({
               testId="enterFullscreenIcon"
             />
           )}
-          <span className={styles.tooltip}>Full screen</span>
+          <span className={`${styles.tooltip} ${styles.fullScreenTooltip}`}>
+            Full screen
+          </span>
         </button>
       </div>
     </div>

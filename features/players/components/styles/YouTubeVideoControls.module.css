@@ -17,14 +17,6 @@
 }
 
 .tooltip {
-  background-color: black;
-  color: white;
-  position: absolute;
-  top: -1.5rem;
-  opacity: 0;
-}
-
-.tooltip {
   pointer-events: none;
   background-color: rgba(28, 28, 30, 0.9);
   padding: 0.3rem 0.5rem;
@@ -32,6 +24,18 @@
   border-radius: 5px;
   font-size: 0.75rem;
   font-weight: 600;
+  color: white;
+  position: absolute;
+  top: -1.5rem;
+  opacity: 0;
+}
+
+.fullScreenTooltip {
+  right: -2px;
+}
+
+.playPauseTooltip {
+  left: -2px;
 }
 
 .controlsBtn:hover .tooltip {
