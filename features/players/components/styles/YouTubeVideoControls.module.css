@@ -3,17 +3,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  padding: 0;
+  width: 3rem;
+  height: 3rem;
   border: none;
   opacity: 0.9;
   position: relative;
+  padding: 0;
 }
 
 .controlsBtn:hover {
   cursor: pointer;
   opacity: 1;
+}
+
+.controlsBtn:focus {
+  outline: none;
+}
+
+.controlsBtn:focus-visible {
+  outline: 2px solid #00adef;
+  outline-offset: -2px;
 }
 
 .tooltip {
@@ -26,30 +35,25 @@
   font-weight: 600;
   color: white;
   position: absolute;
-  top: -1.5rem;
+  top: -2rem;
   opacity: 0;
+  /* transition: opacity linear 50ms; */
 }
 
 .fullScreenTooltip {
   right: -2px;
 }
 
-.playPauseTooltip {
-  left: -2px;
-}
-
 .controlsBtn:hover .tooltip {
   opacity: 1;
 }
 
-.controlsBtn:focus .tooltip {
-  opacity: 0;
-  outline: none;
-}
-
 .controlsBtn:focus-visible .tooltip {
   opacity: 1;
-  outline: none;
+}
+
+.hideTooltip {
+  display: none;
 }
 
 .controlsContainer {
@@ -57,21 +61,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem;
+  padding: 0 0.5rem;
 }
 
 .duration {
   color: white;
   font-size: 0.85rem;
   text-align: left;
-  margin-right: 0.35rem;
-  margin-left: 0.2rem;
-  width: 32px;
+  margin-right: 0.1rem;
+  margin-left: 0.75rem;
+  width: 38px;
   padding-top: 0.1rem;
 }
 
 .durationMedium {
-  width: 40px;
+  width: 42px;
 }
 
 .durationLarge {
@@ -88,14 +92,6 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-}
-
-.leftControls .controlsBtn {
-  margin-right: 0.5rem;
-}
-
-.rightControls .controlsBtn {
-  margin-left: 0.5rem;
 }
 
 .icons24 {

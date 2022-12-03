@@ -17,7 +17,6 @@ import SettingsGearIcon from "icons/SettingsGearIcon";
 import { useVideoTime } from "features/players/hooks/useVideoTime";
 import { Player } from "../api/player";
 import { VideoSettings } from "./VideoSettings";
-import { ControlTooltip } from "./ControlTooltip";
 
 interface VideoControlsProps {
   player: Player;
@@ -211,7 +210,13 @@ export const VideoControls = ({
             onClick={() => setShowSettings((prevState) => !prevState)}
           >
             <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
-            <span className={styles.tooltip}>Settings</span>
+            <span
+              className={`${styles.tooltip} ${
+                showSettings ? styles.hideTooltip : styles.showTooltip
+              }`}
+            >
+              Settings
+            </span>
           </button>
           {showSettings && (
             <VideoSettings
