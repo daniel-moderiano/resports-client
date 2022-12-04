@@ -1,3 +1,4 @@
+import styles from "features/players/components/styles/VolumeSlider.module.css";
 import { Player } from "features/players/api/player";
 import { useEffect, useState } from "react";
 
@@ -26,6 +27,7 @@ export const VolumeSlider = ({ player }: VolumeSliderProps) => {
         player.setVolume(event.target.valueAsNumber);
       }}
       data-testid="slider"
+      className={styles.slider}
     />
   );
 };
