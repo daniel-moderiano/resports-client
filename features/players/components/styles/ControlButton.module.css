@@ -47,8 +47,12 @@
   display: inline;
 }
 
-.fullScreenTooltip {
+.tooltipAlignRight {
   right: -2px;
+}
+
+.tooltipAlignLeft {
+  left: -2px;
 }
 
 /* Show the tooltip when hovering control button */

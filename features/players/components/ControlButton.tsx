@@ -1,15 +1,17 @@
 import styles from "features/players/components/styles/ControlButton.module.css";
 
+export type tooltipAlign = "left" | "right";
+
 interface ControlButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   tooltipText: string;
+  tooltipAlign?: tooltipAlign;
   children?: React.ReactNode;
 }
-
-// TODO: Consider tooltip align prop
 
 const ControlButton = ({
   tooltipText,
   children,
+  tooltipAlign,
   ...props
 }: ControlButtonProps) => {
   return (
@@ -21,7 +23,13 @@ const ControlButton = ({
       aria-expanded={props["aria-expanded"]}
     >
       {children}
-      <span className={`${styles.tooltip}`}>{tooltipText}</span>
+      <span
+        className={`${styles.tooltip} ${
+          tooltipAlign === "left" ? styles.tooltipAlignLeft : ""
+        } ${tooltipAlign === "right" ? styles.tooltipAlignRight : ""}`}
+      >
+        {tooltipText}
+      </span>
     </button>
   );
 };

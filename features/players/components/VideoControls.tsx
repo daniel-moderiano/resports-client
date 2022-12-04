@@ -218,6 +218,7 @@ export const VideoControls = ({
 
         <ControlButton
           tooltipText="Full screen"
+          tooltipAlign="right"
           onClick={toggleFullscreen}
           aria-label={
             document.fullscreenElement
