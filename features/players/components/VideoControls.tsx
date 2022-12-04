@@ -265,25 +265,10 @@ export const VideoControls = ({
           )}
         </div>
 
-        <button
-          className={styles.controlsBtn}
-          onClick={toggleTheaterMode}
-          data-testid="theater"
-          aria-label="Switch to theater mode"
-        >
-          <TheaterIcon className={styles.icons24} fill="#FFFFFF" />
-          <span
-            className={`${styles.tooltip} ${
-              showSettings ? styles.hideTooltip : styles.showTooltip
-            }`}
-          >
-            Theatre mode
-          </span>
-        </button>
         <ControlButton
           tooltipText="Theatre mode"
           onClick={toggleTheaterMode}
-          ria-label="Switch to theater mode"
+          aria-label="Switch to theater mode"
         >
           <TheaterIcon className={styles.icons24} fill="#FFFFFF" />
         </ControlButton>

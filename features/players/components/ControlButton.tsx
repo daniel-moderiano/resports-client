@@ -1,3 +1,5 @@
+import styles from "features/players/components/styles/ControlButton.module.css";
+
 interface ControlButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   tooltipText: string;
   children?: React.ReactNode;
@@ -12,10 +14,10 @@ const ControlButton = ({
     <button
       onClick={props.onClick}
       aria-label={props["aria-label"]}
-      className={props.className}
+      className={styles.controlsBtn}
     >
       {children}
-      <span>{tooltipText}</span>
+      <span className={`${styles.tooltip}`}>{tooltipText}</span>
     </button>
   );
 };
