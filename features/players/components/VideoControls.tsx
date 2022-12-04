@@ -67,8 +67,8 @@ export const VideoControls = ({
   return (
     <div className={styles.controlsContainer}>
       <div className={styles.leftControls}>
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText={playerPaused ? "Play" : "Pause"}
           onClick={togglePlay}
           aria-label={playerPaused ? "Play video" : "Pause video"}
         >
@@ -85,17 +85,10 @@ export const VideoControls = ({
               testId="pauseIcon"
             />
           )}
-          <span
-            className={`${styles.tooltip} ${styles.playPauseTooltip} ${
-              showSettings ? styles.hideTooltip : styles.showTooltip
-            }`}
-          >
-            {playerPaused ? "Play" : "Pause"}
-          </span>
-        </button>
+        </ControlButton>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText={playerMuted ? "Unmute video" : "Mute video"}
           onClick={() => {
             toggleMute();
             releaseFocus();
@@ -115,17 +108,10 @@ export const VideoControls = ({
               testId="volumeIcon"
             />
           )}
-          <span
-            className={`${styles.tooltip} ${
-              showSettings ? styles.hideTooltip : styles.showTooltip
-            }`}
-          >
-            {playerMuted ? "Unmute video" : "Mute video"}
-          </span>
-        </button>
+        </ControlButton>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText="Back 10 min"
           onClick={() => {
             seek(-600);
             releaseFocus();
@@ -133,17 +119,10 @@ export const VideoControls = ({
           aria-label="Skip backward ten minutes"
         >
           <BackTenIcon className={styles.icons30} fill="#FFFFFF" />
-          <span
-            className={`${styles.tooltip} ${
-              showSettings ? styles.hideTooltip : styles.showTooltip
-            }`}
-          >
-            Back 10 min
-          </span>
-        </button>
+        </ControlButton>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText="Back 5 min"
           onClick={() => {
             seek(-300);
             releaseFocus();
@@ -151,17 +130,10 @@ export const VideoControls = ({
           aria-label="Skip backward five minutes"
         >
           <BackFiveIcon className={styles.icons30} fill="#FFFFFF" />
-          <span
-            className={`${styles.tooltip} ${
-              showSettings ? styles.hideTooltip : styles.showTooltip
-            }`}
-          >
-            Back 5 min
-          </span>
-        </button>
+        </ControlButton>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText="Back 1 min"
           onClick={() => {
             seek(-60);
             releaseFocus();
@@ -169,8 +141,7 @@ export const VideoControls = ({
           aria-label="Skip backward one minute"
         >
           <BackOneIcon className={styles.icons30} fill="#FFFFFF" />
-          <span className={styles.tooltip}>Back 1 min</span>
-        </button>
+        </ControlButton>
 
         {/* These duration styles resize to ensure the text is always centered without constantly shifting adjacent divs */}
         <span
@@ -184,8 +155,8 @@ export const VideoControls = ({
           {elapsedDuration}
         </span>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText="Forward 1 mins"
           onClick={() => {
             seek(60);
             releaseFocus();
@@ -193,17 +164,10 @@ export const VideoControls = ({
           aria-label="Skip forward one minute"
         >
           <ForwardOneIcon className={styles.icons30} fill="#FFFFFF" />
-          <span
-            className={`${styles.tooltip} ${
-              showSettings ? styles.hideTooltip : styles.showTooltip
-            }`}
-          >
-            Forward 1 min
-          </span>
-        </button>
+        </ControlButton>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText="Forward 5 mins"
           onClick={() => {
             seek(300);
             releaseFocus();
@@ -211,17 +175,10 @@ export const VideoControls = ({
           aria-label="Skip forward five minutes"
         >
           <ForwardFiveIcon className={styles.icons30} fill="#FFFFFF" />
-          <span
-            className={`${styles.tooltip} ${
-              showSettings ? styles.hideTooltip : styles.showTooltip
-            }`}
-          >
-            Forward 5 mins
-          </span>
-        </button>
+        </ControlButton>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText="Forward 10 mins"
           onClick={() => {
             seek(600);
             releaseFocus();
@@ -229,34 +186,20 @@ export const VideoControls = ({
           aria-label="Skip forward ten minutes"
         >
           <ForwardTenIcon className={styles.icons30} fill="#FFFFFF" />
-          <span
-            className={`${styles.tooltip} ${
-              showSettings ? styles.hideTooltip : styles.showTooltip
-            }`}
-          >
-            Forward 10 mins
-          </span>
-        </button>
+        </ControlButton>
       </div>
 
       <div className={styles.rightControls}>
         <div id="settingsMenuContainer" className={styles.settingsContainer}>
-          <button
-            className={styles.controlsBtn}
+          <ControlButton
+            tooltipText="Settings"
             aria-haspopup="menu"
             aria-expanded={showSettings}
             aria-label="Open video settings menu"
             onClick={() => setShowSettings((prevState) => !prevState)}
           >
             <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
-            <span
-              className={`${styles.tooltip} ${
-                showSettings ? styles.hideTooltip : styles.showTooltip
-              }`}
-            >
-              Settings
-            </span>
-          </button>
+          </ControlButton>
           {showSettings && (
             <VideoSettings
               player={player}
@@ -273,8 +216,8 @@ export const VideoControls = ({
           <TheaterIcon className={styles.icons24} fill="#FFFFFF" />
         </ControlButton>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText="Full screen"
           onClick={toggleFullscreen}
           aria-label={
             document.fullscreenElement
@@ -295,14 +238,7 @@ export const VideoControls = ({
               testId="enterFullscreenIcon"
             />
           )}
-          <span
-            className={`${styles.tooltip} ${
-              showSettings ? styles.hideTooltip : styles.showTooltip
-            } ${styles.fullScreenTooltip}`}
-          >
-            Full screen
-          </span>
-        </button>
+        </ControlButton>
       </div>
     </div>
   );
