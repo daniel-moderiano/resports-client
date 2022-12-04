@@ -37,7 +37,6 @@
   position: absolute;
   top: -2rem;
   opacity: 0;
-  /* transition: opacity linear 50ms; */
 }
 
 .fullScreenTooltip {
@@ -54,6 +53,10 @@
 
 .hideTooltip {
   display: none;
+}
+
+.showTooltip {
+  display: inline;
 }
 
 .controlsContainer {
