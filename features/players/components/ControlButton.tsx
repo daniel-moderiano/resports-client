@@ -23,13 +23,14 @@ export const ControlButton = ({
       className={styles.controlsBtn}
       aria-haspopup={props["aria-haspopup"]}
       aria-expanded={props["aria-expanded"]}
+      type="button"
     >
       {children}
       <span
         className={`${styles.tooltip} ${
-          tooltipAlign === "left" ? styles.tooltipAlignLeft : ""
-        } ${tooltipAlign === "right" ? styles.tooltipAlignRight : ""} ${
-          hideTooltip ? styles.hideTooltip : ""
+          tooltipAlign === "left" ? styles.alignLeft : ""
+        } ${tooltipAlign === "right" ? styles.alignRight : ""} ${
+          hideTooltip ? styles.hide : ""
         }`}
       >
         {tooltipText}

@@ -16,7 +16,7 @@ describe("Button UI rendering states", () => {
       ></ControlButton>
     );
     const tooltip = screen.getByText("hello tooltip");
-    expect(tooltip).toHaveClass("hideTooltip");
+    expect(tooltip).toHaveClass("hide");
   });
 
   it("Aligns tooltip correctly", () => {
@@ -27,6 +27,6 @@ describe("Button UI rendering states", () => {
       ></ControlButton>
     );
     const tooltip = screen.getByText("hello tooltip");
-    expect(tooltip).toHaveClass("tooltipAlignLeft");
+    expect(tooltip).toHaveClass("alignLeft");
   });
 });

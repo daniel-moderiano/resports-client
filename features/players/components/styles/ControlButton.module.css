@@ -1,4 +1,4 @@
-.controlsBtn {
+.button {
   background-color: transparent;
   display: flex;
   align-items: center;
@@ -12,15 +12,15 @@
   cursor: pointer;
 }
 
-.controlsBtn:hover {
+.button:hover {
   opacity: 1;
 }
 
-.controlsBtn:focus {
+.button:focus {
   outline: none;
 }
 
-.controlsBtn:focus-visible {
+.button:focus-visible {
   outline: 2px solid #00adef;
   outline-offset: -2px;
 }
@@ -39,28 +39,24 @@
   opacity: 0;
 }
 
-.hideTooltip {
+.hide {
   display: none;
 }
 
-.showTooltip {
-  display: inline;
-}
-
-.tooltipAlignRight {
+.alignRight {
   right: -2px;
 }
 
-.tooltipAlignLeft {
+.alignLeft {
   left: -2px;
 }
 
 /* Show the tooltip when hovering control button */
-.controlsBtn:hover .tooltip {
+.button:hover .tooltip {
   opacity: 1;
 }
 
 /* Show the tooltip when focusing control button with the keyboard */
-.controlsBtn:focus-visible .tooltip {
+.button:focus-visible .tooltip {
   opacity: 1;
 }
