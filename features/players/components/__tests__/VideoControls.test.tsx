@@ -117,16 +117,6 @@ describe("YouTube video controls icons and label toggles", () => {
     const duration = screen.getByText("0:01");
     expect(duration).toBeInTheDocument();
   });
-
-  it("Shows (correct) control tooltip when focusing a control button", async () => {
-    setup();
-
-    const settingsButton = screen.getByLabelText("Open video settings menu");
-    settingsButton.focus();
-
-    const tooltip = screen.getByText("Settings");
-    expect(tooltip).toHaveStyle("opacity: 1");
-  });
 });
 
 describe("YouTube video controls functionality", () => {
@@ -353,5 +343,16 @@ describe("Settings menu display tests", () => {
 
     const qualityButton = screen.getByRole("menuitem", { name: /quality/i });
     expect(qualityButton).toHaveFocus();
+  });
+
+  it("Hides tooltips when settings menu is open", async () => {
+    setup();
+    const settingsBtn = screen.getByRole("button", {
+      name: /open video settings menu/i,
+    });
+    await userEvent.click(settingsBtn);
+
+    const tooltip = screen.getByText("Settings");
+    expect(tooltip).toHaveClass("hideTooltip");
   });
 });
