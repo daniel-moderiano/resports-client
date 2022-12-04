@@ -79,7 +79,9 @@ export const VideoControlIndicator = ({
 
   return (
     <div
-      className={`${styles.container}`}
+      className={`${styles.container} ${
+        document.fullscreenElement ? styles.large : ""
+      }`}
       role="status"
       aria-label={
         ariaLabelRequired() && ariaLabel !== null ? ariaLabel : undefined
@@ -87,7 +89,13 @@ export const VideoControlIndicator = ({
       ref={indicator}
       onAnimationEnd={handleAnimationEnd}
     >
-      <div className={styles.iconWrapper}>{selectIcon(controlAction)}</div>
+      <div
+        className={`${styles.iconWrapper} ${
+          document.fullscreenElement ? styles.iconLarge : ""
+        }`}
+      >
+        {selectIcon(controlAction)}
+      </div>
     </div>
   );
 };
