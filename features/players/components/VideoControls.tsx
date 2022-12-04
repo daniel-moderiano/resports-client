@@ -17,6 +17,7 @@ import SettingsGearIcon from "icons/SettingsGearIcon";
 import { useVideoTime } from "features/players/hooks/useVideoTime";
 import { Player } from "../api/player";
 import { VideoSettings } from "./VideoSettings";
+import ControlButton from "./ControlButton";
 
 interface VideoControlsProps {
   player: Player;
@@ -279,6 +280,13 @@ export const VideoControls = ({
             Theatre mode
           </span>
         </button>
+        <ControlButton
+          tooltipText="Theatre mode"
+          onClick={toggleTheaterMode}
+          ria-label="Switch to theater mode"
+        >
+          <TheaterIcon className={styles.icons24} fill="#FFFFFF" />
+        </ControlButton>
 
         <button
           className={styles.controlsBtn}
