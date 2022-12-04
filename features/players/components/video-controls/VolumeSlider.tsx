@@ -3,14 +3,11 @@ import { useEffect, useState } from "react";
 
 interface VolumeSliderProps {
   player: Player;
-  currentPlayerVolume: number;
 }
 
-export const VolumeSlider = ({
-  player,
-  currentPlayerVolume,
-}: VolumeSliderProps) => {
+export const VolumeSlider = ({ player }: VolumeSliderProps) => {
   const [volume, setVolume] = useState(0);
+  const currentPlayerVolume = player.getVolume();
 
   // Synchronise the local volume state with player volume
   useEffect(() => {
