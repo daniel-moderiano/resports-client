@@ -344,15 +344,4 @@ describe("Settings menu display tests", () => {
     const qualityButton = screen.getByRole("menuitem", { name: /quality/i });
     expect(qualityButton).toHaveFocus();
   });
-
-  it("Hides tooltips when settings menu is open", async () => {
-    setup();
-    const settingsBtn = screen.getByRole("button", {
-      name: /open video settings menu/i,
-    });
-    await userEvent.click(settingsBtn);
-
-    const tooltip = screen.getByText("Settings");
-    expect(tooltip).toHaveClass("hideTooltip");
-  });
 });
