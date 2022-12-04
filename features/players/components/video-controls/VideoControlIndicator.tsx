@@ -4,7 +4,7 @@ import PauseIcon from "icons/PauseIcon";
 import PlayIcon from "icons/PlayIcon";
 import VolumeDownIcon from "icons/VolumeDownIcon";
 import VolumeIcon from "icons/VolumeIcon";
-import { ControlAction } from "../types/playerTypes";
+import { ControlAction } from "features/players/types/playerTypes";
 import * as React from "react";
 
 interface VideoControlIndicatorProps {
