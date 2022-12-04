@@ -113,7 +113,11 @@ export const VideoControls = ({
           )}
         </ControlButton>
 
-        <VolumeSlider />
+        <VolumeSlider
+          player={player}
+          currentPlayerVolume={player.getVolume()}
+          // setPlayerVolume={player.setVolume}
+        />
 
         <ControlButton
           tooltipText="Back 10 min"

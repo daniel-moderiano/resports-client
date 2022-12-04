@@ -1,13 +1,21 @@
 import { Player } from "features/players/api/player";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface VolumeSliderProps {
-  getPlayerVolume: () => number;
-  setPlayerVolume: () => void;
+  player: Player;
+  currentPlayerVolume: number;
 }
 
-export const VolumeSlider = () => {
-  const [volume, setVolume] = useState(100);
+export const VolumeSlider = ({
+  player,
+  currentPlayerVolume,
+}: VolumeSliderProps) => {
+  const [volume, setVolume] = useState(0);
+
+  // Synchronise the local volume state with player volume
+  useEffect(() => {
+    setVolume(currentPlayerVolume);
+  }, [currentPlayerVolume]);
 
   return (
     <input
@@ -16,7 +24,11 @@ export const VolumeSlider = () => {
       max={100}
       step={1}
       value={volume}
-      onChange={(event) => setVolume(event.target.valueAsNumber)}
+      onChange={(event) => {
+        setVolume(event.target.valueAsNumber);
+        player.setVolume(event.target.valueAsNumber);
+      }}
+      data-testid="slider"
     />
   );
 };
