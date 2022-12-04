@@ -15,8 +15,8 @@ import PlayIcon from "icons/PlayIcon";
 import PauseIcon from "icons/PauseIcon";
 import SettingsGearIcon from "icons/SettingsGearIcon";
 import { useVideoTime } from "features/players/hooks/useVideoTime";
-import { Player } from "../api/player";
-import { VideoSettings } from "./VideoSettings";
+import { Player } from "features/players/api/player";
+import { VideoSettings } from "features/players";
 import { ControlButton } from "./ControlButton";
 
 interface VideoControlsProps {

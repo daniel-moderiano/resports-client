@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useTwitchPlayer } from "features/players/api/useTwitchPlayer";
-import { VideoPlayer } from "../VideoPlayer";
+import { VideoPlayer } from "features/players";
 
 interface TwitchPlayerProps {
   videoId: string;

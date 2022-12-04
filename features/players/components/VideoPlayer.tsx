@@ -7,7 +7,7 @@ import VideoContainer from "./VideoContainer";
 import { VideoControls } from "features/players";
 import { Player } from "../api/player";
 import { useSeek } from "../hooks/useSeek";
-import { VideoControlIndicator } from "./VideoControlIndicator";
+import { VideoControlIndicator } from "./video-controls/VideoControlIndicator";
 import { useControlIndicators } from "../hooks/useControlIndicators";
 import { VolumeLevelIndicator } from "./VolumeLevelIndicator";
 import { SeekIndicator } from "./SeekIndicator";

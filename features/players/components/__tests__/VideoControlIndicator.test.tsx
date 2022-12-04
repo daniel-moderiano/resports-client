@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { VideoControlIndicator } from "../VideoControlIndicator";
+import { VideoControlIndicator } from "features/players/components/video-controls/VideoControlIndicator";
 
 describe("Control indicator rendering and prop handling", () => {
   it("Render correct icon passed in via props", () => {

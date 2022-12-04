@@ -2,7 +2,7 @@ import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Player } from "features/players";
 import { PlayerClass } from "features/players/types/playerTypes";
-import { VideoPlayer } from "../VideoPlayer";
+import { VideoPlayer } from "features/players";
 
 const playMock = jest.fn();
 const pauseMock = jest.fn();

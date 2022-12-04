@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { ControlButton } from "features/players/components/ControlButton";
+import { ControlButton } from "features/players/components/video-controls/ControlButton";
 
 describe("Button UI rendering states", () => {
   it("Shows correct tooltip text", () => {

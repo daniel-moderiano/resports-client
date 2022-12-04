@@ -4,7 +4,7 @@ import PauseIcon from "icons/PauseIcon";
 import PlayIcon from "icons/PlayIcon";
 import VolumeDownIcon from "icons/VolumeDownIcon";
 import VolumeIcon from "icons/VolumeIcon";
-import { ControlAction } from "../types/playerTypes";
+import { ControlAction } from "features/players/types/playerTypes";
 import * as React from "react";
 
 interface VideoControlIndicatorProps {
@@ -79,9 +79,7 @@ export const VideoControlIndicator = ({
 
   return (
     <div
-      className={`${styles.container} ${
-        document.fullscreenElement ? styles.large : ""
-      }`}
+      className={styles.container}
       role="status"
       aria-label={
         ariaLabelRequired() && ariaLabel !== null ? ariaLabel : undefined
@@ -89,13 +87,7 @@ export const VideoControlIndicator = ({
       ref={indicator}
       onAnimationEnd={handleAnimationEnd}
     >
-      <div
-        className={`${styles.iconWrapper} ${
-          document.fullscreenElement ? styles.iconLarge : ""
-        }`}
-      >
-        {selectIcon(controlAction)}
-      </div>
+      <div className={styles.iconWrapper}>{selectIcon(controlAction)}</div>
     </div>
   );
 };

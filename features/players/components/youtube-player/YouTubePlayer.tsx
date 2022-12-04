@@ -1,6 +1,6 @@
 import { useYouTubeIframe } from "features/players/api/useYouTubeIframe";
 import * as React from "react";
-import { VideoPlayer } from "../VideoPlayer";
+import { VideoPlayer } from "features/players";
 
 interface YouTubePlayerProps {
   videoId: string;
