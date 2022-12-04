@@ -17,6 +17,7 @@ import SettingsGearIcon from "icons/SettingsGearIcon";
 import { useVideoTime } from "features/players/hooks/useVideoTime";
 import { Player } from "../api/player";
 import { VideoSettings } from "./VideoSettings";
+import { ControlButton } from "./ControlButton";
 
 interface VideoControlsProps {
   player: Player;
@@ -66,8 +67,9 @@ export const VideoControls = ({
   return (
     <div className={styles.controlsContainer}>
       <div className={styles.leftControls}>
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText={playerPaused ? "Play" : "Pause"}
+          hideTooltip={showSettings}
           onClick={togglePlay}
           aria-label={playerPaused ? "Play video" : "Pause video"}
         >
@@ -84,10 +86,11 @@ export const VideoControls = ({
               testId="pauseIcon"
             />
           )}
-        </button>
+        </ControlButton>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText={playerMuted ? "Unmute video" : "Mute video"}
+          hideTooltip={showSettings}
           onClick={() => {
             toggleMute();
             releaseFocus();
@@ -107,10 +110,11 @@ export const VideoControls = ({
               testId="volumeIcon"
             />
           )}
-        </button>
+        </ControlButton>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText="Back 10 min"
+          hideTooltip={showSettings}
           onClick={() => {
             seek(-600);
             releaseFocus();
@@ -118,10 +122,11 @@ export const VideoControls = ({
           aria-label="Skip backward ten minutes"
         >
           <BackTenIcon className={styles.icons30} fill="#FFFFFF" />
-        </button>
+        </ControlButton>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText="Back 5 min"
+          hideTooltip={showSettings}
           onClick={() => {
             seek(-300);
             releaseFocus();
@@ -129,10 +134,11 @@ export const VideoControls = ({
           aria-label="Skip backward five minutes"
         >
           <BackFiveIcon className={styles.icons30} fill="#FFFFFF" />
-        </button>
+        </ControlButton>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText="Back 1 min"
+          hideTooltip={showSettings}
           onClick={() => {
             seek(-60);
             releaseFocus();
@@ -140,7 +146,7 @@ export const VideoControls = ({
           aria-label="Skip backward one minute"
         >
           <BackOneIcon className={styles.icons30} fill="#FFFFFF" />
-        </button>
+        </ControlButton>
 
         {/* These duration styles resize to ensure the text is always centered without constantly shifting adjacent divs */}
         <span
@@ -154,8 +160,9 @@ export const VideoControls = ({
           {elapsedDuration}
         </span>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText="Forward 1 mins"
+          hideTooltip={showSettings}
           onClick={() => {
             seek(60);
             releaseFocus();
@@ -163,10 +170,11 @@ export const VideoControls = ({
           aria-label="Skip forward one minute"
         >
           <ForwardOneIcon className={styles.icons30} fill="#FFFFFF" />
-        </button>
+        </ControlButton>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText="Forward 5 mins"
+          hideTooltip={showSettings}
           onClick={() => {
             seek(300);
             releaseFocus();
@@ -174,10 +182,11 @@ export const VideoControls = ({
           aria-label="Skip forward five minutes"
         >
           <ForwardFiveIcon className={styles.icons30} fill="#FFFFFF" />
-        </button>
+        </ControlButton>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText="Forward 10 mins"
+          hideTooltip={showSettings}
           onClick={() => {
             seek(600);
             releaseFocus();
@@ -185,20 +194,21 @@ export const VideoControls = ({
           aria-label="Skip forward ten minutes"
         >
           <ForwardTenIcon className={styles.icons30} fill="#FFFFFF" />
-        </button>
+        </ControlButton>
       </div>
 
       <div className={styles.rightControls}>
         <div id="settingsMenuContainer" className={styles.settingsContainer}>
-          <button
-            className={styles.controlsBtn}
+          <ControlButton
+            tooltipText="Settings"
+            hideTooltip={showSettings}
             aria-haspopup="menu"
             aria-expanded={showSettings}
             aria-label="Open video settings menu"
             onClick={() => setShowSettings((prevState) => !prevState)}
           >
             <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
-          </button>
+          </ControlButton>
           {showSettings && (
             <VideoSettings
               player={player}
@@ -207,17 +217,19 @@ export const VideoControls = ({
           )}
         </div>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText="Theatre mode"
+          hideTooltip={showSettings}
           onClick={toggleTheaterMode}
-          data-testid="theater"
           aria-label="Switch to theater mode"
         >
           <TheaterIcon className={styles.icons24} fill="#FFFFFF" />
-        </button>
+        </ControlButton>
 
-        <button
-          className={styles.controlsBtn}
+        <ControlButton
+          tooltipText="Full screen"
+          hideTooltip={showSettings}
+          tooltipAlign="right"
           onClick={toggleFullscreen}
           aria-label={
             document.fullscreenElement
@@ -238,7 +250,7 @@ export const VideoControls = ({
               testId="enterFullscreenIcon"
             />
           )}
-        </button>
+        </ControlButton>
       </div>
     </div>
   );

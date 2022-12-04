@@ -1,0 +1,62 @@
+.button {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  opacity: 0.9;
+  position: relative;
+  padding: 0;
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: 1;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button:focus-visible {
+  outline: 2px solid #00adef;
+  outline-offset: -2px;
+}
+
+.tooltip {
+  pointer-events: none;
+  background-color: rgba(28, 28, 30, 0.9);
+  padding: 0.3rem 0.5rem;
+  white-space: nowrap;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  position: absolute;
+  top: -2rem;
+  opacity: 0;
+}
+
+.hide {
+  display: none;
+}
+
+.alignRight {
+  right: -2px;
+}
+
+.alignLeft {
+  left: -2px;
+}
+
+/* Show the tooltip when hovering control button */
+.button:hover .tooltip {
+  opacity: 1;
+}
+
+/* Show the tooltip when focusing control button with the keyboard */
+.button:focus-visible .tooltip {
+  opacity: 1;
+}

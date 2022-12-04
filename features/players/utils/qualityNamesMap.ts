@@ -10,6 +10,7 @@ export const qualityNamesMap: {
   small: "240p",
   tiny: "160p",
   auto: "Auto",
+  Auto: "Auto",
 
   // Twitch Quality Names
   "160p": "160p",
