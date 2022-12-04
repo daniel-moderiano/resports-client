@@ -9,7 +9,7 @@ interface ControlButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode;
 }
 
-const ControlButton = ({
+export const ControlButton = ({
   tooltipText,
   tooltipAlign,
   hideTooltip,
@@ -37,5 +37,3 @@ const ControlButton = ({
     </button>
   );
 };
-
-export default ControlButton;
