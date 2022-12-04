@@ -54,6 +54,7 @@ export const VideoControlIndicator = ({
   triggerAnimation,
 }: VideoControlIndicatorProps) => {
   const indicator = React.useRef<HTMLDivElement | null>(null);
+  const iconWrapper = React.useRef<HTMLDivElement | null>(null);
 
   // For volume adjustments, the aria label will be on a separate volume indicator and shouldn't be duplicated elsewhere
   const ariaLabelRequired = () => {
@@ -73,15 +74,26 @@ export const VideoControlIndicator = ({
     }
   }, [triggerAnimation]);
 
+  // React.useEffect(() => {
+  //   if (!indicator.current || !iconWrapper.current) {
+  //     return;
+  //   }
+  //   if (document.fullscreenElement) {
+  //     indicator.current.classList.add(styles.large);
+  //     iconWrapper.current.classList.add(styles.iconLarge);
+  //   } else {
+  //     indicator.current.classList.remove(styles.large);
+  //     iconWrapper.current.classList.remove(styles.iconLarge);
+  //   }
+  // }, [document.fullscreenElement]);
+
   const handleAnimationEnd = (event: React.AnimationEvent<HTMLDivElement>) => {
     event.currentTarget.classList.remove(styles.triggerAnimation);
   };
 
   return (
     <div
-      className={`${styles.container} ${
-        document.fullscreenElement ? styles.large : ""
-      }`}
+      className={styles.container}
       role="status"
       aria-label={
         ariaLabelRequired() && ariaLabel !== null ? ariaLabel : undefined
@@ -89,11 +101,7 @@ export const VideoControlIndicator = ({
       ref={indicator}
       onAnimationEnd={handleAnimationEnd}
     >
-      <div
-        className={`${styles.iconWrapper} ${
-          document.fullscreenElement ? styles.iconLarge : ""
-        }`}
-      >
+      <div className={styles.iconWrapper} ref={iconWrapper}>
         {selectIcon(controlAction)}
       </div>
     </div>

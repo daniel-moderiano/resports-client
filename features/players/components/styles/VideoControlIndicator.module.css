@@ -13,7 +13,7 @@
   left: calc(50% - 1.625rem);
 }
 
-.large {
+:fullscreen .container {
   height: 5rem;
   width: 5rem;
 }
@@ -23,7 +23,7 @@
   height: 2rem;
 }
 
-.iconLarge {
+:fullscreen .iconWrapper {
   height: 2.25rem;
   width: 2.25rem;
 }
