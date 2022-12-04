@@ -18,6 +18,7 @@ import { useVideoTime } from "features/players/hooks/useVideoTime";
 import { Player } from "features/players/api/player";
 import { VideoSettings } from "features/players";
 import { ControlButton } from "./ControlButton";
+import { VolumeSlider } from "./VolumeSlider";
 
 interface VideoControlsProps {
   player: Player;
@@ -111,6 +112,8 @@ export const VideoControls = ({
             />
           )}
         </ControlButton>
+
+        <VolumeSlider />
 
         <ControlButton
           tooltipText="Back 10 min"
