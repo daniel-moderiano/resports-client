@@ -5,13 +5,15 @@ export type tooltipAlign = "left" | "right";
 interface ControlButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   tooltipText: string;
   tooltipAlign?: tooltipAlign;
+  hideTooltip?: boolean;
   children?: React.ReactNode;
 }
 
 const ControlButton = ({
   tooltipText,
-  children,
   tooltipAlign,
+  hideTooltip,
+  children,
   ...props
 }: ControlButtonProps) => {
   return (
@@ -26,7 +28,9 @@ const ControlButton = ({
       <span
         className={`${styles.tooltip} ${
           tooltipAlign === "left" ? styles.tooltipAlignLeft : ""
-        } ${tooltipAlign === "right" ? styles.tooltipAlignRight : ""}`}
+        } ${tooltipAlign === "right" ? styles.tooltipAlignRight : ""} ${
+          hideTooltip ? styles.hideTooltip : ""
+        }`}
       >
         {tooltipText}
       </span>

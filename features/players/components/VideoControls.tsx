@@ -69,6 +69,7 @@ export const VideoControls = ({
       <div className={styles.leftControls}>
         <ControlButton
           tooltipText={playerPaused ? "Play" : "Pause"}
+          hideTooltip={showSettings}
           onClick={togglePlay}
           aria-label={playerPaused ? "Play video" : "Pause video"}
         >
@@ -89,6 +90,7 @@ export const VideoControls = ({
 
         <ControlButton
           tooltipText={playerMuted ? "Unmute video" : "Mute video"}
+          hideTooltip={showSettings}
           onClick={() => {
             toggleMute();
             releaseFocus();
@@ -112,6 +114,7 @@ export const VideoControls = ({
 
         <ControlButton
           tooltipText="Back 10 min"
+          hideTooltip={showSettings}
           onClick={() => {
             seek(-600);
             releaseFocus();
@@ -123,6 +126,7 @@ export const VideoControls = ({
 
         <ControlButton
           tooltipText="Back 5 min"
+          hideTooltip={showSettings}
           onClick={() => {
             seek(-300);
             releaseFocus();
@@ -134,6 +138,7 @@ export const VideoControls = ({
 
         <ControlButton
           tooltipText="Back 1 min"
+          hideTooltip={showSettings}
           onClick={() => {
             seek(-60);
             releaseFocus();
@@ -157,6 +162,7 @@ export const VideoControls = ({
 
         <ControlButton
           tooltipText="Forward 1 mins"
+          hideTooltip={showSettings}
           onClick={() => {
             seek(60);
             releaseFocus();
@@ -168,6 +174,7 @@ export const VideoControls = ({
 
         <ControlButton
           tooltipText="Forward 5 mins"
+          hideTooltip={showSettings}
           onClick={() => {
             seek(300);
             releaseFocus();
@@ -179,6 +186,7 @@ export const VideoControls = ({
 
         <ControlButton
           tooltipText="Forward 10 mins"
+          hideTooltip={showSettings}
           onClick={() => {
             seek(600);
             releaseFocus();
@@ -193,6 +201,7 @@ export const VideoControls = ({
         <div id="settingsMenuContainer" className={styles.settingsContainer}>
           <ControlButton
             tooltipText="Settings"
+            hideTooltip={showSettings}
             aria-haspopup="menu"
             aria-expanded={showSettings}
             aria-label="Open video settings menu"
@@ -210,6 +219,7 @@ export const VideoControls = ({
 
         <ControlButton
           tooltipText="Theatre mode"
+          hideTooltip={showSettings}
           onClick={toggleTheaterMode}
           aria-label="Switch to theater mode"
         >
@@ -218,6 +228,7 @@ export const VideoControls = ({
 
         <ControlButton
           tooltipText="Full screen"
+          hideTooltip={showSettings}
           tooltipAlign="right"
           onClick={toggleFullscreen}
           aria-label={
