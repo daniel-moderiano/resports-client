@@ -33,12 +33,11 @@ export const VolumeSlider = ({ player }: VolumeSliderProps) => {
           data-testid="slider"
           className={styles.slider}
           onKeyDown={(event) => {
-            console.log(event.key);
             if (event.key === "ArrowUp" || event.key === "ArrowRight") {
-              setVolume(volume + 5);
+              setVolume(Math.min(volume + 5, 100));
               player.setVolume(volume + 5);
             } else if (event.key === "ArrowDown" || event.key === "ArrowLeft") {
-              setVolume(volume - 5);
+              setVolume(Math.max(volume - 5, 0));
               player.setVolume(volume - 5);
             } else {
               return;
