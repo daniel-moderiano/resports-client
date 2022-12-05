@@ -13,6 +13,7 @@ export const VolumeSlider = ({
   ...props
 }: VolumeSliderProps) => {
   const [volume, setVolume] = useState(0);
+  const [show, setShow] = useState(true);
   const currentPlayerVolume = player.getVolume();
 
   // Synchronise the local volume state with player volume
@@ -20,13 +21,21 @@ export const VolumeSlider = ({
     setVolume(currentPlayerVolume);
   }, [currentPlayerVolume]);
 
+  useEffect(() => {
+    if (showVolumeSlider) {
+      setShow(true);
+    } else {
+      setShow(false);
+    }
+  }, [showVolumeSlider]);
+
   return (
     <div
-      className={`${styles.inputContainer} ${
-        showVolumeSlider ? styles.show : styles.hide
-      }`}
+      className={`${styles.inputContainer} ${show ? styles.show : styles.hide}`}
       onMouseLeave={props.onMouseLeave}
       data-testid="slider"
+      onFocus={() => setShow(true)}
+      onBlur={() => setShow(false)}
     >
       <div className={styles.progress} style={{ width: `${volume}%` }}></div>
       <input

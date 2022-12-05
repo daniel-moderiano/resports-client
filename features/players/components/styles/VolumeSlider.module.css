@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   margin: 0 0.5625rem;
-  transition: all 200ms cubic-bezier(0.4, 0, 1, 1);
+  transition: all 170ms cubic-bezier(0.4, 0, 1, 1);
   cursor: pointer;
   outline: 0;
 }
@@ -29,7 +29,7 @@
   cursor: pointer;
   width: 100%;
   box-sizing: border-box;
-  padding: 0;
+  padding: 1.25rem 0;
   margin: 0;
   border: none;
 }
@@ -103,6 +103,10 @@
 
 .hide {
   width: 0;
-  opacity: 0;
   margin: 0;
+}
+
+.hide .slider::-webkit-slider-thumb {
+  width: 0;
+  transition-delay: 100ms;
 }

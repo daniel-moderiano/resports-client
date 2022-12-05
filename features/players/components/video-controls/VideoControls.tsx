@@ -104,7 +104,6 @@ export const VideoControls = ({
             releaseFocus();
           }}
           onMouseOver={() => setShowVolumeSlider(true)}
-          onFocus={() => setShowVolumeSlider(true)}
           aria-label={playerMuted ? "Unmute video" : "Mute video"}
         >
           {playerMuted ? (
