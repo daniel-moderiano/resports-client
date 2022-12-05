@@ -2,11 +2,16 @@ import styles from "features/players/components/styles/VolumeSlider.module.css";
 import { Player } from "features/players/api/player";
 import { useEffect, useState } from "react";
 
-interface VolumeSliderProps {
+interface VolumeSliderProps extends React.HTMLAttributes<HTMLDivElement> {
   player: Player;
+  showVolumeSlider: boolean;
 }
 
-export const VolumeSlider = ({ player }: VolumeSliderProps) => {
+export const VolumeSlider = ({
+  player,
+  showVolumeSlider,
+  ...props
+}: VolumeSliderProps) => {
   const [volume, setVolume] = useState(0);
   const currentPlayerVolume = player.getVolume();
 
@@ -16,7 +21,12 @@ export const VolumeSlider = ({ player }: VolumeSliderProps) => {
   }, [currentPlayerVolume]);
 
   return (
-    <div className={styles.inputContainer}>
+    <div
+      className={`${styles.inputContainer} ${
+        showVolumeSlider ? styles.show : styles.hide
+      }`}
+      onMouseLeave={props.onMouseLeave}
+    >
       <div className={styles.progress} style={{ width: `${volume}%` }}></div>
       <input
         type="range"

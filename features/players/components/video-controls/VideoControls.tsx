@@ -71,7 +71,10 @@ export const VideoControls = ({
       className={styles.controlsContainer}
       onMouseLeave={() => setShowVolumeSlider(false)}
     >
-      <div className={styles.leftControls}>
+      <div
+        className={styles.leftControls}
+        onMouseLeave={() => setShowVolumeSlider(false)}
+      >
         <ControlButton
           tooltipText={playerPaused ? "Play" : "Pause"}
           hideTooltip={showSettings}
@@ -119,7 +122,7 @@ export const VideoControls = ({
           )}
         </ControlButton>
 
-        {showVolumeSlider && <VolumeSlider player={player} />}
+        <VolumeSlider showVolumeSlider={showVolumeSlider} player={player} />
 
         <ControlButton
           tooltipText="Back 10 min"
