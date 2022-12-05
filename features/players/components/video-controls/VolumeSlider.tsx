@@ -21,6 +21,7 @@ export const VolumeSlider = ({ player }: VolumeSliderProps) => {
         <div className={styles.progress} style={{ width: `${volume}%` }}></div>
         <input
           type="range"
+          id="volume"
           min={0}
           max={100}
           step={1}
@@ -31,7 +32,22 @@ export const VolumeSlider = ({ player }: VolumeSliderProps) => {
           }}
           data-testid="slider"
           className={styles.slider}
+          onKeyDown={(event) => {
+            console.log(event.key);
+            if (event.key === "ArrowUp" || event.key === "ArrowRight") {
+              setVolume(volume + 5);
+              player.setVolume(volume + 5);
+            } else if (event.key === "ArrowDown" || event.key === "ArrowLeft") {
+              setVolume(volume - 5);
+              player.setVolume(volume - 5);
+            } else {
+              return;
+            }
+          }}
         />
+        <label className={styles.visuallyHidden} htmlFor="volume">
+          Volume
+        </label>
       </div>
 
       {/* <div
