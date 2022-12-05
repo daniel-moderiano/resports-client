@@ -1,22 +1,46 @@
+.inputContainer {
+  position: relative;
+  width: 15rem;
+  height: 3rem;
+}
+
+.progress {
+  position: absolute;
+  background-color: rgb(0, 173, 239);
+  height: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
 .slider {
   -webkit-appearance: none;
   appearance: none;
   background: transparent;
   cursor: pointer;
-  width: 15rem;
+  width: 100%;
+  position: absolute;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border: none;
 }
 
 /* Track styles */
 
 /* Chrome, Safari, Opera, and Edge Chromium */
 .slider::-webkit-slider-runnable-track {
-  background: #053a5f;
+  background: transparent;
+  border: 1px solid white;
   height: 0.5rem;
 }
 
 /* Firefox */
 .slider::-moz-range-track {
-  background: #053a5f;
+  background: transparent;
+  border: 1px solid white;
   height: 0.5rem;
 }
 
@@ -27,7 +51,7 @@
   -webkit-appearance: none; /* Override default look */
   appearance: none;
   margin-top: -12px; /* Centers thumb on the track */
-  background-color: #5cd5eb;
+  background-color: #ffffff;
   height: 2rem;
   width: 1rem;
 }
@@ -60,4 +84,55 @@
   border: 1px solid #053a5f;
   outline: 3px solid #053a5f;
   outline-offset: 0.125rem;
+}
+
+.customSlider {
+  position: absolute;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.8em 1em;
+  width: 3.2em;
+  height: 9.6em;
+  margin-bottom: 0.4em;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+  bottom: 3.2em;
+  outline: none;
+}
+
+.volumeBar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 7.2em;
+  width: 0.4em;
+  background-color: hsla(0, 0%, 100%, 0.4);
+  border-radius: 100px;
+  outline: none;
+  transition: width 0.2s ease-in-out;
+}
+
+.volumeBarFill {
+  background-color: rgb(0, 173, 239);
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  opacity: 1;
+  border-radius: 100px;
+  height: 29.2%;
+}
+
+.sliderHandle {
+  position: absolute;
+  transform: translateY(50%);
+  background-color: #fff;
+  height: 0.8em;
+  width: 0.8em;
+  border-radius: 4px;
+  margin: 0 6em;
+  transition: height 0.2s ease-in-out, width 0.2s ease-in-out,
+    border-radius 0.2s ease-in-out;
+  bottom: 29.2%;
 }
