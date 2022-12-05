@@ -18,7 +18,7 @@ export const VolumeSlider = ({ player }: VolumeSliderProps) => {
   return (
     <>
       <div className={styles.inputContainer}>
-        <div className={styles.progress}></div>
+        <div className={styles.progress} style={{ width: `${volume}%` }}></div>
         <input
           type="range"
           min={0}
