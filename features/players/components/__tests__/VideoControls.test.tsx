@@ -345,3 +345,21 @@ describe("Settings menu display tests", () => {
     expect(qualityButton).toHaveFocus();
   });
 });
+
+describe("Volume slider toggle", () => {
+  it("Hides the volume slider by default", () => {
+    setup();
+    const slider = screen.getByTestId("slider");
+    expect(slider).toHaveClass("hide");
+  });
+
+  it("Shows the volume slider when hovering the volume button", async () => {
+    playerMutedMock = false;
+    setup();
+    const volumeButton = screen.getByRole("button", { name: "Mute video" });
+    await userEvent.hover(volumeButton);
+
+    const slider = screen.getByTestId("slider");
+    expect(slider).toHaveClass("show");
+  });
+});
