@@ -47,6 +47,7 @@ export const VideoControls = ({
 }: VideoControlsProps) => {
   // Controls display of video quality settings menu
   const [showSettings, setShowSettings] = useState(false);
+  const [showVolumeSlider, setShowVolumeSlider] = useState(false);
   const { elapsedDuration } = useVideoTime(player, projectedTime);
 
   // Use this function in any position where the user's focus should return to the video
@@ -66,7 +67,10 @@ export const VideoControls = ({
   }, [showSettings, setLockUserActive]);
 
   return (
-    <div className={styles.controlsContainer}>
+    <div
+      className={styles.controlsContainer}
+      onMouseLeave={() => setShowVolumeSlider(false)}
+    >
       <div className={styles.leftControls}>
         <ControlButton
           tooltipText={playerPaused ? "Play" : "Pause"}
@@ -96,6 +100,8 @@ export const VideoControls = ({
             toggleMute();
             releaseFocus();
           }}
+          onMouseOver={() => setShowVolumeSlider(true)}
+          onFocus={() => setShowVolumeSlider(true)}
           aria-label={playerMuted ? "Unmute video" : "Mute video"}
         >
           {playerMuted ? (
@@ -113,7 +119,7 @@ export const VideoControls = ({
           )}
         </ControlButton>
 
-        <VolumeSlider player={player} />
+        {showVolumeSlider && <VolumeSlider player={player} />}
 
         <ControlButton
           tooltipText="Back 10 min"

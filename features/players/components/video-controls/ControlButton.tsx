@@ -17,6 +17,8 @@ export const ControlButton = ({
   return (
     <button
       onClick={props.onClick}
+      onMouseOver={props.onMouseOver}
+      onFocus={props.onFocus}
       aria-label={props["aria-label"]}
       className={styles.button}
       aria-haspopup={props["aria-haspopup"]}

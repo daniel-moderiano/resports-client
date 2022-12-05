@@ -96,3 +96,7 @@
   outline: 2px solid #ffffff;
   outline-offset: 0.125rem;
 }
+
+.hide {
+  display: none;
+}
