@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 interface VolumeSliderProps extends React.HTMLAttributes<HTMLDivElement> {
   player: Player;
-  showVolumeSlider: boolean;
+  showVolumeSlider?: boolean;
 }
 
 export const VolumeSlider = ({
@@ -26,6 +26,7 @@ export const VolumeSlider = ({
         showVolumeSlider ? styles.show : styles.hide
       }`}
       onMouseLeave={props.onMouseLeave}
+      data-testid="slider"
     >
       <div className={styles.progress} style={{ width: `${volume}%` }}></div>
       <input
@@ -39,7 +40,6 @@ export const VolumeSlider = ({
           setVolume(event.target.valueAsNumber);
           player.setVolume(event.target.valueAsNumber);
         }}
-        data-testid="slider"
         className={styles.slider}
         onKeyDown={(event) => {
           if (event.key === "ArrowUp" || event.key === "ArrowRight") {

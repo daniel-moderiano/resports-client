@@ -12,10 +12,21 @@ describe("Volume slider", () => {
       <VolumeSlider
         // @ts-expect-error we do not require a full player mock for testing purposes
         player={playerMock}
-        currentPlayerVolume={playerMock.getVolume()}
+      />
+    );
+    const slider = screen.getByLabelText("Volume");
+    expect(slider).toHaveValue("50");
+  });
+
+  it("Volume slider hides when specified", () => {
+    render(
+      <VolumeSlider
+        // @ts-expect-error we do not require a full player mock for testing purposes
+        player={playerMock}
+        showVolumeSlider={false}
       />
     );
     const slider = screen.getByTestId("slider");
-    expect(slider).toHaveValue("50");
+    expect(slider).toHaveClass("hide");
   });
 });

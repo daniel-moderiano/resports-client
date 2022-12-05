@@ -349,8 +349,8 @@ describe("Settings menu display tests", () => {
 describe("Volume slider toggle", () => {
   it("Hides the volume slider by default", () => {
     setup();
-    const slider = screen.queryByLabelText("Volume");
-    expect(slider).not.toBeInTheDocument();
+    const slider = screen.getByTestId("slider");
+    expect(slider).toHaveClass("hide");
   });
 
   it("Shows the volume slider when hovering the volume button", async () => {
@@ -359,7 +359,7 @@ describe("Volume slider toggle", () => {
     const volumeButton = screen.getByRole("button", { name: "Mute video" });
     await userEvent.hover(volumeButton);
 
-    const slider = screen.getByLabelText("Volume");
-    expect(slider).toBeInTheDocument();
+    const slider = screen.getByTestId("slider");
+    expect(slider).toHaveClass("show");
   });
 });
