@@ -24,7 +24,6 @@
   background: transparent;
   cursor: pointer;
   width: 100%;
-  /* position: absolute; */
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -60,7 +59,7 @@
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none; /* Override default look */
   appearance: none;
-  margin: -0.325rem 0; /* Centers thumb on the track */
+  margin: -0.32rem 0; /* Centers thumb on the track */
   background-color: #ffffff;
   height: 0.9rem;
   width: 0.9rem;
@@ -87,13 +86,13 @@
 }
 
 /* Chrome, Safari, Opera, and Edge Chromium */
-.slider:focus::-webkit-slider-thumb {
+.slider:focus-visible::-webkit-slider-thumb {
   outline: 2px solid #ffffff;
   outline-offset: 0.125rem;
 }
 
 /* Firefox */
-.slider:focus::-moz-range-thumb {
+.slider:focus-visible::-moz-range-thumb {
   outline: 2px solid #ffffff;
   outline-offset: 0.125rem;
 }
