@@ -401,12 +401,6 @@ describe("Video player control indicators", () => {
 });
 
 describe("Volume and muting control", () => {
-  it("Volume slider is set to zero when the player is muted", () => {
-    render(<VideoPlayer player={player} />);
-    const volumeSlider = screen.getByLabelText("Volume");
-    expect(volumeSlider).toHaveValue("0");
-  });
-
   it("Volume slider returns to player volume level when the player is unmuted", async () => {
     render(<VideoPlayer player={player} />);
 
@@ -439,28 +433,4 @@ describe("Volume and muting control", () => {
     const muteButton = screen.getByLabelText("Mute video");
     expect(muteButton).toBeInTheDocument();
   });
-
-  // it("Volume slider retains previous volume when unmuted", async () => {
-  //   // const player = new Player(playerWrapperUnmuted);
-  //   render(<VideoPlayer player={player} />);
-
-  //   // Volume slider should be initialising at 50 volume
-  //   const volumeSlider = screen.getByLabelText("Volume");
-  //   expect(volumeSlider).toHaveValue("50");
-
-  //   // Manually set the volume using the slider
-  //   fireEvent.change(volumeSlider, { target: { value: 20 } });
-  //   expect(volumeSlider).toHaveValue("20");
-
-  //   // Mute the player
-  //   const muteButton = screen.getByLabelText("Mute video");
-  //   await userEvent.click(muteButton);
-
-  //   expect(volumeSlider).toHaveValue("0");
-
-  //   //  Unmute player
-  //   await userEvent.click(muteButton);
-
-  //   expect(volumeSlider).toHaveValue("20");
-  // });
 });

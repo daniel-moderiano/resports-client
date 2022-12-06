@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 interface VolumeSliderProps extends React.HTMLAttributes<HTMLDivElement> {
   player: Player;
   showVolumeSlider?: boolean;
+  setPlayerMuted: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const VolumeSlider = ({
   player,
   showVolumeSlider,
+  setPlayerMuted,
   ...props
 }: VolumeSliderProps) => {
   const [volume, setVolume] = useState(0);
@@ -51,6 +53,10 @@ export const VolumeSlider = ({
         step={1}
         value={volume}
         onChange={(event) => {
+          if (playerMuted && event.target.valueAsNumber > 0) {
+            player.setMuted(false);
+            setPlayerMuted(false);
+          }
           setVolume(event.target.valueAsNumber);
           player.setVolume(event.target.valueAsNumber);
         }}
@@ -64,6 +70,11 @@ export const VolumeSlider = ({
             player.setVolume(volume - 5);
           } else {
             return;
+          }
+
+          if (playerMuted && volume > 0) {
+            player.setMuted(false);
+            setPlayerMuted(false);
           }
         }}
       />
