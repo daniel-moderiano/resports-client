@@ -15,11 +15,16 @@ export const VolumeSlider = ({
   const [volume, setVolume] = useState(0);
   const [show, setShow] = useState(true);
   const currentPlayerVolume = player.getVolume();
+  const playerMuted = player.getMuted();
 
   // Synchronise the local volume state with player volume
   useEffect(() => {
-    setVolume(currentPlayerVolume);
-  }, [currentPlayerVolume]);
+    if (playerMuted) {
+      setVolume(0);
+    } else {
+      setVolume(currentPlayerVolume);
+    }
+  }, [playerMuted, currentPlayerVolume]);
 
   useEffect(() => {
     if (showVolumeSlider) {
