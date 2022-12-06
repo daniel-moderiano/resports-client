@@ -43,11 +43,6 @@ const playerWrapperPaused: PlayerClass = {
   isPaused: () => true,
 };
 
-const playerWrapperUnmuted: PlayerClass = {
-  ...playerWrapperPlaying,
-  getMuted: () => false,
-};
-
 const player = new Player(playerWrapperPlaying);
 
 // The max test timeout should be increase to deal with waiting for timeout intervals in certain tests
@@ -401,19 +396,6 @@ describe("Video player control indicators", () => {
 });
 
 describe("Volume and muting control", () => {
-  it("Volume slider returns to player volume level when the player is unmuted", async () => {
-    render(<VideoPlayer player={player} />);
-
-    const volumeSlider = screen.getByLabelText("Volume");
-    expect(volumeSlider).toHaveValue("0");
-
-    // Unmute the video
-    const unmuteButton = screen.getByLabelText("Unmute video");
-    await userEvent.click(unmuteButton);
-
-    expect(volumeSlider).toHaveValue("50");
-  });
-
   it("Player is unmuted automatically when the volume slider is set to a non-zero value", async () => {
     render(<VideoPlayer player={player} />);
 

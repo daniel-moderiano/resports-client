@@ -57,6 +57,10 @@ export const VolumeSlider = ({
             player.setMuted(false);
             setPlayerMuted(false);
           }
+          if (event.target.valueAsNumber === 0) {
+            player.setMuted(true);
+            setPlayerMuted(true);
+          }
           setVolume(event.target.valueAsNumber);
           player.setVolume(event.target.valueAsNumber);
         }}
@@ -75,6 +79,11 @@ export const VolumeSlider = ({
           if (playerMuted && volume > 0) {
             player.setMuted(false);
             setPlayerMuted(false);
+          }
+
+          if (volume === 0) {
+            player.setMuted(true);
+            setPlayerMuted(true);
           }
         }}
       />

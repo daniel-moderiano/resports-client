@@ -38,7 +38,7 @@ describe("Volume slider", () => {
   it("Volume slider sets to zero when player is muted", () => {
     playerMock.getMuted = () => true;
     render(<VolumeSlider player={playerMock} setPlayerMuted={jest.fn} />);
-    const slider = screen.getByTestId("slider");
-    expect(slider).toHaveClass("hide");
+    const slider = screen.getByLabelText("Volume");
+    expect(slider).toHaveValue("0");
   });
 });
