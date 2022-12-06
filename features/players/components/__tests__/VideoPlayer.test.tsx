@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { Player } from "features/players";
 import { PlayerClass } from "features/players/types/playerTypes";
 import { VideoPlayer } from "features/players";
+import { fireEvent } from "@testing-library/react";
 
 const playMock = jest.fn();
 const pauseMock = jest.fn();
@@ -40,6 +41,11 @@ const playerWrapperPlaying: PlayerClass = {
 const playerWrapperPaused: PlayerClass = {
   ...playerWrapperPlaying,
   isPaused: () => true,
+};
+
+const playerWrapperUnmuted: PlayerClass = {
+  ...playerWrapperPlaying,
+  getMuted: () => false,
 };
 
 const player = new Player(playerWrapperPlaying);
@@ -391,5 +397,70 @@ describe("Video player control indicators", () => {
 
     const indicator = screen.getByText("10 seconds");
     expect(indicator).toBeInTheDocument();
+  });
+});
+
+describe("Volume and muting control", () => {
+  it("Volume slider is set to zero when the player is muted", () => {
+    render(<VideoPlayer player={player} />);
+    const volumeSlider = screen.getByLabelText("Volume");
+    expect(volumeSlider).toHaveValue("0");
+  });
+
+  it("Volume slider returns to player volume level when the player is unmuted", async () => {
+    render(<VideoPlayer player={player} />);
+
+    const volumeSlider = screen.getByLabelText("Volume");
+    expect(volumeSlider).toHaveValue("0");
+
+    // Unmute the video
+    const unmuteButton = screen.getByLabelText("Unmute video");
+    await userEvent.click(unmuteButton);
+
+    expect(volumeSlider).toHaveValue("50");
+  });
+
+  it("Player is unmuted automatically when the volume slider is set to a non-zero value", async () => {
+    render(<VideoPlayer player={player} />);
+
+    // Volume slider should be starting at zero
+    const volumeSlider = screen.getByLabelText("Volume");
+    expect(volumeSlider).toHaveValue("0");
+
+    // Check the player is in muted state
+    const unmuteButton = screen.getByLabelText("Unmute video");
+    expect(unmuteButton).toBeInTheDocument();
+
+    // Manually set the volume using the slider
+    fireEvent.change(volumeSlider, { target: { value: 20 } });
+    expect(volumeSlider).toHaveValue("20");
+
+    // Check the player is now in unmuted state
+    const muteButton = screen.getByLabelText("Mute video");
+    expect(muteButton).toBeInTheDocument();
+  });
+
+  it("Volume slider retains previous volume when unmuted", async () => {
+    // const player = new Player(playerWrapperUnmuted);
+    render(<VideoPlayer player={player} />);
+
+    // Volume slider should be initialising at 50 volume
+    const volumeSlider = screen.getByLabelText("Volume");
+    expect(volumeSlider).toHaveValue("50");
+
+    // Manually set the volume using the slider
+    fireEvent.change(volumeSlider, { target: { value: 20 } });
+    expect(volumeSlider).toHaveValue("20");
+
+    // Mute the player
+    const muteButton = screen.getByLabelText("Mute video");
+    await userEvent.click(muteButton);
+
+    expect(volumeSlider).toHaveValue("0");
+
+    //  Unmute player
+    await userEvent.click(muteButton);
+
+    expect(volumeSlider).toHaveValue("20");
   });
 });
