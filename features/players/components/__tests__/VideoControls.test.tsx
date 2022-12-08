@@ -9,6 +9,7 @@ const playerMock = {
   getCurrentTime: () => 1,
   isMuted: () => false,
   getVolume: jest.fn,
+  getMuted: () => true,
   getQualities: () => [
     {
       name: "Auto",
