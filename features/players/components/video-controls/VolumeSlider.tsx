@@ -5,21 +5,28 @@ import { useEffect, useState } from "react";
 interface VolumeSliderProps extends React.HTMLAttributes<HTMLDivElement> {
   player: Player;
   showVolumeSlider?: boolean;
+  setPlayerMuted: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const VolumeSlider = ({
   player,
   showVolumeSlider,
+  setPlayerMuted,
   ...props
 }: VolumeSliderProps) => {
   const [volume, setVolume] = useState(0);
   const [show, setShow] = useState(true);
   const currentPlayerVolume = player.getVolume();
+  const playerMuted = player.getMuted();
 
   // Synchronise the local volume state with player volume
   useEffect(() => {
-    setVolume(currentPlayerVolume);
-  }, [currentPlayerVolume]);
+    if (playerMuted) {
+      setVolume(0);
+    } else {
+      setVolume(currentPlayerVolume);
+    }
+  }, [playerMuted, currentPlayerVolume]);
 
   useEffect(() => {
     if (showVolumeSlider) {
@@ -46,6 +53,14 @@ export const VolumeSlider = ({
         step={1}
         value={volume}
         onChange={(event) => {
+          if (playerMuted && event.target.valueAsNumber > 0) {
+            player.setMuted(false);
+            setPlayerMuted(false);
+          }
+          if (event.target.valueAsNumber === 0) {
+            player.setMuted(true);
+            setPlayerMuted(true);
+          }
           setVolume(event.target.valueAsNumber);
           player.setVolume(event.target.valueAsNumber);
         }}
@@ -59,6 +74,16 @@ export const VolumeSlider = ({
             player.setVolume(volume - 5);
           } else {
             return;
+          }
+
+          if (playerMuted && volume > 0) {
+            player.setMuted(false);
+            setPlayerMuted(false);
+          }
+
+          if (volume === 0) {
+            player.setMuted(true);
+            setPlayerMuted(true);
           }
         }}
       />

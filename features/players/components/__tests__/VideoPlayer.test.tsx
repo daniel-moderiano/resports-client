@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { Player } from "features/players";
 import { PlayerClass } from "features/players/types/playerTypes";
 import { VideoPlayer } from "features/players";
+import { fireEvent } from "@testing-library/react";
 
 const playMock = jest.fn();
 const pauseMock = jest.fn();
@@ -12,7 +13,7 @@ const setMutedMock = jest.fn();
 
 const playerWrapperPlaying: PlayerClass = {
   getCurrentTime: () => 100,
-  getMuted: () => false,
+  getMuted: () => true,
   setMuted: setMutedMock,
   isPaused: () => false,
   play: playMock,
@@ -391,5 +392,27 @@ describe("Video player control indicators", () => {
 
     const indicator = screen.getByText("10 seconds");
     expect(indicator).toBeInTheDocument();
+  });
+});
+
+describe("Volume and muting control", () => {
+  it("Player is unmuted automatically when the volume slider is set to a non-zero value", async () => {
+    render(<VideoPlayer player={player} />);
+
+    // Volume slider should be starting at zero
+    const volumeSlider = screen.getByLabelText("Volume");
+    expect(volumeSlider).toHaveValue("0");
+
+    // Check the player is in muted state
+    const unmuteButton = screen.getByLabelText("Unmute video");
+    expect(unmuteButton).toBeInTheDocument();
+
+    // Manually set the volume using the slider
+    fireEvent.change(volumeSlider, { target: { value: 20 } });
+    expect(volumeSlider).toHaveValue("20");
+
+    // Check the player is now in unmuted state
+    const muteButton = screen.getByLabelText("Mute video");
+    expect(muteButton).toBeInTheDocument();
   });
 });

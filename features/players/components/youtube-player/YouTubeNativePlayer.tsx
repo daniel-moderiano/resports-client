@@ -185,6 +185,7 @@ export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
           >
             <VideoControls
               player={player}
+              setPlayerMuted={setPlayerMuted}
               playerPaused={playerPaused}
               toggleFullscreen={() => toggleFullscreen(wrapperRef.current)}
               toggleTheaterMode={toggleTheaterMode}

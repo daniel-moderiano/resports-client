@@ -29,6 +29,7 @@ interface VideoControlsProps {
   toggleMute: () => void;
   seek: (timeToSkipInSeconds: number) => void;
   playerMuted: boolean;
+  setPlayerMuted: React.Dispatch<React.SetStateAction<boolean>>;
   projectedTime: number | null;
   setLockUserActive: Dispatch<SetStateAction<boolean>>;
 }
@@ -42,6 +43,7 @@ export const VideoControls = ({
   toggleMute,
   seek,
   playerMuted,
+  setPlayerMuted,
   projectedTime,
   setLockUserActive,
 }: VideoControlsProps) => {
@@ -121,7 +123,11 @@ export const VideoControls = ({
           )}
         </ControlButton>
 
-        <VolumeSlider showVolumeSlider={showVolumeSlider} player={player} />
+        <VolumeSlider
+          showVolumeSlider={showVolumeSlider}
+          player={player}
+          setPlayerMuted={setPlayerMuted}
+        />
 
         <ControlButton
           tooltipText="Back 10 min"
