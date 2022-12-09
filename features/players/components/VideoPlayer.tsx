@@ -119,30 +119,25 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         return;
       }
 
-      const { nodeName, className } = event.target;
-      const withinPlayer = event.target.closest("#wrapper");
+      const { target, key } = event;
+      const withinPlayer = target.closest("#wrapper");
 
       // Ensure these key actions do not mess with normal button expectations and functionality
-      if (nodeName === "BUTTON" || nodeName === "INPUT") {
-        if (className.includes("button")) {
-          console.log("Button reached");
-
-          signalUserActivity();
-        }
+      if (target.nodeName === "BUTTON" || target.nodeName === "INPUT") {
         return;
       }
 
       // Avoid scrolling the page. Always prioritise play/pause functionality.
-      if (event.key === " ") {
+      if (key === " ") {
         event.preventDefault();
       }
 
-      if (activeDOMKeys.includes(event.key) && !withinPlayer) {
+      if (activeDOMKeys.includes(key) && !withinPlayer) {
         return;
       }
 
       if (
-        activeUserKeys.includes(event.key) &&
+        activeUserKeys.includes(key) &&
         wrapperRef.current === document.activeElement
       ) {
         event.preventDefault();
@@ -153,7 +148,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         return;
       }
 
-      switch (event.key) {
+      switch (key) {
         case "k":
         case " ":
           playOrPauseVideo();
@@ -279,6 +274,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
             seek={scheduleSeek}
             projectedTime={projectedTime}
             setLockUserActive={setLockUserActive}
+            signalUserActivity={signalUserActivity}
           />
         </div>
       )}
