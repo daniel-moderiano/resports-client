@@ -84,6 +84,7 @@ export const VideoControlIndicator = ({
       aria-label={
         ariaLabelRequired() && ariaLabel !== null ? ariaLabel : undefined
       }
+      aria-hidden={!ariaLabelRequired()}
       ref={indicator}
       onAnimationEnd={handleAnimationEnd}
     >
