@@ -21,11 +21,22 @@ export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
   const { scheduleSeek, projectedTime } = useSeek(player);
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
 
+  const [localVolume, setLocalVolume] = React.useState(100);
+
   // Use local state to avoid the long delays of an API call to check muted state when toggling icons and UI
   const [playerMuted, setPlayerMuted] = React.useState(true);
   const [playerPaused, setPlayerPaused] = React.useState(false);
   const [theaterMode, setTheaterMode] = React.useState(false);
   const [showYTControls, setShowYTControls] = React.useState(true);
+
+  // Set the player volume according to local changes in volume. By working with the local volume state, we get a fluid UI as opposed to a laggy API interaction. It is fine to have a trace delay between local change and API player volume update.
+  React.useEffect(() => {
+    console.log(localVolume);
+
+    if (player) {
+      player.setVolume(localVolume);
+    }
+  }, [localVolume, player]);
 
   // Ensure the local playerState state is set on play/pause events. This ensures other elements modify with each of the changes as needed
   React.useEffect(() => {
@@ -196,6 +207,8 @@ export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
               projectedTime={projectedTime}
               setLockUserActive={setLockUserActive}
               signalUserActivity={signalUserActivity}
+              localVolume={localVolume}
+              setLocalVolume={setLocalVolume}
             />
           </div>
         )}

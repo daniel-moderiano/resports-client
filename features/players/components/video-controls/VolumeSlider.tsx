@@ -1,7 +1,7 @@
 import styles from "features/players/components/styles/VolumeSlider.module.css";
 import buttonStyles from "features/players/components/styles/ControlButton.module.css";
 import { Player } from "features/players/api/player";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import * as React from "react";
 
 interface VolumeSliderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -9,6 +9,9 @@ interface VolumeSliderProps extends React.HTMLAttributes<HTMLDivElement> {
   showVolumeSlider?: boolean;
   setPlayerMuted: React.Dispatch<React.SetStateAction<boolean>>;
   signalUserActivity: () => void;
+  playerMuted: boolean;
+  localVolume: number;
+  setLocalVolume: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const VolumeSlider = ({
@@ -16,22 +19,20 @@ export const VolumeSlider = ({
   showVolumeSlider,
   setPlayerMuted,
   signalUserActivity,
-  ...props
+  playerMuted,
+  localVolume,
+  setLocalVolume,
 }: VolumeSliderProps) => {
-  const [volume, setVolume] = useState(0);
   const [show, setShow] = useState(true);
-  const currentPlayerVolume = player.getVolume();
-  const playerMuted = player.getMuted();
   const sliderRef = React.useRef<HTMLInputElement | null>(null);
+  const volumeBarRef = React.useRef<HTMLDivElement | null>(null);
 
-  // Synchronise the local volume state with player volume
+  // Dynamically set the width of the 'active' portion of the volume slider.
   useEffect(() => {
-    if (playerMuted) {
-      setVolume(0);
-    } else {
-      setVolume(currentPlayerVolume);
+    if (volumeBarRef.current) {
+      volumeBarRef.current.style.width = playerMuted ? "0" : `${localVolume}%`;
     }
-  }, [playerMuted, currentPlayerVolume]);
+  }, [localVolume, playerMuted]);
 
   useEffect(() => {
     if (!showVolumeSlider && document.activeElement !== sliderRef.current) {
@@ -46,7 +47,11 @@ export const VolumeSlider = ({
       className={`${styles.inputContainer} ${show ? styles.show : styles.hide}`}
       data-testid="slider"
     >
-      <div className={styles.progress} style={{ width: `${volume}%` }}></div>
+      <div
+        className={styles.progress}
+        ref={volumeBarRef}
+        data-testid="activeBar"
+      ></div>
       <input
         type="range"
         id="volume"
@@ -54,10 +59,8 @@ export const VolumeSlider = ({
         max={100}
         step={1}
         ref={sliderRef}
-        value={volume}
+        value={playerMuted ? 0 : localVolume}
         onBlur={(event) => {
-          console.log("Bl;urred");
-
           if (
             event.relatedTarget?.classList.contains(buttonStyles.button) ||
             event.relatedTarget?.id === "wrapper"
@@ -77,28 +80,25 @@ export const VolumeSlider = ({
             player.setMuted(true);
             setPlayerMuted(true);
           }
-          setVolume(event.target.valueAsNumber);
-          player.setVolume(event.target.valueAsNumber);
+          setLocalVolume(event.target.valueAsNumber);
           signalUserActivity();
         }}
         className={styles.slider}
         onKeyDown={(event) => {
           if (event.key === "ArrowUp" || event.key === "ArrowRight") {
-            setVolume(Math.min(volume + 5, 100));
-            player.setVolume(volume + 5);
+            setLocalVolume(Math.min(localVolume + 5, 100));
           } else if (event.key === "ArrowDown" || event.key === "ArrowLeft") {
-            setVolume(Math.max(volume - 5, 0));
-            player.setVolume(volume - 5);
+            setLocalVolume(Math.max(localVolume - 5, 0));
           } else {
             return;
           }
 
-          if (playerMuted && volume > 0) {
+          if (playerMuted && localVolume > 0) {
             player.setMuted(false);
             setPlayerMuted(false);
           }
 
-          if (volume === 0) {
+          if (localVolume === 0) {
             player.setMuted(true);
             setPlayerMuted(true);
           }

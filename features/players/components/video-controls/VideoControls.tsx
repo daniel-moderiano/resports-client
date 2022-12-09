@@ -35,6 +35,8 @@ interface VideoControlsProps {
   projectedTime: number | null;
   setLockUserActive: Dispatch<SetStateAction<boolean>>;
   signalUserActivity: () => void;
+  localVolume: number;
+  setLocalVolume: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const VideoControls = ({
@@ -50,6 +52,8 @@ export const VideoControls = ({
   projectedTime,
   setLockUserActive,
   signalUserActivity,
+  localVolume,
+  setLocalVolume,
 }: VideoControlsProps) => {
   // Controls display of video quality settings menu
   const [showSettings, setShowSettings] = useState(false);
@@ -145,6 +149,9 @@ export const VideoControls = ({
           showVolumeSlider={showVolumeSlider}
           setPlayerMuted={setPlayerMuted}
           signalUserActivity={signalUserActivity}
+          playerMuted={playerMuted}
+          localVolume={localVolume}
+          setLocalVolume={setLocalVolume}
         />
 
         <ControlButton
