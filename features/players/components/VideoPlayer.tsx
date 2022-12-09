@@ -185,7 +185,6 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
           toggleTheaterMode();
           break;
         case "ArrowDown":
-          // player.setVolume(player.getVolume() - 5);
           setLocalVolume((prevVol) => Math.max(prevVol - 5, 0));
           if (player.getVolume() === 0) {
             setPlayerMuted(true);
@@ -199,7 +198,6 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         case "ArrowUp":
           player.setMuted(false);
           setPlayerMuted(false);
-          // player.setVolume(player.getVolume() + 5);
           setLocalVolume((prevVol) => Math.min(prevVol + 5, 100));
           triggerControlIndication("volumeUp");
           triggerVolumeLevelIndication();
@@ -256,7 +254,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
       ></div>
       <div className={styles.indicatorContainer}>
         {showVolumeLevelIndicator && player && (
-          <VolumeLevelIndicator currentVolume={player.getVolume()} />
+          <VolumeLevelIndicator currentVolume={localVolume} />
         )}
 
         {seekAmount && <SeekIndicator projectedSeekInSeconds={seekAmount} />}
