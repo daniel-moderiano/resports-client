@@ -155,37 +155,37 @@ export const VideoControls = ({
         />
 
         <ControlButton
-          tooltipText="Back 10 min"
+          tooltipText="Rewind 10 mins"
           hideTooltip={showSettings}
           onClick={() => {
             seek(-600);
             releaseFocus();
           }}
-          aria-label="Skip backward ten minutes"
+          aria-label="Rewind ten minutes"
         >
           <BackTenIcon className={styles.icons30} fill="#FFFFFF" />
         </ControlButton>
 
         <ControlButton
-          tooltipText="Back 5 min"
+          tooltipText="Rewind 5 mins"
           hideTooltip={showSettings}
           onClick={() => {
             seek(-300);
             releaseFocus();
           }}
-          aria-label="Skip backward five minutes"
+          aria-label="Rewind five minutes"
         >
           <BackFiveIcon className={styles.icons30} fill="#FFFFFF" />
         </ControlButton>
 
         <ControlButton
-          tooltipText="Back 1 min"
+          tooltipText="Rewind 1 min"
           hideTooltip={showSettings}
           onClick={() => {
             seek(-60);
             releaseFocus();
           }}
-          aria-label="Skip backward one minute"
+          aria-label="Rewind one minute"
         >
           <BackOneIcon className={styles.icons30} fill="#FFFFFF" />
         </ControlButton>
@@ -203,7 +203,7 @@ export const VideoControls = ({
         </span>
 
         <ControlButton
-          tooltipText="Forward 1 mins"
+          tooltipText="Skip 1 min"
           hideTooltip={showSettings}
           onClick={() => {
             seek(60);
@@ -215,7 +215,7 @@ export const VideoControls = ({
         </ControlButton>
 
         <ControlButton
-          tooltipText="Forward 5 mins"
+          tooltipText="Skip 5 mins"
           hideTooltip={showSettings}
           onClick={() => {
             seek(300);
@@ -227,7 +227,7 @@ export const VideoControls = ({
         </ControlButton>
 
         <ControlButton
-          tooltipText="Forward 10 mins"
+          tooltipText="Skip 10 mins"
           hideTooltip={showSettings}
           onClick={() => {
             seek(600);
