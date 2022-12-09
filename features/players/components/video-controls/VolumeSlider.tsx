@@ -6,12 +6,14 @@ interface VolumeSliderProps extends React.HTMLAttributes<HTMLDivElement> {
   player: Player;
   showVolumeSlider?: boolean;
   setPlayerMuted: React.Dispatch<React.SetStateAction<boolean>>;
+  signalUserActivity: () => void;
 }
 
 export const VolumeSlider = ({
   player,
   showVolumeSlider,
   setPlayerMuted,
+  signalUserActivity,
   ...props
 }: VolumeSliderProps) => {
   const [volume, setVolume] = useState(0);
@@ -63,6 +65,7 @@ export const VolumeSlider = ({
           }
           setVolume(event.target.valueAsNumber);
           player.setVolume(event.target.valueAsNumber);
+          signalUserActivity();
         }}
         className={styles.slider}
         onKeyDown={(event) => {

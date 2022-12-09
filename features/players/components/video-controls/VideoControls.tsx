@@ -138,9 +138,10 @@ export const VideoControls = ({
         </ControlButton>
 
         <VolumeSlider
-          showVolumeSlider={showVolumeSlider}
           player={player}
+          showVolumeSlider={showVolumeSlider}
           setPlayerMuted={setPlayerMuted}
+          signalUserActivity={signalUserActivity}
         />
 
         <ControlButton
