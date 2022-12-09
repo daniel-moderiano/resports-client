@@ -1,7 +1,7 @@
 import styles from "features/players/components/styles/VolumeSlider.module.css";
 import buttonStyles from "features/players/components/styles/ControlButton.module.css";
 import { Player } from "features/players/api/player";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import * as React from "react";
 
 interface VolumeSliderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -24,17 +24,8 @@ export const VolumeSlider = ({
   setLocalVolume,
   ...props
 }: VolumeSliderProps) => {
-  const [volume, setVolume] = useState(0);
   const [show, setShow] = useState(true);
-  const currentPlayerVolume = player.getVolume();
   const sliderRef = React.useRef<HTMLInputElement | null>(null);
-
-  // Synchronise the local volume state with player volume
-  useEffect(() => {
-    if (playerMuted) {
-      setVolume(0);
-    }
-  }, [playerMuted, currentPlayerVolume]);
 
   useEffect(() => {
     if (!showVolumeSlider && document.activeElement !== sliderRef.current) {
@@ -88,19 +79,19 @@ export const VolumeSlider = ({
         className={styles.slider}
         onKeyDown={(event) => {
           if (event.key === "ArrowUp" || event.key === "ArrowRight") {
-            setLocalVolume(Math.min(volume + 5, 100));
+            setLocalVolume(Math.min(localVolume + 5, 100));
           } else if (event.key === "ArrowDown" || event.key === "ArrowLeft") {
-            setLocalVolume(Math.max(volume - 5, 0));
+            setLocalVolume(Math.max(localVolume - 5, 0));
           } else {
             return;
           }
 
-          if (playerMuted && volume > 0) {
+          if (playerMuted && localVolume > 0) {
             player.setMuted(false);
             setPlayerMuted(false);
           }
 
-          if (volume === 0) {
+          if (localVolume === 0) {
             player.setMuted(true);
             setPlayerMuted(true);
           }
