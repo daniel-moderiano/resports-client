@@ -84,7 +84,7 @@ describe("Volume slider", () => {
     expect(slider).toHaveStyle("width: 50%");
   });
 
-  it("Local player mute state is adjusted when the user changes volume to zero", () => {
+  it("Sets the local playerMuted state when the range input is set to zero", () => {
     const setPlayerMuted = jest.fn();
 
     render(
