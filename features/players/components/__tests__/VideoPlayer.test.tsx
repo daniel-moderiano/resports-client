@@ -307,6 +307,19 @@ describe("Video player controls/user activity timers", () => {
     const customControls = screen.getByTestId("customControls");
     expect(customControls).toHaveClass("controlsHide");
   });
+
+  it("Resets fade out time when user tabs to a control via keyboard", async () => {
+    render(<VideoPlayer player={player} />);
+    const wrapper = screen.getByTestId("wrapper");
+
+    // Focus the wrapper to ensure the keypress is captured correctly
+    wrapper.focus();
+    await userEvent.keyboard("[Tab]");
+    // await userEvent.keyboard("[Tab]");
+
+    const customControls = screen.getByTestId("customControls");
+    expect(customControls).not.toHaveClass("controlsHide");
+  });
 });
 
 describe("Video player control indicators", () => {

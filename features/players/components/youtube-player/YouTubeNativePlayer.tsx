@@ -195,6 +195,7 @@ export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
               seek={scheduleSeek}
               projectedTime={projectedTime}
               setLockUserActive={setLockUserActive}
+              signalUserActivity={signalUserActivity}
             />
           </div>
         )}

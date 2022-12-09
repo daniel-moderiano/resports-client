@@ -60,6 +60,7 @@ const setup = () => {
       toggleMute={toggleMuteMock}
       projectedTime={projectedTime}
       setLockUserActive={jest.fn}
+      signalUserActivity={jest.fn}
     />
   );
 };

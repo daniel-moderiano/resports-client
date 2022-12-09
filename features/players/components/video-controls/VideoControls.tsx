@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styles from "features/players/components/styles/YouTubeVideoControls.module.css";
+import buttonStyles from "features/players/components/styles/ControlButton.module.css";
+import volumeStyles from "features/players/components/styles/VolumeSlider.module.css";
 import MutedIcon from "icons/MutedIcon";
 import VolumeIcon from "icons/VolumeIcon";
 import BackTenIcon from "icons/BackTenIcon";
@@ -32,6 +34,7 @@ interface VideoControlsProps {
   setPlayerMuted: React.Dispatch<React.SetStateAction<boolean>>;
   projectedTime: number | null;
   setLockUserActive: Dispatch<SetStateAction<boolean>>;
+  signalUserActivity: () => void;
 }
 
 export const VideoControls = ({
@@ -46,6 +49,7 @@ export const VideoControls = ({
   setPlayerMuted,
   projectedTime,
   setLockUserActive,
+  signalUserActivity,
 }: VideoControlsProps) => {
   // Controls display of video quality settings menu
   const [showSettings, setShowSettings] = useState(false);
@@ -63,15 +67,26 @@ export const VideoControls = ({
   useEffect(() => {
     if (showSettings) {
       setLockUserActive(true);
+      signalUserActivity();
     } else {
       setLockUserActive(false);
     }
-  }, [showSettings, setLockUserActive]);
+  }, [showSettings, setLockUserActive, signalUserActivity]);
+
+  const handleControlButtonFocus = (event: React.FocusEvent<HTMLElement>) => {
+    if (
+      event.target.classList.contains(buttonStyles.button) ||
+      event.target.classList.contains(volumeStyles.slider)
+    ) {
+      signalUserActivity();
+    }
+  };
 
   return (
     <div
       className={styles.controlsContainer}
       onMouseLeave={() => setShowVolumeSlider(false)}
+      onFocus={handleControlButtonFocus}
     >
       <div
         className={styles.leftControls}
@@ -124,9 +139,10 @@ export const VideoControls = ({
         </ControlButton>
 
         <VolumeSlider
-          showVolumeSlider={showVolumeSlider}
           player={player}
+          showVolumeSlider={showVolumeSlider}
           setPlayerMuted={setPlayerMuted}
+          signalUserActivity={signalUserActivity}
         />
 
         <ControlButton
@@ -222,7 +238,9 @@ export const VideoControls = ({
             aria-haspopup="menu"
             aria-expanded={showSettings}
             aria-label="Open video settings menu"
-            onClick={() => setShowSettings((prevState) => !prevState)}
+            onClick={() => {
+              setShowSettings((prevState) => !prevState);
+            }}
           >
             <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
           </ControlButton>
