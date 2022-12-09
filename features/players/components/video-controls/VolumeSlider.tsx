@@ -22,13 +22,12 @@ export const VolumeSlider = ({
   playerMuted,
   localVolume,
   setLocalVolume,
-  ...props
 }: VolumeSliderProps) => {
   const [show, setShow] = useState(true);
   const sliderRef = React.useRef<HTMLInputElement | null>(null);
-
   const volumeBarRef = React.useRef<HTMLDivElement | null>(null);
 
+  // Dynamically set the width of the 'active' portion of the volume slider.
   useEffect(() => {
     if (volumeBarRef.current) {
       volumeBarRef.current.style.width = playerMuted ? "0" : `${localVolume}%`;
@@ -48,11 +47,7 @@ export const VolumeSlider = ({
       className={`${styles.inputContainer} ${show ? styles.show : styles.hide}`}
       data-testid="slider"
     >
-      <div
-        className={styles.progress}
-        // style={{ width: `${playerMuted ? 0 : localVolume}%` }}
-        ref={volumeBarRef}
-      ></div>
+      <div className={styles.progress} ref={volumeBarRef}></div>
       <input
         type="range"
         id="volume"

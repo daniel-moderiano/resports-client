@@ -428,4 +428,15 @@ describe("Volume and muting control", () => {
     const muteButton = screen.getByLabelText("Mute video");
     expect(muteButton).toBeInTheDocument();
   });
+
+  it("Keyboard interaction with volume slider changes volume in 5 unit steps", async () => {
+    render(<VideoPlayer player={player} />);
+    const slider = screen.getByLabelText("Volume");
+
+    // Focus the slider
+    await userEvent.click(slider);
+
+    await userEvent.keyboard("[ArrowRight]");
+    expect(slider).toHaveValue("55");
+  });
 });
