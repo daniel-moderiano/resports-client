@@ -37,10 +37,6 @@ export const VolumeSlider = ({
   }, [playerMuted, currentPlayerVolume]);
 
   useEffect(() => {
-    player.setVolume(volume);
-  }, [player, volume]);
-
-  useEffect(() => {
     if (!showVolumeSlider && document.activeElement !== sliderRef.current) {
       setShow(false);
     } else {
@@ -55,7 +51,7 @@ export const VolumeSlider = ({
     >
       <div
         className={styles.progress}
-        style={{ width: `${localVolume}%` }}
+        style={{ width: `${playerMuted ? 0 : localVolume}%` }}
       ></div>
       <input
         type="range"
@@ -64,7 +60,7 @@ export const VolumeSlider = ({
         max={100}
         step={1}
         ref={sliderRef}
-        value={localVolume}
+        value={playerMuted ? 0 : localVolume}
         onBlur={(event) => {
           if (
             event.relatedTarget?.classList.contains(buttonStyles.button) ||
@@ -93,10 +89,8 @@ export const VolumeSlider = ({
         onKeyDown={(event) => {
           if (event.key === "ArrowUp" || event.key === "ArrowRight") {
             setLocalVolume(Math.min(volume + 5, 100));
-            // player.setVolume(volume + 5);
           } else if (event.key === "ArrowDown" || event.key === "ArrowLeft") {
             setLocalVolume(Math.max(volume - 5, 0));
-            // player.setVolume(volume - 5);
           } else {
             return;
           }
