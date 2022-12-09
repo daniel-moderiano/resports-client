@@ -23,7 +23,7 @@ describe("Volume slider", () => {
     expect(slider).toHaveValue("50");
   });
 
-  it("Volume slider hides when specified", () => {
+  it("Volume slider hides by default", () => {
     render(
       <VolumeSlider
         player={playerMock}
@@ -36,6 +36,22 @@ describe("Volume slider", () => {
     );
     const slider = screen.getByTestId("slider");
     expect(slider).toHaveClass("hide");
+  });
+
+  it("Volume slider displays when showVoluemSlider prop is true", () => {
+    render(
+      <VolumeSlider
+        player={playerMock}
+        setPlayerMuted={jest.fn}
+        signalUserActivity={jest.fn}
+        playerMuted={false}
+        localVolume={50}
+        setLocalVolume={jest.fn}
+        showVolumeSlider={true}
+      />
+    );
+    const slider = screen.getByTestId("slider");
+    expect(slider).toHaveClass("show");
   });
 
   it("Volume slider sets to zero when player is muted", () => {
@@ -51,5 +67,20 @@ describe("Volume slider", () => {
     );
     const slider = screen.getByLabelText("Volume");
     expect(slider).toHaveValue("0");
+  });
+
+  it("Volume active bar width reflects current volume level", () => {
+    render(
+      <VolumeSlider
+        player={playerMock}
+        setPlayerMuted={jest.fn}
+        signalUserActivity={jest.fn}
+        playerMuted={false}
+        localVolume={50}
+        setLocalVolume={jest.fn}
+      />
+    );
+    const slider = screen.getByTestId("activeBar");
+    expect(slider).toHaveStyle("width: 50%");
   });
 });

@@ -47,7 +47,11 @@ export const VolumeSlider = ({
       className={`${styles.inputContainer} ${show ? styles.show : styles.hide}`}
       data-testid="slider"
     >
-      <div className={styles.progress} ref={volumeBarRef}></div>
+      <div
+        className={styles.progress}
+        ref={volumeBarRef}
+        data-testid="activeBar"
+      ></div>
       <input
         type="range"
         id="volume"
