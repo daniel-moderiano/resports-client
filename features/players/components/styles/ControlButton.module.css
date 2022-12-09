@@ -25,6 +25,10 @@
   outline-offset: -2px;
 }
 
+:fullscreen .button {
+  width: 3.1rem;
+}
+
 .tooltip {
   pointer-events: none;
   background-color: rgba(28, 28, 30, 0.9);
@@ -35,8 +39,14 @@
   font-weight: 600;
   color: white;
   position: absolute;
-  top: -2rem;
+  top: -1.5rem;
   opacity: 0;
+}
+
+:fullscreen .tooltip {
+  padding: 0.45rem 0.65rem;
+  font-size: 0.9rem;
+  top: -2.2rem;
 }
 
 .hide {

@@ -13,3 +13,9 @@
   top: calc(12.5%);
   left: calc(50% - 2.5rem);
 }
+
+:fullscreen .container {
+  height: 3.5rem;
+  width: 5.5rem;
+  font-size: 1.5rem;
+}

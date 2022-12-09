@@ -83,5 +83,3 @@ export class Player implements PlayerClass {
     this.playerWrapper.addEventListener(event, callback);
   }
 }
-
-export {};
