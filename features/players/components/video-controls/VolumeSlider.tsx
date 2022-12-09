@@ -1,7 +1,8 @@
 import styles from "features/players/components/styles/VolumeSlider.module.css";
 import buttonStyles from "features/players/components/styles/ControlButton.module.css";
 import { Player } from "features/players/api/player";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import * as React from "react";
 
 interface VolumeSliderProps extends React.HTMLAttributes<HTMLDivElement> {
   player: Player;
@@ -21,6 +22,7 @@ export const VolumeSlider = ({
   const [show, setShow] = useState(true);
   const currentPlayerVolume = player.getVolume();
   const playerMuted = player.getMuted();
+  const sliderRef = React.useRef<HTMLInputElement | null>(null);
 
   // Synchronise the local volume state with player volume
   useEffect(() => {
@@ -32,26 +34,17 @@ export const VolumeSlider = ({
   }, [playerMuted, currentPlayerVolume]);
 
   useEffect(() => {
-    if (showVolumeSlider) {
-      setShow(true);
-    } else {
+    if (!showVolumeSlider && document.activeElement !== sliderRef.current) {
       setShow(false);
+    } else {
+      setShow(true);
     }
   }, [showVolumeSlider]);
 
   return (
     <div
       className={`${styles.inputContainer} ${show ? styles.show : styles.hide}`}
-      onMouseLeave={props.onMouseLeave}
       data-testid="slider"
-      onFocus={() => setShow(true)}
-      onBlur={(event) => {
-        if (event.relatedTarget?.classList.contains(buttonStyles.button)) {
-          if (!showVolumeSlider) {
-            setShow(false);
-          }
-        }
-      }}
     >
       <div className={styles.progress} style={{ width: `${volume}%` }}></div>
       <input
@@ -60,7 +53,21 @@ export const VolumeSlider = ({
         min={0}
         max={100}
         step={1}
+        ref={sliderRef}
         value={volume}
+        onBlur={(event) => {
+          console.log("Bl;urred");
+
+          if (
+            event.relatedTarget?.classList.contains(buttonStyles.button) ||
+            event.relatedTarget?.id === "wrapper"
+          ) {
+            if (!showVolumeSlider) {
+              setShow(false);
+            }
+          }
+        }}
+        onFocus={() => setShow(true)}
         onChange={(event) => {
           if (playerMuted && event.target.valueAsNumber > 0) {
             player.setMuted(false);
