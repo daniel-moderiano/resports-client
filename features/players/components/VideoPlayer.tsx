@@ -124,7 +124,9 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
 
       // Ensure these key actions do not mess with normal button expectations and functionality
       if (nodeName === "BUTTON" || nodeName === "INPUT") {
-        if (className.includes("controlsBtn")) {
+        if (className.includes("button")) {
+          console.log("Button reached");
+
           signalUserActivity();
         }
         return;
