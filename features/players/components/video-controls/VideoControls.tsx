@@ -67,10 +67,11 @@ export const VideoControls = ({
   useEffect(() => {
     if (showSettings) {
       setLockUserActive(true);
+      signalUserActivity();
     } else {
       setLockUserActive(false);
     }
-  }, [showSettings, setLockUserActive]);
+  }, [showSettings, setLockUserActive, signalUserActivity]);
 
   const handleControlButtonFocus = (event: React.FocusEvent<HTMLElement>) => {
     if (
@@ -237,7 +238,9 @@ export const VideoControls = ({
             aria-haspopup="menu"
             aria-expanded={showSettings}
             aria-label="Open video settings menu"
-            onClick={() => setShowSettings((prevState) => !prevState)}
+            onClick={() => {
+              setShowSettings((prevState) => !prevState);
+            }}
           >
             <SettingsGearIcon className={styles.icons24} fill="#FFFFFF" />
           </ControlButton>
