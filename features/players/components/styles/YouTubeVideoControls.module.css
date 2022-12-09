@@ -36,6 +36,21 @@
   width: 56px;
 }
 
+:fullscreen .duration {
+  font-size: 0.9rem;
+  margin-right: 0.2rem;
+  margin-left: 0.85rem;
+  width: 44px;
+}
+
+:fullscreen .durationMedium {
+  width: 46px;
+}
+
+:fullscreen .durationLarge {
+  width: 60px;
+}
+
 .icons24 {
   width: 24px;
   pointer-events: none;
@@ -53,6 +68,26 @@
 
 .icons32 {
   width: 32px;
+  pointer-events: none;
+}
+
+:fullscreen .icons24 {
+  width: 28px;
+  pointer-events: none;
+}
+
+:fullscreen .icons27 {
+  width: 31px;
+  pointer-events: none;
+}
+
+:fullscreen .icons30 {
+  width: 34px;
+  pointer-events: none;
+}
+
+:fullscreen .icons32 {
+  width: 36px;
   pointer-events: none;
 }
 
