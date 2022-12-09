@@ -27,6 +27,14 @@ export const VolumeSlider = ({
   const [show, setShow] = useState(true);
   const sliderRef = React.useRef<HTMLInputElement | null>(null);
 
+  const volumeBarRef = React.useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (volumeBarRef.current) {
+      volumeBarRef.current.style.width = playerMuted ? "0" : `${localVolume}%`;
+    }
+  }, [localVolume, playerMuted]);
+
   useEffect(() => {
     if (!showVolumeSlider && document.activeElement !== sliderRef.current) {
       setShow(false);
@@ -42,7 +50,8 @@ export const VolumeSlider = ({
     >
       <div
         className={styles.progress}
-        style={{ width: `${playerMuted ? 0 : localVolume}%` }}
+        // style={{ width: `${playerMuted ? 0 : localVolume}%` }}
+        ref={volumeBarRef}
       ></div>
       <input
         type="range"
@@ -73,7 +82,6 @@ export const VolumeSlider = ({
             setPlayerMuted(true);
           }
           setLocalVolume(event.target.valueAsNumber);
-          // player.setVolume(event.target.valueAsNumber);
           signalUserActivity();
         }}
         className={styles.slider}
