@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { Player } from "features/players/api/player";
 import { VolumeSlider } from "features/players/components/video-controls/VolumeSlider";
 

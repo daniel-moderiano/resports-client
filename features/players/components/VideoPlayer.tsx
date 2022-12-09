@@ -43,8 +43,6 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
 
   // Set the player volume according to local changes in volume. By working with the local volume state, we get a fluid UI as opposed to a laggy API interaction. It is fine to have a trace delay between local change and API player volume update.
   React.useEffect(() => {
-    console.log(localVolume);
-
     if (player) {
       player.setVolume(localVolume);
     }

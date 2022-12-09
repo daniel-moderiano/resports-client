@@ -11,6 +11,10 @@ const seekMock = jest.fn();
 const setVolumeMock = jest.fn();
 const setMutedMock = jest.fn();
 
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 const playerWrapperPlaying: PlayerClass = {
   getCurrentTime: () => 100,
   getMuted: () => true,
@@ -370,9 +374,9 @@ describe("Video player control indicators", () => {
 
     // First focus the wrapper to ensure the keypress is captured correctly
     wrapper.focus();
-    await userEvent.keyboard("[ArrowUp]");
+    await userEvent.keyboard("[ArrowDown]");
 
-    const indicator = screen.getByText("50%");
+    const indicator = screen.getByText("95%");
 
     expect(indicator).toBeInTheDocument();
   });
@@ -383,9 +387,9 @@ describe("Video player control indicators", () => {
 
     // First focus the wrapper to ensure the keypress is captured correctly
     wrapper.focus();
-    await userEvent.keyboard("[ArrowUp]");
+    await userEvent.keyboard("[ArrowDown]");
 
-    const indicator = screen.queryByText("50%");
+    const indicator = screen.queryByText("95%");
     expect(indicator).toBeInTheDocument();
 
     await act(async () => {
@@ -436,7 +440,7 @@ describe("Volume and muting control", () => {
     // Focus the slider
     await userEvent.click(slider);
 
-    await userEvent.keyboard("[ArrowRight]");
-    expect(slider).toHaveValue("55");
+    await userEvent.keyboard("[ArrowLeft]");
+    expect(slider).toHaveValue("95");
   });
 });
