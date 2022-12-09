@@ -1,4 +1,5 @@
 import styles from "features/players/components/styles/VolumeSlider.module.css";
+import buttonStyles from "features/players/components/styles/ControlButton.module.css";
 import { Player } from "features/players/api/player";
 import { useEffect, useState } from "react";
 
@@ -44,7 +45,13 @@ export const VolumeSlider = ({
       onMouseLeave={props.onMouseLeave}
       data-testid="slider"
       onFocus={() => setShow(true)}
-      onBlur={() => setShow(false)}
+      onBlur={(event) => {
+        if (event.relatedTarget?.classList.contains(buttonStyles.button)) {
+          if (!showVolumeSlider) {
+            setShow(false);
+          }
+        }
+      }}
     >
       <div className={styles.progress} style={{ width: `${volume}%` }}></div>
       <input
