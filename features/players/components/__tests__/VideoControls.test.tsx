@@ -203,7 +203,7 @@ describe("YouTube video controls functionality", () => {
   it("Calls skip backward function with 1 minute equivalent input on backward 1 btn click", async () => {
     setup();
     const skipOne = screen.getByRole("button", {
-      name: "Skip backward one minute",
+      name: "Rewind one minute",
     });
     await userEvent.click(skipOne);
     expect(seekMock).toBeCalledWith(-60);
@@ -212,7 +212,7 @@ describe("YouTube video controls functionality", () => {
   it("Calls skip backward function with 5 minute equivalent input on backward 5 btn click", async () => {
     setup();
     const skipFive = screen.getByRole("button", {
-      name: "Skip backward five minutes",
+      name: "Rewind five minutes",
     });
     await userEvent.click(skipFive);
     expect(seekMock).toBeCalledWith(-300);
@@ -221,7 +221,7 @@ describe("YouTube video controls functionality", () => {
   it("Calls skip backward function with 10 minute equivalent input on backward 10 btn click", async () => {
     setup();
     const skipTen = screen.getByRole("button", {
-      name: "Skip backward ten minutes",
+      name: "Rewind ten minutes",
     });
     await userEvent.click(skipTen);
     expect(seekMock).toBeCalledWith(-600);
