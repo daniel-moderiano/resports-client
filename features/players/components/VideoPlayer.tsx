@@ -287,6 +287,8 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
             projectedTime={projectedTime}
             setLockUserActive={setLockUserActive}
             signalUserActivity={signalUserActivity}
+            localVolume={localVolume}
+            setLocalVolume={setLocalVolume}
           />
         </div>
       )}

@@ -19,6 +19,8 @@ describe("Volume slider", () => {
         setPlayerMuted={jest.fn}
         signalUserActivity={jest.fn}
         playerMuted={true}
+        localVolume={50}
+        setLocalVolume={jest.fn}
       />
     );
     const slider = screen.getByLabelText("Volume");
@@ -32,6 +34,8 @@ describe("Volume slider", () => {
         setPlayerMuted={jest.fn}
         signalUserActivity={jest.fn}
         playerMuted={true}
+        localVolume={50}
+        setLocalVolume={jest.fn}
       />
     );
     const slider = screen.getByTestId("slider");
@@ -45,6 +49,8 @@ describe("Volume slider", () => {
         setPlayerMuted={jest.fn}
         signalUserActivity={jest.fn}
         playerMuted={true}
+        localVolume={50}
+        setLocalVolume={jest.fn}
       />
     );
     const slider = screen.getByLabelText("Volume");
@@ -64,6 +70,8 @@ describe("Volume slider", () => {
         setPlayerMuted={jest.fn}
         signalUserActivity={jest.fn}
         playerMuted={true}
+        localVolume={50}
+        setLocalVolume={jest.fn}
       />
     );
     const slider = screen.getByLabelText("Volume");

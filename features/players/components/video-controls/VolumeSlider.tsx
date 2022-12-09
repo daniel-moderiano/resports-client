@@ -10,6 +10,8 @@ interface VolumeSliderProps extends React.HTMLAttributes<HTMLDivElement> {
   setPlayerMuted: React.Dispatch<React.SetStateAction<boolean>>;
   signalUserActivity: () => void;
   playerMuted: boolean;
+  localVolume: number;
+  setLocalVolume: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const VolumeSlider = ({
@@ -18,6 +20,8 @@ export const VolumeSlider = ({
   setPlayerMuted,
   signalUserActivity,
   playerMuted,
+  localVolume,
+  setLocalVolume,
   ...props
 }: VolumeSliderProps) => {
   const [volume, setVolume] = useState(0);
@@ -49,7 +53,10 @@ export const VolumeSlider = ({
       className={`${styles.inputContainer} ${show ? styles.show : styles.hide}`}
       data-testid="slider"
     >
-      <div className={styles.progress} style={{ width: `${volume}%` }}></div>
+      <div
+        className={styles.progress}
+        style={{ width: `${localVolume}%` }}
+      ></div>
       <input
         type="range"
         id="volume"
@@ -57,7 +64,7 @@ export const VolumeSlider = ({
         max={100}
         step={1}
         ref={sliderRef}
-        value={volume}
+        value={localVolume}
         onBlur={(event) => {
           if (
             event.relatedTarget?.classList.contains(buttonStyles.button) ||
@@ -78,18 +85,18 @@ export const VolumeSlider = ({
             player.setMuted(true);
             setPlayerMuted(true);
           }
-          setVolume(event.target.valueAsNumber);
+          setLocalVolume(event.target.valueAsNumber);
           // player.setVolume(event.target.valueAsNumber);
           signalUserActivity();
         }}
         className={styles.slider}
         onKeyDown={(event) => {
           if (event.key === "ArrowUp" || event.key === "ArrowRight") {
-            setVolume(Math.min(volume + 5, 100));
-            player.setVolume(volume + 5);
+            setLocalVolume(Math.min(volume + 5, 100));
+            // player.setVolume(volume + 5);
           } else if (event.key === "ArrowDown" || event.key === "ArrowLeft") {
-            setVolume(Math.max(volume - 5, 0));
-            player.setVolume(volume - 5);
+            setLocalVolume(Math.max(volume - 5, 0));
+            // player.setVolume(volume - 5);
           } else {
             return;
           }
