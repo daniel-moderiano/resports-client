@@ -9,6 +9,7 @@ interface VolumeSliderProps extends React.HTMLAttributes<HTMLDivElement> {
   showVolumeSlider?: boolean;
   setPlayerMuted: React.Dispatch<React.SetStateAction<boolean>>;
   signalUserActivity: () => void;
+  playerMuted: boolean;
 }
 
 export const VolumeSlider = ({
@@ -16,22 +17,24 @@ export const VolumeSlider = ({
   showVolumeSlider,
   setPlayerMuted,
   signalUserActivity,
+  playerMuted,
   ...props
 }: VolumeSliderProps) => {
   const [volume, setVolume] = useState(0);
   const [show, setShow] = useState(true);
   const currentPlayerVolume = player.getVolume();
-  const playerMuted = player.getMuted();
   const sliderRef = React.useRef<HTMLInputElement | null>(null);
 
   // Synchronise the local volume state with player volume
   useEffect(() => {
     if (playerMuted) {
       setVolume(0);
-    } else {
-      setVolume(currentPlayerVolume);
     }
   }, [playerMuted, currentPlayerVolume]);
+
+  useEffect(() => {
+    player.setVolume(volume);
+  }, [player, volume]);
 
   useEffect(() => {
     if (!showVolumeSlider && document.activeElement !== sliderRef.current) {
@@ -56,8 +59,6 @@ export const VolumeSlider = ({
         ref={sliderRef}
         value={volume}
         onBlur={(event) => {
-          console.log("Bl;urred");
-
           if (
             event.relatedTarget?.classList.contains(buttonStyles.button) ||
             event.relatedTarget?.id === "wrapper"
@@ -78,7 +79,7 @@ export const VolumeSlider = ({
             setPlayerMuted(true);
           }
           setVolume(event.target.valueAsNumber);
-          player.setVolume(event.target.valueAsNumber);
+          // player.setVolume(event.target.valueAsNumber);
           signalUserActivity();
         }}
         className={styles.slider}

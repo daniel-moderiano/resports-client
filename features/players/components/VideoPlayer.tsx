@@ -34,10 +34,21 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
   } = useControlIndicators();
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
 
+  const [localVolume, setLocalVolume] = React.useState(100);
+
   // Use local state to avoid the long delays of an API call to check muted state when toggling icons and UI
   const [playerMuted, setPlayerMuted] = React.useState(true);
   const [playerPaused, setPlayerPaused] = React.useState(false);
   const [theaterMode, setTheaterMode] = React.useState(false);
+
+  // Set the player volume according to local changes in volume. By working with the local volume state, we get a fluid UI as opposed to a laggy API interaction. It is fine to have a trace delay between local change and API player volume update.
+  React.useEffect(() => {
+    console.log(localVolume);
+
+    if (player) {
+      player.setVolume(localVolume);
+    }
+  }, [localVolume, player]);
 
   // Ensure the local playerState state is set on play/pause events. This ensures other elements modify with each of the changes as needed
   React.useEffect(() => {
@@ -60,6 +71,7 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     if (!player) {
       return;
     }
+    // Do not adjust local volume to zero here. Local volume maintains the 'memory' of volume when the player is unmuted
     if (player.getMuted()) {
       setPlayerMuted(false);
       player.setMuted(false);
@@ -173,7 +185,8 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
           toggleTheaterMode();
           break;
         case "ArrowDown":
-          player.setVolume(player.getVolume() - 5);
+          // player.setVolume(player.getVolume() - 5);
+          setLocalVolume((prevVol) => prevVol - 5);
           if (player.getVolume() === 0) {
             setPlayerMuted(true);
             player.setMuted(true);
@@ -186,7 +199,8 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
         case "ArrowUp":
           player.setMuted(false);
           setPlayerMuted(false);
-          player.setVolume(player.getVolume() + 5);
+          // player.setVolume(player.getVolume() + 5);
+          setLocalVolume((prevVol) => prevVol + 5);
           triggerControlIndication("volumeUp");
           triggerVolumeLevelIndication();
           break;

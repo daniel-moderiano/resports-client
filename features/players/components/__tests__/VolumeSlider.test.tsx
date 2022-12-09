@@ -10,8 +10,6 @@ const playerMock: Player = {
   getMuted: () => true,
 };
 
-const signalUserActivityMock = () => console.log("Called");
-
 describe("Volume slider", () => {
   it("Volume slider reflects current player volume", () => {
     playerMock.getMuted = () => false;
@@ -20,6 +18,7 @@ describe("Volume slider", () => {
         player={playerMock}
         setPlayerMuted={jest.fn}
         signalUserActivity={jest.fn}
+        playerMuted={true}
       />
     );
     const slider = screen.getByLabelText("Volume");
@@ -32,6 +31,7 @@ describe("Volume slider", () => {
         player={playerMock}
         setPlayerMuted={jest.fn}
         signalUserActivity={jest.fn}
+        playerMuted={true}
       />
     );
     const slider = screen.getByTestId("slider");
@@ -44,6 +44,7 @@ describe("Volume slider", () => {
         player={playerMock}
         setPlayerMuted={jest.fn}
         signalUserActivity={jest.fn}
+        playerMuted={true}
       />
     );
     const slider = screen.getByLabelText("Volume");
@@ -62,6 +63,7 @@ describe("Volume slider", () => {
         player={playerMock}
         setPlayerMuted={jest.fn}
         signalUserActivity={jest.fn}
+        playerMuted={true}
       />
     );
     const slider = screen.getByLabelText("Volume");
