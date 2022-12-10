@@ -8,7 +8,7 @@ interface SidebarProps {
 export const Sidebar = ({ showSidebar, toggleSidebar }: SidebarProps) => {
   return (
     <div className={styles.sidebar} data-testid="sidebar">
-      <button onClick={toggleSidebar}>Toggle Sidebar</button>
+      SB
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Layout } from "components/Layout";
 
 describe("Layout component", () => {
@@ -16,19 +17,21 @@ describe("Layout component", () => {
     expect(heading).toBeInTheDocument();
   });
 
-  it("contains the header, footer, and sidebar elements", () => {
-    render(
-      <Layout>
-        <h2>content</h2>
-      </Layout>
-    );
+  it("hides sidebar by default", () => {
+    render(<Layout />);
+    const sidebar = screen.queryByTestId("sidebar");
+    expect(sidebar).not.toBeInTheDocument();
+  });
 
-    const header = screen.getByRole("banner");
-    const footer = screen.getByRole("contentinfo");
-    const sidebar = screen.getByTestId("sidebar");
+  it("toggles sidebar on toggle button click", async () => {
+    render(<Layout />);
 
-    expect(header).toBeInTheDocument();
-    expect(footer).toBeInTheDocument();
+    const toggleButton = screen.getByRole("button", {
+      name: /toggle sidebar/i,
+    });
+    await userEvent.click(toggleButton);
+
+    const sidebar = screen.queryByTestId("sidebar");
     expect(sidebar).toBeInTheDocument();
   });
 });

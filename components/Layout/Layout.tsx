@@ -5,7 +5,7 @@ import { Footer } from "./Footer";
 import { Sidebar } from "./Sidebar";
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export const Layout = ({ children }: LayoutProps) => {
