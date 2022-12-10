@@ -9,4 +9,18 @@ describe("Sidebar component", () => {
 
     expect(sidebar).toBeInTheDocument();
   });
+
+  it("sets the active class when the sidebar is shown", () => {
+    render(<Sidebar showSidebar={true} toggleSidebar={jest.fn} />);
+
+    const sidebar = screen.getByTestId("sidebar");
+    expect(sidebar).toHaveClass("sidebarActive");
+  });
+
+  it("removes the active class when the sidebar is hidden", () => {
+    render(<Sidebar showSidebar={false} toggleSidebar={jest.fn} />);
+
+    const sidebar = screen.getByTestId("sidebar");
+    expect(sidebar).not.toHaveClass("sidebarActive");
+  });
 });

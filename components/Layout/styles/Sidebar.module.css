@@ -1,8 +1,16 @@
 .sidebar {
-  width: 2rem;
+  width: 10rem;
   height: 100%;
   border-right: 2px solid grey;
   position: absolute;
   top: 0;
-  left: 0;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  transform: translateX(-100%);
+  transition: 200ms ease;
+  z-index: 2;
+}
+
+.sidebarActive {
+  transform: translateX(0%);
 }
