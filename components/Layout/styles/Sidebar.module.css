@@ -2,4 +2,7 @@
   width: 2rem;
   height: 100%;
   border-right: 2px solid grey;
+  position: absolute;
+  top: 0;
+  left: 0;
 }

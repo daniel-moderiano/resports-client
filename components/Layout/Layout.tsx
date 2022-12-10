@@ -18,10 +18,10 @@ export const Layout = ({ children }: LayoutProps) => {
   return (
     <div className={styles.container}>
       <Header toggleSidebar={toggleSidebar} showSidebar={showSidebar} />
+      {showSidebar && (
+        <Sidebar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
+      )}
       <div className={styles.content}>
-        {showSidebar && (
-          <Sidebar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
-        )}
         <main>{children}</main>
       </div>
       <Footer />
