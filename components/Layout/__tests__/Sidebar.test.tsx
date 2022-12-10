@@ -3,7 +3,7 @@ import { Sidebar } from "components/Layout";
 
 describe("Sidebar component", () => {
   it("contains appropriate test-id", () => {
-    render(<Sidebar />);
+    render(<Sidebar showSidebar={true} toggleSidebar={jest.fn} />);
 
     const sidebar = screen.getByTestId("sidebar");
 

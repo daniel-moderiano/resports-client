@@ -9,11 +9,20 @@ interface LayoutProps {
 }
 
 export const Layout = ({ children }: LayoutProps) => {
+  const [showSidebar, setShowSidebar] = React.useState(false);
+
+  const toggleSidebar = () => {
+    setShowSidebar(!showSidebar);
+  };
+
   return (
     <div className={styles.container}>
       <Header />
+      <button onClick={toggleSidebar}>Toggle Sidebar</button>
       <div className={styles.content}>
-        <Sidebar />
+        {showSidebar && (
+          <Sidebar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
+        )}
         <main>{children}</main>
       </div>
       <Footer />

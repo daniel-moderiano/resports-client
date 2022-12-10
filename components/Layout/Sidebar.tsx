@@ -1,9 +1,14 @@
 import styles from "components/Layout/styles/Sidebar.module.css";
 
-export const Sidebar = () => {
+interface SidebarProps {
+  showSidebar: boolean;
+  toggleSidebar: () => void;
+}
+
+export const Sidebar = ({ showSidebar, toggleSidebar }: SidebarProps) => {
   return (
     <div className={styles.sidebar} data-testid="sidebar">
-      SB
+      <button onClick={toggleSidebar}>Toggle Sidebar</button>
     </div>
   );
 };
