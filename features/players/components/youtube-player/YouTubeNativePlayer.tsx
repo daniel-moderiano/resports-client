@@ -6,6 +6,11 @@ import { useUserActivity } from "features/players/hooks/useUserActivity";
 import VideoContainer from "../VideoContainer";
 import { useYouTubeIframe, VideoControls } from "features/players";
 import { useSeek } from "features/players/hooks/useSeek";
+import { useControlIndicators } from "features/players/hooks/useControlIndicators";
+import { VolumeLevelIndicator } from "../VolumeLevelIndicator";
+import { SeekIndicator } from "../SeekIndicator";
+import { VideoControlIndicator } from "../video-controls/VideoControlIndicator";
+
 interface YouTubeNativePlayerProps {
   videoId: string;
 }
@@ -18,7 +23,15 @@ export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
     signalUserActivity,
     setLockUserActive,
   } = useUserActivity();
-  const { scheduleSeek, projectedTime } = useSeek(player);
+  const { scheduleSeek, projectedTime, seekAmount } = useSeek(player);
+  const {
+    showControlIndicator,
+    triggerControlIndication,
+    controlAction,
+    triggerVolumeLevelIndication,
+    showVolumeLevelIndicator,
+  } = useControlIndicators();
+
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
 
   const [localVolume, setLocalVolume] = React.useState(100);
@@ -31,8 +44,6 @@ export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
 
   // Set the player volume according to local changes in volume. By working with the local volume state, we get a fluid UI as opposed to a laggy API interaction. It is fine to have a trace delay between local change and API player volume update.
   React.useEffect(() => {
-    console.log(localVolume);
-
     if (player) {
       player.setVolume(localVolume);
     }
@@ -105,23 +116,44 @@ export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
   React.useEffect(() => {
     const activeUserKeys = [
       "m",
+      "k",
+      "f",
+      "t",
       "ArrowDown",
       "ArrowUp",
       "ArrowLeft",
       "ArrowRight",
     ];
 
-    const handleKeyPress = (event: KeyboardEvent) => {
-      const { nodeName, className } = event.target as HTMLElement;
+    const activeDOMKeys = ["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"];
 
-      // Ensure these key actions do not mess with normal button expectations and functionality
-      if (nodeName === "BUTTON" || nodeName === "INPUT") {
-        if (className.includes("controlsBtn")) {
-          signalUserActivity();
-        } else return;
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (!(event.target instanceof Element)) {
+        return;
       }
 
-      if (activeUserKeys.includes(event.key)) {
+      const { target, key } = event;
+      const withinPlayer = target.closest("#wrapper");
+
+      // Ensure these key actions do not mess with normal button expectations and functionality
+      if (target.nodeName === "BUTTON" || target.nodeName === "INPUT") {
+        return;
+      }
+
+      // Avoid scrolling the page. Always prioritise play/pause functionality.
+      if (key === " ") {
+        event.preventDefault();
+      }
+
+      if (activeDOMKeys.includes(key) && !withinPlayer) {
+        return;
+      }
+
+      if (
+        activeUserKeys.includes(key) &&
+        wrapperRef.current === document.activeElement
+      ) {
+        event.preventDefault();
         signalUserActivity();
       }
 
@@ -129,13 +161,23 @@ export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
         return;
       }
 
-      switch (event.key) {
+      switch (key) {
         case "k":
         case " ":
           playOrPauseVideo();
+          if (playerPaused) {
+            triggerControlIndication("play");
+          } else {
+            triggerControlIndication("pause");
+          }
           break;
         case "m":
           toggleMute();
+          if (playerMuted) {
+            triggerControlIndication("unmute");
+          } else {
+            triggerControlIndication("mute");
+          }
           break;
         case "f":
           toggleFullscreen(wrapperRef.current);
@@ -144,10 +186,22 @@ export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
           toggleTheaterMode();
           break;
         case "ArrowDown":
-          player.setVolume(player.getVolume() - 0.05);
+          setLocalVolume((prevVol) => Math.max(prevVol - 5, 0));
+          if (player.getVolume() === 0) {
+            setPlayerMuted(true);
+            player.setMuted(true);
+            triggerControlIndication("mute");
+          } else {
+            triggerControlIndication("volumeDown");
+          }
+          triggerVolumeLevelIndication();
           break;
         case "ArrowUp":
-          player.setVolume(player.getVolume() + 0.05);
+          player.setMuted(false);
+          setPlayerMuted(false);
+          setLocalVolume((prevVol) => Math.min(prevVol + 5, 100));
+          triggerControlIndication("volumeUp");
+          triggerVolumeLevelIndication();
           break;
         case "ArrowLeft":
           scheduleSeek(-10);
@@ -164,7 +218,17 @@ export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [playOrPauseVideo, player, toggleMute, signalUserActivity, scheduleSeek]);
+  }, [
+    playOrPauseVideo,
+    player,
+    toggleMute,
+    signalUserActivity,
+    scheduleSeek,
+    triggerControlIndication,
+    playerMuted,
+    playerPaused,
+    triggerVolumeLevelIndication,
+  ]);
 
   return (
     <div>
@@ -175,15 +239,40 @@ export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
       >
         <div id="player"></div>
         {!showYTControls && (
-          <div
-            className={`${styles.overlay} ${
-              userActive || playerPaused ? "" : styles.overlayInactive
-            } ${playerPaused ? styles.overlayPaused : styles.overlayPlaying}`}
-            onClick={playOrPauseVideo}
-            onDoubleClick={() => toggleFullscreen(wrapperRef.current)}
-            onMouseMove={throttleMousemove}
-            data-testid="overlay"
-          ></div>
+          <>
+            <div
+              className={`${styles.overlay} ${
+                userActive || playerPaused ? "" : styles.overlayInactive
+              } ${playerPaused ? styles.overlayPaused : styles.overlayPlaying}`}
+              onClick={() => {
+                playOrPauseVideo();
+                if (playerPaused) {
+                  triggerControlIndication("play");
+                } else {
+                  triggerControlIndication("pause");
+                }
+              }}
+              onDoubleClick={() => toggleFullscreen(wrapperRef.current)}
+              onMouseMove={throttleMousemove}
+              data-testid="overlay"
+            ></div>
+
+            <div className={styles.indicatorContainer}>
+              {showVolumeLevelIndicator && player && (
+                <VolumeLevelIndicator currentVolume={localVolume} />
+              )}
+
+              {seekAmount && (
+                <SeekIndicator projectedSeekInSeconds={seekAmount} />
+              )}
+
+              <VideoControlIndicator
+                ariaLabel={controlAction}
+                controlAction={controlAction}
+                triggerAnimation={showControlIndicator}
+              />
+            </div>
+          </>
         )}
 
         {!showYTControls && player && (
