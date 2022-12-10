@@ -17,8 +17,7 @@ export const Layout = ({ children }: LayoutProps) => {
 
   return (
     <div className={styles.container}>
-      <Header />
-      <button onClick={toggleSidebar}>Toggle Sidebar</button>
+      <Header toggleSidebar={toggleSidebar} showSidebar={showSidebar} />
       <div className={styles.content}>
         {showSidebar && (
           <Sidebar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
