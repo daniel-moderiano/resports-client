@@ -9,23 +9,19 @@ interface SidebarProps {
 export const Sidebar = ({ showSidebar, closeSidebar }: SidebarProps) => {
   const sidebarRef = React.useRef<HTMLDivElement | null>(null);
 
-  // React.useEffect(() => {
-  //   const handleOutsideClick = (event: MouseEvent) => {
-  //     const clickTarget = event.target as HTMLElement;
+  React.useEffect(() => {
+    const handleEscPress = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeSidebar();
+      }
+    };
 
-  //     if (sidebarRef.current) {
-  //       if (!clickTarget.closest(sidebarRef.current.id) && showSidebar) {
-  //         closeSidebar();
-  //       }
-  //     }
-  //   };
+    window.addEventListener("keydown", handleEscPress);
 
-  //   window.addEventListener("click", handleOutsideClick);
-
-  //   return () => {
-  //     window.removeEventListener("click", handleOutsideClick);
-  //   };
-  // }, [closeSidebar, showSidebar]);
+    return () => {
+      window.addEventListener("keydown", handleEscPress);
+    };
+  }, [closeSidebar, showSidebar]);
 
   return (
     <div

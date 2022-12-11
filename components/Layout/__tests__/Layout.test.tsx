@@ -61,7 +61,7 @@ describe("Layout component", () => {
     const sidebar = screen.queryByTestId("sidebar");
     expect(sidebar).toHaveClass("sidebarActive");
 
-    await userEvent.keyboard("[Esc]");
+    await userEvent.keyboard("[Escape]");
     expect(sidebar).not.toHaveClass("sidebarActive");
   });
 
