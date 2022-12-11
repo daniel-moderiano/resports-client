@@ -28,6 +28,8 @@ export const Layout = ({ children }: LayoutProps) => {
         className={`${styles.overlay} ${
           showSidebar ? styles.overlayActive : ""
         }`}
+        data-testid="overlay"
+        onClick={toggleSidebar}
       ></div>
 
       <div className={styles.content}>

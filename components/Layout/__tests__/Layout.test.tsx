@@ -35,6 +35,21 @@ describe("Layout component", () => {
     expect(sidebar).toHaveClass("sidebarActive");
   });
 
+  it("toggles overlay when sidebar is opened", async () => {
+    render(<Layout />);
+
+    // Default to hidden overlay
+    const overlay = screen.getByTestId("overlay");
+    expect(overlay).not.toHaveClass("overlayActive");
+
+    const toggleButton = screen.getByRole("button", {
+      name: /toggle sidebar/i,
+    });
+    await userEvent.click(toggleButton);
+
+    expect(overlay).toHaveClass("overlayActive");
+  });
+
   it("closes sidebar on Esc key press", async () => {
     render(<Layout />);
 
@@ -50,20 +65,21 @@ describe("Layout component", () => {
     expect(sidebar).not.toHaveClass("sidebarActive");
   });
 
-  it("closes sidebar on outside click", async () => {
+  it("closes sidebar on outside click (i.e. overlay click)", async () => {
     render(<Layout />);
 
     const toggleButton = screen.getByRole("button", {
       name: /toggle sidebar/i,
     });
+
     await userEvent.click(toggleButton);
 
     const sidebar = screen.queryByTestId("sidebar");
     expect(sidebar).toHaveClass("sidebarActive");
 
     // An outside click
-    const header = screen.getByRole("banner");
-    await userEvent.click(header);
+    const overlay = screen.getByTestId("overlay");
+    await userEvent.click(overlay);
 
     expect(sidebar).not.toHaveClass("sidebarActive");
   });
