@@ -3,9 +3,29 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .content {
   display: flex;
   height: 100%;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: 200ms ease;
+  background-color: black;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.overlayActive {
+  background-color: black;
+  opacity: 0.5;
+  pointer-events: all;
 }
