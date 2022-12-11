@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Sidebar } from "components/Layout";
 
 describe("Sidebar component", () => {
@@ -21,6 +22,17 @@ describe("Sidebar component", () => {
     render(<Sidebar showSidebar={false} toggleSidebar={jest.fn} />);
 
     const sidebar = screen.getByTestId("sidebar");
+    expect(sidebar).not.toHaveClass("sidebarActive");
+  });
+
+  it("closes the sidebar when close button is clicked", async () => {
+    render(<Sidebar showSidebar={false} toggleSidebar={jest.fn} />);
+
+    const sidebar = screen.getByTestId("sidebar");
+    const closeButton = screen.getByRole("button", { name: /close/i });
+
+    await userEvent.click(closeButton);
+
     expect(sidebar).not.toHaveClass("sidebarActive");
   });
 });

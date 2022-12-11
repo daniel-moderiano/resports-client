@@ -20,7 +20,7 @@ describe("Layout component", () => {
   it("hides sidebar by default", () => {
     render(<Layout />);
     const sidebar = screen.queryByTestId("sidebar");
-    expect(sidebar).not.toBeInTheDocument();
+    expect(sidebar).not.toHaveClass("sidebarActive");
   });
 
   it("toggles sidebar on toggle button click", async () => {
@@ -31,7 +31,40 @@ describe("Layout component", () => {
     });
     await userEvent.click(toggleButton);
 
+    const sidebar = screen.getByTestId("sidebar");
+    expect(sidebar).toHaveClass("sidebarActive");
+  });
+
+  it("closes sidebar on Esc key press", async () => {
+    render(<Layout />);
+
+    const toggleButton = screen.getByRole("button", {
+      name: /toggle sidebar/i,
+    });
+    await userEvent.click(toggleButton);
+
     const sidebar = screen.queryByTestId("sidebar");
-    expect(sidebar).toBeInTheDocument();
+    expect(sidebar).toHaveClass("sidebarActive");
+
+    await userEvent.keyboard("[Esc]");
+    expect(sidebar).not.toHaveClass("sidebarActive");
+  });
+
+  it("closes sidebar on outside click", async () => {
+    render(<Layout />);
+
+    const toggleButton = screen.getByRole("button", {
+      name: /toggle sidebar/i,
+    });
+    await userEvent.click(toggleButton);
+
+    const sidebar = screen.queryByTestId("sidebar");
+    expect(sidebar).toHaveClass("sidebarActive");
+
+    // An outside click
+    const header = screen.getByRole("banner");
+    await userEvent.click(header);
+
+    expect(sidebar).not.toHaveClass("sidebarActive");
   });
 });

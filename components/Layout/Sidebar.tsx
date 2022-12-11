@@ -12,7 +12,7 @@ export const Sidebar = ({ showSidebar, toggleSidebar }: SidebarProps) => {
       data-testid="sidebar"
       id="sidebar"
     >
-      <button onClick={toggleSidebar}>Toggle Sidebar</button>
+      <button onClick={toggleSidebar}>Close</button>
       SB
     </div>
   );
