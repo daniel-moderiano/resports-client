@@ -19,7 +19,16 @@ export const Layout = ({ children }: LayoutProps) => {
     <div className={styles.container}>
       <Header toggleSidebar={toggleSidebar} showSidebar={showSidebar} />
 
-      <Sidebar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
+      <Sidebar
+        showSidebar={showSidebar}
+        closeSidebar={() => setShowSidebar(false)}
+      />
+
+      <div
+        className={`${styles.overlay} ${
+          showSidebar ? styles.overlayActive : ""
+        }`}
+      ></div>
 
       <div className={styles.content}>
         <main>{children}</main>
