@@ -73,11 +73,13 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
     if (player.getMuted()) {
       setPlayerMuted(false);
       player.setMuted(false);
+      // A manual volume set call is needed here as unmuting does not change local volume to trigger the typical volume setting effect
+      player.setVolume(localVolume);
     } else {
       setPlayerMuted(true);
       player.setMuted(true);
     }
-  }, [player, signalUserActivity]);
+  }, [player, signalUserActivity, localVolume]);
 
   // Use this function to play a paused video, or pause a playing video. Intended to activate on clicking the video, or pressing spacebar
   const playOrPauseVideo = React.useCallback(() => {
@@ -102,12 +104,6 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
       wrapperRef.current.focus();
     }
   };
-
-  React.useEffect(() => {
-    addEventListener("performSeek", () => {
-      console.log("Seek performed");
-    });
-  }, []);
 
   // A global keypress handler to allow the user to control the video regardless of where they are on the page.
   React.useEffect(() => {
