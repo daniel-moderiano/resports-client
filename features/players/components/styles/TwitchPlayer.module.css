@@ -10,8 +10,10 @@
 .wrapperNormal {
   position: relative;
   width: 100%;
+  /* Ensures 16:9 ratio */
   height: 56.25vw;
-  max-height: calc(100vh - 169px);
+  /* The second value measures height of video. 140 - 190px is a good range */
+  max-height: calc(100vh - 150px);
   min-height: 480px;
   background: #000;
 }
