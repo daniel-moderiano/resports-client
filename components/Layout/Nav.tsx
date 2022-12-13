@@ -6,7 +6,7 @@ import styles from "components/Layout/styles/Nav.module.css";
 export const Nav = () => {
   return (
     <nav role="navigation" className="nav">
-      <ul role="menubar" className={styles.navList}>
+      {/* <ul role="menubar" className={styles.navList}>
         <li role="menuitem" className={styles.navListItem}>
           Home
         </li>
@@ -19,7 +19,7 @@ export const Nav = () => {
         <li role="menuitem" className={styles.navListItem}>
           Log out
         </li>
-      </ul>
+      </ul> */}
     </nav>
   );
 };
