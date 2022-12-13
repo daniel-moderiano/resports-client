@@ -9,9 +9,11 @@
 
 .wrapperNormal {
   position: relative;
-  overflow: hidden;
   width: 100%;
-  padding-top: 56.25%;
+  height: 56.25vw;
+  max-height: calc(100vh - 169px);
+  min-height: 480px;
+  background: #000;
 }
 
 .wrapperTheater {
