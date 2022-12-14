@@ -28,9 +28,9 @@ export const Header = ({ showSidebar, toggleSidebar }: HeaderProps) => {
         >
           <HamburgerIcon className={styles.hamburgerIcon} />
         </button>
-        <h1>
+        <h1 className={styles.headerTitle}>
           <Link
-            className={`${styles.headerTitle} ${titleFont.className}`}
+            className={`${styles.headerLink} ${titleFont.className}`}
             href="/"
           >
             Resports
