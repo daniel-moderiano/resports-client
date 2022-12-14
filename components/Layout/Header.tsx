@@ -19,24 +19,28 @@ interface HeaderProps {
 export const Header = ({ showSidebar, toggleSidebar }: HeaderProps) => {
   return (
     <header role="banner" className={styles.header}>
-      <button
-        onClick={toggleSidebar}
-        aria-controls="sidebar"
-        aria-expanded={showSidebar}
-        className={styles.sidebarButton}
-      >
-        <HamburgerIcon className={styles.hamburgerIcon} />
-      </button>
-      <h1>
-        <Link
-          className={`${styles.headerTitle} ${titleFont.className}`}
-          href="/"
+      <div className={styles.leftContainer}>
+        <button
+          onClick={toggleSidebar}
+          aria-controls="sidebar"
+          aria-expanded={showSidebar}
+          className={styles.sidebarButton}
         >
-          Resports
-        </Link>
-      </h1>
+          <HamburgerIcon className={styles.hamburgerIcon} />
+        </button>
+        <h1>
+          <Link
+            className={`${styles.headerTitle} ${titleFont.className}`}
+            href="/"
+          >
+            Resports
+          </Link>
+        </h1>
+      </div>
+      {/* <div className={styles.rightContainer}> */}
       <SearchBar />
       <Nav />
+      {/* </div> */}
     </header>
   );
 };

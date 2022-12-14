@@ -1,9 +1,10 @@
 .header {
   border-bottom: 2px solid grey;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 3.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1;
+  align-content: center;
+  /* height: 3.5rem; */
   background-color: #27272e;
 }
 
@@ -18,10 +19,16 @@
   text-decoration: none;
 }
 
+.leftContainer {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
 .sidebarButton {
   background-color: transparent;
   border: none;
-  margin: 0;
+  margin: 0 0.5rem;
   padding: 0.25rem 0.4rem;
   display: flex;
   align-items: center;
