@@ -5,21 +5,8 @@ import styles from "components/Layout/styles/Nav.module.css";
 
 export const Nav = () => {
   return (
-    <nav role="navigation" className="nav">
-      <ul role="menubar" className={styles.navList}>
-        <li role="menuitem" className={styles.navListItem}>
-          Home
-        </li>
-        <li role="menuitem" className={styles.navListItem}>
-          Sign up
-        </li>
-        <li role="menuitem" className={styles.navListItem}>
-          Log in
-        </li>
-        <li role="menuitem" className={styles.navListItem}>
-          Log out
-        </li>
-      </ul>
+    <nav role="navigation" className={styles.nav}>
+      Nav
     </nav>
   );
 };

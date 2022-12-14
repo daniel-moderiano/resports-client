@@ -1,11 +1,10 @@
 .header {
-  border-bottom: 2px solid grey;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1;
   align-content: center;
   /* height: 3.5rem; */
-  background-color: #27272e;
+  background-color: #16161a;
 }
 
 .headerTitle {
