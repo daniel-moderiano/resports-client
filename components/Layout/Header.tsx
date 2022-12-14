@@ -3,6 +3,13 @@ import styles from "components/Layout/styles/Header.module.css";
 import { SearchBar } from "features/search";
 import Link from "next/link";
 import HamburgerIcon from "icons/HamburgerIcon";
+import localFont from "@next/font/local";
+
+// Font files can be colocated inside of `pages`
+const titleFont = localFont({
+  src: "./assets/fonts/montserrat-alt1/MontserratAlt1-Medium.woff2",
+  // adjustFontFallback: false,
+});
 
 interface HeaderProps {
   showSidebar: boolean;
@@ -20,8 +27,13 @@ export const Header = ({ showSidebar, toggleSidebar }: HeaderProps) => {
       >
         <HamburgerIcon className={styles.hamburgerIcon} />
       </button>
-      <h1 className={styles.headerTitle}>
-        <Link href="/">Resports</Link>
+      <h1>
+        <Link
+          className={`${styles.headerTitle} ${titleFont.className}`}
+          href="/"
+        >
+          Resports
+        </Link>
       </h1>
       <SearchBar />
       <Nav />
