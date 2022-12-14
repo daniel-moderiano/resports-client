@@ -2,6 +2,7 @@ import { Nav } from "./Nav";
 import styles from "components/Layout/styles/Header.module.css";
 import { SearchBar } from "features/search";
 import Link from "next/link";
+import HamburgerIcon from "icons/HamburgerIcon";
 
 interface HeaderProps {
   showSidebar: boolean;
@@ -15,8 +16,9 @@ export const Header = ({ showSidebar, toggleSidebar }: HeaderProps) => {
         onClick={toggleSidebar}
         aria-controls="sidebar"
         aria-expanded={showSidebar}
+        className={styles.sidebarButton}
       >
-        Toggle Sidebar
+        <HamburgerIcon className={styles.hamburgerIcon} />
       </button>
       <h1 className={styles.headerTitle}>
         <Link href="/">Resports</Link>
