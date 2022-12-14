@@ -3,6 +3,27 @@
   align-items: center;
 }
 
+.searchInput {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 8px;
+  background: #1d2125;
+  border: 2px solid rgba(166, 197, 226, 0.160784);
+  border-radius: 3px;
+  color: #c7d1db;
+}
+
+.searchInput:focus {
+  border: 2px solid #597cac;
+  outline: none;
+  caret-color: #c7d1db;
+}
+
+.searchInput::placeholder {
+  color: #8696a7;
+}
+
 /* Visible to screen readers only */
 .label {
   position: absolute;
@@ -18,8 +39,23 @@
 
 .button {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
+  padding: 0px 12px;
+  gap: 4px;
+  background: rgba(161, 189, 217, 0.0784314);
+  border-radius: 3px;
+  color: #c7d1db;
+  border: none;
+  margin: 0;
+  line-height: 2rem;
+}
+
+.buttonsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 /* These will still apply in disabled state */
@@ -32,5 +68,5 @@
 }
 
 .selected {
-  border: blue 1px solid;
+  border: #226bd1 1px solid;
 }
