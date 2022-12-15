@@ -29,7 +29,7 @@ describe("Sidebar component", () => {
     render(<Sidebar showSidebar={false} closeSidebar={jest.fn} />);
 
     const sidebar = screen.getByTestId("sidebar");
-    const closeButton = screen.getByRole("button", { name: /close/i });
+    const closeButton = screen.getByLabelText(/close sidebar/i);
 
     await userEvent.click(closeButton);
 

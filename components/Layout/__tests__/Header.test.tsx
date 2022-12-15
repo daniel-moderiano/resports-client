@@ -2,6 +2,11 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Header } from "components/Layout";
 
+jest.mock("next/router", () => ({
+  __esModule: true,
+  useRouter: jest.fn(),
+}));
+
 describe("Header component", () => {
   it("contains banner accessibility role", () => {
     render(<Header toggleSidebar={jest.fn} showSidebar={false} />);

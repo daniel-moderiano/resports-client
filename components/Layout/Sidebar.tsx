@@ -16,6 +16,7 @@ export const Sidebar = ({ showSidebar, closeSidebar }: SidebarProps) => {
       className={`${styles.sidebar} ${showSidebar ? styles.sidebarActive : ""}`}
       data-testid="sidebar"
       id="sidebar"
+      aria-label="Close sidebar"
     >
       <button onClick={closeSidebar} className={styles.sidebarButton}>
         <HamburgerIcon className={styles.hamburgerIcon} />

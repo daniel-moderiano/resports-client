@@ -18,6 +18,7 @@ export const Header = ({ showSidebar, toggleSidebar }: HeaderProps) => {
           aria-controls="sidebar"
           aria-expanded={showSidebar}
           className={styles.sidebarButton}
+          aria-label="Toggle sidebar"
         >
           <HamburgerIcon className={styles.hamburgerIcon} />
         </button>
