@@ -55,9 +55,12 @@ export const SearchBar = () => {
         autoCorrect="false"
         autoComplete="false"
         onKeyDown={handleKeyPress}
+        className={styles.searchInput}
       />
-      <div>
-        <button onClick={togglePlatform}>Toggle platform</button>
+      <div className={styles.buttonsContainer}>
+        <button className={`${styles.button}`} onClick={togglePlatform}>
+          Switch
+        </button>
         <button
           aria-label="Search Twitch"
           className={`${
@@ -71,7 +74,7 @@ export const SearchBar = () => {
             updateSearchQuery("twitch");
           }}
         >
-          Search Twitch
+          Twitch
         </button>
         <button
           aria-label="Search YouTube"
@@ -86,7 +89,7 @@ export const SearchBar = () => {
             updateSearchQuery("youtube");
           }}
         >
-          Search YouTube
+          YouTube
         </button>
       </div>
     </div>

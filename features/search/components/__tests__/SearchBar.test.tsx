@@ -52,7 +52,7 @@ describe("Search bar and button UI states", () => {
   it("Switches button selected UI on toggle platform click", async () => {
     render(<SearchBar />);
     const platformToggle: HTMLButtonElement = screen.getByRole("button", {
-      name: /toggle/i,
+      name: /switch/i,
     });
     const youtubeButton: HTMLButtonElement = screen.getByRole("button", {
       name: /search youtube/i,

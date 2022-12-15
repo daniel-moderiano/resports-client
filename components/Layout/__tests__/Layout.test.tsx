@@ -2,6 +2,11 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Layout } from "components/Layout";
 
+jest.mock("next/router", () => ({
+  __esModule: true,
+  useRouter: jest.fn(),
+}));
+
 describe("Layout component", () => {
   it("renders children elements", () => {
     render(
@@ -26,9 +31,7 @@ describe("Layout component", () => {
   it("toggles sidebar on toggle button click", async () => {
     render(<Layout />);
 
-    const toggleButton = screen.getByRole("button", {
-      name: /toggle sidebar/i,
-    });
+    const toggleButton = screen.getByLabelText(/toggle sidebar/i);
     await userEvent.click(toggleButton);
 
     const sidebar = screen.getByTestId("sidebar");
@@ -42,9 +45,7 @@ describe("Layout component", () => {
     const overlay = screen.getByTestId("overlay");
     expect(overlay).not.toHaveClass("overlayActive");
 
-    const toggleButton = screen.getByRole("button", {
-      name: /toggle sidebar/i,
-    });
+    const toggleButton = screen.getByLabelText(/toggle sidebar/i);
     await userEvent.click(toggleButton);
 
     expect(overlay).toHaveClass("overlayActive");
@@ -53,9 +54,7 @@ describe("Layout component", () => {
   it("closes sidebar on Esc key press", async () => {
     render(<Layout />);
 
-    const toggleButton = screen.getByRole("button", {
-      name: /toggle sidebar/i,
-    });
+    const toggleButton = screen.getByLabelText(/toggle sidebar/i);
     await userEvent.click(toggleButton);
 
     const sidebar = screen.queryByTestId("sidebar");
@@ -68,9 +67,7 @@ describe("Layout component", () => {
   it("closes sidebar on outside click (i.e. overlay click)", async () => {
     render(<Layout />);
 
-    const toggleButton = screen.getByRole("button", {
-      name: /toggle sidebar/i,
-    });
+    const toggleButton = screen.getByLabelText(/toggle sidebar/i);
 
     await userEvent.click(toggleButton);
 
