@@ -1,4 +1,5 @@
 import { TwitchPlayer } from "features/players";
+import VideoDetails from "features/players/components/video-details/VideoDetails";
 import { GetServerSideProps } from "next";
 import { sanitiseVideoQuery } from "utils/queryHandling";
 
@@ -12,5 +13,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { videoId } };
 };
 
-const Video = ({ videoId }: VideoProps) => <TwitchPlayer videoId={videoId} />;
+const Video = ({ videoId }: VideoProps) => (
+  <div>
+    <TwitchPlayer videoId={videoId} />
+    <VideoDetails videoId={videoId} />
+  </div>
+);
 export default Video;
