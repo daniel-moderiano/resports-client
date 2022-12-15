@@ -21,7 +21,6 @@
     "*.css": "prettier --write"
   },
   "dependencies": {
-    "@next/font": "^13.0.6",
     "@twurple/api": "^5.2.5",
     "@twurple/auth": "^5.2.5",
     "javascript-time-ago": "^2.5.9",
