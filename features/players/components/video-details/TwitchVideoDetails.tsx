@@ -5,6 +5,7 @@ import styles from "features/players/components/styles/TwitchVideoDetails.module
 import Link from "next/link";
 import NewTabIcon from "icons/NewTabIcon";
 import { timeAgo } from "config/timeAgoFormatter";
+import TwitchNameIcon from "icons/TwitchNameIcon";
 
 interface TwitchVideoDetailsProps {
   videoId: string;
@@ -47,8 +48,8 @@ export const TwitchVideoDetails = ({ videoId }: TwitchVideoDetailsProps) => {
             </div>
           </div>
           <Link className={styles.twitchLink} href={data.videoData.url}>
-            <NewTabIcon className={styles.newTabIcon} />
-            Watch on Twitch
+            Watch on
+            <TwitchNameIcon fill="#9147FF" className={styles.twitchName} />
           </Link>
         </section>
       )}
