@@ -23,10 +23,11 @@ export const TwitchVideoDetails = ({ videoId }: TwitchVideoDetailsProps) => {
             <h2 className={styles.videoTitle}>{data.videoData.title}</h2>
 
             <div className={styles.metricsContainer}>
+              <div className={styles.bar}></div>
               <p className={styles.uploadedDate}>
-                Uploaded {timeAgo.format(data.videoData.creationDate)}
+                {timeAgo.format(data.videoData.creationDate)}
               </p>
-              <span>·</span>
+              <span className={styles.dot}>·</span>
               <p className={styles.views}>
                 {formatter.format(data.videoData.views)} views
               </p>
