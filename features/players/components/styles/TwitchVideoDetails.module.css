@@ -62,6 +62,32 @@
   font-family: var(--primary-font);
 }
 
+.rightContainer {
+  flex-shrink: 0;
+  width: 10rem;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.toggleButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(161, 189, 217, 0.0784314);
+  border-radius: 3px;
+  color: #c7d1db;
+  border: none;
+  margin: 0;
+  cursor: pointer;
+  font-family: var(--primary-font);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 0.75rem;
+  width: 100%;
+}
+
 .twitchLink {
   display: flex;
   justify-content: center;
@@ -74,8 +100,8 @@
   font-size: 13px;
   padding: 0.75rem;
   border-radius: 6px;
-  flex-shrink: 0;
   gap: 0.2rem;
+  width: 100%;
 }
 
 .twitchName {

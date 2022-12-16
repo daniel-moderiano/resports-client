@@ -53,7 +53,7 @@ export const TwitchVideoDetails = ({
             </div>
           </div>
           <div className={styles.rightContainer}>
-            <button onClick={toggleControls}>
+            <button onClick={toggleControls} className={styles.toggleButton}>
               {controlsDisabled ? "Enable controls" : "Disable controls"}
             </button>
             <Link className={styles.twitchLink} href={data.videoData.url}>
