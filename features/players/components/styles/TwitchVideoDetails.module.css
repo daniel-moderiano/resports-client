@@ -1,15 +1,25 @@
-.container {
+.outerContainer {
+  width: 100%;
+  padding: 0 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.innerContainer {
   width: 100%;
   max-width: 1280px;
-  padding: 0 4rem;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
+  position: relative;
 }
 
 .videoTitle {
   margin: 0;
   padding: 0;
+  font-size: 1.4rem;
 }
 
 .channelContainer {
@@ -45,10 +55,32 @@
   font-family: var(--primary-font);
 }
 
+.twitchLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(145, 71, 255);
+  border: none;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 0.5rem;
+  border-radius: 6px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  gap: 0.2rem;
+}
+
 .metricsContainer {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 0.9rem;
   color: #949a9f;
+}
+
+.newTabIcon {
+  width: 18px;
 }
