@@ -66,28 +66,28 @@ jest.mock("features/players/hooks/useGetTwitchVideoDetails", () => ({
 describe("Video detail rendering", () => {
   mockVideoQuery.data = testData;
 
-  it("Includes video thumbnail", () => {
+  it("Includes channel thumbnail", () => {
     render(<TwitchVideoDetails videoId={"1234"} />);
     const thumbnail = screen.getByRole("img");
     expect(thumbnail).toBeInTheDocument();
   });
 
-  it("Includes video name", () => {
+  it("Includes video title", () => {
     render(<TwitchVideoDetails videoId={"1234"} />);
     const name = screen.getByText(/BEST GAMER EVER/i);
     expect(name).toBeInTheDocument();
   });
 
-  it("Includes video duration", () => {
+  it("Includes video views", () => {
     render(<TwitchVideoDetails videoId={"1234"} />);
-    const duration = screen.getByText("5:00:00");
-    expect(duration).toBeInTheDocument();
+    const views = screen.getByText(/54140 views/i);
+    expect(views).toBeInTheDocument();
   });
 
-  it("Includes upload time/date", () => {
+  it("Includes uploaded section", () => {
     render(<TwitchVideoDetails videoId={"1234"} />);
-    const duration = screen.getByText("just now");
-    expect(duration).toBeInTheDocument();
+    const uploaded = screen.getByText(/uploaded/i);
+    expect(uploaded).toBeInTheDocument();
   });
 
   it("Includes channel name", () => {
@@ -96,9 +96,9 @@ describe("Video detail rendering", () => {
     expect(channelName).toBeInTheDocument();
   });
 
-  it("Includes player link", () => {
+  it("Includes subscribe button", () => {
     render(<TwitchVideoDetails videoId={"1234"} />);
-    const playerLink = screen.getByRole("link", { name: /view in player/i });
-    expect(playerLink).toBeInTheDocument();
+    const subscribeButton = screen.getByRole("button", { name: /subscribe/i });
+    expect(subscribeButton).toBeInTheDocument();
   });
 });
