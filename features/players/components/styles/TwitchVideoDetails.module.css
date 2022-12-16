@@ -12,8 +12,15 @@
   max-width: 1280px;
   display: flex;
   align-items: flex-start;
+  flex-direction: row;
+}
+
+.videoDetails {
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  align-items: flex-start;
   flex-direction: column;
-  position: relative;
 }
 
 .videoTitle {
@@ -67,9 +74,7 @@
   font-size: 13px;
   padding: 0.5rem;
   border-radius: 6px;
-  position: absolute;
-  right: 0;
-  top: 0;
+  flex-shrink: 0;
   gap: 0.2rem;
 }
 
@@ -79,6 +84,7 @@
   gap: 0.5rem;
   font-size: 0.9rem;
   color: #949a9f;
+  margin: 0.6rem 0 1rem 0;
 }
 
 .newTabIcon {
