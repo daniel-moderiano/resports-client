@@ -10,6 +10,8 @@ interface TwitchVideoDetailsProps {
   videoId: string;
 }
 
+const formatter = Intl.NumberFormat("en", { notation: "compact" });
+
 export const TwitchVideoDetails = ({ videoId }: TwitchVideoDetailsProps) => {
   const { isError, isLoading, data } = useGetTwitchVideoDetails(videoId);
 
@@ -25,7 +27,9 @@ export const TwitchVideoDetails = ({ videoId }: TwitchVideoDetailsProps) => {
                 Uploaded {timeAgo.format(data.videoData.creationDate)}
               </p>
               <span>·</span>
-              <p className={styles.views}>{data.videoData.views} views</p>
+              <p className={styles.views}>
+                {formatter.format(data.videoData.views)} views
+              </p>
             </div>
             <div className={styles.channelContainer}>
               <Image

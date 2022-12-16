@@ -78,9 +78,9 @@ describe("Video detail rendering", () => {
     expect(name).toBeInTheDocument();
   });
 
-  it("Includes video views", () => {
+  it("Includes video views in compact format", () => {
     render(<TwitchVideoDetails videoId={"1234"} />);
-    const views = screen.getByText(/54140 views/i);
+    const views = screen.getByText(/54k views/i);
     expect(views).toBeInTheDocument();
   });
 
