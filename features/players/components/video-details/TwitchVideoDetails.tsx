@@ -1,12 +1,12 @@
-import { useGetTwitchVideoDetails } from "features/channels/hooks/useGetTwitchVideoDetails";
+import { useGetTwitchVideoDetails } from "features/players/hooks/useGetTwitchVideoDetails";
 import React, { useEffect } from "react";
 import Image from "next/image";
 
-interface VideoDetailsProps {
+interface TwitchVideoDetailsProps {
   videoId: string;
 }
 
-const VideoDetails = ({ videoId }: VideoDetailsProps) => {
+export const TwitchVideoDetails = ({ videoId }: TwitchVideoDetailsProps) => {
   const { isError, isLoading, data } = useGetTwitchVideoDetails(videoId);
 
   return (
@@ -32,5 +32,3 @@ const VideoDetails = ({ videoId }: VideoDetailsProps) => {
     </div>
   );
 };
-
-export default VideoDetails;

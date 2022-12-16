@@ -6,7 +6,7 @@ export interface TwitchChannel {
   isLive?: boolean;
 }
 
-export interface TwitchVideoDetails {
+export interface TwitchVideo {
   videoData: HelixVideo;
   userData: HelixUser;
 }
