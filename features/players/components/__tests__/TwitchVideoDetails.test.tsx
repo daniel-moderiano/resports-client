@@ -68,37 +68,73 @@ describe("Video detail rendering", () => {
   mockVideoQuery.data = testData;
 
   it("Includes channel thumbnail", () => {
-    render(<TwitchVideoDetails videoId={"1234"} toggleControls={jest.fn} />);
+    render(
+      <TwitchVideoDetails
+        videoId={"1234"}
+        toggleControls={jest.fn}
+        controlsDisabled={false}
+      />
+    );
     const thumbnail = screen.getByRole("img");
     expect(thumbnail).toBeInTheDocument();
   });
 
   it("Includes video title", () => {
-    render(<TwitchVideoDetails videoId={"1234"} toggleControls={jest.fn} />);
+    render(
+      <TwitchVideoDetails
+        videoId={"1234"}
+        toggleControls={jest.fn}
+        controlsDisabled={false}
+      />
+    );
     const name = screen.getByText(/BEST GAMER EVER/i);
     expect(name).toBeInTheDocument();
   });
 
   it("Includes video views in compact format", () => {
-    render(<TwitchVideoDetails videoId={"1234"} toggleControls={jest.fn} />);
+    render(
+      <TwitchVideoDetails
+        videoId={"1234"}
+        toggleControls={jest.fn}
+        controlsDisabled={false}
+      />
+    );
     const views = screen.getByText(/54k views/i);
     expect(views).toBeInTheDocument();
   });
 
   it("Includes uploaded section", () => {
-    render(<TwitchVideoDetails videoId={"1234"} toggleControls={jest.fn} />);
+    render(
+      <TwitchVideoDetails
+        videoId={"1234"}
+        toggleControls={jest.fn}
+        controlsDisabled={false}
+      />
+    );
     const uploaded = screen.getByText(/just now/i);
     expect(uploaded).toBeInTheDocument();
   });
 
   it("Includes channel name", () => {
-    render(<TwitchVideoDetails videoId={"1234"} toggleControls={jest.fn} />);
+    render(
+      <TwitchVideoDetails
+        videoId={"1234"}
+        toggleControls={jest.fn}
+        controlsDisabled={false}
+      />
+    );
     const channelName = screen.getByText(/loserfruit/i);
     expect(channelName).toBeInTheDocument();
   });
 
   it("Includes subscribe button", () => {
-    render(<TwitchVideoDetails videoId={"1234"} toggleControls={jest.fn} />);
+    render(
+      <TwitchVideoDetails
+        videoId={"1234"}
+        toggleControls={jest.fn}
+        controlsDisabled={false}
+      />
+    );
     const subscribeButton = screen.getByRole("button", { name: /subscribe/i });
     expect(subscribeButton).toBeInTheDocument();
   });
@@ -106,13 +142,35 @@ describe("Video detail rendering", () => {
 
 describe("Control toggles", () => {
   it("Calls toggle control function on toggle button click", async () => {
-    const toggleMock = jest.fn;
-    render(<TwitchVideoDetails videoId={"1234"} toggleControls={toggleMock} />);
+    const toggleMock = jest.fn();
+    render(
+      <TwitchVideoDetails
+        videoId={"1234"}
+        toggleControls={toggleMock}
+        controlsDisabled={false}
+      />
+    );
     const toggleButton = screen.getByRole("button", {
       name: /disable controls/i,
     });
 
     await userEvent.click(toggleButton);
     expect(toggleMock).toBeCalledTimes(1);
+  });
+
+  it("Customises toggle button content when controls are enabled/disabled", async () => {
+    const toggleMock = jest.fn();
+    render(
+      <TwitchVideoDetails
+        videoId={"1234"}
+        toggleControls={toggleMock}
+        controlsDisabled={true}
+      />
+    );
+    const toggleButton = screen.getByRole("button", {
+      name: /enable controls/i,
+    });
+
+    expect(toggleButton).toBeInTheDocument();
   });
 });

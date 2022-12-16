@@ -9,6 +9,7 @@ import TwitchNameIcon from "icons/TwitchNameIcon";
 interface TwitchVideoDetailsProps {
   videoId: string;
   toggleControls: () => void;
+  controlsDisabled: boolean;
 }
 
 const formatter = Intl.NumberFormat("en", { notation: "compact" });
@@ -16,6 +17,7 @@ const formatter = Intl.NumberFormat("en", { notation: "compact" });
 export const TwitchVideoDetails = ({
   videoId,
   toggleControls,
+  controlsDisabled,
 }: TwitchVideoDetailsProps) => {
   const { isError, isLoading, data } = useGetTwitchVideoDetails(videoId);
 
@@ -51,7 +53,9 @@ export const TwitchVideoDetails = ({
             </div>
           </div>
           <div className={styles.rightContainer}>
-            <button onClick={toggleControls}>Toggle controls</button>
+            <button onClick={toggleControls}>
+              {controlsDisabled ? "Enable controls" : "Disable controls"}
+            </button>
             <Link className={styles.twitchLink} href={data.videoData.url}>
               Watch on
               <TwitchNameIcon fill="#9147FF" className={styles.twitchName} />

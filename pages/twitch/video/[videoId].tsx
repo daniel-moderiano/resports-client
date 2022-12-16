@@ -24,6 +24,7 @@ const Video = ({ videoId }: VideoProps) => {
       <TwitchVideoDetails
         videoId={videoId}
         toggleControls={() => setDisableControls(!disableControls)}
+        controlsDisabled={disableControls}
       />
     </div>
   );
