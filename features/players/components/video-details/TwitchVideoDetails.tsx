@@ -11,21 +11,23 @@ export const TwitchVideoDetails = ({ videoId }: TwitchVideoDetailsProps) => {
   const { isError, isLoading, data } = useGetTwitchVideoDetails(videoId);
 
   return (
-    <div>
+    <>
       {data && (
-        <section>
+        <section className={styles.container}>
           <h2 className={styles.videoTitle}>{data.videoData.title}</h2>
-          <p className={styles.uploadedDate}>
-            Uploaded {data.videoData.creationDate.toLocaleDateString()}
-          </p>
-
-          <p className={styles.views}>{data.videoData.views} views</p>
+          <div className={styles.metricsContainer}>
+            <p className={styles.uploadedDate}>
+              Uploaded {data.videoData.creationDate.toLocaleDateString()}
+            </p>
+            <span>|</span>
+            <p className={styles.views}>{data.videoData.views} views</p>
+          </div>
           <div className={styles.channelContainer}>
             <Image
               alt={`${data.userData.displayName} thumbnail`}
               src={data.userData.profilePictureUrl}
-              width={100}
-              height={100}
+              width={65}
+              height={65}
               className={styles.channelThumbnail}
             />
             <span className={styles.channelName}>
@@ -35,6 +37,6 @@ export const TwitchVideoDetails = ({ videoId }: TwitchVideoDetailsProps) => {
           </div>
         </section>
       )}
-    </div>
+    </>
   );
 };

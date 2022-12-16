@@ -1,0 +1,54 @@
+.container {
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 4rem;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.videoTitle {
+  margin: 0;
+  padding: 0;
+}
+
+.channelContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.channelThumbnail {
+  border-radius: 100%;
+  border: 2px solid var(--text-color-light);
+  margin-right: 1rem;
+}
+
+.channelName {
+  font-weight: bold;
+  margin-right: 2rem;
+}
+
+.subscribeButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 12px;
+  gap: 4px;
+  background: rgba(161, 189, 217, 0.0784314);
+  border-radius: 3px;
+  color: #c7d1db;
+  border: none;
+  margin: 0;
+  line-height: 2rem;
+  cursor: pointer;
+  font-family: var(--primary-font);
+}
+
+.metricsContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #949a9f;
+}
