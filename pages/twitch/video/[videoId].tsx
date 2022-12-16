@@ -2,6 +2,7 @@ import { TwitchPlayer } from "features/players";
 import { TwitchVideoDetails } from "features/players/components/video-details/TwitchVideoDetails";
 import { GetServerSideProps } from "next";
 import { sanitiseVideoQuery } from "utils/queryHandling";
+import * as React from "react";
 
 interface VideoProps {
   videoId: string;
@@ -13,10 +14,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { videoId } };
 };
 
-const Video = ({ videoId }: VideoProps) => (
-  <div>
-    <TwitchPlayer videoId={videoId} />
-    <TwitchVideoDetails videoId={videoId} />
-  </div>
-);
+const Video = ({ videoId }: VideoProps) => {
+  // The user should be able to manually disable the overlay to interact with the player in certain circumstances, e.g. mature content, reloading player, etc.
+  const [disableControls, setDisableControls] = React.useState(false);
+
+  return (
+    <div>
+      <TwitchPlayer videoId={videoId} disableControls={disableControls} />
+      <TwitchVideoDetails
+        videoId={videoId}
+        toggleControls={() => setDisableControls(!disableControls)}
+      />
+    </div>
+  );
+};
 export default Video;

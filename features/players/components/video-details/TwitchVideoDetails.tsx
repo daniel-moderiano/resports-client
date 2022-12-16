@@ -1,19 +1,22 @@
 import { useGetTwitchVideoDetails } from "features/players/hooks/useGetTwitchVideoDetails";
-import React, { useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import styles from "features/players/components/styles/TwitchVideoDetails.module.css";
 import Link from "next/link";
-import NewTabIcon from "icons/NewTabIcon";
 import { timeAgo } from "config/timeAgoFormatter";
 import TwitchNameIcon from "icons/TwitchNameIcon";
 
 interface TwitchVideoDetailsProps {
   videoId: string;
+  toggleControls: () => void;
 }
 
 const formatter = Intl.NumberFormat("en", { notation: "compact" });
 
-export const TwitchVideoDetails = ({ videoId }: TwitchVideoDetailsProps) => {
+export const TwitchVideoDetails = ({
+  videoId,
+  toggleControls,
+}: TwitchVideoDetailsProps) => {
   const { isError, isLoading, data } = useGetTwitchVideoDetails(videoId);
 
   return (
@@ -47,10 +50,13 @@ export const TwitchVideoDetails = ({ videoId }: TwitchVideoDetailsProps) => {
               <button className={styles.subscribeButton}>Subscribe</button>
             </div>
           </div>
-          <Link className={styles.twitchLink} href={data.videoData.url}>
-            Watch on
-            <TwitchNameIcon fill="#9147FF" className={styles.twitchName} />
-          </Link>
+          <div className={styles.rightContainer}>
+            <button onClick={toggleControls}>Toggle controls</button>
+            <Link className={styles.twitchLink} href={data.videoData.url}>
+              Watch on
+              <TwitchNameIcon fill="#9147FF" className={styles.twitchName} />
+            </Link>
+          </div>
         </section>
       )}
     </div>

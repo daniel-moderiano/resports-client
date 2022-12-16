@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import { TwitchVideo } from "features/channels";
 import { TwitchVideoDetails } from "features/players/components/video-details/TwitchVideoDetails";
@@ -67,38 +68,51 @@ describe("Video detail rendering", () => {
   mockVideoQuery.data = testData;
 
   it("Includes channel thumbnail", () => {
-    render(<TwitchVideoDetails videoId={"1234"} />);
+    render(<TwitchVideoDetails videoId={"1234"} toggleControls={jest.fn} />);
     const thumbnail = screen.getByRole("img");
     expect(thumbnail).toBeInTheDocument();
   });
 
   it("Includes video title", () => {
-    render(<TwitchVideoDetails videoId={"1234"} />);
+    render(<TwitchVideoDetails videoId={"1234"} toggleControls={jest.fn} />);
     const name = screen.getByText(/BEST GAMER EVER/i);
     expect(name).toBeInTheDocument();
   });
 
   it("Includes video views in compact format", () => {
-    render(<TwitchVideoDetails videoId={"1234"} />);
+    render(<TwitchVideoDetails videoId={"1234"} toggleControls={jest.fn} />);
     const views = screen.getByText(/54k views/i);
     expect(views).toBeInTheDocument();
   });
 
   it("Includes uploaded section", () => {
-    render(<TwitchVideoDetails videoId={"1234"} />);
+    render(<TwitchVideoDetails videoId={"1234"} toggleControls={jest.fn} />);
     const uploaded = screen.getByText(/just now/i);
     expect(uploaded).toBeInTheDocument();
   });
 
   it("Includes channel name", () => {
-    render(<TwitchVideoDetails videoId={"1234"} />);
+    render(<TwitchVideoDetails videoId={"1234"} toggleControls={jest.fn} />);
     const channelName = screen.getByText(/loserfruit/i);
     expect(channelName).toBeInTheDocument();
   });
 
   it("Includes subscribe button", () => {
-    render(<TwitchVideoDetails videoId={"1234"} />);
+    render(<TwitchVideoDetails videoId={"1234"} toggleControls={jest.fn} />);
     const subscribeButton = screen.getByRole("button", { name: /subscribe/i });
     expect(subscribeButton).toBeInTheDocument();
+  });
+});
+
+describe("Control toggles", () => {
+  it("Calls toggle control function on toggle button click", async () => {
+    const toggleMock = jest.fn;
+    render(<TwitchVideoDetails videoId={"1234"} toggleControls={toggleMock} />);
+    const toggleButton = screen.getByRole("button", {
+      name: /disable controls/i,
+    });
+
+    await userEvent.click(toggleButton);
+    expect(toggleMock).toBeCalledTimes(1);
   });
 });
