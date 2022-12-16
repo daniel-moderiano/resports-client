@@ -86,7 +86,7 @@ describe("Video detail rendering", () => {
 
   it("Includes uploaded section", () => {
     render(<TwitchVideoDetails videoId={"1234"} />);
-    const uploaded = screen.getByText(/uploaded/i);
+    const uploaded = screen.getByText(/just now/i);
     expect(uploaded).toBeInTheDocument();
   });
 

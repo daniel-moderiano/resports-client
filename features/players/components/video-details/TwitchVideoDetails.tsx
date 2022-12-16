@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "features/players/components/styles/TwitchVideoDetails.module.css";
 import Link from "next/link";
 import NewTabIcon from "icons/NewTabIcon";
+import { timeAgo } from "config/timeAgoFormatter";
 
 interface TwitchVideoDetailsProps {
   videoId: string;
@@ -21,7 +22,7 @@ export const TwitchVideoDetails = ({ videoId }: TwitchVideoDetailsProps) => {
 
             <div className={styles.metricsContainer}>
               <p className={styles.uploadedDate}>
-                Uploaded {data.videoData.creationDate.toLocaleDateString()}
+                Uploaded {timeAgo.format(data.videoData.creationDate)}
               </p>
               <span>·</span>
               <p className={styles.views}>{data.videoData.views} views</p>
