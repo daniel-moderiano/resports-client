@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-
 import { TwitchVideo } from "features/channels";
 import { TwitchVideoDetails } from "features/players/components/video-details/TwitchVideoDetails";
 

@@ -30,18 +30,15 @@ export const TwitchVideoDetails = ({
 
             <div className={styles.metricsContainer}>
               <div className={styles.bar}></div>
-              <p className={styles.uploadedDate}>
-                {timeAgo.format(data.videoData.creationDate)}
-              </p>
+              <p>{timeAgo.format(data.videoData.creationDate)}</p>
               <span className={styles.dot}>·</span>
-              <p className={styles.views}>
-                {formatter.format(data.videoData.views)} views
-              </p>
+              <p>{formatter.format(data.videoData.views)} views</p>
             </div>
             <div className={styles.channelContainer}>
               <Link
                 href={`/twitch/channel/${data.userData.id}`}
                 data-testid="channelImageLink"
+                className={styles.imageLink}
               >
                 <span className={styles.srOnly}>
                   {data.userData.displayName}
