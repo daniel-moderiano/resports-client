@@ -150,11 +150,8 @@ describe("Control toggles", () => {
         controlsDisabled={false}
       />
     );
-    const toggleButton = screen.getByRole("button", {
-      name: /disable controls/i,
-    });
-
-    await userEvent.click(toggleButton);
+    const toggleSwitch = screen.getByRole("checkbox");
+    await userEvent.click(toggleSwitch);
     expect(toggleMock).toBeCalledTimes(1);
   });
 
@@ -167,10 +164,7 @@ describe("Control toggles", () => {
         controlsDisabled={true}
       />
     );
-    const toggleButton = screen.getByRole("button", {
-      name: /enable controls/i,
-    });
-
-    expect(toggleButton).toBeInTheDocument();
+    const toggleSwitch = screen.getByRole("checkbox");
+    expect(toggleSwitch).not.toBeChecked();
   });
 });
