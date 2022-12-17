@@ -115,7 +115,7 @@ describe("Video detail rendering", () => {
     expect(uploaded).toBeInTheDocument();
   });
 
-  it("Includes channel name", () => {
+  it("Includes channel name as link", () => {
     render(
       <TwitchVideoDetails
         videoId={"1234"}
@@ -125,9 +125,10 @@ describe("Video detail rendering", () => {
     );
     const channelName = screen.getByText(/loserfruit/i);
     expect(channelName).toBeInTheDocument();
+    expect(channelName).toHaveAttribute("href", "/twitch/channel/41245072");
   });
 
-  it("Includes subscribe button", () => {
+  it("Includes save button", () => {
     render(
       <TwitchVideoDetails
         videoId={"1234"}
@@ -135,8 +136,8 @@ describe("Video detail rendering", () => {
         controlsDisabled={false}
       />
     );
-    const subscribeButton = screen.getByRole("button", { name: /subscribe/i });
-    expect(subscribeButton).toBeInTheDocument();
+    const saveButton = screen.getByRole("button", { name: /save/i });
+    expect(saveButton).toBeInTheDocument();
   });
 });
 

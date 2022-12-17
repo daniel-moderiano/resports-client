@@ -46,10 +46,14 @@ export const TwitchVideoDetails = ({
                 height={55}
                 className={styles.channelThumbnail}
               />
-              <span className={styles.channelName}>
+
+              <Link
+                className={styles.channelName}
+                href={`/twitch/channel/${data.userData.id}`}
+              >
                 {data.userData.displayName}
-              </span>
-              <button className={styles.subscribeButton}>Subscribe</button>
+              </Link>
+              <button className={styles.saveButton}>+ Save</button>
             </div>
           </div>
           <div className={styles.rightContainer}>
