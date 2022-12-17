@@ -9,7 +9,7 @@ const testData: YouTubeVideoData = {
     etag: "lvZx1mDERuROES8etRGA8RQSrIY",
     id: "eBDki6E6Bsk",
     snippet: {
-      publishedAt: "2022-10-31T19:00:17Z",
+      publishedAt: new Date().toLocaleString(),
       channelId: "UC4-KglLgi2JMDiJLfteayGg",
       title: "How Well Do The Underdogs Know Poppt1?",
       description:
@@ -130,18 +130,21 @@ describe("Video detail rendering", () => {
 
     const link = screen.getByTestId("channelImageLink");
     expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute("href", "/twitch/channel/41245072");
+    expect(link).toHaveAttribute(
+      "href",
+      "/youtube/channel/UC4-KglLgi2JMDiJLfteayGg"
+    );
   });
 
   it("Includes video title", () => {
     render(<YouTubeVideoDetails videoId={"1234"} />);
-    const name = screen.getByText(/BEST GAMER EVER/i);
+    const name = screen.getByText(/How Well Do The Underdogs Know Poppt1?/i);
     expect(name).toBeInTheDocument();
   });
 
   it("Includes video views in compact format", () => {
     render(<YouTubeVideoDetails videoId={"1234"} />);
-    const views = screen.getByText(/54k views/i);
+    const views = screen.getByText(/107k views/i);
     expect(views).toBeInTheDocument();
   });
 
@@ -155,7 +158,10 @@ describe("Video detail rendering", () => {
     render(<YouTubeVideoDetails videoId={"1234"} />);
     const channelName = screen.getByTestId("channelLink");
     expect(channelName).toBeInTheDocument();
-    expect(channelName).toHaveAttribute("href", "/twitch/channel/41245072");
+    expect(channelName).toHaveAttribute(
+      "href",
+      "/youtube/channel/UC4-KglLgi2JMDiJLfteayGg"
+    );
   });
 
   it("Includes save button", () => {
