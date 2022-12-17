@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 import { sanitiseVideoQuery } from "utils/queryHandling";
 import { YouTubePlayer } from "features/players";
 import Link from "next/link";
+import { YouTubeVideoDetails } from "features/players/components/video-details/YouTubeVideoDetails";
 
 interface VideoProps {
   videoId: string;
@@ -17,6 +18,7 @@ const Video = ({ videoId }: VideoProps) => {
   return (
     <div>
       <YouTubePlayer videoId={videoId} />
+      <YouTubeVideoDetails videoId={videoId} />
       <Link href={`/youtube/video/${videoId}/native-player`}>
         YT-enabled player
       </Link>
