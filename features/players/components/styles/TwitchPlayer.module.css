@@ -36,6 +36,10 @@
   height: 100%;
 }
 
+.wrapper:focus-visible {
+  outline: none;
+}
+
 .overlay {
   position: absolute;
   top: 0;
