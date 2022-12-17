@@ -39,13 +39,18 @@ export const TwitchVideoDetails = ({
               </p>
             </div>
             <div className={styles.channelContainer}>
-              <Image
-                alt={`${data.userData.displayName} thumbnail`}
-                src={data.userData.profilePictureUrl}
-                width={55}
-                height={55}
-                className={styles.channelThumbnail}
-              />
+              <Link href={`/twitch/channel/${data.userData.id}`}>
+                <span className={styles.srOnly}>
+                  {data.userData.displayName}
+                </span>
+                <Image
+                  alt={`${data.userData.displayName} thumbnail`}
+                  src={data.userData.profilePictureUrl}
+                  width={55}
+                  height={55}
+                  className={styles.channelThumbnail}
+                />
+              </Link>
 
               <Link
                 className={styles.channelName}
@@ -62,8 +67,8 @@ export const TwitchVideoDetails = ({
               <TwitchNameIcon fill="#9147FF" className={styles.twitchName} />
             </Link>
             <div className={styles.toggleSwitch}>
-              <span className={styles.labelText}>Enable Controls</span>
               <label className={styles.switch}>
+                <span className={styles.labelText}>Enable Controls</span>
                 <input
                   type="checkbox"
                   className={styles.input}
