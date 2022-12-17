@@ -11,6 +11,8 @@ import SwitchPlayerIcon from "icons/SwitchPlayerIcon";
 interface YouTubeVideoDetailsProps {
   videoId: string;
   defaultPlayer: boolean;
+  toggleControls?: () => void;
+  controlsDisabled?: boolean;
 }
 
 const formatter = Intl.NumberFormat("en", { notation: "compact" });
@@ -18,6 +20,8 @@ const formatter = Intl.NumberFormat("en", { notation: "compact" });
 export const YouTubeVideoDetails = ({
   videoId,
   defaultPlayer,
+  toggleControls,
+  controlsDisabled,
 }: YouTubeVideoDetailsProps) => {
   const { isError, isLoading, data } = useGetYouTubeVideoDetails(videoId);
 
@@ -88,13 +92,27 @@ export const YouTubeVideoDetails = ({
                 Custom player
               </Link>
             ) : (
-              <Link
-                href={`/youtube/video/${videoId}`}
-                className={styles.playerSwitchLink}
-              >
-                <SwitchPlayerIcon className={styles.switchIcon} />
-                Default player
-              </Link>
+              <>
+                <Link
+                  href={`/youtube/video/${videoId}`}
+                  className={styles.playerSwitchLink}
+                >
+                  <SwitchPlayerIcon className={styles.switchIcon} />
+                  Default player
+                </Link>
+                <div className={styles.toggleSwitch}>
+                  <label className={styles.switch}>
+                    <span className={styles.labelText}>Enable controls</span>
+                    <input
+                      type="checkbox"
+                      className={styles.input}
+                      checked={!controlsDisabled}
+                      onChange={toggleControls}
+                    />
+                    <span className={`${styles.slider} ${styles.round}`}></span>
+                  </label>
+                </div>
+              </>
             )}
           </div>
         </section>

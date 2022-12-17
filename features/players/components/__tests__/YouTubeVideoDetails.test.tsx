@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { YouTubeVideoDetails } from "features/players/components/video-details/YouTubeVideoDetails";
 import { YouTubeVideoData } from "types/youtubeAPITypes";
 
@@ -123,7 +124,14 @@ describe("Video detail rendering", () => {
   mockVideoQuery.data = testData;
 
   it("Includes channel thumbnail", () => {
-    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={true} />);
+    render(
+      <YouTubeVideoDetails
+        videoId={"1234"}
+        defaultPlayer={true}
+        toggleControls={jest.fn}
+        controlsDisabled={false}
+      />
+    );
     const thumbnail = screen.getByRole("img");
     expect(thumbnail).toBeInTheDocument();
 
@@ -136,25 +144,53 @@ describe("Video detail rendering", () => {
   });
 
   it("Includes video title", () => {
-    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={true} />);
+    render(
+      <YouTubeVideoDetails
+        videoId={"1234"}
+        defaultPlayer={true}
+        toggleControls={jest.fn}
+        controlsDisabled={false}
+      />
+    );
     const name = screen.getByText(/How Well Do The Underdogs Know Poppt1?/i);
     expect(name).toBeInTheDocument();
   });
 
   it("Includes video views in compact format", () => {
-    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={true} />);
+    render(
+      <YouTubeVideoDetails
+        videoId={"1234"}
+        defaultPlayer={true}
+        toggleControls={jest.fn}
+        controlsDisabled={false}
+      />
+    );
     const views = screen.getByText(/107k views/i);
     expect(views).toBeInTheDocument();
   });
 
   it("Includes uploaded section", () => {
-    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={true} />);
+    render(
+      <YouTubeVideoDetails
+        videoId={"1234"}
+        defaultPlayer={true}
+        toggleControls={jest.fn}
+        controlsDisabled={false}
+      />
+    );
     const uploaded = screen.getByText(/just now/i);
     expect(uploaded).toBeInTheDocument();
   });
 
   it("Includes channel name as link", () => {
-    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={true} />);
+    render(
+      <YouTubeVideoDetails
+        videoId={"1234"}
+        defaultPlayer={true}
+        toggleControls={jest.fn}
+        controlsDisabled={false}
+      />
+    );
     const channelName = screen.getByTestId("channelLink");
     expect(channelName).toBeInTheDocument();
     expect(channelName).toHaveAttribute(
@@ -164,20 +200,72 @@ describe("Video detail rendering", () => {
   });
 
   it("Includes save button", () => {
-    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={true} />);
+    render(
+      <YouTubeVideoDetails
+        videoId={"1234"}
+        defaultPlayer={true}
+        toggleControls={jest.fn}
+        controlsDisabled={false}
+      />
+    );
     const saveButton = screen.getByRole("button", { name: /save/i });
     expect(saveButton).toBeInTheDocument();
   });
 
   it("Renders YT-enabled player link on default player details", () => {
-    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={true} />);
+    render(
+      <YouTubeVideoDetails
+        videoId={"1234"}
+        defaultPlayer={true}
+        toggleControls={jest.fn}
+        controlsDisabled={false}
+      />
+    );
     const link = screen.getByRole("link", { name: /custom player/i });
     expect(link).toBeInTheDocument();
   });
 
   it("Renders default player link on YT-enabled player details", () => {
-    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={false} />);
+    render(
+      <YouTubeVideoDetails
+        videoId={"1234"}
+        defaultPlayer={false}
+        toggleControls={jest.fn}
+        controlsDisabled={false}
+      />
+    );
     const link = screen.getByRole("link", { name: /default player/i });
     expect(link).toBeInTheDocument();
+  });
+});
+
+describe("Control toggles", () => {
+  it("Calls toggle control function on toggle button click", async () => {
+    const toggleMock = jest.fn();
+    render(
+      <YouTubeVideoDetails
+        videoId={"1234"}
+        defaultPlayer={false}
+        toggleControls={toggleMock}
+        controlsDisabled={false}
+      />
+    );
+    const toggleSwitch = screen.getByLabelText("Enable controls");
+    await userEvent.click(toggleSwitch);
+    expect(toggleMock).toBeCalledTimes(1);
+  });
+
+  it("Customises toggle button content when controls are enabled/disabled", async () => {
+    const toggleMock = jest.fn();
+    render(
+      <YouTubeVideoDetails
+        videoId={"1234"}
+        defaultPlayer={false}
+        toggleControls={toggleMock}
+        controlsDisabled={true}
+      />
+    );
+    const toggleSwitch = screen.getByLabelText("Enable controls");
+    expect(toggleSwitch).not.toBeChecked();
   });
 });

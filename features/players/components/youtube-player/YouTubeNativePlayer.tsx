@@ -13,9 +13,13 @@ import { VideoControlIndicator } from "../video-controls/VideoControlIndicator";
 
 interface YouTubeNativePlayerProps {
   videoId: string;
+  disableControls: boolean;
 }
 
-export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
+export const YouTubeNativePlayer = ({
+  videoId,
+  disableControls,
+}: YouTubeNativePlayerProps) => {
   const { player } = useYouTubeIframe(videoId, true);
   const {
     userActive,
@@ -347,7 +351,6 @@ export const YouTubeNativePlayer = ({ videoId }: YouTubeNativePlayerProps) => {
         >
           Hide YT Controls
         </button>
-        <p>{showYTControls ? "YouTube mode" : "Custom mode"}</p>
       </div>
     </div>
   );
