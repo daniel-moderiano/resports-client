@@ -3,7 +3,6 @@ import { useQuery } from "react-query";
 import {
   YouTubeVideoData,
   YouTubeVideoListResponse,
-  YouTubeVideoResult,
 } from "types/youtubeAPITypes";
 
 // Conditions specify any additional criteria that must evaluate to true before the query is executed
