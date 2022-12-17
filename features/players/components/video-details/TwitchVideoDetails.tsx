@@ -53,13 +53,22 @@ export const TwitchVideoDetails = ({
             </div>
           </div>
           <div className={styles.rightContainer}>
-            <button onClick={toggleControls} className={styles.toggleButton}>
-              {controlsDisabled ? "Enable controls" : "Disable controls"}
-            </button>
             <Link className={styles.twitchLink} href={data.videoData.url}>
               Watch on
               <TwitchNameIcon fill="#9147FF" className={styles.twitchName} />
             </Link>
+            <div className={styles.toggleSwitch}>
+              <span className={styles.labelText}>Enable Controls</span>
+              <label className={styles.switch}>
+                <input
+                  type="checkbox"
+                  className={styles.input}
+                  checked={!controlsDisabled}
+                  onChange={toggleControls}
+                />
+                <span className={`${styles.slider} ${styles.round}`}></span>
+              </label>
+            </div>
           </div>
         </section>
       )}
