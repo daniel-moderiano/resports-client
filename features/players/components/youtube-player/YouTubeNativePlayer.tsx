@@ -13,12 +13,12 @@ import { VideoControlIndicator } from "../video-controls/VideoControlIndicator";
 
 interface YouTubeNativePlayerProps {
   videoId: string;
-  disableControls: boolean;
+  controlsDisabled: boolean;
 }
 
 export const YouTubeNativePlayer = ({
   videoId,
-  disableControls,
+  controlsDisabled,
 }: YouTubeNativePlayerProps) => {
   const { player } = useYouTubeIframe(videoId, true);
   const {
@@ -44,7 +44,6 @@ export const YouTubeNativePlayer = ({
   const [playerMuted, setPlayerMuted] = React.useState(true);
   const [playerPaused, setPlayerPaused] = React.useState(false);
   const [theaterMode, setTheaterMode] = React.useState(false);
-  const [showYTControls, setShowYTControls] = React.useState(true);
 
   // Set the player volume according to local changes in volume. By working with the local volume state, we get a fluid UI as opposed to a laggy API interaction. It is fine to have a trace delay between local change and API player volume update.
   React.useEffect(() => {
@@ -242,7 +241,7 @@ export const YouTubeNativePlayer = ({
         wrapperRef={wrapperRef}
       >
         <div id="player"></div>
-        {!showYTControls && (
+        {!controlsDisabled && (
           <>
             <div
               className={`${styles.overlay} ${
@@ -279,7 +278,7 @@ export const YouTubeNativePlayer = ({
           </>
         )}
 
-        {!showYTControls && player && (
+        {!controlsDisabled && player && (
           <div
             className={`${styles.controls} ${
               userActive || playerPaused ? "" : styles.controlsHide
@@ -306,7 +305,7 @@ export const YouTubeNativePlayer = ({
           </div>
         )}
 
-        {!showYTControls && (
+        {!controlsDisabled && (
           <div
             className={`${styles.gradient} ${
               userActive || playerPaused ? "" : styles.gradientHide
@@ -315,7 +314,7 @@ export const YouTubeNativePlayer = ({
           ></div>
         )}
 
-        {showYTControls && (
+        {controlsDisabled && (
           <div
             className={styles.YTcontrolsBlocker}
             data-testid="controlsBlocker"
@@ -328,30 +327,6 @@ export const YouTubeNativePlayer = ({
           </div>
         )}
       </VideoContainer>
-      <div className="playerMode">
-        <button
-          onClick={() => {
-            setShowYTControls(true);
-            // If the user switches controls while paused, then pauses the video on YT controls, then switches back to custom controls while paused, the overlay is still in play mode. This happens because the setPlayerState is not called with YT native pause/play. Hence it is manually called here
-            if (player && player.isPaused()) {
-              setPlayerPaused(true);
-            }
-          }}
-        >
-          Show YT Controls
-        </button>
-        <button
-          onClick={() => {
-            setShowYTControls(false);
-            // If the user switches controls while paused, then plays the video on YT controls, then switches back to custom controls while playing, the overlay is still in pause mode. This happens because the setPlayerState is not called with YT native pause/play. Hence it is manually called here
-            if (player && !player.isPaused()) {
-              setPlayerPaused(false);
-            }
-          }}
-        >
-          Hide YT Controls
-        </button>
-      </div>
     </div>
   );
 };

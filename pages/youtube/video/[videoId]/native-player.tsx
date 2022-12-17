@@ -16,13 +16,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const Video = ({ videoId }: VideoProps) => {
-  // The user should be able to manually disable the overlay to interact with the player in certain circumstances, e.g. mature content, reloading player, etc.
-  const [disableControls, setDisableControls] = useState(false);
+  // The user should be able to manually disable the custom controls to access the native YouTube controls (mainly to allow quality adjustment)
+  const [disableControls, setDisableControls] = useState(true);
   return (
     <div>
       <YouTubeNativePlayer
         videoId={videoId}
-        disableControls={disableControls}
+        controlsDisabled={disableControls}
       />
       <YouTubeVideoDetails
         videoId={videoId}
