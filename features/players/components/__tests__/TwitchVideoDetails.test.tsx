@@ -77,6 +77,10 @@ describe("Video detail rendering", () => {
     );
     const thumbnail = screen.getByRole("img");
     expect(thumbnail).toBeInTheDocument();
+
+    const link = screen.getByTestId("channelImageLink");
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "/twitch/channel/41245072");
   });
 
   it("Includes video title", () => {
@@ -123,7 +127,7 @@ describe("Video detail rendering", () => {
         controlsDisabled={false}
       />
     );
-    const channelName = screen.getByText(/loserfruit/i);
+    const channelName = screen.getByTestId("channelLink");
     expect(channelName).toBeInTheDocument();
     expect(channelName).toHaveAttribute("href", "/twitch/channel/41245072");
   });
@@ -151,7 +155,7 @@ describe("Control toggles", () => {
         controlsDisabled={false}
       />
     );
-    const toggleSwitch = screen.getByRole("checkbox");
+    const toggleSwitch = screen.getByLabelText("Enable controls");
     await userEvent.click(toggleSwitch);
     expect(toggleMock).toBeCalledTimes(1);
   });
@@ -165,7 +169,7 @@ describe("Control toggles", () => {
         controlsDisabled={true}
       />
     );
-    const toggleSwitch = screen.getByRole("checkbox");
+    const toggleSwitch = screen.getByLabelText("Enable controls");
     expect(toggleSwitch).not.toBeChecked();
   });
 });

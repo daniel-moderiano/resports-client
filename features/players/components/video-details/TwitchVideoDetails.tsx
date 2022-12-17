@@ -39,7 +39,10 @@ export const TwitchVideoDetails = ({
               </p>
             </div>
             <div className={styles.channelContainer}>
-              <Link href={`/twitch/channel/${data.userData.id}`}>
+              <Link
+                href={`/twitch/channel/${data.userData.id}`}
+                data-testid="channelImageLink"
+              >
                 <span className={styles.srOnly}>
                   {data.userData.displayName}
                 </span>
@@ -55,6 +58,7 @@ export const TwitchVideoDetails = ({
               <Link
                 className={styles.channelName}
                 href={`/twitch/channel/${data.userData.id}`}
+                data-testid="channelLink"
               >
                 {data.userData.displayName}
               </Link>
@@ -68,7 +72,7 @@ export const TwitchVideoDetails = ({
             </Link>
             <div className={styles.toggleSwitch}>
               <label className={styles.switch}>
-                <span className={styles.labelText}>Enable Controls</span>
+                <span className={styles.labelText}>Enable controls</span>
                 <input
                   type="checkbox"
                   className={styles.input}
