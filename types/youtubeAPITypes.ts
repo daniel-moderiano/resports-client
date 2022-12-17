@@ -298,3 +298,31 @@ export interface YouTubeVideoListResponse {
   };
   items: YouTubeVideoResult[];
 }
+
+export interface YouTubeVideoData {
+  videoData: {
+    kind: string;
+    etag: string;
+    id: string;
+    snippet: YouTubeVideoResultSnippet;
+    statistics: {
+      viewCount: string;
+      likeCount: string;
+      favoriteCount: string;
+      commentCount: string;
+      dislikeCount?: string;
+    };
+  };
+  channelData: {
+    kind: string;
+    etag: string;
+    id: string;
+    snippet: YouTubeChannelSearchResultSnippet;
+    statistics: {
+      viewCount: string;
+      subscriberCount: string;
+      hiddenSubscriberCount: boolean;
+      videoCount: string;
+    };
+  };
+}

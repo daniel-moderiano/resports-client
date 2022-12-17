@@ -9,6 +9,7 @@ const nextConfig = {
       "lh3.googleusercontent.com",
       "i.ytimg.com",
       "vod-secure.twitch.tv",
+      "yt3.googleusercontent.com",
     ],
   },
 };

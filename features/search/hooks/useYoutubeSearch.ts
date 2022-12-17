@@ -17,7 +17,7 @@ export const useYouTubeSearch = (
   if (process.env.NODE_ENV === "production") {
     enableApi = true;
   } else {
-    enableApi = false;
+    enableApi = true;
   }
 
   const { isLoading, isError, data, error } = useQuery(

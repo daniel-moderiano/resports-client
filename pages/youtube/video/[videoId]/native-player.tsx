@@ -2,6 +2,8 @@ import { GetServerSideProps } from "next";
 import { sanitiseVideoQuery } from "utils/queryHandling";
 import { YouTubeNativePlayer } from "features/players";
 import Link from "next/link";
+import { YouTubeVideoDetails } from "features/players/components/video-details/YouTubeVideoDetails";
+import { useState } from "react";
 
 interface VideoProps {
   videoId: string;
@@ -14,10 +16,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const Video = ({ videoId }: VideoProps) => {
+  // The user should be able to manually disable the custom controls to access the native YouTube controls (mainly to allow quality adjustment)
+  const [disableControls, setDisableControls] = useState(true);
   return (
     <div>
-      <YouTubeNativePlayer videoId={videoId} />
-      <Link href={`/youtube/video/${videoId}`}>Custom player</Link>
+      <YouTubeNativePlayer
+        videoId={videoId}
+        controlsDisabled={disableControls}
+      />
+      <YouTubeVideoDetails
+        videoId={videoId}
+        defaultPlayer={false}
+        toggleControls={() => setDisableControls(!disableControls)}
+        controlsDisabled={disableControls}
+      />
     </div>
   );
 };
