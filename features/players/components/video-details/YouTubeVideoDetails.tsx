@@ -6,14 +6,19 @@ import { timeAgo } from "config/timeAgoFormatter";
 
 import { useGetYouTubeVideoDetails } from "features/players/hooks/useGetYouTubeVideoDetails";
 import YouTubeFullIcon from "icons/YouTubeFullIcon";
+import SwitchPlayerIcon from "icons/SwitchPlayerIcon";
 
 interface YouTubeVideoDetailsProps {
   videoId: string;
+  defaultPlayer: boolean;
 }
 
 const formatter = Intl.NumberFormat("en", { notation: "compact" });
 
-export const YouTubeVideoDetails = ({ videoId }: YouTubeVideoDetailsProps) => {
+export const YouTubeVideoDetails = ({
+  videoId,
+  defaultPlayer,
+}: YouTubeVideoDetailsProps) => {
   const { isError, isLoading, data } = useGetYouTubeVideoDetails(videoId);
 
   return (
@@ -74,6 +79,23 @@ export const YouTubeVideoDetails = ({ videoId }: YouTubeVideoDetailsProps) => {
               Watch on
               <YouTubeFullIcon className={styles.youtubeIcon} />
             </Link>
+            {defaultPlayer ? (
+              <Link
+                href={`/youtube/video/${videoId}/native-player`}
+                className={styles.playerSwitchLink}
+              >
+                <SwitchPlayerIcon className={styles.switchIcon} />
+                Custom player
+              </Link>
+            ) : (
+              <Link
+                href={`/youtube/video/${videoId}`}
+                className={styles.playerSwitchLink}
+              >
+                <SwitchPlayerIcon className={styles.switchIcon} />
+                Default player
+              </Link>
+            )}
           </div>
         </section>
       )}

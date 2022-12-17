@@ -123,7 +123,7 @@ describe("Video detail rendering", () => {
   mockVideoQuery.data = testData;
 
   it("Includes channel thumbnail", () => {
-    render(<YouTubeVideoDetails videoId={"1234"} />);
+    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={true} />);
     const thumbnail = screen.getByRole("img");
     expect(thumbnail).toBeInTheDocument();
 
@@ -136,25 +136,25 @@ describe("Video detail rendering", () => {
   });
 
   it("Includes video title", () => {
-    render(<YouTubeVideoDetails videoId={"1234"} />);
+    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={true} />);
     const name = screen.getByText(/How Well Do The Underdogs Know Poppt1?/i);
     expect(name).toBeInTheDocument();
   });
 
   it("Includes video views in compact format", () => {
-    render(<YouTubeVideoDetails videoId={"1234"} />);
+    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={true} />);
     const views = screen.getByText(/107k views/i);
     expect(views).toBeInTheDocument();
   });
 
   it("Includes uploaded section", () => {
-    render(<YouTubeVideoDetails videoId={"1234"} />);
+    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={true} />);
     const uploaded = screen.getByText(/just now/i);
     expect(uploaded).toBeInTheDocument();
   });
 
   it("Includes channel name as link", () => {
-    render(<YouTubeVideoDetails videoId={"1234"} />);
+    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={true} />);
     const channelName = screen.getByTestId("channelLink");
     expect(channelName).toBeInTheDocument();
     expect(channelName).toHaveAttribute(
@@ -164,8 +164,20 @@ describe("Video detail rendering", () => {
   });
 
   it("Includes save button", () => {
-    render(<YouTubeVideoDetails videoId={"1234"} />);
+    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={true} />);
     const saveButton = screen.getByRole("button", { name: /save/i });
     expect(saveButton).toBeInTheDocument();
+  });
+
+  it("Renders YT-enabled player link on default player details", () => {
+    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={true} />);
+    const link = screen.getByRole("link", { name: /custom player/i });
+    expect(link).toBeInTheDocument();
+  });
+
+  it("Renders default player link on YT-enabled player details", () => {
+    render(<YouTubeVideoDetails videoId={"1234"} defaultPlayer={false} />);
+    const link = screen.getByRole("link", { name: /default player/i });
+    expect(link).toBeInTheDocument();
   });
 });

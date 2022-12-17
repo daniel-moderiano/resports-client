@@ -124,6 +124,22 @@
   width: 100%;
 }
 
+.playerSwitchLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(161, 189, 217, 0.0784314);
+  border: none;
+  text-decoration: none;
+  color: #c7d1db;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  gap: 0.6rem;
+  width: 100%;
+}
+
 .twitchName {
   width: 3rem;
   margin-left: 0.2rem;
@@ -132,6 +148,11 @@
 .youtubeIcon {
   width: 3.9rem;
   margin-left: 0.3rem;
+}
+
+.switchIcon {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .metricsContainer {
