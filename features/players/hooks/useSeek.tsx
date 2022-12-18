@@ -50,9 +50,16 @@ export const useSeek = (player: Player | null) => {
     }
   }, [player]);
 
+  const cancelSeek = React.useCallback(() => {
+    seekTimer.current = null;
+    setProjectedTime(null);
+    setSeekAmount(null);
+  }, []);
+
   return {
     scheduleSeek,
     projectedTime,
     seekAmount,
+    cancelSeek,
   };
 };
