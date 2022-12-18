@@ -13,38 +13,28 @@ export const TwitchVideoDetailsOverlay = ({
 }: TwitchVideoDetailsOverlayProps) => {
   return (
     <div className={styles.outerContainer}>
-      <div className={styles.videoDetails}>
+      <div className={styles.gradient}></div>
+      <div className={styles.innerContainer}>
+        <Link
+          href={`/twitch/channel/${videoDetailsData.userData.id}`}
+          data-testid="channelImageLink"
+          className={styles.imageLink}
+        >
+          <span className={styles.srOnly}>
+            {videoDetailsData.userData.displayName}
+          </span>
+          <Image
+            alt={`${videoDetailsData.userData.displayName} thumbnail`}
+            src={videoDetailsData.userData.profilePictureUrl}
+            width={45}
+            height={45}
+            className={styles.channelThumbnail}
+          />
+        </Link>
+
         <h2 className={styles.videoTitle}>
           {videoDetailsData.videoData.title}
         </h2>
-
-        <div className={styles.channelContainer}>
-          <Link
-            href={`/twitch/channel/${videoDetailsData.userData.id}`}
-            data-testid="channelImageLink"
-            className={styles.imageLink}
-          >
-            <span className={styles.srOnly}>
-              {videoDetailsData.userData.displayName}
-            </span>
-            <Image
-              alt={`${videoDetailsData.userData.displayName} thumbnail`}
-              src={videoDetailsData.userData.profilePictureUrl}
-              width={55}
-              height={55}
-              className={styles.channelThumbnail}
-            />
-          </Link>
-
-          <Link
-            className={styles.channelName}
-            href={`/twitch/channel/${videoDetailsData.userData.id}`}
-            data-testid="channelLink"
-          >
-            {videoDetailsData.userData.displayName}
-          </Link>
-          <button className={styles.saveButton}>+ Save</button>
-        </div>
       </div>
     </div>
   );
