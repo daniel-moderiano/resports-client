@@ -11,13 +11,20 @@ import { VideoControlIndicator } from "./video-controls/VideoControlIndicator";
 import { useControlIndicators } from "../hooks/useControlIndicators";
 import { VolumeLevelIndicator } from "./VolumeLevelIndicator";
 import { SeekIndicator } from "./SeekIndicator";
+import { TwitchVideoDetailsOverlay } from "./video-details/TwitchVideoDetailsOverlay";
+import { TwitchVideo } from "features/channels";
 
 interface VideoPlayerProps {
   player: Player | null;
   disableControls?: boolean;
+  videoData?: TwitchVideo | undefined | null;
 }
 
-export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
+export const VideoPlayer = ({
+  player,
+  disableControls,
+  videoData,
+}: VideoPlayerProps) => {
   const {
     userActive,
     signalUserInactivity,
@@ -284,6 +291,18 @@ export const VideoPlayer = ({ player, disableControls }: VideoPlayerProps) => {
             localVolume={localVolume}
             setLocalVolume={setLocalVolume}
           />
+        </div>
+      )}
+
+      {videoData && player && (
+        <div
+          className={`${styles.detailsOverlay} ${
+            userActive || playerPaused ? "" : styles.detailsOverlayHide
+          }`}
+          onMouseMove={throttleMousemove}
+          data-testid="detailsOverlay"
+        >
+          <TwitchVideoDetailsOverlay videoDetailsData={videoData} />
         </div>
       )}
 
