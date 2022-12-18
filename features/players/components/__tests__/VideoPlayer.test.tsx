@@ -4,6 +4,7 @@ import { Player } from "features/players";
 import { PlayerClass } from "features/players/types/playerTypes";
 import { VideoPlayer } from "features/players";
 import { fireEvent } from "@testing-library/react";
+import { TwitchVideo } from "features/channels";
 
 const playMock = jest.fn();
 const pauseMock = jest.fn();
@@ -14,6 +15,46 @@ const setMutedMock = jest.fn();
 afterEach(() => {
   jest.clearAllMocks();
 });
+
+const testData: TwitchVideo = {
+  // @ts-expect-error exact class implementation not needed in these tests
+  videoData: {
+    description: "",
+    duration: "5h0m0s",
+    durationInSeconds: 18000,
+    id: "1521027333",
+    isPublic: true,
+    language: "en",
+    publishDate: new Date(),
+    streamId: "40938585131",
+    thumbnailUrl:
+      "https://static-cdn.jtvnw.net/cf_vods/d2nvs31859zcd8/99f9e412e6c974e168ba_loserfruit_40938585131_1656826735//thumb/thumb0-%{width}x%{height}.jpg",
+    title:
+      "BEST GAMER EVER? !newvid FORTNITE THEN GETTING THAT FALL GUYS ACHIEVEMENT",
+    type: "archive",
+    url: "https://www.twitch.tv/videos/1521027333",
+    userDisplayName: "Loserfruit",
+    userId: "41245072",
+    userName: "loserfruit",
+    views: 54140,
+    creationDate: new Date(),
+  },
+  // @ts-expect-error exact class implementation not needed in these tests
+  userData: {
+    broadcasterType: "partner",
+    cacheKey: "41245072",
+    creationDate: new Date(),
+    description:
+      '"The streamer to watch when no one else is live...." - Thomas Jefferson',
+    displayName: "Loserfruit",
+    id: "41245072",
+    name: "loserfruit",
+    offlinePlaceholderUrl: "https://exampleimage.com",
+    profilePictureUrl: "https://exampleimage.com",
+    type: "",
+    views: 56617494,
+  },
+};
 
 const playerWrapperPlaying: PlayerClass = {
   getCurrentTime: () => 100,
@@ -442,5 +483,35 @@ describe("Volume and muting control", () => {
 
     await userEvent.keyboard("[ArrowLeft]");
     expect(slider).toHaveValue("95");
+  });
+});
+
+describe("Video details overlay", () => {
+  it("Displays video details on hover", async () => {
+    render(<VideoPlayer player={player} videoData={testData} />);
+
+    const overlay = screen.getByTestId("overlay");
+    await userEvent.hover(overlay);
+
+    const customControls = screen.getByTestId("detailsOverlay");
+    expect(customControls).not.toHaveClass("detailsOverlayHide");
+  });
+
+  it("Hides video detail overlay when video is playing", async () => {
+    const player = new Player(playerWrapperPaused);
+    render(<VideoPlayer player={player} videoData={testData} />);
+    const wrapper = screen.getByTestId("wrapper");
+
+    // First enable custom controls, then focus the wrapper to ensure the keypress is captured correctly
+    wrapper.focus();
+    await userEvent.keyboard("k");
+
+    // Allow time for the timeout to expire before playing video
+    await act(async () => {
+      await new Promise((res) => setTimeout(res, 1000));
+    });
+
+    const customControls = screen.getByTestId("detailsOverlay");
+    expect(customControls).toHaveClass("detailsOverlayHide");
   });
 });

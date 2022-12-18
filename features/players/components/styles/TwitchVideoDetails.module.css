@@ -182,18 +182,19 @@
   margin-right: 0.6rem;
 }
 
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 38px;
-  height: 20px;
-}
-
 .toggleSwitch {
   width: 100%;
   display: flex;
   justify-content: flex-end;
   padding: 0.5rem 0.25rem;
+  position: relative;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 20px;
 }
 
 .labelText {
