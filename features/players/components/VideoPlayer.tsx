@@ -65,6 +65,17 @@ export const VideoPlayer = ({
       player.addEventListener("pause", () => {
         setPlayerPaused(true);
       });
+
+      player.addEventListener("ended", () => {
+        // TODO: Ensure all seek indicators disappear
+        // TODO: Ensure current seek events are eliminated
+        // TODO: Ensure the video duration is set to accurate endpoint
+        // TODO: Avoid autoplay of further videos
+        // TODO: Avoid spoiler recommendations
+        // TODO: Provide user with an indication we are at the end
+        // TODO: Provide a replay functionality
+        console.log("video ended");
+      });
     }
   }, [player]);
 
