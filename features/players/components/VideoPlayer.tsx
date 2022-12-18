@@ -13,6 +13,7 @@ import { VolumeLevelIndicator } from "./VolumeLevelIndicator";
 import { SeekIndicator } from "./SeekIndicator";
 import { TwitchVideoDetailsOverlay } from "./video-details/TwitchVideoDetailsOverlay";
 import { TwitchVideo } from "features/channels";
+import ReplayIcon from "icons/ReplayIcon";
 
 interface VideoPlayerProps {
   player: Player | null;
@@ -31,7 +32,8 @@ export const VideoPlayer = ({
     signalUserActivity,
     setLockUserActive,
   } = useUserActivity();
-  const { scheduleSeek, projectedTime, seekAmount } = useSeek(player);
+  const { scheduleSeek, projectedTime, seekAmount, cancelSeek } =
+    useSeek(player);
   const {
     showControlIndicator,
     triggerControlIndication,
@@ -67,22 +69,17 @@ export const VideoPlayer = ({
         setPlayerPaused(true);
       });
 
+      // Auto restart on video end to avoid autoplay of recommended videos
       player.addEventListener("ended", () => {
-        // TODO: Ensure all seek indicators disappear
-        // TODO: Ensure current seek events are eliminated
-        // TODO: Ensure the video duration is set to accurate endpoint
-        // TODO: Avoid autoplay of further videos
-        // TODO: Avoid spoiler recommendations
-        // TODO: Provide user with an indication we are at the end
-        // TODO: Provide a replay functionality
         setVideoEnded(true);
-      });
-
-      player.addEventListener("seek", () => {
-        setVideoEnded(false);
+        cancelSeek();
+        setTimeout(() => {
+          player.seek(-Infinity);
+          setVideoEnded(false);
+        }, 3000);
       });
     }
-  }, [player]);
+  }, [player, cancelSeek, projectedTime]);
 
   const throttleMousemove = throttle(signalUserActivity, 500);
 
@@ -257,9 +254,12 @@ export const VideoPlayer = ({
         <div
           className={`${styles.endOverlay} ${videoEnded ? styles.show : ""}`}
         >
-          <button className="replay" onClick={() => scheduleSeek(-Infinity)}>
-            Replay
-          </button>
+          <div className={styles.replayMessage}>
+            <p>Reached end of video</p>
+            <p>Restarting...</p>
+
+            <ReplayIcon className={styles.replayIcon} />
+          </div>
         </div>
       )}
       <div
