@@ -4,6 +4,7 @@ import { GetServerSideProps } from "next";
 import { sanitiseVideoQuery } from "utils/queryHandling";
 import * as React from "react";
 import { useGetTwitchVideoDetails } from "features/players/hooks/useGetTwitchVideoDetails";
+import { PlayerContextProvider } from "providers/PlayerContext";
 
 interface VideoProps {
   videoId: string;
@@ -21,18 +22,20 @@ const Video = ({ videoId }: VideoProps) => {
   const { isError, isLoading, data } = useGetTwitchVideoDetails(videoId);
 
   return (
-    <div>
-      <TwitchPlayer
-        videoId={videoId}
-        disableControls={disableControls}
-        videoData={data}
-      />
-      <TwitchVideoDetails
-        videoId={videoId}
-        toggleControls={() => setDisableControls(!disableControls)}
-        controlsDisabled={disableControls}
-      />
-    </div>
+    <PlayerContextProvider>
+      <div>
+        <TwitchPlayer
+          videoId={videoId}
+          disableControls={disableControls}
+          videoData={data}
+        />
+        <TwitchVideoDetails
+          videoId={videoId}
+          toggleControls={() => setDisableControls(!disableControls)}
+          controlsDisabled={disableControls}
+        />
+      </div>
+    </PlayerContextProvider>
   );
 };
 export default Video;

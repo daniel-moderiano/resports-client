@@ -13,8 +13,8 @@ import { VolumeLevelIndicator } from "./VolumeLevelIndicator";
 import { SeekIndicator } from "./SeekIndicator";
 import { TwitchVideoDetailsOverlay } from "./video-details/TwitchVideoDetailsOverlay";
 import { TwitchVideo } from "features/channels";
-import ReplayIcon from "icons/ReplayIcon";
 import { EndOverlay } from "./EndOverlay";
+import { usePlayerContext } from "providers/PlayerContext";
 
 interface VideoPlayerProps {
   player: Player | null;
@@ -49,7 +49,8 @@ export const VideoPlayer = ({
   // Use local state to avoid the long delays of an API call to check muted state when toggling icons and UI
   const [playerMuted, setPlayerMuted] = React.useState(true);
   const [playerPaused, setPlayerPaused] = React.useState(false);
-  const [theaterMode, setTheaterMode] = React.useState(false);
+  // const [theaterMode, setTheaterMode] = React.useState(false);
+  const { theaterMode, dispatch } = usePlayerContext();
   const [videoEnded, setVideoEnded] = React.useState(false);
 
   // Set the player volume according to local changes in volume. By working with the local volume state, we get a fluid UI as opposed to a laggy API interaction. It is fine to have a trace delay between local change and API player volume update.
@@ -119,7 +120,8 @@ export const VideoPlayer = ({
   }, [player, signalUserInactivity]);
 
   const toggleTheaterMode = () => {
-    setTheaterMode((prevState) => !prevState);
+    // setTheaterMode((prevState) => !prevState);
+    dispatch({ type: "toggle-theater-mode" });
     // Move focus to the parent wrapper rather than remaining on the theater btn. This is the expected UX behaviour for video controls.
     if (wrapperRef.current) {
       wrapperRef.current.focus();
@@ -309,12 +311,11 @@ export const VideoPlayer = ({
         </div>
       )}
 
-      {videoData && player && (
+      {videoData && (
         <div
           className={`${styles.detailsOverlay} ${
             userActive || playerPaused ? "" : styles.detailsOverlayHide
           }`}
-          onMouseMove={throttleMousemove}
           data-testid="detailsOverlay"
         >
           <TwitchVideoDetailsOverlay videoDetailsData={videoData} />
