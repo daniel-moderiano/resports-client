@@ -14,6 +14,7 @@ import { SeekIndicator } from "./SeekIndicator";
 import { TwitchVideoDetailsOverlay } from "./video-details/TwitchVideoDetailsOverlay";
 import { TwitchVideo } from "features/channels";
 import ReplayIcon from "icons/ReplayIcon";
+import { EndOverlay } from "./EndOverlay";
 
 interface VideoPlayerProps {
   player: Player | null;
@@ -250,18 +251,7 @@ export const VideoPlayer = ({
       wrapperRef={wrapperRef}
     >
       <div id="player"></div>
-      {player && (
-        <div
-          className={`${styles.endOverlay} ${videoEnded ? styles.show : ""}`}
-        >
-          <div className={styles.replayMessage}>
-            <p>Reached end of video</p>
-            <p>Restarting...</p>
-
-            <ReplayIcon className={styles.replayIcon} />
-          </div>
-        </div>
-      )}
+      <EndOverlay videoEnded={videoEnded} />
       <div
         className={`${styles.overlay} ${
           userActive || playerPaused ? "" : styles.overlayInactive
@@ -279,7 +269,7 @@ export const VideoPlayer = ({
         data-testid="overlay"
       ></div>
       <div className={styles.indicatorContainer}>
-        {showVolumeLevelIndicator && player && (
+        {showVolumeLevelIndicator && (
           <VolumeLevelIndicator currentVolume={localVolume} />
         )}
 
