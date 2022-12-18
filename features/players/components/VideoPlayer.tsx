@@ -47,6 +47,7 @@ export const VideoPlayer = ({
   const [playerMuted, setPlayerMuted] = React.useState(true);
   const [playerPaused, setPlayerPaused] = React.useState(false);
   const [theaterMode, setTheaterMode] = React.useState(false);
+  const [videoEnded, setVideoEnded] = React.useState(false);
 
   // Set the player volume according to local changes in volume. By working with the local volume state, we get a fluid UI as opposed to a laggy API interaction. It is fine to have a trace delay between local change and API player volume update.
   React.useEffect(() => {
@@ -74,7 +75,11 @@ export const VideoPlayer = ({
         // TODO: Avoid spoiler recommendations
         // TODO: Provide user with an indication we are at the end
         // TODO: Provide a replay functionality
-        console.log("video ended");
+        setVideoEnded(true);
+      });
+
+      player.addEventListener("seek", () => {
+        setVideoEnded(false);
       });
     }
   }, [player]);
@@ -248,6 +253,15 @@ export const VideoPlayer = ({
       wrapperRef={wrapperRef}
     >
       <div id="player"></div>
+      {player && (
+        <div
+          className={`${styles.endOverlay} ${videoEnded ? styles.show : ""}`}
+        >
+          <button className="replay" onClick={() => scheduleSeek(-Infinity)}>
+            Replay
+          </button>
+        </div>
+      )}
       <div
         className={`${styles.overlay} ${
           userActive || playerPaused ? "" : styles.overlayInactive
