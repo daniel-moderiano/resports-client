@@ -1,15 +1,32 @@
 import * as React from "react";
 import { useTwitchPlayer } from "features/players/api/useTwitchPlayer";
 import { VideoPlayer } from "features/players";
-import { TwitchVideo } from "features/channels";
+import { TwitchVideoDetails } from "../video-details/TwitchVideoDetails";
+import { useGetTwitchVideoDetails } from "features/players/hooks/useGetTwitchVideoDetails";
 
 interface TwitchPlayerProps {
   videoId: string;
-  videoData: TwitchVideo | undefined | null;
 }
 
-export const TwitchPlayer = ({ videoId, videoData }: TwitchPlayerProps) => {
+export const TwitchPlayer = ({ videoId }: TwitchPlayerProps) => {
   const { player } = useTwitchPlayer(videoId);
+  const [controlsDisabled, setControlsDisabled] = React.useState(false);
+  const { isError, isLoading, data } = useGetTwitchVideoDetails(videoId);
 
-  return <VideoPlayer player={player} videoData={videoData} />;
+  return (
+    <div>
+      <VideoPlayer
+        player={player}
+        videoDetails={data}
+        controlsDisabled={controlsDisabled}
+      />
+      {data && (
+        <TwitchVideoDetails
+          videoDetails={data}
+          controlsDisabled={controlsDisabled}
+          toggleControls={() => setControlsDisabled(!controlsDisabled)}
+        />
+      )}
+    </div>
+  );
 };

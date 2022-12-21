@@ -14,22 +14,24 @@ import { SeekIndicator } from "./SeekIndicator";
 import { TwitchVideoDetailsOverlay } from "./video-details/TwitchVideoDetailsOverlay";
 import { TwitchVideo } from "features/channels";
 import { EndOverlay } from "./EndOverlay";
-import { useControlsContext } from "providers/ControlsContext";
 
 interface VideoPlayerProps {
   player: Player | null;
-
-  videoData?: TwitchVideo | undefined | null;
+  controlsDisabled: boolean;
+  videoDetails?: TwitchVideo | undefined | null;
 }
 
-export const VideoPlayer = ({ player, videoData }: VideoPlayerProps) => {
+export const VideoPlayer = ({
+  player,
+  videoDetails,
+  controlsDisabled,
+}: VideoPlayerProps) => {
   const {
     userActive,
     signalUserInactivity,
     signalUserActivity,
     setLockUserActive,
   } = useUserActivity();
-  const { controlsDisabled } = useControlsContext();
   const { scheduleSeek, projectedTime, seekAmount, cancelSeek } =
     useSeek(player);
   const {
@@ -308,14 +310,14 @@ export const VideoPlayer = ({ player, videoData }: VideoPlayerProps) => {
         </div>
       )}
 
-      {videoData && (
+      {videoDetails && (
         <div
           className={`${styles.detailsOverlay} ${
             userActive || playerPaused ? "" : styles.detailsOverlayHide
           }`}
           data-testid="detailsOverlay"
         >
-          <TwitchVideoDetailsOverlay videoDetailsData={videoData} />
+          <TwitchVideoDetailsOverlay videoDetails={videoDetails} />
         </div>
       )}
 

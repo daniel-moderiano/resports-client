@@ -2,10 +2,6 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { TwitchVideo } from "features/channels";
 import { TwitchVideoDetails } from "features/players/components/video-details/TwitchVideoDetails";
-import {
-  ControlsContext,
-  ControlsContextProvider,
-} from "providers/ControlsContext";
 
 const testData: TwitchVideo = {
   // @ts-expect-error exact class implementation not needed in these tests
@@ -47,48 +43,17 @@ const testData: TwitchVideo = {
   },
 };
 
-interface mockVideoQueryTypes {
-  isLoading: boolean;
-  isError: boolean;
-  data: TwitchVideo | undefined;
-  error: unknown;
-}
-
-// Modify these parameters as needed within individual tests
-const mockVideoQuery: mockVideoQueryTypes = {
-  isLoading: false,
-  isError: false,
-  data: undefined,
-  error: null,
-};
-
-// Provide channel data and other UI states via this mock of the channel search API call
-jest.mock("features/players/hooks/useGetTwitchVideoDetails", () => ({
-  useGetTwitchVideoDetails: () => mockVideoQuery,
-}));
-
-// Provide channel data and other UI states via this mock of the channel search API call
-// jest.mock("providers/ControlsContext", () => ({
-//   useControlsContext: () => ({
-//     controlsDisabled: false,
-//   }),
-// }));
-
-const setControlsMock = jest.fn();
-
 const setup = () => {
   render(
-    <ControlsContext.Provider
-      value={{ controlsDisabled: false, setControlsDisabled: setControlsMock }}
-    >
-      <TwitchVideoDetails videoId={"1234"} />
-    </ControlsContext.Provider>
+    <TwitchVideoDetails
+      videoDetails={testData}
+      toggleControls={jest.fn}
+      controlsDisabled={false}
+    />
   );
 };
 
 describe("Video detail rendering", () => {
-  mockVideoQuery.data = testData;
-
   it("Includes channel thumbnail", () => {
     setup();
     const thumbnail = screen.getByRole("img");
@@ -133,15 +98,29 @@ describe("Video detail rendering", () => {
 
 describe("Control toggles", () => {
   it("Calls toggle control function on toggle button click", async () => {
-    setup();
+    const toggleMock = jest.fn();
+    render(
+      <TwitchVideoDetails
+        videoDetails={testData}
+        toggleControls={toggleMock}
+        controlsDisabled={false}
+      />
+    );
     const toggleSwitch = screen.getByLabelText("Enable controls");
     await userEvent.click(toggleSwitch);
-    expect(setControlsMock).toBeCalledTimes(1);
+    expect(toggleMock).toBeCalledTimes(1);
   });
 
   it("Customises toggle button content when controls are enabled/disabled", async () => {
-    setup();
+    const toggleMock = jest.fn();
+    render(
+      <TwitchVideoDetails
+        videoDetails={testData}
+        toggleControls={toggleMock}
+        controlsDisabled={true}
+      />
+    );
     const toggleSwitch = screen.getByLabelText("Enable controls");
-    expect(toggleSwitch).toBeChecked();
+    expect(toggleSwitch).not.toBeChecked();
   });
 });

@@ -1,10 +1,7 @@
 import { TwitchPlayer } from "features/players";
-import { TwitchVideoDetails } from "features/players/components/video-details/TwitchVideoDetails";
 import { GetServerSideProps } from "next";
 import { sanitiseVideoQuery } from "utils/queryHandling";
 import * as React from "react";
-import { useGetTwitchVideoDetails } from "features/players/hooks/useGetTwitchVideoDetails";
-import { ControlsContextProvider } from "providers/ControlsContext";
 
 interface VideoProps {
   videoId: string;
@@ -17,15 +14,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const Video = ({ videoId }: VideoProps) => {
-  const { isError, isLoading, data } = useGetTwitchVideoDetails(videoId);
-
-  return (
-    <ControlsContextProvider>
-      <div>
-        <TwitchPlayer videoId={videoId} videoData={data} />
-        <TwitchVideoDetails videoId={videoId} />
-      </div>
-    </ControlsContextProvider>
-  );
+  return <TwitchPlayer videoId={videoId} />;
 };
 export default Video;

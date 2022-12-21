@@ -44,7 +44,7 @@ const testData: TwitchVideo = {
 
 describe("Video details rendering", () => {
   it("Includes channel thumbnail", () => {
-    render(<TwitchVideoDetailsOverlay videoDetailsData={testData} />);
+    render(<TwitchVideoDetailsOverlay videoDetails={testData} />);
     const thumbnail = screen.getByRole("img");
     expect(thumbnail).toBeInTheDocument();
 
@@ -54,7 +54,7 @@ describe("Video details rendering", () => {
   });
 
   it("Includes video title", () => {
-    render(<TwitchVideoDetailsOverlay videoDetailsData={testData} />);
+    render(<TwitchVideoDetailsOverlay videoDetails={testData} />);
     const name = screen.getByText(/BEST GAMER EVER/i);
     expect(name).toBeInTheDocument();
   });

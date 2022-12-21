@@ -8,5 +8,5 @@ interface YouTubePlayerProps {
 
 export const YouTubePlayer = ({ videoId }: YouTubePlayerProps) => {
   const { player } = useYouTubeIframe(videoId);
-  return <VideoPlayer player={player} />;
+  return <VideoPlayer player={player} controlsDisabled={false} />;
 };
