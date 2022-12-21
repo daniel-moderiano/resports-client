@@ -17,6 +17,8 @@ export const TwitchVideoDetails = ({ videoId }: TwitchVideoDetailsProps) => {
   const { isError, isLoading, data } = useGetTwitchVideoDetails(videoId);
   const { controlsDisabled, setControlsDisabled } = useControlsContext();
 
+  console.log(controlsDisabled);
+
   return (
     <div className={styles.outerContainer}>
       {data && (
