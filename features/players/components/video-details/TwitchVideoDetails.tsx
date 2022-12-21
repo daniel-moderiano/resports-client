@@ -5,21 +5,17 @@ import styles from "features/players/components/styles/TwitchVideoDetails.module
 import Link from "next/link";
 import { timeAgo } from "config/timeAgoFormatter";
 import TwitchNameIcon from "icons/TwitchNameIcon";
+import { useControlsContext } from "providers/ControlsContext";
 
 interface TwitchVideoDetailsProps {
   videoId: string;
-  toggleControls: () => void;
-  controlsDisabled: boolean;
 }
 
 const formatter = Intl.NumberFormat("en", { notation: "compact" });
 
-export const TwitchVideoDetails = ({
-  videoId,
-  toggleControls,
-  controlsDisabled,
-}: TwitchVideoDetailsProps) => {
+export const TwitchVideoDetails = ({ videoId }: TwitchVideoDetailsProps) => {
   const { isError, isLoading, data } = useGetTwitchVideoDetails(videoId);
+  const { controlsDisabled, setControlsDisabled } = useControlsContext();
 
   return (
     <div className={styles.outerContainer}>
@@ -74,7 +70,7 @@ export const TwitchVideoDetails = ({
                   type="checkbox"
                   className={styles.input}
                   checked={!controlsDisabled}
-                  onChange={toggleControls}
+                  onChange={() => setControlsDisabled(!controlsDisabled)}
                 />
                 <span className={`${styles.slider} ${styles.round}`}></span>
               </label>

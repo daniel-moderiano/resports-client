@@ -14,25 +14,22 @@ import { SeekIndicator } from "./SeekIndicator";
 import { TwitchVideoDetailsOverlay } from "./video-details/TwitchVideoDetailsOverlay";
 import { TwitchVideo } from "features/channels";
 import { EndOverlay } from "./EndOverlay";
-import { usePlayerContext } from "providers/PlayerContext";
+import { useControlsContext } from "providers/ControlsContext";
 
 interface VideoPlayerProps {
   player: Player | null;
-  disableControls?: boolean;
+
   videoData?: TwitchVideo | undefined | null;
 }
 
-export const VideoPlayer = ({
-  player,
-  disableControls,
-  videoData,
-}: VideoPlayerProps) => {
+export const VideoPlayer = ({ player, videoData }: VideoPlayerProps) => {
   const {
     userActive,
     signalUserInactivity,
     signalUserActivity,
     setLockUserActive,
   } = useUserActivity();
+  const { controlsDisabled } = useControlsContext();
   const { scheduleSeek, projectedTime, seekAmount, cancelSeek } =
     useSeek(player);
   const {
@@ -49,8 +46,8 @@ export const VideoPlayer = ({
   // Use local state to avoid the long delays of an API call to check muted state when toggling icons and UI
   const [playerMuted, setPlayerMuted] = React.useState(true);
   const [playerPaused, setPlayerPaused] = React.useState(false);
-  // const [theaterMode, setTheaterMode] = React.useState(false);
-  const { theaterMode, dispatch } = usePlayerContext();
+  const [theaterMode, setTheaterMode] = React.useState(false);
+  // const { theaterMode, dispatch } = usePlayerContext();
   const [videoEnded, setVideoEnded] = React.useState(false);
 
   // Set the player volume according to local changes in volume. By working with the local volume state, we get a fluid UI as opposed to a laggy API interaction. It is fine to have a trace delay between local change and API player volume update.
@@ -120,8 +117,8 @@ export const VideoPlayer = ({
   }, [player, signalUserInactivity]);
 
   const toggleTheaterMode = () => {
-    // setTheaterMode((prevState) => !prevState);
-    dispatch({ type: "toggle-theater-mode" });
+    setTheaterMode((prevState) => !prevState);
+    // dispatch({ type: "toggle-theater-mode" });
     // Move focus to the parent wrapper rather than remaining on the theater btn. This is the expected UX behaviour for video controls.
     if (wrapperRef.current) {
       wrapperRef.current.focus();
@@ -257,7 +254,7 @@ export const VideoPlayer = ({
       <div
         className={`${styles.overlay} ${
           userActive || playerPaused ? "" : styles.overlayInactive
-        } ${disableControls ? styles.overlayDisabled : ""}`}
+        } ${controlsDisabled ? styles.overlayDisabled : ""}`}
         onClick={() => {
           playOrPauseVideo();
           if (playerPaused) {
@@ -288,7 +285,7 @@ export const VideoPlayer = ({
         <div
           className={`${styles.controls} ${
             userActive || playerPaused ? "" : styles.controlsHide
-          } ${disableControls ? styles.controlsDisabled : ""}`}
+          } ${controlsDisabled ? styles.controlsDisabled : ""}`}
           onMouseMove={throttleMousemove}
           data-testid="customControls"
         >
@@ -325,7 +322,7 @@ export const VideoPlayer = ({
       <div
         className={`${styles.gradient} ${
           userActive || playerPaused ? "" : styles.gradientHide
-        } ${disableControls ? styles.gradientHide : ""}`}
+        } ${controlsDisabled ? styles.gradientHide : ""}`}
         data-testid="gradient"
       ></div>
     </VideoContainer>
