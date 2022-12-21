@@ -12,8 +12,6 @@ export const useMenuCloseEvents = (
     const handleOutsideClick = (event: MouseEvent) => {
       const clickTarget = event.target as HTMLElement;
       if (!clickTarget.closest(`#${menuElementId}`)) {
-        console.log(menuOpen);
-
         closeElement();
       }
     };

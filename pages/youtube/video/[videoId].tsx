@@ -1,7 +1,6 @@
 import { GetServerSideProps } from "next";
 import { sanitiseVideoQuery } from "utils/queryHandling";
 import { YouTubePlayer } from "features/players";
-import { YouTubeVideoDetails } from "features/players/components/video-details/YouTubeVideoDetails";
 
 interface VideoProps {
   videoId: string;
@@ -14,12 +13,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const Video = ({ videoId }: VideoProps) => {
-  return (
-    <div>
-      <YouTubePlayer videoId={videoId} />
-      <YouTubeVideoDetails videoId={videoId} defaultPlayer={true} />
-    </div>
-  );
+  return <YouTubePlayer videoId={videoId} />;
 };
 
 export default Video;

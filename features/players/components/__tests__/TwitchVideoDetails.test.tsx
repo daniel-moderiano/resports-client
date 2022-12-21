@@ -43,37 +43,19 @@ const testData: TwitchVideo = {
   },
 };
 
-interface mockVideoQueryTypes {
-  isLoading: boolean;
-  isError: boolean;
-  data: TwitchVideo | undefined;
-  error: unknown;
-}
-
-// Modify these parameters as needed within individual tests
-const mockVideoQuery: mockVideoQueryTypes = {
-  isLoading: false,
-  isError: false,
-  data: undefined,
-  error: null,
+const setup = () => {
+  render(
+    <TwitchVideoDetails
+      videoDetails={testData}
+      toggleControls={jest.fn}
+      controlsDisabled={false}
+    />
+  );
 };
 
-// Provide channel data and other UI states via this mock of the channel search API call
-jest.mock("features/players/hooks/useGetTwitchVideoDetails", () => ({
-  useGetTwitchVideoDetails: () => mockVideoQuery,
-}));
-
 describe("Video detail rendering", () => {
-  mockVideoQuery.data = testData;
-
   it("Includes channel thumbnail", () => {
-    render(
-      <TwitchVideoDetails
-        videoId={"1234"}
-        toggleControls={jest.fn}
-        controlsDisabled={false}
-      />
-    );
+    setup();
     const thumbnail = screen.getByRole("img");
     expect(thumbnail).toBeInTheDocument();
 
@@ -83,62 +65,32 @@ describe("Video detail rendering", () => {
   });
 
   it("Includes video title", () => {
-    render(
-      <TwitchVideoDetails
-        videoId={"1234"}
-        toggleControls={jest.fn}
-        controlsDisabled={false}
-      />
-    );
+    setup();
     const name = screen.getByText(/BEST GAMER EVER/i);
     expect(name).toBeInTheDocument();
   });
 
   it("Includes video views in compact format", () => {
-    render(
-      <TwitchVideoDetails
-        videoId={"1234"}
-        toggleControls={jest.fn}
-        controlsDisabled={false}
-      />
-    );
+    setup();
     const views = screen.getByText(/54k views/i);
     expect(views).toBeInTheDocument();
   });
 
   it("Includes uploaded section", () => {
-    render(
-      <TwitchVideoDetails
-        videoId={"1234"}
-        toggleControls={jest.fn}
-        controlsDisabled={false}
-      />
-    );
+    setup();
     const uploaded = screen.getByText(/just now/i);
     expect(uploaded).toBeInTheDocument();
   });
 
   it("Includes channel name as link", () => {
-    render(
-      <TwitchVideoDetails
-        videoId={"1234"}
-        toggleControls={jest.fn}
-        controlsDisabled={false}
-      />
-    );
+    setup();
     const channelName = screen.getByTestId("channelLink");
     expect(channelName).toBeInTheDocument();
     expect(channelName).toHaveAttribute("href", "/twitch/channel/41245072");
   });
 
   it("Includes save button", () => {
-    render(
-      <TwitchVideoDetails
-        videoId={"1234"}
-        toggleControls={jest.fn}
-        controlsDisabled={false}
-      />
-    );
+    setup();
     const saveButton = screen.getByRole("button", { name: /save/i });
     expect(saveButton).toBeInTheDocument();
   });
@@ -149,7 +101,7 @@ describe("Control toggles", () => {
     const toggleMock = jest.fn();
     render(
       <TwitchVideoDetails
-        videoId={"1234"}
+        videoDetails={testData}
         toggleControls={toggleMock}
         controlsDisabled={false}
       />
@@ -163,7 +115,7 @@ describe("Control toggles", () => {
     const toggleMock = jest.fn();
     render(
       <TwitchVideoDetails
-        videoId={"1234"}
+        videoDetails={testData}
         toggleControls={toggleMock}
         controlsDisabled={true}
       />

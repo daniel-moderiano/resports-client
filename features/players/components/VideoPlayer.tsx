@@ -13,18 +13,18 @@ import { VolumeLevelIndicator } from "./VolumeLevelIndicator";
 import { SeekIndicator } from "./SeekIndicator";
 import { TwitchVideoDetailsOverlay } from "./video-details/TwitchVideoDetailsOverlay";
 import { TwitchVideo } from "features/channels";
-import ReplayIcon from "icons/ReplayIcon";
+import { EndOverlay } from "./EndOverlay";
 
 interface VideoPlayerProps {
   player: Player | null;
-  disableControls?: boolean;
-  videoData?: TwitchVideo | undefined | null;
+  controlsDisabled: boolean;
+  videoDetails?: TwitchVideo | undefined | null;
 }
 
 export const VideoPlayer = ({
   player,
-  disableControls,
-  videoData,
+  videoDetails,
+  controlsDisabled,
 }: VideoPlayerProps) => {
   const {
     userActive,
@@ -49,6 +49,7 @@ export const VideoPlayer = ({
   const [playerMuted, setPlayerMuted] = React.useState(true);
   const [playerPaused, setPlayerPaused] = React.useState(false);
   const [theaterMode, setTheaterMode] = React.useState(false);
+  // const { theaterMode, dispatch } = usePlayerContext();
   const [videoEnded, setVideoEnded] = React.useState(false);
 
   // Set the player volume according to local changes in volume. By working with the local volume state, we get a fluid UI as opposed to a laggy API interaction. It is fine to have a trace delay between local change and API player volume update.
@@ -119,6 +120,7 @@ export const VideoPlayer = ({
 
   const toggleTheaterMode = () => {
     setTheaterMode((prevState) => !prevState);
+    // dispatch({ type: "toggle-theater-mode" });
     // Move focus to the parent wrapper rather than remaining on the theater btn. This is the expected UX behaviour for video controls.
     if (wrapperRef.current) {
       wrapperRef.current.focus();
@@ -250,22 +252,11 @@ export const VideoPlayer = ({
       wrapperRef={wrapperRef}
     >
       <div id="player"></div>
-      {player && (
-        <div
-          className={`${styles.endOverlay} ${videoEnded ? styles.show : ""}`}
-        >
-          <div className={styles.replayMessage}>
-            <p>Reached end of video</p>
-            <p>Restarting...</p>
-
-            <ReplayIcon className={styles.replayIcon} />
-          </div>
-        </div>
-      )}
+      <EndOverlay videoEnded={videoEnded} />
       <div
         className={`${styles.overlay} ${
           userActive || playerPaused ? "" : styles.overlayInactive
-        } ${disableControls ? styles.overlayDisabled : ""}`}
+        } ${controlsDisabled ? styles.overlayDisabled : ""}`}
         onClick={() => {
           playOrPauseVideo();
           if (playerPaused) {
@@ -279,7 +270,7 @@ export const VideoPlayer = ({
         data-testid="overlay"
       ></div>
       <div className={styles.indicatorContainer}>
-        {showVolumeLevelIndicator && player && (
+        {showVolumeLevelIndicator && (
           <VolumeLevelIndicator currentVolume={localVolume} />
         )}
 
@@ -296,7 +287,7 @@ export const VideoPlayer = ({
         <div
           className={`${styles.controls} ${
             userActive || playerPaused ? "" : styles.controlsHide
-          } ${disableControls ? styles.controlsDisabled : ""}`}
+          } ${controlsDisabled ? styles.controlsDisabled : ""}`}
           onMouseMove={throttleMousemove}
           data-testid="customControls"
         >
@@ -319,22 +310,21 @@ export const VideoPlayer = ({
         </div>
       )}
 
-      {videoData && player && (
+      {videoDetails && (
         <div
           className={`${styles.detailsOverlay} ${
             userActive || playerPaused ? "" : styles.detailsOverlayHide
           }`}
-          onMouseMove={throttleMousemove}
           data-testid="detailsOverlay"
         >
-          <TwitchVideoDetailsOverlay videoDetailsData={videoData} />
+          <TwitchVideoDetailsOverlay videoDetails={videoDetails} />
         </div>
       )}
 
       <div
         className={`${styles.gradient} ${
           userActive || playerPaused ? "" : styles.gradientHide
-        } ${disableControls ? styles.gradientHide : ""}`}
+        } ${controlsDisabled ? styles.gradientHide : ""}`}
         data-testid="gradient"
       ></div>
     </VideoContainer>

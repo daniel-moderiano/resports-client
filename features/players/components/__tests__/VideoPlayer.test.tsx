@@ -95,14 +95,14 @@ jest.setTimeout(20000);
 
 describe("Video player styling and modes", () => {
   it("Begins in normal (non-theater) mode", () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
     expect(wrapper).toHaveClass("wrapperNormal");
     expect(wrapper).not.toHaveClass("wrapperTheater");
   });
 
   it('Switches to theater mode on "t" key press', async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
 
     await userEvent.keyboard("[KeyT]");
@@ -112,7 +112,7 @@ describe("Video player styling and modes", () => {
   });
 
   it('Switches to normal mode on "t" subsequent key press', async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
 
     await userEvent.keyboard("[KeyT]");
@@ -125,7 +125,7 @@ describe("Video player styling and modes", () => {
   // * Testing fullscreen functionality is not only impossible without a valid iframe (with 'allowFullscreen'), but potentially redundant as it is an inbuilt browser API function
 
   it("Includes video overlay, controls, and controls gradient on initial render", () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const gradient = screen.getByTestId("gradient");
     const overlay = screen.getByTestId("overlay");
     const customControls = screen.getByTestId("customControls");
@@ -137,13 +137,13 @@ describe("Video player styling and modes", () => {
 
 describe("Video player control toggles", () => {
   it("Initialises video with custom controls", () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const customControls = screen.getByTestId("customControls");
     expect(customControls).toBeInTheDocument();
   });
 
   it("Visually display custom controls on mute/unmute with keypress", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     // First enable custom controls, then hover the relevant div to trigger user activity/controls to show
     const overlay = screen.getByTestId("overlay");
     await userEvent.hover(overlay);
@@ -153,7 +153,7 @@ describe("Video player control toggles", () => {
   });
 
   it("Shows gradient alongside custom controls", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
 
     // First enable custom controls, then hover the relevant div to trigger user activity/controls to show
     const overlay = screen.getByTestId("overlay");
@@ -168,7 +168,7 @@ describe("Video player control toggles", () => {
 
 describe("Video player keyboard shortcuts", () => {
   it('Mutes/unmutes the video on "m" key press', async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
 
     // First enable custom controls, then focus the wrapper to ensure the keypress is captured correctly
@@ -181,7 +181,7 @@ describe("Video player keyboard shortcuts", () => {
 
   it('Plays a paused video on "k" key press', async () => {
     const player = new Player(playerWrapperPaused);
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
 
     // First enable custom controls, then focus the wrapper to ensure the keypress is captured correctly
@@ -198,7 +198,7 @@ describe("Video player keyboard shortcuts", () => {
 
   it('Pauses a playing video on "k" key press', async () => {
     const player = new Player(playerWrapperPlaying);
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
 
     // First enable custom controls, then focus the wrapper to ensure the keypress is captured correctly
@@ -214,7 +214,7 @@ describe("Video player keyboard shortcuts", () => {
   });
 
   it("Adjusts volume on up/down arrow press", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
 
     // First enable custom controls, then focus the wrapper to ensure the keypress is captured correctly
@@ -226,7 +226,7 @@ describe("Video player keyboard shortcuts", () => {
   });
 
   it("Seeks forward on right arrow key press", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
 
     // First enable custom controls, then focus the wrapper to ensure the keypress is captured correctly
@@ -242,7 +242,7 @@ describe("Video player keyboard shortcuts", () => {
   });
 
   it("Seeks backward on left arrow key press", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
 
     // First enable custom controls, then focus the wrapper to ensure the keypress is captured correctly
@@ -260,7 +260,7 @@ describe("Video player keyboard shortcuts", () => {
 
 describe("Video player controls/user activity timers", () => {
   it("Hides custom controls 3 seconds after user activity is first registered", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
 
     // First enable custom controls, then hover the relevant div to trigger user activity/controls to show
     const overlay = screen.getByTestId("overlay");
@@ -276,7 +276,7 @@ describe("Video player controls/user activity timers", () => {
   });
 
   it("Shows controls on press of mute keyboard shortcut", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
 
     // First enable custom controls, then focus the wrapper to ensure the keypress is captured correctly
@@ -288,7 +288,7 @@ describe("Video player controls/user activity timers", () => {
   });
 
   it("Fades controls after some time following a mute keyboard shortcut", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
 
     // First enable custom controls, then focus the wrapper to ensure the keypress is captured correctly
@@ -309,7 +309,7 @@ describe("Video player controls/user activity timers", () => {
   });
 
   it("Cancels original fade out timer when user is active within original fade out timer", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
 
     // First enable custom controls, then hover the relevant div to trigger user activity/controls to show
     const overlay = screen.getByTestId("overlay");
@@ -332,7 +332,7 @@ describe("Video player controls/user activity timers", () => {
   });
 
   it("Resets fade out time when user is active during original fade out time", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     // First enable custom controls, then hover the relevant div to trigger user activity/controls to show
     const overlay = screen.getByTestId("overlay");
     await userEvent.hover(overlay);
@@ -354,7 +354,7 @@ describe("Video player controls/user activity timers", () => {
   });
 
   it("Resets fade out time when user tabs to a control via keyboard", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
 
     // Focus the wrapper to ensure the keypress is captured correctly
@@ -369,7 +369,7 @@ describe("Video player controls/user activity timers", () => {
 
 describe("Video player control indicators", () => {
   it("Shows control indicator when pausing/playing video with keyboard", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
 
     // First focus the wrapper to ensure the keypress is captured correctly
@@ -383,7 +383,7 @@ describe("Video player control indicators", () => {
   });
 
   it("Does not show control indicator when playing/pausing video with control", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
 
     // First hover the relevant div to trigger user activity/controls to show
     const overlay = screen.getByTestId("overlay");
@@ -397,7 +397,7 @@ describe("Video player control indicators", () => {
   });
 
   it("Shows control indicator when pausing/playing video by clicking on video overlay", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
 
     // First hover the relevant div to trigger user activity/controls to show
     const overlay = screen.getByTestId("overlay");
@@ -410,7 +410,7 @@ describe("Video player control indicators", () => {
   });
 
   it("Shows volume indicator when adjusting volume via keyboard (ArrowUp)", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
 
     // First focus the wrapper to ensure the keypress is captured correctly
@@ -423,7 +423,7 @@ describe("Video player control indicators", () => {
   });
 
   it("Volume indicator disappears after certain time", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
 
     // First focus the wrapper to ensure the keypress is captured correctly
@@ -441,7 +441,7 @@ describe("Video player control indicators", () => {
   });
 
   it("Shows correct seek indicator when seeking with the keyboard", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const wrapper = screen.getByTestId("wrapper");
 
     // First focus the wrapper to ensure the keypress is captured correctly
@@ -455,7 +455,7 @@ describe("Video player control indicators", () => {
 
 describe("Volume and muting control", () => {
   it("Player is unmuted automatically when the volume slider is set to a non-zero value", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
 
     // Volume slider should be starting at zero
     const volumeSlider = screen.getByLabelText("Volume");
@@ -475,7 +475,7 @@ describe("Volume and muting control", () => {
   });
 
   it("Keyboard interaction with volume slider changes volume in 5 unit steps", async () => {
-    render(<VideoPlayer player={player} />);
+    render(<VideoPlayer player={player} controlsDisabled={false} />);
     const slider = screen.getByLabelText("Volume");
 
     // Focus the slider
@@ -488,7 +488,13 @@ describe("Volume and muting control", () => {
 
 describe("Video details overlay", () => {
   it("Displays video details on hover", async () => {
-    render(<VideoPlayer player={player} videoData={testData} />);
+    render(
+      <VideoPlayer
+        player={player}
+        videoDetails={testData}
+        controlsDisabled={false}
+      />
+    );
 
     const overlay = screen.getByTestId("overlay");
     await userEvent.hover(overlay);
@@ -499,7 +505,13 @@ describe("Video details overlay", () => {
 
   it("Hides video detail overlay when video is playing", async () => {
     const player = new Player(playerWrapperPaused);
-    render(<VideoPlayer player={player} videoData={testData} />);
+    render(
+      <VideoPlayer
+        player={player}
+        videoDetails={testData}
+        controlsDisabled={false}
+      />
+    );
     const wrapper = screen.getByTestId("wrapper");
 
     // First enable custom controls, then focus the wrapper to ensure the keypress is captured correctly
