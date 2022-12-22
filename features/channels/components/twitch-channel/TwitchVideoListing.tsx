@@ -1,9 +1,9 @@
 import { HelixVideo } from "@twurple/api/lib";
-import Image from "next/image";
 import { convertTwitchVideoDuration } from "utils/videoDurationConversion";
 import { timeAgo } from "config/timeAgoFormatter";
 import styles from "features/channels/components/styles/TwitchVideoListing.module.css";
 import Link from "next/link";
+import ImageWithFallback from "utils/ImageWithFallback";
 
 interface TwitchVideoListingProps {
   videoData: HelixVideo;
@@ -13,21 +13,13 @@ export const TwitchVideoListing = ({ videoData }: TwitchVideoListingProps) => {
   return (
     <div className={styles.videoListing}>
       <div className={styles.imageContainer}>
-        {videoData.getThumbnailUrl(240, 135) ? (
-          <Image
-            src={videoData.getThumbnailUrl(240, 135)}
-            height={135}
-            width={240}
-            alt="Video thumbnail"
-          />
-        ) : (
-          <Image
-            src="/images/no-thumbnail.png"
-            height={135}
-            width={240}
-            alt="Video thumbnail"
-          />
-        )}
+        <ImageWithFallback
+          src={videoData.getThumbnailUrl(240, 135)}
+          fallbackSrc="/images/no-thumbnail.png"
+          height={135}
+          width={240}
+          alt="Video thumbnail"
+        />
         <p className={styles.duration}>
           {convertTwitchVideoDuration(videoData.duration)}
         </p>

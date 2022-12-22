@@ -30,17 +30,16 @@ const YouTubeChannel = ({ channelId }: YouTubeChannelProps) => {
                     height={100}
                     width={100}
                   />
-                  {data.channelData.brandingSettings.image && (
-                    <Image
-                      src={
-                        data.channelData.brandingSettings.image
-                          .bannerExternalUrl
-                      }
-                      alt={`${data.channelData.snippet.title} channel banner`}
-                      height={100}
-                      width={100}
-                    />
-                  )}
+
+                  {/* Note: the bannerUrl has a max res of 512 * 288 and will likely be remove altogether later x  */}
+                  <Image
+                    src={
+                      data.channelData.brandingSettings.image.bannerExternalUrl
+                    }
+                    alt={`${data.channelData.snippet.title} channel banner`}
+                    height={100}
+                    width={100}
+                  />
                 </div>
                 <div>
                   <p>
