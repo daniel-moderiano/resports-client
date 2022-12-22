@@ -19,6 +19,11 @@ export const TwitchVideoListing = ({ videoData }: TwitchVideoListingProps) => {
             height={135}
             width={240}
             alt="Video thumbnail"
+            // TODO: Add fallback image
+            onError={function (event) {
+              // Reset source tag to a known safe fallback image
+              // event.currentTarget.src = "/images/no-thumbnail.png";
+            }}
           />
         ) : (
           <Image
