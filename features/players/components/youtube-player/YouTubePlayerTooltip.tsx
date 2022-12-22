@@ -2,13 +2,17 @@ import QuestionMarkIcon from "icons/QuestionMarkIcon";
 import React from "react";
 import styles from "features/players/components/styles/YouTubePlayerTooltip.module.css";
 
-interface TooltipProps {
+interface YouTubePlayerTooltipProps {
   showTooltip: boolean;
   tooltipText: string;
   ariaLabel: string;
 }
 
-const Tooltip = ({ showTooltip, tooltipText, ariaLabel }: TooltipProps) => {
+const YouTubePlayerTooltip = ({
+  showTooltip,
+  tooltipText,
+  ariaLabel,
+}: YouTubePlayerTooltipProps) => {
   return (
     <div
       className={`${styles.tooltip} ${showTooltip ? styles.show : styles.hide}`}
@@ -20,4 +24,4 @@ const Tooltip = ({ showTooltip, tooltipText, ariaLabel }: TooltipProps) => {
   );
 };
 
-export default Tooltip;
+export default YouTubePlayerTooltip;

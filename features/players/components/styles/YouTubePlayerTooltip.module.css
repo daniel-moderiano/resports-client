@@ -15,7 +15,7 @@
 
 .tooltipText {
   visibility: hidden;
-  width: 15.5rem;
+  /* width: 15.5rem; */
   background-color: #3d3d3d;
   color: #fff;
   text-align: left;
