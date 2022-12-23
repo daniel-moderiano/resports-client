@@ -40,56 +40,40 @@ export const SearchBar = () => {
   };
 
   return (
-    <div className={styles.searchBar}>
-      <label htmlFor="search" className={styles.label}>
-        Search
-      </label>
-      <SearchIcon fill="#000000" />
-      <input
-        type="text"
-        id="search"
-        placeholder="Search channels"
-        onChange={handleChange}
-        value={searchQuery}
-        spellCheck="false"
-        autoCorrect="false"
-        autoComplete="false"
-        onKeyDown={handleKeyPress}
-        className={styles.searchInput}
-      />
-      <div className={styles.buttonsContainer}>
-        <button className={`${styles.button}`} onClick={togglePlatform}>
-          Switch
-        </button>
+    <div>
+      <div>
+        <select>
+          <option value="twitch">Twitch</option>
+          <option value="youtube">YouTube</option>
+        </select>
+      </div>
+      <div>
+        <label htmlFor="search" className={styles.label}>
+          Search
+        </label>
+
+        <input
+          type="text"
+          id="search"
+          placeholder="Search channels"
+          onChange={handleChange}
+          value={searchQuery}
+          spellCheck="false"
+          autoCorrect="false"
+          autoComplete="false"
+          onKeyDown={handleKeyPress}
+          className={styles.searchInput}
+        />
+      </div>
+      <div>
         <button
-          aria-label="Search Twitch"
-          className={`${
-            selectedPlatform === "twitch"
-              ? `${styles.selected} ${styles.button}`
-              : styles.button
-          }`}
+          aria-label="Search"
           disabled={searchQuery.trim() === ""}
           onClick={() => {
-            setSelectedPlatform("twitch");
             updateSearchQuery("twitch");
           }}
         >
-          Twitch
-        </button>
-        <button
-          aria-label="Search YouTube"
-          className={`${
-            selectedPlatform === "youtube"
-              ? `${styles.selected} ${styles.button}`
-              : styles.button
-          }`}
-          disabled={searchQuery.trim() === ""}
-          onClick={() => {
-            setSelectedPlatform("youtube");
-            updateSearchQuery("youtube");
-          }}
-        >
-          YouTube
+          <SearchIcon fill="#000000" />
         </button>
       </div>
     </div>
