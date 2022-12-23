@@ -7,6 +7,7 @@ import { timeAgo } from "config/timeAgoFormatter";
 import { useGetYouTubeVideoDetails } from "features/players/hooks/useGetYouTubeVideoDetails";
 import YouTubeFullIcon from "icons/YouTubeFullIcon";
 import SwitchPlayerIcon from "icons/SwitchPlayerIcon";
+import { InfoTooltip } from "../youtube-player/InfoTooltip";
 
 interface YouTubeVideoDetailsProps {
   videoId: string;
@@ -83,23 +84,36 @@ export const YouTubeVideoDetails = ({
               Watch on
               <YouTubeFullIcon className={styles.youtubeIcon} />
             </Link>
+
             {defaultPlayer ? (
-              <Link
-                href={`/youtube/video/${videoId}/native-player`}
-                className={styles.playerSwitchLink}
-              >
-                <SwitchPlayerIcon className={styles.switchIcon} />
-                Custom player
-              </Link>
-            ) : (
-              <>
+              <div className={styles.playerSwitchContainer}>
+                <InfoTooltip
+                  tooltipText="The default YouTube player uses Resports' player controls, but does not allow the user to change video quality. Switch to the custom player to use YouTube's naitve player controls, which allow for quality change."
+                  ariaLabel="Show more information about the different YouTube video players"
+                />
                 <Link
-                  href={`/youtube/video/${videoId}`}
+                  href={`/youtube/video/${videoId}/native-player`}
                   className={styles.playerSwitchLink}
                 >
                   <SwitchPlayerIcon className={styles.switchIcon} />
-                  Default player
+                  Custom player
                 </Link>
+              </div>
+            ) : (
+              <>
+                <div className={styles.playerSwitchContainer}>
+                  <InfoTooltip
+                    tooltipText="The default YouTube player uses Resports' player controls, but does not allow the user to change video quality. Switch to the custom player to use YouTube's naitve player controls, which allow for quality change."
+                    ariaLabel="Show more information about the different YouTube video players"
+                  />
+                  <Link
+                    href={`/youtube/video/${videoId}`}
+                    className={styles.playerSwitchLink}
+                  >
+                    <SwitchPlayerIcon className={styles.switchIcon} />
+                    Default player
+                  </Link>
+                </div>
                 <div className={styles.toggleSwitch}>
                   <label className={styles.switch}>
                     <span className={styles.labelText}>Enable controls</span>
