@@ -40,14 +40,17 @@ export const SearchBar = () => {
   };
 
   return (
-    <div>
-      <div>
-        <select>
+    <div className={styles.container}>
+      <div className={styles.selectContainer}>
+        <label htmlFor="platformSelect" className={styles.label}>
+          Select platform
+        </label>
+        <select id="platformSelect">
           <option value="twitch">Twitch</option>
           <option value="youtube">YouTube</option>
         </select>
       </div>
-      <div>
+      <div className={styles.inputContainer}>
         <label htmlFor="search" className={styles.label}>
           Search
         </label>
@@ -65,13 +68,14 @@ export const SearchBar = () => {
           className={styles.searchInput}
         />
       </div>
-      <div>
+      <div className={styles.buttonContainer}>
         <button
           aria-label="Search"
           disabled={searchQuery.trim() === ""}
           onClick={() => {
             updateSearchQuery("twitch");
           }}
+          className={styles.button}
         >
           <SearchIcon fill="#000000" />
         </button>
