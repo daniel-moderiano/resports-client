@@ -51,9 +51,14 @@ export const SearchBar = () => {
           id="platformSelect"
           value={selectedPlatform}
           onChange={handleSelectChange}
+          className={styles.select}
         >
-          <option value="twitch">Twitch</option>
-          <option value="youtube">YouTube</option>
+          <option className={styles.option} value="twitch">
+            Twitch
+          </option>
+          <option className={styles.option} value="youtube">
+            YouTube
+          </option>
         </select>
       </div>
       <div className={styles.inputContainer}>
@@ -79,7 +84,7 @@ export const SearchBar = () => {
           disabled={searchQuery.trim() === ""}
           className={styles.button}
         >
-          <SearchIcon fill="#000000" />
+          <SearchIcon fill="#FFFFFF" />
         </button>
       </div>
     </form>

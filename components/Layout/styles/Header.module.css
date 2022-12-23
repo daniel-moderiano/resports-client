@@ -11,7 +11,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1;
-  align-content: center;
+  align-items: center;
   background-color: #16161a;
   padding: 0.5rem;
 }
