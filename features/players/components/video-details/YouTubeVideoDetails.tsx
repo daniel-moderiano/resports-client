@@ -88,7 +88,7 @@ export const YouTubeVideoDetails = ({
             {defaultPlayer ? (
               <div className={styles.playerSwitchContainer}>
                 <InfoTooltip
-                  tooltipText="Lorem ipsum"
+                  tooltipText="The default YouTube player uses Resports' player controls, but does not allow the user to change video quality. Switch to the custom player to use YouTube's naitve player controls, which allow for quality change."
                   ariaLabel="Show more information about the different YouTube video players"
                 />
                 <Link
@@ -103,7 +103,7 @@ export const YouTubeVideoDetails = ({
               <>
                 <div className={styles.playerSwitchContainer}>
                   <InfoTooltip
-                    tooltipText="The default YouTube player uses Resports' player controls, but does not allow the user to change video quality. Switch to the custom player to use YouTube's naitve player controls, which allow for quality change. Once the quality is adjusted, it is recommended to then enable Resports controls while in the custom player mode."
+                    tooltipText="The default YouTube player uses Resports' player controls, but does not allow the user to change video quality. Switch to the custom player to use YouTube's naitve player controls, which allow for quality change."
                     ariaLabel="Show more information about the different YouTube video players"
                   />
                   <Link
