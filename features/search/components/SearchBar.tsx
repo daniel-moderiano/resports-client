@@ -28,7 +28,7 @@ export const SearchBar = () => {
     }
   };
 
-  const updateSearchQuery = (platform: string) => {
+  const updateSearchQuery = (platform: Platform) => {
     // Router.push returns a promise, but this is an odd choice, and at this stage there is no intention of awaiting this promise for handling. The void keyword indicates this choice
     void router.push({
       pathname: `/${platform}/search`,
@@ -36,24 +36,13 @@ export const SearchBar = () => {
     });
   };
 
-  const togglePlatform = () => {
-    if (selectedPlatform === "twitch") {
-      setSelectedPlatform("youtube");
-    } else {
-      setSelectedPlatform("twitch");
-    }
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key !== "Enter" || searchQuery.trim() === "") {
-      return;
-    }
-
-    updateSearchQuery("twitch");
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    updateSearchQuery(selectedPlatform);
   };
 
   return (
-    <div className={styles.container}>
+    <form className={styles.container} onSubmit={handleSubmit}>
       <div className={styles.selectContainer}>
         <label htmlFor="platformSelect" className={styles.label}>
           Select platform
@@ -81,7 +70,6 @@ export const SearchBar = () => {
           spellCheck="false"
           autoCorrect="false"
           autoComplete="false"
-          onKeyDown={handleKeyPress}
           className={styles.searchInput}
         />
       </div>
@@ -97,6 +85,6 @@ export const SearchBar = () => {
           <SearchIcon fill="#000000" />
         </button>
       </div>
-    </div>
+    </form>
   );
 };
