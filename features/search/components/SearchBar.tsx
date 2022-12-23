@@ -18,22 +18,22 @@ export const SearchBar = () => {
   const [selectedPlatform, setSelectedPlatform] =
     React.useState<Platform>("twitch");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (isPlatform(e.currentTarget.value)) {
-      setSelectedPlatform(e.currentTarget.value);
-    }
-  };
-
   const updateSearchQuery = (platform: Platform) => {
     // Router.push returns a promise, but this is an odd choice, and at this stage there is no intention of awaiting this promise for handling. The void keyword indicates this choice
     void router.push({
       pathname: `/${platform}/search`,
       query: { term: searchQuery },
     });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.currentTarget.value);
+  };
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (isPlatform(e.currentTarget.value)) {
+      setSelectedPlatform(e.currentTarget.value);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -77,9 +77,6 @@ export const SearchBar = () => {
         <button
           aria-label="Search"
           disabled={searchQuery.trim() === ""}
-          onClick={() => {
-            updateSearchQuery("twitch");
-          }}
           className={styles.button}
         >
           <SearchIcon fill="#000000" />
