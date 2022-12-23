@@ -24,19 +24,6 @@ describe("Search bar UI and select options", () => {
     expect(input.value).toBe("test");
   });
 
-  it("Defaults to twitch as selected platform", () => {
-    render(<SearchBar />);
-    const select: HTMLSelectElement = screen.getByLabelText(/select platform/i);
-    expect(select).toHaveValue("twitch");
-  });
-
-  it("Updates selected platform", async () => {
-    render(<SearchBar />);
-    const select: HTMLSelectElement = screen.getByLabelText(/select platform/i);
-    await userEvent.selectOptions(select, ["youtube"]);
-    expect(select).toHaveValue("youtube");
-  });
-
   it("disables search buttons when search query is empty", () => {
     render(<SearchBar />);
     const buttons: HTMLButtonElement[] = screen.getAllByRole("button", {
@@ -89,9 +76,14 @@ describe("Search bar functionality", () => {
     });
     const input: HTMLInputElement =
       screen.getByPlaceholderText(/search channels/i);
-    const select: HTMLSelectElement = screen.getByLabelText(/select platform/i);
+    const select: HTMLSelectElement = screen.getByRole("combobox");
 
-    await userEvent.selectOptions(select, ["youtube"]);
+    // Select the YouTube option in select dropdown menu
+    await userEvent.click(select);
+    const option = screen.getByText("YouTube");
+    userEvent.click(option);
+
+    // Perform the search
     await userEvent.type(input, "hello");
     await userEvent.click(btn);
 
