@@ -7,7 +7,7 @@ import { timeAgo } from "config/timeAgoFormatter";
 import { useGetYouTubeVideoDetails } from "features/players/hooks/useGetYouTubeVideoDetails";
 import YouTubeFullIcon from "icons/YouTubeFullIcon";
 import SwitchPlayerIcon from "icons/SwitchPlayerIcon";
-import YouTubePlayerTooltip from "../youtube-player/YouTubePlayerTooltip";
+import { InfoTooltip } from "../youtube-player/InfoTooltip";
 
 interface YouTubeVideoDetailsProps {
   videoId: string;
@@ -87,9 +87,8 @@ export const YouTubeVideoDetails = ({
 
             {defaultPlayer ? (
               <div className={styles.playerSwitchContainer}>
-                <YouTubePlayerTooltip
-                  showTooltip={true}
-                  tooltipText="Lorem ipsum"
+                <InfoTooltip
+                  tooltipText="The default YouTube player uses Resports' player controls, but does not allow the user to change video quality. Switch to the custom player to use YouTube's naitve player controls, which allow for quality change."
                   ariaLabel="Show more information about the different YouTube video players"
                 />
                 <Link
@@ -103,9 +102,8 @@ export const YouTubeVideoDetails = ({
             ) : (
               <>
                 <div className={styles.playerSwitchContainer}>
-                  <YouTubePlayerTooltip
-                    showTooltip={true}
-                    tooltipText="The default YouTube player uses Resports' player controls, but does not allow the user to change video quality. Switch to the custom player to use YouTube's naitve player controls, which allow for quality change. Once the quality is adjusted, it is recommended to then enable Resports controls while in the custom player mode."
+                  <InfoTooltip
+                    tooltipText="The default YouTube player uses Resports' player controls, but does not allow the user to change video quality. Switch to the custom player to use YouTube's naitve player controls, which allow for quality change."
                     ariaLabel="Show more information about the different YouTube video players"
                   />
                   <Link
