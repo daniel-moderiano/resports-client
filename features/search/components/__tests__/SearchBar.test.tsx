@@ -9,7 +9,7 @@ jest.mock("next/router", () => ({
   useRouter: jest.fn(),
 }));
 
-describe("Search bar and button UI states", () => {
+describe("Search bar UI and select options", () => {
   it('Shows "search channels" placeholder by default', () => {
     render(<SearchBar />);
     const input = screen.getByPlaceholderText(/search channels/i);
@@ -28,6 +28,13 @@ describe("Search bar and button UI states", () => {
     render(<SearchBar />);
     const select: HTMLSelectElement = screen.getByLabelText(/select platform/i);
     expect(select).toHaveValue("twitch");
+  });
+
+  it("Updates selected platform", async () => {
+    render(<SearchBar />);
+    const select: HTMLSelectElement = screen.getByLabelText(/select platform/i);
+    await userEvent.selectOptions(select, ["youtube"]);
+    expect(select).toHaveValue("youtube");
   });
 
   it("disables search buttons when search query is empty", () => {
@@ -69,6 +76,31 @@ describe("Search bar and button UI states", () => {
 });
 
 describe("Search bar functionality", () => {
+  it("routes to search page with correct search, using selected platform", async () => {
+    const mockRouter = {
+      push: jest.fn(),
+      pathname: "",
+    };
+    (useRouter as jest.Mock).mockReturnValue(mockRouter);
+
+    render(<SearchBar />);
+    const btn: HTMLButtonElement = screen.getByRole("button", {
+      name: /search/i,
+    });
+    const input: HTMLInputElement =
+      screen.getByPlaceholderText(/search channels/i);
+    const select: HTMLSelectElement = screen.getByLabelText(/select platform/i);
+
+    await userEvent.selectOptions(select, ["youtube"]);
+    await userEvent.type(input, "hello");
+    await userEvent.click(btn);
+
+    expect(mockRouter.push).toHaveBeenCalledWith({
+      pathname: "/youtube/search",
+      query: { term: "hello" },
+    });
+  });
+
   it("routes to search page with correct search term when Twitch search btn is pressed", async () => {
     const mockRouter = {
       push: jest.fn(),
@@ -88,44 +120,6 @@ describe("Search bar functionality", () => {
       query: { term: "hello" },
     });
   });
-
-  // it("routes to search page with correct search term when YouTube search btn is pressed", async () => {
-  //   const mockRouter = {
-  //     push: jest.fn(),
-  //     pathname: "",
-  //   };
-  //   (useRouter as jest.Mock).mockReturnValue(mockRouter);
-  //   render(<SearchBar />);
-  //   const youtubeButton: HTMLButtonElement = screen.getByRole("button", {
-  //     name: /search youtube/i,
-  //   });
-  //   const input: HTMLInputElement =
-  //     screen.getByPlaceholderText(/search channels/i);
-  //   await userEvent.type(input, "hello");
-  //   await userEvent.click(youtubeButton);
-  //   expect(mockRouter.push).toHaveBeenCalledWith({
-  //     pathname: "/youtube/search",
-  //     query: { term: "hello" },
-  //   });
-  // });
-
-  // it("routes to twitch search by default Enter key is pressed within input", async () => {
-  //   const mockRouter = {
-  //     push: jest.fn(),
-  //     pathname: "",
-  //   };
-  //   (useRouter as jest.Mock).mockReturnValue(mockRouter);
-  //   render(<SearchBar />);
-  //   const input: HTMLInputElement =
-  //     screen.getByPlaceholderText(/search channels/i);
-  //   await userEvent.type(input, "hello");
-  //   input.focus();
-  //   await userEvent.keyboard("[Enter]");
-  //   expect(mockRouter.push).toHaveBeenCalledWith({
-  //     pathname: "/twitch/search",
-  //     query: { term: "hello" },
-  //   });
-  // });
 
   it("Does not route to search page (i.e. submit search form) for empty searchQueries", async () => {
     const mockRouter = {
