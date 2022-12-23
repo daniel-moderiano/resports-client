@@ -63,22 +63,9 @@ export const SearchBar = () => {
   return (
     <form className={styles.container} onSubmit={handleSubmit}>
       <div className={styles.selectContainer}>
-        <label id="selectLabel" className={styles.label}>
+        <span id="selectLabel" className={styles.label}>
           Select platform
-        </label>
-        {/* <select
-          id="platformSelect"
-          value={selectedPlatform}
-          onChange={handleSelectChange}
-          className={styles.select}
-        >
-          <option className={styles.option} value="twitch">
-            Twitch
-          </option>
-          <option className={styles.option} value="youtube">
-            YouTube
-          </option>
-        </select> */}
+        </span>
         <CustomSelect
           options={options}
           onChange={handleSelectChange}
