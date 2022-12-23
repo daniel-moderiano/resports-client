@@ -1,18 +1,31 @@
-import React, { useEffect, useState } from "react";
+import * as React from "react";
 import { useRouter } from "next/router";
 import styles from "features/search/components/styles/SearchBar.module.css";
 import SearchIcon from "icons/SearchIcon";
 
-// TODO: Add custom disabled styles that replicate normal btn, but with 'stop sign' cursor
+// Logic that allows us to derive a function that checks whether any string is part of the Platform type
+const Platform = ["youtube", "twitch"] as const;
+export type Platform = typeof Platform[number];
+
+function isPlatform(a: unknown): a is Platform {
+  return Platform.indexOf(a as Platform) != -1;
+}
 
 // This component is expected to 'live' in the header and remain visible from all pages of the application
 export const SearchBar = () => {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedPlatform, setSelectedPlatform] = useState("twitch");
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [selectedPlatform, setSelectedPlatform] =
+    React.useState<Platform>("twitch");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
+  };
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (isPlatform(e.currentTarget.value)) {
+      setSelectedPlatform(e.currentTarget.value);
+    }
   };
 
   const updateSearchQuery = (platform: string) => {
@@ -45,7 +58,11 @@ export const SearchBar = () => {
         <label htmlFor="platformSelect" className={styles.label}>
           Select platform
         </label>
-        <select id="platformSelect">
+        <select
+          id="platformSelect"
+          value={selectedPlatform}
+          onChange={handleSelectChange}
+        >
           <option value="twitch">Twitch</option>
           <option value="youtube">YouTube</option>
         </select>
