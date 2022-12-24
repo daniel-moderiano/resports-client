@@ -2,14 +2,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  max-height: 2rem;
+  max-height: 2.25rem;
   height: 100%;
-  width: 100%;
   border-radius: 0.25rem;
 }
 
 .active {
   outline: 2px solid #597cac;
+  outline-offset: 1px;
 }
 
 .buttonContainer,
@@ -18,13 +18,6 @@
   height: 100%;
   display: flex;
   align-items: center;
-}
-
-.select {
-  height: 100%;
-  background: #1d2125;
-  border: none;
-  color: #c7d1db;
 }
 
 .option {
@@ -39,12 +32,13 @@
   border: none;
   color: #c7d1db;
   height: 100%;
-  padding: 0 0.5rem;
+  padding: 0 0.75rem;
   font-size: 1rem;
+  min-width: 20rem;
 }
 
 .searchInput:focus {
-  outline: 2px solid #597cac;
+  outline: none;
   caret-color: #c7d1db;
 }
 
@@ -71,17 +65,23 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  background: #226bd1;
+  background: rgba(161, 189, 217, 0.0784314);
   color: #c7d1db;
   border: none;
   margin: 0;
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
+  padding: 0 0.5rem;
 }
 
 /* These will still apply in disabled state */
 .button:hover {
   cursor: pointer;
+  background-color: rgba(166, 197, 226, 0.160784);
+}
+
+.button:active {
+  background-color: rgba(191, 219, 248, 0.278431);
 }
 
 .button:focus {
@@ -90,4 +90,8 @@
 
 .button:disabled {
   cursor: not-allowed;
+}
+
+.searchIcon {
+  width: 1.5rem;
 }

@@ -11,19 +11,17 @@ export function CustomSelect<
       styles={{
         control: (provided, state) => ({
           ...provided,
-          border: "none",
+          border: state.isFocused ? "none" : "none",
           borderRadius: "0",
           borderBottomLeftRadius: "0.25rem",
           borderTopLeftRadius: "0.25rem",
-          backgroundColor: state.isDisabled ? "#616161" : "#1d2125",
+          backgroundColor: "#082145",
           outline: state.isFocused ? "2px solid #597cac" : "none",
-
-          "&:hover": {
-            borderColor: state.isFocused ? "#597cac" : "transparent",
-          },
+          outlineOffset: "1px",
+          boxShadow: "none",
           minWidth: "7rem",
           minHeight: "0",
-          height: "2rem",
+          height: "2.25rem",
           transition: "none",
         }),
 
@@ -71,7 +69,7 @@ export function CustomSelect<
           ...provided,
           padding: "0 0 0 0.5rem",
           margin: "0",
-          color: "#c7d1db",
+          color: "#579DFF",
           fontSize: "0.9rem",
         }),
 

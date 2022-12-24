@@ -92,7 +92,7 @@ export const SearchBar = () => {
           className={styles.button}
           type="submit"
         >
-          <SearchIcon fill="#FFFFFF" />
+          <SearchIcon fill="#FFFFFF" className={styles.searchIcon} />
         </button>
       </div>
     </form>
