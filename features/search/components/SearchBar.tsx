@@ -30,6 +30,7 @@ export const SearchBar = () => {
   const [selectedOption, setSelectedOption] = React.useState<Option>(
     options[0]
   );
+  const [inputFocused, setInputFocused] = React.useState(false);
 
   const updateSearchQuery = (platform: Platform) => {
     // Router.push returns a promise, but this is an odd choice, and at this stage there is no intention of awaiting this promise for handling. The void keyword indicates this choice
@@ -61,7 +62,10 @@ export const SearchBar = () => {
   };
 
   return (
-    <form className={styles.container} onSubmit={handleSubmit}>
+    <form
+      className={`${styles.container} ${inputFocused ? styles.active : ""}`}
+      onSubmit={handleSubmit}
+    >
       <div className={styles.selectContainer}>
         <span id="selectLabel" className={styles.label}>
           Select platform
@@ -88,6 +92,8 @@ export const SearchBar = () => {
           autoCorrect="false"
           autoComplete="false"
           className={styles.searchInput}
+          onFocus={() => setInputFocused(true)}
+          onBlur={() => setInputFocused(false)}
         />
       </div>
       <div className={styles.buttonContainer}>

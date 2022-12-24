@@ -1,8 +1,14 @@
 .container {
   display: flex;
   align-items: center;
+  justify-content: center;
   max-height: 2rem;
   height: 100%;
+  border-radius: 0.25rem;
+}
+
+.active {
+  outline: 2px solid #597cac;
 }
 
 .buttonContainer,
@@ -32,13 +38,12 @@
   border: none;
   color: #c7d1db;
   height: 100%;
-  padding: 0;
+  padding: 0 0.5rem;
   font-size: 1rem;
 }
 
 .searchInput:focus {
-  border: 2px solid #597cac;
-  outline: none;
+  outline: 2px solid #597cac;
   caret-color: #c7d1db;
 }
 
@@ -65,15 +70,21 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  background: rgba(161, 189, 217, 0.0784314);
+  background: #226bd1;
   color: #c7d1db;
   border: none;
   margin: 0;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
 }
 
 /* These will still apply in disabled state */
 .button:hover {
   cursor: pointer;
+}
+
+.button:focus {
+  outline: 2px solid #597cac;
 }
 
 .button:disabled {

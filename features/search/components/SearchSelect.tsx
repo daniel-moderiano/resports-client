@@ -14,14 +14,16 @@ export function CustomSelect<
           borderWidth: "2px",
           borderColor: state.isFocused ? "#597cac" : "transparent",
           borderRadius: "0",
+          borderBottomLeftRadius: "0.25rem",
+          borderTopLeftRadius: "0.25rem",
           backgroundColor: state.isDisabled ? "#616161" : "#1d2125",
 
           "&:hover": {
             borderColor: state.isFocused ? "#597cac" : "transparent",
           },
-          width: "8rem",
-          minHeight: "0px",
-          maxHeight: "2rem",
+          minWidth: "7rem",
+          minHeight: "0",
+          height: "2rem",
         }),
 
         menu: (provided) => ({
@@ -39,8 +41,13 @@ export function CustomSelect<
         option: (provided, state) => ({
           ...provided,
           color: "#c7d1db",
-          lineHeight: "1.5rem",
-          padding: "0.625rem 0.875rem",
+          fontSize: "0.9rem",
+          backgroundColor: state.isSelected ? "#082145" : "#1d2125",
+          "&:hover": {
+            backgroundColor: state.isSelected
+              ? "#082145"
+              : "rgba(161, 189, 217, 0.0784314)",
+          },
         }),
 
         valueContainer: (provided) => ({
@@ -51,10 +58,10 @@ export function CustomSelect<
 
         singleValue: (provided) => ({
           ...provided,
-          padding: "0.25rem",
+          padding: "0 0 0 0.5rem",
           margin: "0",
           color: "#c7d1db",
-          // fontSize: "1rem",
+          fontSize: "0.9rem",
         }),
 
         clearIndicator: (provided) => ({
@@ -70,7 +77,8 @@ export function CustomSelect<
 
         dropdownIndicator: (provided) => ({
           ...provided,
-          padding: "0.25rem",
+          padding: "0 0.5rem 0 0",
+          width: "1.4rem",
         }),
       }}
     />
