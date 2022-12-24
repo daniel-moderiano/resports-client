@@ -4,6 +4,7 @@ import styles from "features/search/components/styles/SearchBar.module.css";
 import SearchIcon from "icons/SearchIcon";
 import { CustomSelect } from "./SearchSelect";
 import { SingleValue } from "react-select";
+import CloseIcon from "icons/CloseIcon";
 
 export type Platform = "youtube" | "twitch";
 
@@ -84,6 +85,9 @@ export const SearchBar = () => {
           onFocus={() => setInputFocused(true)}
           onBlur={() => setInputFocused(false)}
         />
+        <button className={styles.clearInput}>
+          <CloseIcon fill="#FFFFFF" className={styles.closeIcon} />
+        </button>
       </div>
       <div className={styles.buttonContainer}>
         <button

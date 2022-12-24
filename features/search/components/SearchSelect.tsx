@@ -23,6 +23,7 @@ export function CustomSelect<
           minHeight: "0",
           height: "2.25rem",
           transition: "none",
+          zIndex: "1",
         }),
 
         menu: (provided) => ({
