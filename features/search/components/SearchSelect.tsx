@@ -11,12 +11,12 @@ export function CustomSelect<
       styles={{
         control: (provided, state) => ({
           ...provided,
-          borderWidth: "2px",
-          borderColor: state.isFocused ? "#597cac" : "transparent",
+          border: "none",
           borderRadius: "0",
           borderBottomLeftRadius: "0.25rem",
           borderTopLeftRadius: "0.25rem",
           backgroundColor: state.isDisabled ? "#616161" : "#1d2125",
+          outline: state.isFocused ? "2px solid #597cac" : "none",
 
           "&:hover": {
             borderColor: state.isFocused ? "#597cac" : "transparent",
@@ -24,6 +24,7 @@ export function CustomSelect<
           minWidth: "7rem",
           minHeight: "0",
           height: "2rem",
+          transition: "none",
         }),
 
         menu: (provided) => ({
