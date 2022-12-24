@@ -11,23 +11,22 @@ export function CustomSelect<
       styles={{
         control: (provided, state) => ({
           ...provided,
-          borderWidth: "1px",
-          borderColor: state.isFocused ? "#FFFFFF" : "#000000",
-          borderRadius: "8px",
-          boxShadow: state.isFocused ? "#FFFFFF" : "#000000",
-          padding: "0.5625rem 0.8125rem",
-          backgroundColor: state.isDisabled ? "#FFFFFF" : "#000000",
+          borderWidth: "2px",
+          borderColor: state.isFocused ? "#597cac" : "transparent",
+          borderRadius: "0",
+          backgroundColor: state.isDisabled ? "#616161" : "#1d2125",
 
           "&:hover": {
-            borderColor: state.isFocused ? "#FFFFFF" : "#000000",
-            cursor: "pointer",
+            borderColor: state.isFocused ? "#597cac" : "transparent",
           },
+          width: "8rem",
+          minHeight: "0px",
+          maxHeight: "2rem",
         }),
 
         menu: (provided) => ({
           ...provided,
-          boxShadow:
-            "0px 12px 16px -4px rgba(16, 24, 40, 0.1), 0px 4px 6px -2px rgba(16, 24, 40, 0.05)",
+          backgroundColor: "#1d2125",
           borderRadius: "8px",
           margin: "0.5rem 0",
         }),
@@ -39,18 +38,9 @@ export function CustomSelect<
 
         option: (provided, state) => ({
           ...provided,
-          color: "#FFFFFF",
+          color: "#c7d1db",
           lineHeight: "1.5rem",
           padding: "0.625rem 0.875rem",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          backgroundColor:
-            state.isFocused || state.isSelected ? "#FFFFFF" : "#FFFFFF",
-
-          "&:hover": {
-            backgroundColor: `#FFFFFF`,
-          },
         }),
 
         valueContainer: (provided) => ({
@@ -59,27 +49,28 @@ export function CustomSelect<
           padding: "0",
         }),
 
-        placeholder: (provided) => ({
-          ...provided,
-          color: "#FFFFFF",
-          lineHeight: "1.5rem",
-          display: "flex",
-          alignContent: "center",
-          margin: "0",
-        }),
-
         singleValue: (provided) => ({
           ...provided,
-          lineHeight: "1.5rem",
-          display: "flex",
-          alignContent: "center",
+          padding: "0.25rem",
           margin: "0",
+          color: "#c7d1db",
+          // fontSize: "1rem",
         }),
 
         clearIndicator: (provided) => ({
           ...provided,
           margin: "0",
           padding: "0 0.1rem",
+        }),
+
+        indicatorSeparator: (provided) => ({
+          ...provided,
+          display: "none",
+        }),
+
+        dropdownIndicator: (provided) => ({
+          ...provided,
+          padding: "0.25rem",
         }),
       }}
     />
