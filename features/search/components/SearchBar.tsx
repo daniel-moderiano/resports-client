@@ -5,13 +5,7 @@ import SearchIcon from "icons/SearchIcon";
 import { CustomSelect } from "./SearchSelect";
 import { SingleValue } from "react-select";
 
-// Logic that allows us to derive a function that checks whether any string is part of the Platform type
-const Platform = ["youtube", "twitch"] as const;
-export type Platform = typeof Platform[number];
-
-function isPlatform(a: unknown): a is Platform {
-  return Platform.indexOf(a as Platform) != -1;
-}
+export type Platform = "youtube" | "twitch";
 
 type Option = {
   value: Platform;
@@ -40,15 +34,9 @@ export const SearchBar = () => {
     });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.currentTarget.value);
   };
-
-  // const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   if (isPlatform(e.currentTarget.value)) {
-  //     setSelectedPlatform(e.currentTarget.value);
-  //   }
-  // };
 
   const handleSelectChange = (newValue: SingleValue<Option>) => {
     if (newValue) {
@@ -87,7 +75,7 @@ export const SearchBar = () => {
           type="text"
           id="search"
           placeholder="Search channels"
-          onChange={handleChange}
+          onChange={handleInputChange}
           value={searchQuery}
           spellCheck="false"
           autoCorrect="false"
@@ -102,6 +90,7 @@ export const SearchBar = () => {
           aria-label="Search"
           disabled={searchQuery.trim() === ""}
           className={styles.button}
+          type="submit"
         >
           <SearchIcon fill="#FFFFFF" />
         </button>
