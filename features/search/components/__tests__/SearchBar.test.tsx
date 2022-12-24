@@ -26,39 +26,28 @@ describe("Search bar UI and select options", () => {
 
   it("disables search buttons when search query is empty", () => {
     render(<SearchBar />);
-    const buttons: HTMLButtonElement[] = screen.getAllByRole("button", {
-      name: /search/i,
-    });
-    buttons.forEach((button) => {
-      expect(button).toHaveAttribute("disabled");
-    });
+    const button: HTMLButtonElement = screen.getByRole("button");
+    expect(button).toBeDisabled();
   });
 
   it("disables search buttons when search query is whitespace only", async () => {
     render(<SearchBar />);
-    const buttons: HTMLButtonElement[] = screen.getAllByRole("button", {
-      name: /search/i,
-    });
-
+    const button: HTMLButtonElement = screen.getByRole("button");
     const input: HTMLInputElement =
       screen.getByPlaceholderText(/search channels/i);
+
     await userEvent.type(input, "   ");
-    buttons.forEach((button) => {
-      expect(button).toHaveAttribute("disabled");
-    });
+    expect(button).toBeDisabled();
   });
 
   it("enables search buttons when search query is valid (non-whitespace)", async () => {
     render(<SearchBar />);
-    const buttons: HTMLButtonElement[] = screen.getAllByRole("button", {
-      name: /search/i,
-    });
+    const button: HTMLButtonElement = screen.getByRole("button");
     const input: HTMLInputElement =
       screen.getByPlaceholderText(/search channels/i);
-    await userEvent.type(input, "hello");
-    buttons.forEach((button) => {
-      expect(button).not.toHaveAttribute("disabled");
-    });
+
+    await userEvent.type(input, "Hello");
+    expect(button).not.toBeDisabled();
   });
 
   it("Sets container-wide styles when the input is focused", async () => {

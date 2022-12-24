@@ -39,7 +39,7 @@ export const SearchBar = () => {
   };
 
   const handleSelectChange = (newValue: SingleValue<Option>) => {
-    if (newValue) {
+    if (newValue !== null) {
       setSelectedOption(newValue);
     }
   };
