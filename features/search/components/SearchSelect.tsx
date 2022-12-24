@@ -19,7 +19,7 @@ export function CustomSelect<
           outline: state.isFocused ? "2px solid #597cac" : "none",
           outlineOffset: "1px",
           boxShadow: "none",
-          minWidth: "7rem",
+          minWidth: "6.25rem",
           minHeight: "0",
           height: "2.25rem",
           transition: "none",
@@ -84,10 +84,14 @@ export function CustomSelect<
           display: "none",
         }),
 
-        dropdownIndicator: (provided) => ({
+        dropdownIndicator: (provided, state) => ({
           ...provided,
           padding: "0 0.5rem 0 0",
           width: "1.4rem",
+          color: state.isFocused ? "#c7d1db" : "#b9d6ff",
+          "&:hover": {
+            color: "#c7d1db",
+          },
         }),
       }}
     />
