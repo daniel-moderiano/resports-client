@@ -60,6 +60,18 @@ describe("Search bar UI and select options", () => {
       expect(button).not.toHaveAttribute("disabled");
     });
   });
+
+  it("Sets container-wide styles when the input is focused", async () => {
+    render(<SearchBar />);
+    const input: HTMLInputElement =
+      screen.getByPlaceholderText(/search channels/i);
+    const container: HTMLFormElement = screen.getByTestId("searchBar");
+    expect(container).not.toHaveClass("active");
+
+    await userEvent.click(input);
+
+    expect(container).toHaveClass("active");
+  });
 });
 
 describe("Search bar functionality", () => {

@@ -65,6 +65,7 @@ export const SearchBar = () => {
     <form
       className={`${styles.container} ${inputFocused ? styles.active : ""}`}
       onSubmit={handleSubmit}
+      data-testid="searchBar"
     >
       <div className={styles.selectContainer}>
         <span id="selectLabel" className={styles.label}>
