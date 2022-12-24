@@ -62,7 +62,11 @@ export const SearchBar = () => {
   };
 
   return (
-    <div>
+    <form
+      className={`${styles.container} ${inputFocused ? styles.active : ""}`}
+      onSubmit={handleSubmit}
+      role="search"
+    >
       <div className={styles.selectContainer}>
         <span id="selectLabel" className={styles.label}>
           Select platform
@@ -74,40 +78,34 @@ export const SearchBar = () => {
           aria-labelledby="selectLabel"
         />
       </div>
-      <form
-        className={`${styles.container} ${inputFocused ? styles.active : ""}`}
-        onSubmit={handleSubmit}
-        role="search"
-      >
-        <div className={styles.inputContainer}>
-          <label htmlFor="search" className={styles.label}>
-            Search
-          </label>
+      <div className={styles.inputContainer}>
+        <label htmlFor="search" className={styles.label}>
+          Search
+        </label>
 
-          <input
-            type="text"
-            id="search"
-            placeholder="Search channels"
-            onChange={handleChange}
-            value={searchQuery}
-            spellCheck="false"
-            autoCorrect="false"
-            autoComplete="false"
-            className={styles.searchInput}
-            onFocus={() => setInputFocused(true)}
-            onBlur={() => setInputFocused(false)}
-          />
-        </div>
-        <div className={styles.buttonContainer}>
-          <button
-            aria-label="Search"
-            disabled={searchQuery.trim() === ""}
-            className={styles.button}
-          >
-            <SearchIcon fill="#FFFFFF" />
-          </button>
-        </div>
-      </form>
-    </div>
+        <input
+          type="text"
+          id="search"
+          placeholder="Search channels"
+          onChange={handleChange}
+          value={searchQuery}
+          spellCheck="false"
+          autoCorrect="false"
+          autoComplete="false"
+          className={styles.searchInput}
+          onFocus={() => setInputFocused(true)}
+          onBlur={() => setInputFocused(false)}
+        />
+      </div>
+      <div className={styles.buttonContainer}>
+        <button
+          aria-label="Search"
+          disabled={searchQuery.trim() === ""}
+          className={styles.button}
+        >
+          <SearchIcon fill="#FFFFFF" />
+        </button>
+      </div>
+    </form>
   );
 };
