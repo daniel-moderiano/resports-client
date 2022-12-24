@@ -65,7 +65,7 @@ describe("Search bar UI and select options", () => {
     render(<SearchBar />);
     const input: HTMLInputElement =
       screen.getByPlaceholderText(/search channels/i);
-    const container: HTMLFormElement = screen.getByTestId("searchBar");
+    const container: HTMLFormElement = screen.getByRole("search");
     expect(container).not.toHaveClass("active");
 
     await userEvent.click(input);

@@ -43,8 +43,18 @@ export function CustomSelect<
           ...provided,
           color: "#c7d1db",
           fontSize: "0.9rem",
-          backgroundColor: state.isSelected ? "#082145" : "#1d2125",
+          backgroundColor: state.isSelected
+            ? "#082145"
+            : state.isFocused
+            ? "rgba(161, 189, 217, 0.0784314)"
+            : "#1d2125",
           "&:hover": {
+            backgroundColor: state.isSelected
+              ? "#082145"
+              : "rgba(161, 189, 217, 0.0784314)",
+          },
+
+          "&:active": {
             backgroundColor: state.isSelected
               ? "#082145"
               : "rgba(161, 189, 217, 0.0784314)",
