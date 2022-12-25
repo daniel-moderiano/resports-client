@@ -26,13 +26,17 @@ describe("Search bar UI and select options", () => {
 
   it("disables search buttons when search query is empty", () => {
     render(<SearchBar />);
-    const button: HTMLButtonElement = screen.getByRole("button");
+    const button: HTMLButtonElement = screen.getByRole("button", {
+      name: "Search",
+    });
     expect(button).toBeDisabled();
   });
 
   it("disables search buttons when search query is whitespace only", async () => {
     render(<SearchBar />);
-    const button: HTMLButtonElement = screen.getByRole("button");
+    const button: HTMLButtonElement = screen.getByRole("button", {
+      name: "Search",
+    });
     const input: HTMLInputElement =
       screen.getByPlaceholderText(/search channels/i);
 
@@ -42,7 +46,9 @@ describe("Search bar UI and select options", () => {
 
   it("enables search buttons when search query is valid (non-whitespace)", async () => {
     render(<SearchBar />);
-    const button: HTMLButtonElement = screen.getByRole("button");
+    const button: HTMLButtonElement = screen.getByRole("button", {
+      name: "Search",
+    });
     const input: HTMLInputElement =
       screen.getByPlaceholderText(/search channels/i);
 
@@ -61,6 +67,18 @@ describe("Search bar UI and select options", () => {
 
     expect(container).toHaveClass("active");
   });
+
+  it("Shows clear search button when the user types a search query", async () => {
+    render(<SearchBar />);
+    const input: HTMLInputElement =
+      screen.getByPlaceholderText(/search channels/i);
+    const clearButton = screen.queryByLabelText("Clear search term");
+
+    expect(clearButton).toHaveClass("hide");
+    await userEvent.type(input, "test");
+
+    expect(clearButton).not.toHaveClass("hide");
+  });
 });
 
 describe("Search bar functionality", () => {
@@ -72,8 +90,8 @@ describe("Search bar functionality", () => {
     (useRouter as jest.Mock).mockReturnValue(mockRouter);
 
     render(<SearchBar />);
-    const btn: HTMLButtonElement = screen.getByRole("button", {
-      name: /search/i,
+    const button: HTMLButtonElement = screen.getByRole("button", {
+      name: "Search",
     });
     const input: HTMLInputElement =
       screen.getByPlaceholderText(/search channels/i);
@@ -86,7 +104,7 @@ describe("Search bar functionality", () => {
 
     // Perform the search
     await userEvent.type(input, "hello");
-    await userEvent.click(btn);
+    await userEvent.click(button);
 
     expect(mockRouter.push).toHaveBeenCalledWith({
       pathname: "/youtube/search",
@@ -101,13 +119,13 @@ describe("Search bar functionality", () => {
     };
     (useRouter as jest.Mock).mockReturnValue(mockRouter);
     render(<SearchBar />);
-    const btn: HTMLButtonElement = screen.getByRole("button", {
-      name: /search/i,
+    const button: HTMLButtonElement = screen.getByRole("button", {
+      name: "Search",
     });
     const input: HTMLInputElement =
       screen.getByPlaceholderText(/search channels/i);
     await userEvent.type(input, "hello");
-    await userEvent.click(btn);
+    await userEvent.click(button);
     expect(mockRouter.push).toHaveBeenCalledWith({
       pathname: "/twitch/search",
       query: { term: "hello" },
@@ -126,5 +144,22 @@ describe("Search bar functionality", () => {
     await userEvent.type(input, "  ");
     await userEvent.keyboard("[Enter]");
     expect(mockRouter.push).not.toHaveBeenCalled();
+  });
+
+  it("Clears the search query when the clear button is pressed", async () => {
+    const mockRouter = {
+      push: jest.fn(),
+      pathname: "",
+    };
+    (useRouter as jest.Mock).mockReturnValue(mockRouter);
+    render(<SearchBar />);
+    const input: HTMLInputElement =
+      screen.getByPlaceholderText(/search channels/i);
+    await userEvent.type(input, "test");
+    const button: HTMLButtonElement = screen.getByRole("button", {
+      name: "Clear search term",
+    });
+    await userEvent.click(button);
+    expect(input).toHaveValue("");
   });
 });

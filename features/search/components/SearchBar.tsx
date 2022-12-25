@@ -89,6 +89,7 @@ export const SearchBar = () => {
           className={`${styles.clearInput} ${searchQuery ? "" : styles.hide}`}
           type="button"
           onClick={() => setSearchQuery("")}
+          aria-label="Clear search term"
         >
           <CloseIcon fill="#FFFFFF" className={`${styles.closeIcon}`} />
         </button>
