@@ -85,8 +85,12 @@ export const SearchBar = () => {
           onFocus={() => setInputFocused(true)}
           onBlur={() => setInputFocused(false)}
         />
-        <button className={styles.clearInput}>
-          <CloseIcon fill="#FFFFFF" className={styles.closeIcon} />
+        <button
+          className={`${styles.clearInput} ${searchQuery ? "" : styles.hide}`}
+          type="button"
+          onClick={() => setSearchQuery("")}
+        >
+          <CloseIcon fill="#FFFFFF" className={`${styles.closeIcon}`} />
         </button>
       </div>
       <div className={styles.buttonContainer}>
