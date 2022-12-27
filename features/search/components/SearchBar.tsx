@@ -5,6 +5,7 @@ import SearchIcon from "icons/SearchIcon";
 import { CustomSelect } from "./SearchSelect";
 import { SingleValue } from "react-select";
 import CloseIcon from "icons/CloseIcon";
+import { Routes } from "config/routes";
 
 export type Platform = "youtube" | "twitch";
 
@@ -30,7 +31,7 @@ export const SearchBar = () => {
   const updateSearchQuery = (platform: Platform) => {
     // Router.push returns a promise, but this is an odd choice, and at this stage there is no intention of awaiting this promise for handling. The void keyword indicates this choice
     void router.push({
-      pathname: `/${platform}/search`,
+      pathname: Routes.search[platform],
       query: { term: searchQuery },
     });
   };
