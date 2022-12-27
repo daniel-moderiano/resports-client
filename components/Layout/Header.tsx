@@ -3,6 +3,7 @@ import styles from "components/Layout/styles/Header.module.css";
 import { SearchBar } from "features/search";
 import Link from "next/link";
 import HamburgerIcon from "icons/HamburgerIcon";
+import { Routes } from "config/routes";
 
 interface HeaderProps {
   showSidebar: boolean;
@@ -23,7 +24,7 @@ export const Header = ({ showSidebar, toggleSidebar }: HeaderProps) => {
           <HamburgerIcon className={styles.hamburgerIcon} />
         </button>
         <h1 className={styles.headerTitle}>
-          <Link className={`${styles.headerLink}`} href="/">
+          <Link className={`${styles.headerLink}`} href={Routes.home}>
             Resports
           </Link>
         </h1>

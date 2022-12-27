@@ -5,6 +5,7 @@ import Link from "next/link";
 import { timeAgo } from "config/timeAgoFormatter";
 import TwitchNameIcon from "icons/TwitchNameIcon";
 import { TwitchVideo } from "features/channels";
+import { Routes } from "config/routes";
 
 interface TwitchVideoDetailsProps {
   videoDetails: TwitchVideo;
@@ -35,7 +36,7 @@ export const TwitchVideoDetails = ({
           </div>
           <div className={styles.channelContainer}>
             <Link
-              href={`/twitch/channel/${userData.id}`}
+              href={`${Routes.twitch.channel}/${userData.id}`}
               data-testid="channelImageLink"
               className={styles.imageLink}
             >
@@ -51,7 +52,7 @@ export const TwitchVideoDetails = ({
 
             <Link
               className={styles.channelName}
-              href={`/twitch/channel/${userData.id}`}
+              href={`${Routes.twitch.channel}/${userData.id}`}
               data-testid="channelLink"
             >
               {userData.displayName}

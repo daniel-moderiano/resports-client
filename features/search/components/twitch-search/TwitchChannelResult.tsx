@@ -2,6 +2,7 @@ import Image from "next/image";
 import { HelixChannelSearchResult } from "@twurple/api/lib/api/helix/search/HelixChannelSearchResult";
 import styles from "features/search/components/styles/TwitchSearchResult.module.css";
 import Link from "next/link";
+import { Routes } from "config/routes";
 
 interface TwitchChannelResultProps {
   channelData: HelixChannelSearchResult;
@@ -23,7 +24,7 @@ export const TwitchChannelResult = ({
         {channelData.isLive && <span className={styles.live}>LIVE</span>}
       </div>
       <div className={styles.channelText}>
-        <Link href={`/twitch/channel/${channelData.id}`}>
+        <Link href={`${Routes.twitch.channel}/${channelData.id}`}>
           <h3 className={styles.channelTitle}>{channelData.displayName}</h3>
         </Link>
         <p className={styles.game}>{channelData.gameName}</p>

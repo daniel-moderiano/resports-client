@@ -3,6 +3,7 @@ import styles from "features/players/components/styles/TwitchVideoDetailsOverlay
 import Link from "next/link";
 import Image from "next/image";
 import { TwitchVideo } from "features/channels";
+import { Routes } from "config/routes";
 
 interface TwitchVideoDetailsOverlayProps {
   videoDetails: TwitchVideo;
@@ -17,7 +18,7 @@ export const TwitchVideoDetailsOverlay = ({
       <div className={styles.gradient}></div>
       <div className={styles.innerContainer}>
         <Link
-          href={`/twitch/channel/${userData.id}`}
+          href={`${Routes.twitch.channel}/${userData.id}`}
           data-testid="channelImageLink"
           className={styles.imageLink}
         >

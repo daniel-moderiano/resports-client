@@ -8,6 +8,7 @@ import { useGetYouTubeVideoDetails } from "features/players/hooks/useGetYouTubeV
 import YouTubeFullIcon from "icons/YouTubeFullIcon";
 import SwitchPlayerIcon from "icons/SwitchPlayerIcon";
 import { InfoTooltip } from "../youtube-player/InfoTooltip";
+import { Routes } from "config/routes";
 
 interface YouTubeVideoDetailsProps {
   videoId: string;
@@ -50,7 +51,7 @@ export const YouTubeVideoDetails = ({
             </div>
             <div className={styles.channelContainer}>
               <Link
-                href={`/youtube/channel/${data.channelData.id}`}
+                href={`${Routes.youtube.channel}/${data.channelData.id}`}
                 data-testid="channelImageLink"
                 className={styles.imageLink}
               >
@@ -68,7 +69,7 @@ export const YouTubeVideoDetails = ({
 
               <Link
                 className={styles.channelName}
-                href={`/youtube/channel/${data.channelData.id}`}
+                href={`${Routes.youtube.channel}/${data.channelData.id}`}
                 data-testid="channelLink"
               >
                 {data.channelData.snippet.title}
@@ -92,7 +93,7 @@ export const YouTubeVideoDetails = ({
                   ariaLabel="Show more information about the different YouTube video players"
                 />
                 <Link
-                  href={`/youtube/video/${videoId}/native-player`}
+                  href={`${Routes.youtube.video}/${videoId}/native-player`}
                   className={styles.playerSwitchLink}
                 >
                   <SwitchPlayerIcon className={styles.switchIcon} />
@@ -107,7 +108,7 @@ export const YouTubeVideoDetails = ({
                     ariaLabel="Show more information about the different YouTube video players"
                   />
                   <Link
-                    href={`/youtube/video/${videoId}`}
+                    href={`${Routes.youtube.video}/${videoId}`}
                     className={styles.playerSwitchLink}
                   >
                     <SwitchPlayerIcon className={styles.switchIcon} />

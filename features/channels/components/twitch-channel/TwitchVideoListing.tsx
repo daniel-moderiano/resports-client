@@ -4,6 +4,7 @@ import { timeAgo } from "config/timeAgoFormatter";
 import styles from "features/channels/components/styles/TwitchVideoListing.module.css";
 import Link from "next/link";
 import ImageWithFallback from "utils/ImageWithFallback";
+import { Routes } from "config/routes";
 
 interface TwitchVideoListingProps {
   videoData: HelixVideo;
@@ -37,7 +38,10 @@ export const TwitchVideoListing = ({ videoData }: TwitchVideoListingProps) => {
       >
         View on Twitch
       </Link>
-      <Link href={`/twitch/video/${videoData.id}`} className={styles.link}>
+      <Link
+        href={`${Routes.twitch.video}/${videoData.id}`}
+        className={styles.link}
+      >
         View in Player
       </Link>
     </div>
