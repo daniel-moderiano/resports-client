@@ -2,6 +2,7 @@ import { YouTubeSearchResultSnippet } from "types/youtubeAPITypes";
 import Image from "next/image";
 import styles from "features/search/components/styles/YouTubeSearchResult.module.css";
 import Link from "next/link";
+import { Routes } from "config/routes";
 
 interface YouTubeChannelResultProps {
   channelData: YouTubeSearchResultSnippet;
@@ -22,7 +23,7 @@ export const YouTubeChannelResult = ({
         />
       </div>
       <div className={styles.channelText}>
-        <Link href={`/youtube/channel/${channelData.channelId}`}>
+        <Link href={`${Routes.youtube.channel}/${channelData.channelId}`}>
           <h3 className={styles.channelTitle}>{channelData.channelTitle}</h3>
         </Link>
         <p className={styles.description}>{channelData.description}</p>
