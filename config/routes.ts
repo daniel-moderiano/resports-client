@@ -1,18 +1,16 @@
 export const Routes = {
   home: "/",
-  search: {
-    twitch: "/twitch/search",
-    youtube: "/youtube/search",
+  about: "/about/",
+  settings: "/settings/",
+  savedChannels: "/saved/",
+  twitch: {
+    search: "/twitch/search/",
+    channel: "/twitch/channel/",
+    video: "/twitch/video/",
   },
-  channel: {
-    twitch: "/twitch/channel",
-    youtube: "/youtube/channel",
+  youtube: {
+    search: "/youtube/search/",
+    channel: "/youtube/channel/",
+    video: "/youtube/video/",
   },
-  video: {
-    twitch: "/twitch/video",
-    youtube: "/youtube/video",
-  },
-  about: "/about",
-  settings: "/settings",
-  savedChannels: "/saved",
 };

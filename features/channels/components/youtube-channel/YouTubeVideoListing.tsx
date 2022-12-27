@@ -5,6 +5,7 @@ import { convertYouTubeVideoDuration } from "utils/videoDurationConversion";
 import Link from "next/link";
 import { timeAgo } from "config/timeAgoFormatter";
 import ImageWithFallback from "utils/ImageWithFallback";
+import { Routes } from "config/routes";
 
 interface YouTubeVideoListingProps {
   videoData: YouTubeVideoResult;
@@ -40,7 +41,10 @@ export const YouTubeVideoListing = ({
       >
         View on YouTube
       </Link>
-      <Link href={`/youtube/video/${videoData.id}`} className={styles.link}>
+      <Link
+        href={`${Routes.youtube.video}/${videoData.id}`}
+        className={styles.link}
+      >
         View in Player
       </Link>
     </div>
