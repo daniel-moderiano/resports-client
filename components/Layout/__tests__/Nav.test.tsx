@@ -4,7 +4,10 @@ import { Nav } from "components/Layout";
 
 jest.mock("next/router", () => ({
   __esModule: true,
-  useRouter: jest.fn(),
+  useRouter: () => ({
+    // Set to login route to test accessibility
+    pathname: "/login",
+  }),
 }));
 
 describe("Nav component", () => {
@@ -18,5 +21,12 @@ describe("Nav component", () => {
     await userEvent.click(toggleButton);
 
     expect(toggleSidebar).toBeCalledTimes(1);
+  });
+
+  it("marks links with current page for accessibility", async () => {
+    render(<Nav toggleSidebar={jest.fn} showSidebar={false} />);
+    const loginLink = screen.getByText("Log In");
+
+    expect(loginLink).toHaveAttribute("aria-current", "page");
   });
 });

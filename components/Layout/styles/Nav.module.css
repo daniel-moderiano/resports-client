@@ -64,3 +64,9 @@
 .sidebarButton:hover {
   background-color: #35353e;
 }
+
+.rightContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
