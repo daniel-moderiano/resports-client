@@ -16,12 +16,7 @@ export const UserMenu = () => {
           setShowMenu(!showMenu);
         }}
       >
-        <div>
-          <span id="dropdown-me" className="text-xs">
-            Me
-          </span>
-          <CaretIcon />
-        </div>
+        <CaretIcon />
       </button>
       {showMenu && (
         <ul role="menu" aria-label="User navigation menu">
