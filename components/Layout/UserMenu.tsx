@@ -3,9 +3,11 @@ import { useMenuCloseEvents } from "hooks/useMenuCloseEvents";
 import CaretIcon from "icons/CaretIcon";
 import Link from "next/link";
 import { useState } from "react";
+import * as React from "react";
 
 export const UserMenu = () => {
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(true);
+  const menuRef = React.useRef<HTMLUListElement | null>(null);
   useMenuCloseEvents("userMenu", () => setShowMenu(false));
   return (
     <div id="userMenu">
@@ -23,7 +25,12 @@ export const UserMenu = () => {
         <CaretIcon />
       </button>
       {showMenu && (
-        <ul role="menu" aria-label="User navigation menu" data-testid="">
+        <ul
+          role="menu"
+          aria-label="User navigation menu"
+          data-testid=""
+          ref={menuRef}
+        >
           <li role="none">
             <Link
               role="menuitem"
