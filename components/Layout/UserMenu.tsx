@@ -21,13 +21,13 @@ export const UserMenu = () => {
       {showMenu && (
         <ul role="menu" aria-label="User navigation menu">
           <li role="none">
-            <Link role="menuitem" href={Routes.login}>
-              Log In
+            <Link role="menuitem" href={Routes.about}>
+              About
             </Link>
           </li>
           <li role="none">
-            <Link role="menuitem" href={Routes.signup}>
-              Sign Up
+            <Link role="menuitem" href={Routes.settings}>
+              Settings
             </Link>
           </li>
         </ul>
