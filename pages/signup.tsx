@@ -4,8 +4,9 @@ import Link from "next/link";
 const Signup = () => {
   return (
     <div>
-      <h2>Log In</h2>
+      <h2>Sign Up</h2>
       <Link href={Routes.login}>Log In</Link>
+      <br />
       <Link href={Routes.home}>Home</Link>
     </div>
   );
