@@ -2,6 +2,11 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Nav } from "components/Layout";
 
+jest.mock("next/router", () => ({
+  __esModule: true,
+  useRouter: jest.fn(),
+}));
+
 describe("Nav component", () => {
   it("calls toggle sidebar function when clicking sidebar toggle button", async () => {
     const toggleSidebar = jest.fn();

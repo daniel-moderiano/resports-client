@@ -16,7 +16,7 @@ interface NavProps {
 
 export const Nav = ({ showSidebar, toggleSidebar }: NavProps) => {
   return (
-    <nav className={styles.header}>
+    <nav className={styles.nav}>
       <div className={styles.leftContainer}>
         <button
           onClick={toggleSidebar}
