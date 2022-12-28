@@ -6,8 +6,7 @@ import { useState } from "react";
 import * as React from "react";
 
 export const UserMenu = () => {
-  const [showMenu, setShowMenu] = useState(true);
-  const menuRef = React.useRef<HTMLUListElement | null>(null);
+  const [showMenu, setShowMenu] = useState(false);
   useMenuCloseEvents("userMenu", () => setShowMenu(false));
   return (
     <div id="userMenu">
@@ -25,12 +24,7 @@ export const UserMenu = () => {
         <CaretIcon />
       </button>
       {showMenu && (
-        <ul
-          role="menu"
-          aria-label="User navigation menu"
-          data-testid=""
-          ref={menuRef}
-        >
+        <ul role="menu" aria-label="User navigation menu" data-testid="">
           <li role="none">
             <Link
               role="menuitem"
