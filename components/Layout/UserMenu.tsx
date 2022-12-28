@@ -17,6 +17,7 @@ export const UserMenu = () => {
           setShowMenu(!showMenu);
         }}
       >
+        User Menu
         <CaretIcon />
       </button>
       {showMenu && (

@@ -11,73 +11,73 @@ describe("Dropdown menu display tests", () => {
     expect(menu).not.toBeInTheDocument();
   });
 
-  it("Opens menu on click of profile pic btn if menu is currently closed", () => {
+  it("Opens menu on click of menu button if menu is currently closed", async () => {
     setup();
-    const btn = screen.getByLabelText(/open user menu/i);
-    userEvent.click(btn);
+    const button = screen.getByText(/user menu/i);
+    await userEvent.click(button);
 
     const menu = screen.getByRole("menu");
     expect(menu).toBeInTheDocument();
   });
 
-  it("Closes menu on click of profile pic btn if menu is already open", () => {
+  it("Closes menu on click of menu button if menu is already open", async () => {
     setup();
-    // Open and close with double btn press
-    const btn = screen.getByLabelText(/open user menu/i);
-    userEvent.click(btn);
-    userEvent.click(btn);
+    // Open and close with double button press
+    const button = screen.getByLabelText(/open user menu/i);
+    await userEvent.click(button);
+    await userEvent.click(button);
 
     const menu = screen.queryByRole("menu");
     expect(menu).not.toBeInTheDocument();
   });
 
-  it("Closes menu when any of the menu links are pressed", () => {
+  it("Closes menu when any of the menu links are pressed", async () => {
     setup();
     // Open menu
-    const btn = screen.getByLabelText(/open user menu/i);
-    userEvent.click(btn);
+    const button = screen.getByLabelText(/open user menu/i);
+    await userEvent.click(button);
 
     const menuBtn = screen.getByRole("menuitem", { name: /settings/i });
-    userEvent.click(menuBtn);
+    await userEvent.click(menuBtn);
 
     const menu = screen.queryByRole("menu");
     expect(menu).not.toBeInTheDocument();
   });
 
-  it("Closes menu when outside click occurs", () => {
+  it("Closes menu when outside click occurs", async () => {
     setup();
 
     // Open menu
-    const btn = screen.getByLabelText(/open user menu/i);
-    userEvent.click(btn);
+    const button = screen.getByLabelText(/open user menu/i);
+    await userEvent.click(button);
 
     // Outside click by clicking on post body
-    userEvent.click(window.document.body);
+    await userEvent.click(window.document.body);
 
     const menu = screen.queryByRole("menu");
     expect(menu).not.toBeInTheDocument();
   });
 
-  it("Closes menu when Esc key is pressed", () => {
+  it("Closes menu when Esc key is pressed", async () => {
     setup();
     // Open menu
-    const btn = screen.getByLabelText(/open user menu/i);
-    userEvent.click(btn);
+    const button = screen.getByLabelText(/open user menu/i);
+    await userEvent.click(button);
 
-    userEvent.keyboard("{esc}");
+    await userEvent.keyboard("{esc}");
 
     const menu = screen.queryByRole("menu");
     expect(menu).not.toBeInTheDocument();
   });
 
-  it("Does not close menu when menu is clicked in a non-btn area", () => {
+  it("Does not close menu when menu is clicked in a non-button area", async () => {
     setup();
     // Open menu
-    const btn = screen.getByLabelText(/open user menu/i);
-    userEvent.click(btn);
+    const button = screen.getByLabelText(/open user menu/i);
+    await userEvent.click(button);
 
     const menu = screen.getByRole("menu");
-    userEvent.click(menu);
+    await userEvent.click(menu);
     expect(menu).toBeInTheDocument();
   });
 });
