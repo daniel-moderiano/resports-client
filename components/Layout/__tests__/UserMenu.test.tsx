@@ -64,7 +64,7 @@ describe("Dropdown menu display tests", () => {
     const button = screen.getByLabelText(/open user menu/i);
     await userEvent.click(button);
 
-    await userEvent.keyboard("{esc}");
+    await userEvent.keyboard("{Escape}");
 
     const menu = screen.queryByRole("menu");
     expect(menu).not.toBeInTheDocument();
