@@ -2,6 +2,8 @@ export const Routes = {
   home: "/",
   about: "/about",
   settings: "/settings",
+  login: "/login",
+  signup: "signup",
   savedChannels: "/saved",
   twitch: {
     search: "/twitch/search",
