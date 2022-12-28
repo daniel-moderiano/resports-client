@@ -12,6 +12,7 @@ export const UserMenu = () => {
         aria-controls="dropdown"
         aria-haspopup="true"
         aria-expanded={showMenu}
+        aria-label="Open user menu"
         onClick={() => {
           setShowMenu(!showMenu);
         }}
@@ -19,7 +20,7 @@ export const UserMenu = () => {
         <CaretIcon />
       </button>
       {showMenu && (
-        <ul role="menu" aria-label="User navigation menu">
+        <ul role="menu" aria-label="User navigation menu" data-testid="">
           <li role="none">
             <Link role="menuitem" href={Routes.about}>
               About
