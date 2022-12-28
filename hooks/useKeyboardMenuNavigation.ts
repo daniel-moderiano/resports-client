@@ -2,23 +2,33 @@ import * as React from "react";
 
 // Trap focus within a dropdown menu and handle arrow navigation (still allow user to tab out of menu)
 export const useKeyboardNavigation = (
-  menuRef: React.MutableRefObject<HTMLDivElement | null>
+  menuRef: React.MutableRefObject<HTMLDivElement | HTMLUListElement | null>
 ) => {
   React.useEffect(() => {
     const menu = menuRef.current;
     // Grab all focusable elements within the menu
     if (!menu) {
-      throw new Error("Accessible menu not found in the DOM");
+      console.error("Accessible menu not found in the DOM");
+      return;
     }
 
-    const menuItems: NodeListOf<HTMLButtonElement> =
+    const menuItems: NodeListOf<HTMLButtonElement | HTMLAnchorElement> =
       menu.querySelectorAll('[role="menuitem"]');
 
     // Focus the first menu item when the menu is first opened
     menuItems[0].focus();
 
     // Add accessible up/down arroy key navigation to menu
-    const handleKeyPress = (event: KeyboardEvent) => {
+    const handleKeyPress = (event: Event) => {
+      // Narrow event type
+      const isKeyboardEvent = (event: Event): event is KeyboardEvent => {
+        return "key" in event;
+      };
+
+      if (!isKeyboardEvent(event)) {
+        return;
+      }
+
       let currentFocus = 0;
 
       // Set currently focused variable to correspond to the index of the currently focused menu item

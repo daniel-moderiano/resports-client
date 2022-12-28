@@ -4,7 +4,9 @@ import { Layout } from "components/Layout";
 
 jest.mock("next/router", () => ({
   __esModule: true,
-  useRouter: jest.fn(),
+  useRouter: () => ({
+    pathname: "/",
+  }),
 }));
 
 describe("Layout component", () => {
