@@ -6,7 +6,7 @@ export default function Home() {
       <Head>
         <title>Resports</title>
       </Head>
-      <h2>Home</h2>
+      <h2>Hello World!</h2>
     </>
   );
 }
