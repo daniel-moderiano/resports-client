@@ -1,3 +1,4 @@
+import Profile from "components/Auth0/Profile";
 import Head from "next/head";
 
 export default function Home() {
@@ -6,7 +7,7 @@ export default function Home() {
       <Head>
         <title>Resports</title>
       </Head>
-      <h2>Hello World!</h2>
+      <Profile />
     </>
   );
 }
