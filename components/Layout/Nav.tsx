@@ -44,13 +44,9 @@ export const Nav = ({ showSidebar, toggleSidebar }: NavProps) => {
           <UserMenu />
         ) : (
           <div>
-            {/* <Link
+            <LoginButton
               aria-current={pathname === Routes.login ? "page" : "false"}
-              href={Routes.login}
-            >
-              Log In
-            </Link> */}
-            <LoginButton />
+            />
             <LogoutButton />
 
             <Link
