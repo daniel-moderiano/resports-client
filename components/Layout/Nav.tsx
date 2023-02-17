@@ -1,3 +1,5 @@
+import LoginButton from "components/Auth0/LoginButton";
+import LogoutButton from "components/Auth0/LogoutButton";
 import styles from "components/Layout/styles/Nav.module.css";
 import { Routes } from "config/routes";
 import { SearchBar } from "features/search";
@@ -42,12 +44,11 @@ export const Nav = ({ showSidebar, toggleSidebar }: NavProps) => {
           <UserMenu />
         ) : (
           <div>
-            <Link
+            <LoginButton
               aria-current={pathname === Routes.login ? "page" : "false"}
-              href={Routes.login}
-            >
-              Log In
-            </Link>
+            />
+            <LogoutButton />
+
             <Link
               href={Routes.signup}
               aria-current={pathname === Routes.signup ? "page" : "false"}

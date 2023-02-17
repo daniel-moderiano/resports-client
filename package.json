@@ -22,6 +22,7 @@
     "*.css": "prettier --write"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.0.0",
     "@twurple/api": "^5.2.5",
     "@twurple/auth": "^5.2.5",
     "javascript-time-ago": "^2.5.9",
