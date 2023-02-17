@@ -19,6 +19,27 @@ const Profile = () => {
     getUserMetadata();
   }, [getAccessTokenSilently]);
 
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const token = await getAccessTokenSilently({
+  //         authorizationParams: {
+  //           audience: 'https://api.example.com/', // Value in Identifier field for the API being called.
+  //           scope: 'read:posts', // Scope that exists for the API being called. You can create these through the Auth0 Management API or through the Auth0 Dashboard in the Permissions view of your API.
+  //         }
+  //       });
+  //       const response = await fetch('https://api.example.com/posts', {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
+  //       setPosts(await response.json());
+  //     } catch (e) {
+  //       console.error(e);
+  //     }
+  //   })();
+  // }, [getAccessTokenSilently]);
+
   if (isLoading) {
     return <div>Loading ...</div>;
   }

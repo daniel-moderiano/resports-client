@@ -15,6 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
       clientId="mJvb9a6rBcUFG9UnkLDwt8ODyCACYFsI"
       authorizationParams={{
         redirect_uri: "http://localhost:3000",
+        audience: "https://auth0-jwt-authorizer",
       }}
     >
       <GapiContextProvider>
