@@ -14,10 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
       domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN}
       clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID}
       authorizationParams={{
-        redirect_uri:
-          process.env.NODE_ENV === "development"
-            ? "http://localhost:3000"
-            : process.env.NEXT_PUBLIC_AUTH0_CALLBACK_URI,
+        redirect_uri: process.env.NEXT_PUBLIC_AUTH0_CALLBACK_URI,
         audience: process.env.NEXT_PUBLIC_AUTH0_JWT_AUDIENCE,
       }}
     >
