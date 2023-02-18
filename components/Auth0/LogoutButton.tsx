@@ -7,7 +7,9 @@ const LogoutButton = () => {
   return (
     <button
       onClick={() =>
-        logout({ logoutParams: { returnTo: "http://localhost:3000" } })
+        logout({
+          logoutParams: { returnTo: process.env.NEXT_PUBLIC_AUTH0_LOGOUT_URI },
+        })
       }
     >
       Log Out
