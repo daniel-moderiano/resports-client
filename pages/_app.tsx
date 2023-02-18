@@ -11,11 +11,14 @@ const queryClient = new QueryClient();
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Auth0Provider
-      domain="dev-c0yb5cr7.us.auth0.com"
-      clientId="mJvb9a6rBcUFG9UnkLDwt8ODyCACYFsI"
+      domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN}
+      clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID}
       authorizationParams={{
-        redirect_uri: "http://localhost:3000",
-        audience: "https://auth0-jwt-authorizer",
+        redirect_uri:
+          process.env.NODE_ENV === "development"
+            ? "http://localhost:3000"
+            : process.env.NEXT_PUBLIC_AUTH0_CALLBACK_URI,
+        audience: process.env.NEXT_PUBLIC_AUTH0_JWT_AUDIENCE,
       }}
     >
       <GapiContextProvider>
