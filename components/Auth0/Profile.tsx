@@ -18,7 +18,7 @@ const Profile = () => {
 
     getUserMetadata();
 
-    console.log(user);
+    console.log(JSON.stringify(user));
   }, [getAccessTokenSilently, user]);
 
   if (isLoading) {
