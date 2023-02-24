@@ -32,7 +32,7 @@ exports.onExecutePostLogin = async (event, api) => {
   // Use JWT retrieved above to call API route for upserting user to custom Postgres database
   const upsertUserRequest = {
     method: "POST",
-    url: `https://uhojd6ug1l.execute-api.ap-southeast-2.amazonaws.com/users`,
+    url: `${event.secrets.AWS_API_ENDPOINT}/users/${event.user.user_id}`,
     headers: {
       "content-type": "application/json",
       Authorization: `Bearer ${tokenData.access_token}`,
