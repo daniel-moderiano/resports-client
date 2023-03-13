@@ -1,5 +1,4 @@
 import { YouTubeSearchResultSnippet } from "types/youtubeAPITypes";
-import Image from "next/image";
 import styles from "features/search/components/styles/YouTubeSearchResult.module.css";
 import Link from "next/link";
 import { Routes } from "config/routes";
@@ -14,7 +13,7 @@ export const YouTubeChannelResult = ({
   return (
     <div className={styles.channel}>
       <div>
-        <Image
+        <img
           src={channelData.thumbnails.medium.url}
           alt={`${channelData.channelTitle} channel thumbnail`}
           height={100}

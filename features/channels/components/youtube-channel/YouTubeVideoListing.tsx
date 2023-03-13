@@ -1,6 +1,5 @@
 import { YouTubeVideoResult } from "types/youtubeAPITypes";
 import styles from "features/channels/components/styles/YouTubeVideoListing.module.css";
-import Image from "next/image";
 import { convertYouTubeVideoDuration } from "utils/videoDurationConversion";
 import Link from "next/link";
 import { timeAgo } from "config/timeAgoFormatter";

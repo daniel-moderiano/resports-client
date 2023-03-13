@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Image, { ImageProps } from "next/image";
 
-interface ImageWithFallbackProps extends ImageProps {
+interface ImageWithFallbackProps
+  extends React.ImgHTMLAttributes<HTMLImageElement> {
   fallbackSrc: string;
   alt: string;
 }
@@ -11,7 +11,7 @@ const ImageWithFallback = (props: ImageWithFallbackProps) => {
   const [imgSrc, setImgSrc] = useState(src);
 
   return (
-    <Image
+    <img
       {...rest}
       alt={alt}
       src={imgSrc ? imgSrc : fallbackSrc}
