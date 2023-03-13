@@ -1,7 +1,5 @@
 import { useGetYouTubeChannel } from "features/channels/hooks/useGetYouTubeChannel";
-import Image from "next/image";
 import { YouTubeChannelVideos } from "features/channels";
-import { useEffect } from "react";
 
 interface YouTubeChannelProps {
   channelId: string;
@@ -24,7 +22,7 @@ const YouTubeChannel = ({ channelId }: YouTubeChannelProps) => {
                 <div>
                   <h2>{data.channelData.snippet.title}</h2>
                   <p>{data.channelData.snippet.description}</p>
-                  <Image
+                  <img
                     src={data.channelData.snippet.thumbnails.medium.url}
                     alt={`${data.channelData.snippet.title} channel thumbnail`}
                     height={100}
@@ -32,7 +30,7 @@ const YouTubeChannel = ({ channelId }: YouTubeChannelProps) => {
                   />
 
                   {/* Note: the bannerUrl has a max res of 512 * 288 and will likely be remove altogether later x  */}
-                  <Image
+                  <img
                     src={
                       data.channelData.brandingSettings.image.bannerExternalUrl
                     }

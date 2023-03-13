@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "features/players/components/styles/TwitchVideoDetailsOverlay.module.css";
 import Link from "next/link";
-import Image from "next/image";
 import { TwitchVideo } from "features/channels";
 import { Routes } from "config/routes";
 
@@ -23,7 +22,7 @@ export const TwitchVideoDetailsOverlay = ({
           className={styles.imageLink}
         >
           <span className={styles.srOnly}>{userData.displayName}</span>
-          <Image
+          <img
             alt={`${userData.displayName} thumbnail`}
             src={userData.profilePictureUrl}
             width={45}

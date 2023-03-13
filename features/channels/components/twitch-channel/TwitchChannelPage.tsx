@@ -1,5 +1,4 @@
 import { useGetTwitchChannel } from "features/channels/hooks/useGetTwitchChannel";
-import Image from "next/image";
 import { TwitchChannelVideos } from "features/channels";
 
 interface TwitchChannelProps {
@@ -20,14 +19,14 @@ export const TwitchChannelPage = ({ channelId }: TwitchChannelProps) => {
           <div>
             <h2>{data.channelData.displayName}</h2>
             <p>{data.userData.description}</p>
-            <Image
+            <img
               src={data.userData.profilePictureUrl}
               alt={`${data.channelData.displayName} channel thumbnail`}
               height={100}
               width={100}
             />
             {data.userData.offlinePlaceholderUrl && (
-              <Image
+              <img
                 src={data.userData.offlinePlaceholderUrl}
                 alt={`${data.channelData.displayName} channel banner`}
                 height={100}

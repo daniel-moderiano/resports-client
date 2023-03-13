@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { HelixChannelSearchResult } from "@twurple/api/lib/api/helix/search/HelixChannelSearchResult";
 import styles from "features/search/components/styles/TwitchSearchResult.module.css";
 import Link from "next/link";
@@ -14,7 +13,7 @@ export const TwitchChannelResult = ({
   return (
     <div className={styles.channel}>
       <div className={styles.imgContainer}>
-        <Image
+        <img
           src={channelData.thumbnailUrl}
           alt={`${channelData.displayName} channel thumbnail`}
           height={100}

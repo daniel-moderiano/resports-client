@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import styles from "features/players/components/styles/TwitchVideoDetails.module.css";
 import Link from "next/link";
 import { timeAgo } from "config/timeAgoFormatter";
@@ -41,7 +40,7 @@ export const TwitchVideoDetails = ({
               className={styles.imageLink}
             >
               <span className={styles.srOnly}>{userData.displayName}</span>
-              <Image
+              <img
                 alt={`${userData.displayName} thumbnail`}
                 src={userData.profilePictureUrl}
                 width={55}

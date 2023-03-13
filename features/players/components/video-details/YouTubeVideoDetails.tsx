@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import styles from "features/players/components/styles/TwitchVideoDetails.module.css";
 import Link from "next/link";
 import { timeAgo } from "config/timeAgoFormatter";
@@ -58,7 +57,7 @@ export const YouTubeVideoDetails = ({
                 <span className={styles.srOnly}>
                   {data.channelData.snippet.title}
                 </span>
-                <Image
+                <img
                   alt={`${data.channelData.snippet.title} thumbnail`}
                   src={data.channelData.snippet.thumbnails.default.url}
                   width={55}
