@@ -29,17 +29,20 @@ exports.onExecutePostLogin = async (event, api) => {
 
   const { data: tokenData } = await axios(tokenRequest);
 
-  // Use JWT retrieved above to call API route for upserting user to custom Postgres database
-  const upsertUserRequest = {
+  const addUserRequest = {
     method: "POST",
-    url: `${event.secrets.AWS_API_ENDPOINT}/users/${event.user.user_id}`,
+    url: `${event.secrets.AWS_API_ENDPOINT}users`,
     headers: {
       "content-type": "application/json",
       Authorization: `Bearer ${tokenData.access_token}`,
     },
-    data: event.user,
+    data: {
+      email: event.user.email,
+      email_verified: event.user.email_verified,
+      user_id: event.user.user_id,
+    },
   };
 
-  const { data: awsData } = await axios(upsertUserRequest);
-  console.log(awsData);
+  const res = await axios(addUserRequest);
+  console.log(res);
 };
