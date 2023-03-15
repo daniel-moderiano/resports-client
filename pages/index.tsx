@@ -1,4 +1,4 @@
-import Profile from "components/Auth0/Profile";
+import { Profile } from "features/auth";
 import Head from "next/head";
 
 export default function Home() {

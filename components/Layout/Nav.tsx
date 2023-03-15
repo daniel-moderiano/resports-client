@@ -1,5 +1,5 @@
-import LoginButton from "components/Auth0/LoginButton";
-import LogoutButton from "components/Auth0/LogoutButton";
+import { LoginButton } from "features/auth";
+import { LogoutButton } from "features/auth";
 import styles from "components/Layout/styles/Nav.module.css";
 import { Routes } from "config/routes";
 import { SearchBar } from "features/search";
