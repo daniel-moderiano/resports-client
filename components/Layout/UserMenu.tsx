@@ -7,12 +7,9 @@ import * as React from "react";
 import { LogoutButton } from "features/auth";
 import styles from "components/Layout/styles/UserMenu.module.css";
 import AvatarIcon from "icons/AvatarIcon";
+import CaretIcon from "icons/CaretIcon";
 
-type MenuProps = {
-  closeMenu: () => void;
-};
-
-const Dropdown = ({ closeMenu }: MenuProps) => {
+const Dropdown = ({ closeMenu }: { closeMenu: () => void }) => {
   const menuRef = React.useRef<HTMLUListElement | null>(null);
   useMenuCloseEvents("userMenu", closeMenu);
   useKeyboardNavigation(menuRef, false);
@@ -62,6 +59,11 @@ export const UserMenu = () => {
         }}
       >
         <AvatarIcon className={styles.avatarIcon} />
+        <CaretIcon
+          className={`${styles.caretIcon} ${
+            showMenu ? styles.caretIconFlipped : ""
+          }`}
+        />
       </button>
       {showMenu && <Dropdown closeMenu={() => setShowMenu(false)} />}
     </div>
