@@ -1,0 +1,24 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 12px;
+  gap: 4px;
+  border-radius: 3px;
+  border: none;
+  margin: 0;
+  line-height: 2rem;
+  cursor: pointer;
+  font-family: var(--primary-font);
+  font-weight: 500;
+}
+
+.primary {
+  background: #226bd1;
+  color: #ffffff;
+}
+
+.secondary {
+  background: rgba(161, 189, 217, 0.0784314);
+  color: #c7d1db;
+}
