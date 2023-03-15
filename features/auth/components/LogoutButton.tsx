@@ -1,4 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
+import { Button } from "components/button";
 import React from "react";
 
 export const LogoutButton = (
@@ -7,8 +8,9 @@ export const LogoutButton = (
   const { logout } = useAuth0();
 
   return (
-    <button
+    <Button
       {...props}
+      variant="none"
       onClick={() =>
         logout({
           logoutParams: { returnTo: process.env.NEXT_PUBLIC_AUTH0_LOGOUT_URI },
@@ -16,6 +18,6 @@ export const LogoutButton = (
       }
     >
       Log Out
-    </button>
+    </Button>
   );
 };

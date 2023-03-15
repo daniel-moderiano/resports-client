@@ -7,7 +7,8 @@ export type ButtonVariant =
   | "secondary"
   | "outlined"
   | "link"
-  | "danger";
+  | "danger"
+  | "none";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: ButtonSize;

@@ -10,7 +10,6 @@
   cursor: pointer;
   font-family: var(--primary-font);
   font-weight: 500;
-  margin: 1rem;
   transition: background-color 150ms ease-in;
 }
 
@@ -43,7 +42,7 @@
 
 .secondary {
   background: #212329;
-  color: #c7d1db;
+  color: #d6dee7;
   border-color: transparent;
 }
 
@@ -55,7 +54,7 @@
 .outlined {
   background: transparent;
   color: #ffffff;
-  border-color: #c7d1db;
+  border-color: #d6dee7;
 }
 
 .outlined:hover,
@@ -87,4 +86,26 @@
 .danger:hover,
 .danger:active {
   background: #dc3f2a;
+}
+
+.none {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: block;
+  border-radius: 0;
+  margin: 0;
+  font-family: var(--primary-font);
+  font-weight: normal;
+  transition: none;
+  line-height: normal;
+}
+
+.none:focus {
+  outline: none;
+}
+
+.none:active {
+  transform: scale(1);
 }

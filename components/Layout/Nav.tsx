@@ -37,19 +37,14 @@ export const Nav = ({ showSidebar, toggleSidebar }: NavProps) => {
       </div>
       <SearchBar />
       <div className={styles.rightContainer}>
-        <div>
-          {isAuthenticated ? (
-            <UserMenu />
-          ) : (
-            <>
-              <LoginButton />
-              <SignupButton />
-              <Button size="default" variant="danger">
-                Test Button
-              </Button>
-            </>
-          )}
-        </div>
+        {isAuthenticated ? (
+          <UserMenu />
+        ) : (
+          <>
+            <LoginButton />
+            <SignupButton />
+          </>
+        )}
       </div>
     </nav>
   );
