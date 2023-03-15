@@ -44,7 +44,9 @@ export const Nav = ({ showSidebar, toggleSidebar }: NavProps) => {
             <>
               <LoginButton />
               <SignupButton />
-              <Button>Test Button</Button>
+              <Button size="default" variant="danger">
+                Test Button
+              </Button>
             </>
           )}
         </div>

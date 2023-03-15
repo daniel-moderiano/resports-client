@@ -2,7 +2,12 @@ import styles from "components/button/Button.module.css";
 
 export type ButtonSize = "default" | "compact";
 
-export type ButtonVariant = "primary" | "secondary" | "link" | "danger";
+export type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "outlined"
+  | "link"
+  | "danger";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: ButtonSize;
