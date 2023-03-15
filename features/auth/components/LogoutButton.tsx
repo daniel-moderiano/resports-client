@@ -1,11 +1,14 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
 
-export const LogoutButton = () => {
+export const LogoutButton = (
+  props: React.ButtonHTMLAttributes<HTMLButtonElement>
+) => {
   const { logout } = useAuth0();
 
   return (
     <button
+      {...props}
       onClick={() =>
         logout({
           logoutParams: { returnTo: process.env.NEXT_PUBLIC_AUTH0_LOGOUT_URI },

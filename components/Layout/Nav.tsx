@@ -7,10 +7,12 @@ import HamburgerIcon from "icons/HamburgerIcon";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { UserMenu } from "./UserMenu";
+import { useAuth0 } from "@auth0/auth0-react";
+import { SignupButton } from "features/auth/components/SignupButton";
 
 // In the future we will access the user property from React context or similar. This is a placeholder to allow development of the nav menu in authenticated and non-authenticated states while we await backend integration.
 
-const user = false;
+// const user = false;
 
 interface NavProps {
   showSidebar: boolean;
@@ -19,6 +21,7 @@ interface NavProps {
 
 export const Nav = ({ showSidebar, toggleSidebar }: NavProps) => {
   const { pathname } = useRouter();
+  const { isAuthenticated } = useAuth0();
 
   return (
     <nav className={styles.nav}>
@@ -40,23 +43,21 @@ export const Nav = ({ showSidebar, toggleSidebar }: NavProps) => {
       </div>
       <SearchBar />
       <div className={styles.rightContainer}>
-        {user ? (
-          <UserMenu />
-        ) : (
-          <div>
-            <LoginButton
-              aria-current={pathname === Routes.login ? "page" : "false"}
-            />
-            <LogoutButton />
+        <div>
+          {isAuthenticated ? (
+            <UserMenu />
+          ) : (
+            <>
+              <LoginButton
+                aria-current={pathname === Routes.login ? "page" : "false"}
+              />
 
-            <Link
-              href={Routes.signup}
-              aria-current={pathname === Routes.signup ? "page" : "false"}
-            >
-              Sign Up
-            </Link>
-          </div>
-        )}
+              <SignupButton
+                aria-current={pathname === Routes.signup ? "page" : "false"}
+              />
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );
