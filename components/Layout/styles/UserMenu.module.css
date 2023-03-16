@@ -1,0 +1,88 @@
+.userMenu {
+  position: relative;
+}
+
+.userMenuButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 4px;
+  border: 0.05rem solid transparent;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  transition: background-color 150ms ease-in;
+  background: transparent;
+}
+
+.avatarIcon {
+  width: 18px;
+}
+
+.caretIcon {
+  width: 8px;
+}
+
+.caretIconFlipped {
+  transform: rotate(180deg);
+}
+
+.userMenuButton:focus {
+  outline: 2px solid #597cac;
+  outline-offset: 2px;
+}
+
+.userMenuButton:active,
+.userMenuButton:hover {
+  background: #212329;
+}
+
+.userMenuList {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  gap: 0.25rem;
+  border-radius: 3px;
+  background-color: #16161a;
+  border: 0.1rem #212329 solid;
+  list-style: none;
+  right: 0;
+  top: 125%;
+  padding: 0.25rem;
+  margin: 0;
+  min-width: 8rem;
+  max-width: 14rem;
+}
+
+.emailBanner {
+  padding: 0.6rem 0.75rem 0.85rem 0.75rem;
+  font-size: 0.75rem;
+  border-bottom: 1px solid #212329;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userMenuListItem {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.6rem 0.75rem;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  display: block;
+  cursor: pointer;
+  border-radius: 0.2rem;
+  transition: background-color 150ms ease-in;
+}
+
+.userMenuListItem:hover {
+  background: #212329;
+}
+
+.userMenuListItem:focus,
+.userMenuListItem:active {
+  outline: 2px solid #597cac;
+  outline-offset: -1px;
+}
