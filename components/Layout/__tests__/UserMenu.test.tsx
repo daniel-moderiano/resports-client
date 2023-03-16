@@ -13,7 +13,7 @@ describe("Dropdown menu display tests", () => {
 
   it("Opens menu on click of menu button if menu is currently closed", async () => {
     setup();
-    const button = screen.getByText(/user menu/i);
+    const button = screen.getByLabelText(/open user menu/i);
     await userEvent.click(button);
 
     const menu = screen.getByRole("menu");
@@ -79,5 +79,27 @@ describe("Dropdown menu display tests", () => {
     const menu = screen.getByRole("menu");
     await userEvent.click(menu);
     expect(menu).toBeInTheDocument();
+  });
+
+  it("Allows key navigation using arrow keys and tab key", async () => {
+    setup();
+    // Open menu
+    const button = screen.getByLabelText(/open user menu/i);
+    await userEvent.click(button);
+
+    const settingsBtn = screen.getByRole("menuitem", { name: /settings/i });
+    const logoutBtn = screen.getByRole("menuitem", { name: /log out/i });
+
+    // Navigate to first menu item
+    await userEvent.keyboard("{Tab}");
+    expect(settingsBtn).toHaveFocus();
+
+    // Navigate to second menu item
+    await userEvent.keyboard("{ArrowDown}");
+    expect(logoutBtn).toHaveFocus();
+
+    // Check focus is trapped with arrow keys
+    await userEvent.keyboard("{ArrowDown}");
+    expect(settingsBtn).toHaveFocus();
   });
 });
