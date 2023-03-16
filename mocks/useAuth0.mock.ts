@@ -2,6 +2,8 @@ import { mocked } from "jest-mock";
 import { useAuth0 } from "@auth0/auth0-react";
 import { AuthState } from "@auth0/auth0-react/dist/auth-state";
 
+// ! These function import must be declared before other imports in the Jest test file
+
 // This must remain top-level
 jest.mock("@auth0/auth0-react");
 

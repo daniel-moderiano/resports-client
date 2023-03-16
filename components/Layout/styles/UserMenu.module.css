@@ -50,7 +50,13 @@
   top: 125%;
   padding: 0.25rem;
   margin: 0;
-  width: 8rem;
+  width: 10rem;
+}
+
+.emailBanner {
+  padding: 0.6rem 0.75rem 0.85rem 0.75rem;
+  font-size: 0.75rem;
+  border-bottom: 1px solid #212329;
 }
 
 .userMenuListItem {

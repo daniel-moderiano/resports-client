@@ -8,8 +8,14 @@ import { LogoutButton } from "features/auth";
 import styles from "components/Layout/styles/UserMenu.module.css";
 import AvatarIcon from "icons/AvatarIcon";
 import CaretIcon from "icons/CaretIcon";
+import { useAuth0, User } from "@auth0/auth0-react";
 
-const Dropdown = ({ closeMenu }: { closeMenu: () => void }) => {
+type DropdownProps = {
+  closeMenu: () => void;
+  user: User;
+};
+
+const Dropdown = ({ closeMenu, user }: DropdownProps) => {
   const menuRef = React.useRef<HTMLUListElement | null>(null);
   useMenuCloseEvents("userMenu", closeMenu);
   useKeyboardNavigation(menuRef, false);
@@ -21,6 +27,9 @@ const Dropdown = ({ closeMenu }: { closeMenu: () => void }) => {
       ref={menuRef}
       id="userMenuDropdown"
     >
+      <li role="none" className={styles.emailBanner}>
+        {`${user.email?.split("@")[0]}\n@${user.email?.split("@")[1]}`}
+      </li>
       <li role="none">
         <Link
           role="menuitem"
@@ -44,6 +53,7 @@ const Dropdown = ({ closeMenu }: { closeMenu: () => void }) => {
 
 export const UserMenu = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const { user } = useAuth0();
 
   return (
     <div id="userMenu" className={styles.userMenu}>
@@ -65,7 +75,9 @@ export const UserMenu = () => {
           }`}
         />
       </button>
-      {showMenu && <Dropdown closeMenu={() => setShowMenu(false)} />}
+      {showMenu && user && (
+        <Dropdown closeMenu={() => setShowMenu(false)} user={user} />
+      )}
     </div>
   );
 };

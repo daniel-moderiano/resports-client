@@ -1,6 +1,21 @@
+import { mockUseAuth0, mockUseAuth0ReturnValue } from "mocks/useAuth0.mock";
 import { render, screen } from "@testing-library/react";
 import { UserMenu } from "../UserMenu";
 import userEvent from "@testing-library/user-event";
+
+mockUseAuth0();
+mockUseAuth0ReturnValue({
+  isAuthenticated: true,
+  isLoading: false,
+  user: {
+    given_name: "John",
+    family_name: "Doe",
+    updated_at: "2023-03-16T06:18:59.357Z",
+    email: "john.doe@gmail.com",
+    email_verified: true,
+    sub: "google-oauth2|122413423845",
+  },
+});
 
 describe("Dropdown menu display tests", () => {
   const setup = () => render(<UserMenu />);
@@ -18,6 +33,15 @@ describe("Dropdown menu display tests", () => {
 
     const menu = screen.getByRole("menu");
     expect(menu).toBeInTheDocument();
+  });
+
+  it("Displays user info in user menu list", async () => {
+    setup();
+    const button = screen.getByLabelText(/open user menu/i);
+    await userEvent.click(button);
+
+    const user = screen.getByText(/john/i);
+    expect(user).toBeInTheDocument();
   });
 
   it("Closes menu on click of menu button if menu is already open", async () => {
