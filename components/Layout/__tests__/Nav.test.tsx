@@ -1,8 +1,7 @@
+import { mockUseAuth0, mockUseAuth0ReturnValue } from "mocks/useAuth0.mock";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Nav } from "components/Layout";
-import { mocked } from "jest-mock";
-import { useAuth0 } from "@auth0/auth0-react";
 
 // Must mock router as child components use this
 jest.mock("next/router", () => ({
@@ -12,12 +11,7 @@ jest.mock("next/router", () => ({
   }),
 }));
 
-jest.mock("@auth0/auth0-react");
-const mockedUseAuth0 = mocked(useAuth0);
-// @ts-expect-error don't need a complete mock
-mockedUseAuth0.mockReturnValue({
-  isAuthenticated: false,
-});
+mockUseAuth0();
 
 describe("Nav component", () => {
   it("calls toggle sidebar function when clicking sidebar toggle button", async () => {
@@ -33,6 +27,10 @@ describe("Nav component", () => {
   });
 
   it("shows only log in and sign up buttons when user is not authenticated", async () => {
+    mockUseAuth0ReturnValue({
+      isAuthenticated: false,
+      isLoading: false,
+    });
     render(<Nav toggleSidebar={jest.fn} showSidebar={false} />);
     const loginBtn = screen.getByRole("button", { name: /log in/i });
     const signupBtn = screen.getByRole("button", { name: /sign up/i });
@@ -44,9 +42,9 @@ describe("Nav component", () => {
   });
 
   it("shows user menu button when user is logged in", async () => {
-    // @ts-expect-error don't need a complete mock
-    mockedUseAuth0.mockReturnValue({
+    mockUseAuth0ReturnValue({
       isAuthenticated: true,
+      isLoading: false,
     });
     render(<Nav toggleSidebar={jest.fn} showSidebar={false} />);
     const loginBtn = screen.queryByRole("button", { name: /log in/i });

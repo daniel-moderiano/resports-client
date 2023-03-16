@@ -2,24 +2,32 @@ import { mocked } from "jest-mock";
 import { useAuth0 } from "@auth0/auth0-react";
 import { AuthState } from "@auth0/auth0-react/dist/auth-state";
 
+// This must remain top-level
 jest.mock("@auth0/auth0-react");
 
-export const mockedUseAuth0 = mocked(useAuth0);
+const mockedUseAuth0 = mocked(useAuth0);
 
-// Allow the user of this mock to alter the return value with a custom authState, or use the default logged in user state
-const mockUseAuth0 = (authState?: AuthState) => {
-  let mockedAuthState: AuthState = {
+// User should call this top level within test files
+export const mockUseAuth0 = () => {
+  mockedUseAuth0.mockReturnValue({
     isAuthenticated: true,
     user: {},
     isLoading: false,
     error: undefined,
-  };
+    logout: jest.fn(),
+    loginWithRedirect: jest.fn(),
+    getAccessTokenWithPopup: jest.fn(),
+    getAccessTokenSilently: jest.fn(),
+    getIdTokenClaims: jest.fn(),
+    loginWithPopup: jest.fn(),
+    handleRedirectCallback: jest.fn(),
+  });
+};
 
-  if (authState) {
-    mockedAuthState = authState;
-  }
-  return mockedUseAuth0.mockReturnValue({
-    ...mockedAuthState,
+// Call this within individual tests to change auth state/conditions test-by-test
+export const mockUseAuth0ReturnValue = (authState: AuthState) => {
+  mockedUseAuth0.mockReturnValue({
+    ...authState,
     logout: jest.fn(),
     loginWithRedirect: jest.fn(),
     getAccessTokenWithPopup: jest.fn(),

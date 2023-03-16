@@ -15,9 +15,6 @@ interface NavProps {
 
 export const Nav = ({ showSidebar, toggleSidebar }: NavProps) => {
   const { isAuthenticated } = useAuth0();
-
-  console.log(isAuthenticated);
-
   return (
     <nav className={styles.nav}>
       <div className={styles.leftContainer}>
