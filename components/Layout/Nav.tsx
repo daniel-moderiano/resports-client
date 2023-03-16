@@ -7,7 +7,6 @@ import Link from "next/link";
 import { UserMenu } from "./UserMenu";
 import { useAuth0 } from "@auth0/auth0-react";
 import { SignupButton } from "features/auth/components/SignupButton";
-import { Button } from "components/button/Button";
 
 interface NavProps {
   showSidebar: boolean;
@@ -16,6 +15,8 @@ interface NavProps {
 
 export const Nav = ({ showSidebar, toggleSidebar }: NavProps) => {
   const { isAuthenticated } = useAuth0();
+
+  console.log(isAuthenticated);
 
   return (
     <nav className={styles.nav}>
