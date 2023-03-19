@@ -1,15 +1,16 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import * as React from "react";
+import { DeleteButton } from "./DeleteButton";
 
 export const Profile = () => {
   const { user, getAccessTokenSilently } = useAuth0();
-  const [userMetadata, setUserMetadata] = React.useState<null | string>(null);
+  const [accessToken, setAccessToken] = React.useState<null | string>(null);
 
   React.useEffect(() => {
     const getUserMetadata = async () => {
       try {
         const accessToken = await getAccessTokenSilently();
-        setUserMetadata(accessToken);
+        setAccessToken(accessToken);
       } catch (error) {
         console.log(error);
       }
@@ -18,8 +19,18 @@ export const Profile = () => {
     getUserMetadata();
 
     console.log(JSON.stringify(user));
-    console.log(userMetadata);
-  }, [getAccessTokenSilently, user, userMetadata]);
+    console.log(accessToken);
+  }, [getAccessTokenSilently, user, accessToken]);
 
-  return <div></div>;
+  return (
+    <div>
+      {user && accessToken && (
+        <>
+          {user.sub && (
+            <DeleteButton userId={user.sub} accessToken={accessToken} />
+          )}
+        </>
+      )}
+    </div>
+  );
 };

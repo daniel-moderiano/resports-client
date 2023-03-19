@@ -10,7 +10,10 @@ const handleFetchErrors = (response: Response) => {
 
 // Deleting a user is a two-step API call process, one for the Postgres user, the other for the Auth0 database user
 
-export function useDeleteUser(userId: string, accessToken: string) {
+export function useDeleteUser(
+  userId: string | undefined,
+  accessToken: string | null
+) {
   const options = {
     method: "DELETE",
     headers: {
