@@ -5,14 +5,10 @@ import * as React from "react";
 
 interface DeleteButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   userId: string;
-  accessToken: string;
 }
 
-export const DeleteButton = ({ userId, accessToken }: DeleteButtonProps) => {
-  const { isLoading, error, mutate, data, isSuccess } = useDeleteUser(
-    userId,
-    accessToken
-  );
+export const DeleteButton = ({ userId }: DeleteButtonProps) => {
+  const { isLoading, error, mutate, data, isSuccess } = useDeleteUser(userId);
   const { logout } = useAuth0();
 
   React.useEffect(() => {
