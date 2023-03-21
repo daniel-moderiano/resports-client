@@ -29,7 +29,7 @@ export const DeleteButton = ({ userId }: DeleteButtonProps) => {
         mutate();
       }}
     >
-      Delete User
+      Delete Account
     </Button>
   );
 };
