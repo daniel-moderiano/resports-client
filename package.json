@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.0.0",
+    "@auth0/nextjs-auth0": "^2.3.1",
     "@twurple/api": "^5.2.5",
     "@twurple/auth": "^5.2.5",
     "javascript-time-ago": "^2.5.9",

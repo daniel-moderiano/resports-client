@@ -8,6 +8,7 @@ export function CustomSelect<
   return (
     <Select
       {...props}
+      instanceId="react-select"
       styles={{
         control: (provided, state) => ({
           ...provided,
