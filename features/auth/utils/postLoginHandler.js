@@ -39,7 +39,7 @@ exports.onExecutePostLogin = async (event, api) => {
     data: {
       email: event.user.email,
       email_verified: event.user.email_verified,
-      user_id: event.user.user_id,
+      _id: event.user.user_id,
     },
   };
 
