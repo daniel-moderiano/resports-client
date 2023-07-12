@@ -9,8 +9,11 @@ export async function httpRequest<T>(
   const response = await fetch(url, options);
 
   if (!response.ok) {
+    const errorData = await response.json(); // Read error details from response body
     throw new Error(
-      `HTTP error: ${response.statusText} with code ${response.status}`
+      `HTTP error: ${response.statusText} with code ${
+        response.status
+      }, details: ${JSON.stringify(errorData)}`
     );
   }
 
