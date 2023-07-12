@@ -32,3 +32,26 @@ export const PopulatedUserStruct = object({
 export type Channel = Infer<typeof ChannelStruct>;
 export type User = Infer<typeof UserStruct>;
 export type PopulatedUser = Infer<typeof PopulatedUserStruct>;
+
+export type ApiResponseStatus = "success" | "fail" | "error";
+
+export type ApiResponse<T> = {
+  status: ApiResponseStatus;
+  data: T;
+};
+
+export type ErrorApiResponse = ApiResponse<string | null>;
+
+export type FailApiResponse = ApiResponse<Record<string, string>>;
+
+export type SuccessfulDeleteApiResponse = ApiResponse<null>;
+
+export type AddChannelApiResponse = ApiResponse<{ channel: Channel }>;
+
+export type GetSavedChannelsApiResponse = ApiResponse<{
+  savedChannels: Channel[];
+}>;
+
+export type AddUserApiResponse = ApiResponse<{ user: User }>;
+
+export type AddSavedChannelApiResponse = ApiResponse<{ user: PopulatedUser }>;
