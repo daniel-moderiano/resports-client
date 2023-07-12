@@ -1,23 +1,34 @@
-import { Infer, boolean, literal, object, string, union } from "superstruct";
+import {
+  Infer,
+  boolean,
+  literal,
+  object,
+  string,
+  union,
+  array,
+  optional,
+} from "superstruct";
 
 // Superstruct types for runtime type checking
 export const ChannelStruct = object({
-  channel_id: string(),
+  _id: string(),
   platform: union([literal("youtube"), literal("twitch")]),
 });
 
 export const UserStruct = object({
+  _id: string(),
   email: string(),
   email_verified: boolean(),
-  user_id: string(),
+  saved_channels: optional(array(string())),
 });
 
-export const SavedChannelStruct = object({
-  user_id: string(),
-  channel_id: string(),
+export const PopulatedUserStruct = object({
+  _id: string(),
+  email: string(),
+  email_verified: boolean(),
+  saved_channels: array(ChannelStruct),
 });
 
 export type Channel = Infer<typeof ChannelStruct>;
 export type User = Infer<typeof UserStruct>;
-export type SavedChannel = Infer<typeof SavedChannelStruct>;
-export type Table = "users" | "channels" | "saved_channels";
+export type PopulatedUser = Infer<typeof PopulatedUserStruct>;

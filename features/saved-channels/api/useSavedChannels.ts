@@ -1,6 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "react-query";
-import { SavedChannel } from "types/backendAPITypes";
 import { httpRequest } from "utils/fetchWrapper";
 
 export function useProjects(userId: string | undefined) {
@@ -21,12 +20,12 @@ export function useProjects(userId: string | undefined) {
   async function getSavedChannels() {
     const options = await generateOptions();
 
-    const response = await httpRequest<SavedChannel[]>(
+    const response = await httpRequest(
       `${process.env.NEXT_PUBLIC_AWS_API_ENDPOINT}/users/${userId}`,
       options
     );
 
     return response;
   }
-  return useQuery<SavedChannel[], Error>("savedChannels", getSavedChannels);
+  return useQuery("savedChannels", getSavedChannels);
 }
