@@ -1,15 +1,16 @@
 import {
   Infer,
-  boolean,
-  literal,
   object,
   string,
   union,
-  array,
+  literal,
+  boolean,
   optional,
+  array,
+  unknown,
 } from "superstruct";
 
-// Superstruct types for runtime type checking
+// Superstruct definitions
 export const ChannelStruct = object({
   _id: string(),
   platform: union([literal("youtube"), literal("twitch")]),
@@ -29,59 +30,45 @@ export const PopulatedUserStruct = object({
   saved_channels: array(ChannelStruct),
 });
 
+export const SuccessApiResponseStruct = object({
+  status: literal("success"),
+  data: unknown(),
+});
+
+export const FailApiResponseStruct = object({
+  status: literal("fail"),
+  message: string(),
+});
+
+export const ApiResponseStruct = union([
+  SuccessApiResponseStruct,
+  FailApiResponseStruct,
+]);
+
+// Separate structs for each response
+export const AddChannelResponseDataStruct = object({
+  channel: ChannelStruct,
+});
+
+export const GetSavedChannelsResponseDataStruct = object({
+  savedChannels: array(ChannelStruct),
+});
+
+export const AddUserResponseDataStruct = object({
+  user: UserStruct,
+});
+
+export const AddSavedChannelResponseDataStruct = object({
+  user: PopulatedUserStruct,
+});
+
+// TypeScript types
 export type Channel = Infer<typeof ChannelStruct>;
 export type User = Infer<typeof UserStruct>;
 export type PopulatedUser = Infer<typeof PopulatedUserStruct>;
 
-/**
- * Represents successful API responses.
- * Contains a status of 'success' and any data returned from the API.
- */
-export type SuccessApiResponse<T> = {
-  status: "success";
+export type FailApiResponse = Infer<typeof FailApiResponseStruct>;
+export type SuccessApiResponse<T> = Infer<typeof SuccessApiResponseStruct> & {
   data: T;
 };
-
-/**
- * Represents failed API responses.
- * Contains a status of 'fail' and a message detailing the reason for the failure.
- */
-export type FailApiResponse = {
-  status: "fail";
-  message: string;
-};
-
-/**
- * A generic API response which could be either a successful or failed response.
- *
- * Use of discrimination unions here means that checking for status "fail" or "success"
- * will automatically result in TypeScript identifying whether the second property is
- * `data` or `message`.
- */
 export type ApiResponse<T> = SuccessApiResponse<T> | FailApiResponse;
-
-/**
- * API response type for adding a new channel.
- * On success, it includes the newly added channel information.
- */
-export type AddChannelApiResponse = ApiResponse<{ channel: Channel }>;
-
-/**
- * API response type for retrieving saved channels.
- * On success, it includes an array of the saved channels.
- */
-export type GetSavedChannelsApiResponse = ApiResponse<{
-  savedChannels: Channel[];
-}>;
-
-/**
- * API response type for adding a new user.
- * On success, it includes the newly added user's information.
- */
-export type AddUserApiResponse = ApiResponse<{ user: User }>;
-
-/**
- * API response type for adding a saved channel to a user's list.
- * On success, it includes the updated user's information.
- */
-export type AddSavedChannelApiResponse = ApiResponse<{ user: PopulatedUser }>;

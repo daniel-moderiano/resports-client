@@ -1,8 +1,7 @@
 // Fetch wrapper that accepts a generic parameter/type T for the tpe of the response body (response.json())
-
 type FetchOptions = RequestInit;
 
-export async function httpRequest<T>(
+export async function httpRequest<T = unknown>(
   url: string,
   options?: FetchOptions
 ): Promise<T> {
