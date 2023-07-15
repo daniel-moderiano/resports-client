@@ -1,3 +1,4 @@
+import { useQuery } from "react-query";
 import {
   Channel,
   GetSavedChannelsResponseDataStruct,
@@ -10,13 +11,16 @@ async function getSavedChannels(
   userId: string,
   accessToken: string
 ): Promise<Channel[]> {
-  const requestOptions = generateRequestOptions("GET", accessToken);
   const response = await httpRequest(
     `${process.env.NEXT_PUBLIC_AWS_API_ENDPOINT}/users/${userId}/saved-channels`,
-    requestOptions
+    generateRequestOptions("GET", accessToken)
   );
 
   assertApiResponse(response, GetSavedChannelsResponseDataStruct);
 
   return response.data.savedChannels;
 }
+
+export const useGetSavedChannels = (userId: string, accessToken: string) => {
+  return useQuery("savedChannels", () => getSavedChannels(userId, accessToken));
+};
