@@ -5,7 +5,6 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { Layout } from "components/Layout";
 import { GapiContextProvider } from "providers/GapiContext";
 import { Auth0Provider } from "@auth0/auth0-react";
-import { AccessTokenContextProvider } from "providers/AccessTokenContext";
 
 const queryClient = new QueryClient();
 
@@ -20,14 +19,12 @@ export default function App({ Component, pageProps }: AppProps) {
       }}
     >
       <GapiContextProvider>
-        <AccessTokenContextProvider>
-          <QueryClientProvider client={queryClient}>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-            {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-          </QueryClientProvider>
-        </AccessTokenContextProvider>
+        <QueryClientProvider client={queryClient}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+        </QueryClientProvider>
       </GapiContextProvider>
     </Auth0Provider>
   );

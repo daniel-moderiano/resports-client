@@ -8,6 +8,8 @@ import {
   optional,
   array,
   unknown,
+  number,
+  record,
 } from "superstruct";
 
 // Superstruct definitions
@@ -31,13 +33,21 @@ export const PopulatedUserStruct = object({
 });
 
 export const SuccessApiResponseStruct = object({
-  status: literal("success"),
-  data: unknown(),
+  statusCode: number(),
+  headers: record(string(), string()),
+  body: object({
+    status: literal("success"),
+    data: unknown(),
+  }),
 });
 
 export const FailApiResponseStruct = object({
-  status: literal("fail"),
-  message: string(),
+  statusCode: number(),
+  headers: record(string(), string()),
+  body: object({
+    status: literal("fail"),
+    message: string(),
+  }),
 });
 
 export const ApiResponseStruct = union([
@@ -67,8 +77,21 @@ export type Channel = Infer<typeof ChannelStruct>;
 export type User = Infer<typeof UserStruct>;
 export type PopulatedUser = Infer<typeof PopulatedUserStruct>;
 
-export type FailApiResponse = Infer<typeof FailApiResponseStruct>;
-export type SuccessApiResponse<T> = Infer<typeof SuccessApiResponseStruct> & {
-  data: T;
+export type SuccessApiResponseBody<T> = {
+  body: {
+    status: "success";
+    data: T;
+  };
 };
+
+export type FailApiResponseBody = {
+  body: {
+    status: "fail";
+    message: string;
+  };
+};
+
+export type FailApiResponse = Infer<typeof FailApiResponseStruct>;
+export type SuccessApiResponse<T> = Infer<typeof SuccessApiResponseStruct> &
+  SuccessApiResponseBody<T>;
 export type ApiResponse<T> = SuccessApiResponse<T> | FailApiResponse;

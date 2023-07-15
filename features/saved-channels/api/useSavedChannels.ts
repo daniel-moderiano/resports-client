@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "react-query";
 import {
   Channel,
@@ -5,7 +6,7 @@ import {
 } from "types/backendAPITypes";
 import { httpRequest } from "utils/fetchWrapper";
 import { generateRequestOptions } from "utils/generateRequestOptions";
-import { assertApiResponse } from "utils/validateApiResponse";
+import { assertApiResponse } from "utils/assertApiResponse";
 
 async function getSavedChannels(
   userId: string,
@@ -18,9 +19,14 @@ async function getSavedChannels(
 
   assertApiResponse(response, GetSavedChannelsResponseDataStruct);
 
-  return response.data.savedChannels;
+  return response.body.data.savedChannels;
 }
 
-export const useGetSavedChannels = (userId: string, accessToken: string) => {
-  return useQuery("savedChannels", () => getSavedChannels(userId, accessToken));
+export const useGetSavedChannels = (userId: string) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  return useQuery("savedChannels", async () => {
+    const accessToken = await getAccessTokenSilently();
+    return getSavedChannels(userId, accessToken);
+  });
 };

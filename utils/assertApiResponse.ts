@@ -12,12 +12,12 @@ export function assertApiResponse<T>(
   }
 
   // Here we are guaranteed either a successful API response, or failed API response
-  if (validationResult.status === "fail") {
-    throw new Error(validationResult.message);
+  if (validationResult.body.status === "fail") {
+    throw new Error(validationResult.body.message);
   }
 
   // Here we are guaranteed a successful API response, but have not yet confirmed the successful data shape
-  if (!is(validationResult.data, responseDataStruct)) {
+  if (!is(validationResult.body.data, responseDataStruct)) {
     throw new Error(
       "Response data does not match expected API response structure"
     );
