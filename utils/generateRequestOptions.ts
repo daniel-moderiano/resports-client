@@ -6,7 +6,8 @@
  */
 export const generateRequestOptions = (
   method: string,
-  accessToken: string
+  accessToken: string,
+  requestBody: BodyInit | null | undefined = undefined
 ): Partial<RequestInit> => {
   return {
     method,
@@ -14,5 +15,6 @@ export const generateRequestOptions = (
       "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
+    body: requestBody,
   };
 };

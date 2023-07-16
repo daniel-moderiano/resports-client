@@ -8,6 +8,7 @@ import {
   array,
   number,
   record,
+  nullable,
 } from "superstruct";
 
 // Superstruct definitions
@@ -18,9 +19,19 @@ export const ChannelStruct = object({
 
 export const UserStruct = object({
   _id: string(),
+  // Best not to hide this as it can be used by mongo for verionsing
+  __v: number(),
   email: string(),
   email_verified: boolean(),
   saved_channels: array(ChannelStruct),
+});
+
+export const ApiSuccessResponseStruct = object({
+  statusCode: number(),
+  headers: record(string(), string()),
+  body: object({
+    data: nullable(union([UserStruct, array(ChannelStruct)])),
+  }),
 });
 
 export const ApiErrorResponseStruct = object({
