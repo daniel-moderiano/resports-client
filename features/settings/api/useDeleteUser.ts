@@ -1,57 +1,33 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation } from "react-query";
+import { ApiSuccessResponseStruct } from "types/backendAPITypes";
+import { httpRequest } from "utils/fetchWrapper";
+import { generateRequestOptions } from "utils/generateRequestOptions";
+import { assertApiResponse } from "utils/assertApiResponse";
 
-const handleFetchErrors = (response: Response) => {
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
+async function deleteUser(userId: string, accessToken: string): Promise<void> {
+  const response = await httpRequest(
+    `${process.env.NEXT_PUBLIC_AWS_API_ENDPOINT}/users/${userId}`,
+    generateRequestOptions("DELETE", accessToken)
+  );
 
-  return response;
-};
-
-// Deleting a user is a two-step API call process, one for the Postgres user, the other for the Auth0 database user
-
-export function useDeleteUser(userId: string | undefined) {
-  const { getAccessTokenSilently } = useAuth0();
-
-  const generateOptions = async () => {
-    const accessToken = await getAccessTokenSilently();
-
-    return {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
-  };
-
-  const deletePostgresUser = async () => {
-    const options = await generateOptions();
-
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_AWS_API_ENDPOINT}/users/${userId}`,
-      options
-    );
-
-    return handleFetchErrors(response);
-  };
-
-  const deleteAuth0User = async () => {
-    const options = await generateOptions();
-
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_AWS_API_ENDPOINT}/users/auth0/${userId}`,
-      options
-    );
-
-    return handleFetchErrors(response);
-  };
-
-  return useMutation({
-    mutationKey: ["users", userId],
-    mutationFn: async () => {
-      return Promise.all([deleteAuth0User(), deletePostgresUser()]);
-    },
-  });
+  assertApiResponse(response, ApiSuccessResponseStruct);
 }
+
+export const useDeleteUser = (userId: string) => {
+  const { getAccessTokenSilently, logout } = useAuth0();
+
+  const mutation = useMutation(
+    async () => {
+      const accessToken = await getAccessTokenSilently();
+      return deleteUser(userId, accessToken);
+    },
+    {
+      onSuccess: () => {
+        logout();
+      },
+    }
+  );
+
+  return mutation;
+};

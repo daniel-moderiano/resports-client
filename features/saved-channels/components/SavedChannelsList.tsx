@@ -3,6 +3,7 @@ import {
   useDeleteSavedChannel,
   useGetSavedChannels,
 } from "features/saved-channels/api/useSavedChannels";
+import { useDeleteUser } from "features/settings/api/useDeleteUser";
 
 type SavedChannelsListProps = {
   userId: string;
@@ -12,6 +13,7 @@ export const SavedChannelsList = ({ userId }: SavedChannelsListProps) => {
   const { data, isLoading, error } = useGetSavedChannels(userId);
   const { mutate: addChannel } = useAddSavedChannel(userId);
   const { mutate: deleteChannel } = useDeleteSavedChannel(userId);
+  const { mutate: deleteUser } = useDeleteUser(userId);
 
   if (error) {
     console.error(error);
@@ -54,6 +56,13 @@ export const SavedChannelsList = ({ userId }: SavedChannelsListProps) => {
 
   return (
     <div>
+      <button
+        onClick={() => {
+          deleteUser();
+        }}
+      >
+        DELETE USER
+      </button>
       <button
         onClick={() => {
           addChannel({
