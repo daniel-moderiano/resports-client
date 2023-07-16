@@ -28,8 +28,8 @@ export const SavedChannelsList = ({ userId }: SavedChannelsListProps) => {
   return (
     <ul>
       {data.map((channel) => (
-        <li key={channel._id}>
-          {channel._id} - {channel.platform}
+        <li key={channel.channel_id}>
+          {channel.channel_id} - {channel.platform}
         </li>
       ))}
     </ul>

@@ -1,9 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "react-query";
-import {
-  Channel,
-  GetSavedChannelsResponseDataStruct,
-} from "types/backendAPITypes";
+import { Channel, SavedChannelsApiResponseStruct } from "types/backendAPITypes";
 import { httpRequest } from "utils/fetchWrapper";
 import { generateRequestOptions } from "utils/generateRequestOptions";
 import { assertApiResponse } from "utils/assertApiResponse";
@@ -17,9 +14,9 @@ async function getSavedChannels(
     generateRequestOptions("GET", accessToken)
   );
 
-  assertApiResponse(response, GetSavedChannelsResponseDataStruct);
+  assertApiResponse(response, SavedChannelsApiResponseStruct);
 
-  return response.body.data.savedChannels;
+  return response.body.data;
 }
 
 export const useGetSavedChannels = (userId: string) => {
