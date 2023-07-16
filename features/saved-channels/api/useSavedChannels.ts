@@ -68,16 +68,15 @@ export const useGetSavedChannels = (userId: string) => {
 export const useAddSavedChannel = (userId: string) => {
   const { getAccessTokenSilently } = useAuth0();
 
-  const mutation = useMutation(async (channel: Channel) => {
-    const accessToken = await getAccessTokenSilently();
-    return addSavedChannel(userId, channel, accessToken);
-  });
-
-  // mutation object contains methods and values including:
-  // mutate - the mutation function
-  // data - the data returned from the mutation function
-  // isLoading - a boolean that is true when the mutation status is "loading"
-  // error - any error returned from the mutation function
+  const mutation = useMutation(
+    async (channel: Channel) => {
+      const accessToken = await getAccessTokenSilently();
+      return addSavedChannel(userId, channel, accessToken);
+    },
+    {
+      mutationKey: "savedChannels",
+    }
+  );
 
   return mutation;
 };
@@ -85,12 +84,15 @@ export const useAddSavedChannel = (userId: string) => {
 export const useDeleteSavedChannel = (userId: string) => {
   const { getAccessTokenSilently } = useAuth0();
 
-  const mutation = useMutation({
-    mutationFn: async (channelId: string) => {
+  const mutation = useMutation(
+    async (channelId: string) => {
       const accessToken = await getAccessTokenSilently();
       return deleteSavedChannel(userId, channelId, accessToken);
     },
-  });
+    {
+      mutationKey: "savedChannels",
+    }
+  );
 
   return mutation;
 };

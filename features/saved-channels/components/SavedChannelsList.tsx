@@ -1,5 +1,6 @@
 import {
   useAddSavedChannel,
+  useDeleteSavedChannel,
   useGetSavedChannels,
 } from "features/saved-channels/api/useSavedChannels";
 
@@ -9,7 +10,8 @@ type SavedChannelsListProps = {
 
 export const SavedChannelsList = ({ userId }: SavedChannelsListProps) => {
   const { data, isLoading, error } = useGetSavedChannels(userId);
-  const { mutate } = useAddSavedChannel(userId);
+  const { mutate: addChannel } = useAddSavedChannel(userId);
+  const { mutate: deleteChannel } = useDeleteSavedChannel(userId);
 
   if (error) {
     console.error(error);
@@ -30,13 +32,20 @@ export const SavedChannelsList = ({ userId }: SavedChannelsListProps) => {
       <div>
         <button
           onClick={() => {
-            mutate({
+            addChannel({
               channel_id: "5678",
               platform: "twitch",
             });
           }}
         >
           Add saved channel
+        </button>
+        <button
+          onClick={() => {
+            deleteChannel("1234");
+          }}
+        >
+          Delete channel
         </button>
         No channels found.
       </div>
@@ -47,13 +56,20 @@ export const SavedChannelsList = ({ userId }: SavedChannelsListProps) => {
     <div>
       <button
         onClick={() => {
-          mutate({
+          addChannel({
             channel_id: "1234",
             platform: "twitch",
           });
         }}
       >
         Add saved channel
+      </button>
+      <button
+        onClick={() => {
+          deleteChannel("1234");
+        }}
+      >
+        Delete channel
       </button>
       <ul>
         {data.map((channel) => (
