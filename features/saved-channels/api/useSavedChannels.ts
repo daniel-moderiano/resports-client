@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   ApiSuccessResponseStruct,
   Channel,
@@ -67,6 +67,7 @@ export const useGetSavedChannels = (userId: string) => {
 
 export const useAddSavedChannel = (userId: string) => {
   const { getAccessTokenSilently } = useAuth0();
+  const queryClient = useQueryClient();
 
   const mutation = useMutation(
     async (channel: Channel) => {
@@ -74,7 +75,9 @@ export const useAddSavedChannel = (userId: string) => {
       return addSavedChannel(userId, channel, accessToken);
     },
     {
-      mutationKey: "savedChannels",
+      onSuccess: () => {
+        queryClient.invalidateQueries("savedChannels");
+      },
     }
   );
 
@@ -83,6 +86,7 @@ export const useAddSavedChannel = (userId: string) => {
 
 export const useDeleteSavedChannel = (userId: string) => {
   const { getAccessTokenSilently } = useAuth0();
+  const queryClient = useQueryClient();
 
   const mutation = useMutation(
     async (channelId: string) => {
@@ -90,7 +94,9 @@ export const useDeleteSavedChannel = (userId: string) => {
       return deleteSavedChannel(userId, channelId, accessToken);
     },
     {
-      mutationKey: "savedChannels",
+      onSuccess: () => {
+        queryClient.invalidateQueries("savedChannels");
+      },
     }
   );
 
