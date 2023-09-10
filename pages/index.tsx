@@ -9,7 +9,7 @@ export default function Home() {
       <Head>
         <title>Resports</title>
       </Head>
-      {userId && <SavedChannelsList userId={userId} />}
+      {userId && <SavedChannelsList />}
     </>
   );
 }

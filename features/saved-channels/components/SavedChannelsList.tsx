@@ -1,19 +1,21 @@
+import { Button } from "components/button";
+import { LoadingSpinner } from "components/spinner";
 import {
   useAddSavedChannel,
   useDeleteSavedChannel,
   useGetSavedChannels,
 } from "features/saved-channels/api/useSavedChannels";
-import { useDeleteUser } from "features/settings/api/useDeleteUser";
 
-type SavedChannelsListProps = {
-  userId: string;
-};
-
-export const SavedChannelsList = ({ userId }: SavedChannelsListProps) => {
-  const { data, isLoading, error } = useGetSavedChannels(userId);
-  const { mutate: addChannel } = useAddSavedChannel(userId);
-  const { mutate: deleteChannel } = useDeleteSavedChannel(userId);
-  const { mutate: deleteUser } = useDeleteUser(userId);
+export const SavedChannelsList = () => {
+  const {
+    data,
+    isLoading: isSavedChannelsLoading,
+    error,
+  } = useGetSavedChannels();
+  const { mutate: addChannel, isLoading: isAddSavedChannelLoading } =
+    useAddSavedChannel();
+  const { mutate: deleteChannel, isLoading: isDeleteChannelLoading } =
+    useDeleteSavedChannel();
 
   if (error) {
     console.error(error);
@@ -25,30 +27,34 @@ export const SavedChannelsList = ({ userId }: SavedChannelsListProps) => {
     );
   }
 
-  if (isLoading) {
+  if (isSavedChannelsLoading) {
     return <div>Loading your channels...</div>;
   }
 
   if (!data || data.length === 0) {
     return (
       <div>
-        <button
+        <Button
           onClick={() => {
             addChannel({
               channel_id: "5678",
               platform: "twitch",
             });
           }}
+          disabled={isAddSavedChannelLoading}
         >
-          Add saved channel
-        </button>
-        <button
+          {isAddSavedChannelLoading ? <LoadingSpinner /> : "Add saved channel"}
+        </Button>
+        <Button
+          variant="secondary"
           onClick={() => {
             deleteChannel("1234");
           }}
+          disabled={isDeleteChannelLoading}
         >
+          {isDeleteChannelLoading && <LoadingSpinner />}
           Delete channel
-        </button>
+        </Button>
         No channels found.
       </div>
     );
@@ -56,30 +62,28 @@ export const SavedChannelsList = ({ userId }: SavedChannelsListProps) => {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          deleteUser();
-        }}
-      >
-        DELETE USER
-      </button>
-      <button
+      <Button
         onClick={() => {
           addChannel({
             channel_id: "1234",
             platform: "twitch",
           });
         }}
+        disabled={isAddSavedChannelLoading}
       >
+        {isAddSavedChannelLoading && <LoadingSpinner />}
         Add saved channel
-      </button>
-      <button
+      </Button>
+      <Button
+        variant="secondary"
         onClick={() => {
           deleteChannel("1234");
         }}
+        disabled={isDeleteChannelLoading}
       >
+        {isDeleteChannelLoading && <LoadingSpinner />}
         Delete channel
-      </button>
+      </Button>
       <ul>
         {data.map((channel) => (
           <li key={channel.channel_id}>

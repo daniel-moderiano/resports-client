@@ -11,12 +11,9 @@ import { httpRequest } from "utils/fetchWrapper";
 import { generateRequestOptions } from "utils/generateRequestOptions";
 import { assertApiResponse } from "utils/assertApiResponse";
 
-async function getSavedChannels(
-  userId: string,
-  accessToken: string
-): Promise<Channel[]> {
+async function getSavedChannels(accessToken: string): Promise<Channel[]> {
   const response = await httpRequest(
-    `${process.env.NEXT_PUBLIC_AWS_API_ENDPOINT}/users/${userId}/saved-channels`,
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT}/users/saved-channels`,
     generateRequestOptions("GET", accessToken)
   );
 
@@ -26,7 +23,6 @@ async function getSavedChannels(
 }
 
 async function addSavedChannel(
-  userId: string,
   channel: Channel,
   accessToken: string
 ): Promise<User> {
@@ -34,7 +30,7 @@ async function addSavedChannel(
     channel,
   });
   const response = await httpRequest(
-    `${process.env.NEXT_PUBLIC_AWS_API_ENDPOINT}/users/${userId}/saved-channels`,
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT}/users/saved-channels`,
     generateRequestOptions("POST", accessToken, requestBody)
   );
 
@@ -44,35 +40,34 @@ async function addSavedChannel(
 }
 
 async function deleteSavedChannel(
-  userId: string,
   channelId: string,
   accessToken: string
 ): Promise<void> {
   const response = await httpRequest(
-    `${process.env.NEXT_PUBLIC_AWS_API_ENDPOINT}/users/${userId}/saved-channels/${channelId}`,
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT}/users/saved-channels/${channelId}`,
     generateRequestOptions("DELETE", accessToken)
   );
 
   assertApiResponse(response, ApiSuccessResponseStruct);
 }
 
-export const useGetSavedChannels = (userId: string) => {
+export const useGetSavedChannels = () => {
   const { getAccessTokenSilently } = useAuth0();
 
   return useQuery("savedChannels", async () => {
     const accessToken = await getAccessTokenSilently();
-    return getSavedChannels(userId, accessToken);
+    return getSavedChannels(accessToken);
   });
 };
 
-export const useAddSavedChannel = (userId: string) => {
+export const useAddSavedChannel = () => {
   const { getAccessTokenSilently } = useAuth0();
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
     async (channel: Channel) => {
       const accessToken = await getAccessTokenSilently();
-      return addSavedChannel(userId, channel, accessToken);
+      return addSavedChannel(channel, accessToken);
     },
     {
       onSuccess: () => {
@@ -84,14 +79,14 @@ export const useAddSavedChannel = (userId: string) => {
   return mutation;
 };
 
-export const useDeleteSavedChannel = (userId: string) => {
+export const useDeleteSavedChannel = () => {
   const { getAccessTokenSilently } = useAuth0();
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
     async (channelId: string) => {
       const accessToken = await getAccessTokenSilently();
-      return deleteSavedChannel(userId, channelId, accessToken);
+      return deleteSavedChannel(channelId, accessToken);
     },
     {
       onSuccess: () => {
