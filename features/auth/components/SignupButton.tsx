@@ -1,18 +1,24 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Button } from "components/button/Button";
-import React from "react";
+import { ButtonHTMLAttributes } from "react";
+import { toast } from "react-hot-toast";
 
 export const SignupButton = (
-  props: React.ButtonHTMLAttributes<HTMLButtonElement>
+  props: ButtonHTMLAttributes<HTMLButtonElement>
 ) => {
   const { loginWithRedirect } = useAuth0();
 
   const handleSignUp = async () => {
-    await loginWithRedirect({
-      authorizationParams: {
-        screen_hint: "signup",
-      },
-    });
+    try {
+      await loginWithRedirect({
+        authorizationParams: {
+          screen_hint: "signup",
+        },
+      });
+    } catch (error) {
+      toast.error("Error: Unable to sign up. Please try again.");
+      console.error(error);
+    }
   };
 
   return (
