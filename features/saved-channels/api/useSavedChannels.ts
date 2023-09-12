@@ -10,6 +10,7 @@ import {
 import { httpRequest } from "utils/fetchWrapper";
 import { generateRequestOptions } from "utils/generateRequestOptions";
 import { assertApiResponse } from "utils/assertApiResponse";
+import { toast } from "react-hot-toast";
 
 async function getSavedChannels(accessToken: string): Promise<Channel[]> {
   const response = await httpRequest(
@@ -54,10 +55,18 @@ async function deleteSavedChannel(
 export const useGetSavedChannels = () => {
   const { getAccessTokenSilently } = useAuth0();
 
-  return useQuery("savedChannels", async () => {
-    const accessToken = await getAccessTokenSilently();
-    return getSavedChannels(accessToken);
-  });
+  return useQuery(
+    "savedChannels",
+    async () => {
+      const accessToken = await getAccessTokenSilently();
+      return getSavedChannels(accessToken);
+    },
+    {
+      onError: () => {
+        toast.error("Error: Unable to get saved channels.");
+      },
+    }
+  );
 };
 
 export const useAddSavedChannel = () => {
@@ -72,6 +81,10 @@ export const useAddSavedChannel = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("savedChannels");
+        toast.success("Channel saved!");
+      },
+      onError: () => {
+        toast.error("Error: Unable to save channel. Please try again.");
       },
     }
   );
@@ -91,6 +104,10 @@ export const useDeleteSavedChannel = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("savedChannels");
+        toast.success("Channel removed!");
+      },
+      onError: () => {
+        toast.error("Error: Unable to remove channel. Please try again.");
       },
     }
   );
