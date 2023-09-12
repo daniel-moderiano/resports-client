@@ -27,7 +27,7 @@ export const Layout = ({ children }: LayoutProps) => {
             padding: "0.75rem 1.25rem",
             fontSize: "0.9rem",
           },
-          position: "bottom-right",
+          position: "bottom-center",
         }}
       />
       <Header toggleSidebar={toggleSidebar} showSidebar={showSidebar} />

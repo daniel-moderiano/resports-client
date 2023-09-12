@@ -26,4 +26,8 @@
   font-size: 0.85rem;
   margin: 0;
   color: grey;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300px;
 }

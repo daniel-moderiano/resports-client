@@ -5,6 +5,8 @@ import {
   useDeleteSavedChannel,
   useGetSavedChannels,
 } from "features/saved-channels/api/useSavedChannels";
+import { toast } from "react-hot-toast";
+import { YouTubeChannelList } from "./YouTubeChannelList";
 
 export const SavedChannelsList = () => {
   const {
@@ -36,6 +38,7 @@ export const SavedChannelsList = () => {
       <div>
         <Button
           onClick={() => {
+            toast.success("You've successfully added a channel!");
             addChannel({
               channel_id: "5678",
               platform: "twitch",
@@ -43,7 +46,8 @@ export const SavedChannelsList = () => {
           }}
           disabled={isAddSavedChannelLoading}
         >
-          {isAddSavedChannelLoading ? <LoadingSpinner /> : "Add saved channel"}
+          {isAddSavedChannelLoading && <LoadingSpinner />}
+          Add saved channel
         </Button>
         <Button
           variant="secondary"
@@ -62,8 +66,12 @@ export const SavedChannelsList = () => {
 
   return (
     <div>
+      <YouTubeChannelList
+        channelIds={data.flatMap((channel) => channel.channel_id)}
+      />
       <Button
         onClick={() => {
+          toast.success("You've successfully added a channel!");
           addChannel({
             channel_id: "1234",
             platform: "twitch",
