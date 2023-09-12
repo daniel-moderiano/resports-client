@@ -92,8 +92,7 @@
   border-color: #ca3521;
 }
 
-.danger:hover,
-.danger:active {
+.danger:hover {
   background: #dc3f2a;
 }
 

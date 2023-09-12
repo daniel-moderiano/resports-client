@@ -9,7 +9,7 @@ export const DangerZone = ({ user }: DangerZoneProps) => {
   return (
     <section>
       <h3>Danger Zone</h3>
-      {user.sub && <DeleteButton userId={user.sub} />}
+      {user.sub && <DeleteButton />}
     </section>
   );
 };
