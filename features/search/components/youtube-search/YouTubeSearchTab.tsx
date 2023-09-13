@@ -1,5 +1,6 @@
+import { Routes } from "config/routes";
 import { useYouTubeSearch } from "features/search/hooks/useYoutubeSearch";
-import { YouTubeChannelResult } from "./YouTubeChannelResult";
+import { ChannelCard } from "../ChannelCard";
 
 interface YouTubeSearchTabProps {
   searchQuery: string;
@@ -741,11 +742,11 @@ const testData = {
 };
 
 export const YouTubeSearchTab = ({ searchQuery }: YouTubeSearchTabProps) => {
-  const { isLoading, isError, data } = useYouTubeSearch(searchQuery, "channel");
+  // const { isLoading, isError, data } = useYouTubeSearch(searchQuery, "channel");
 
   return (
     <div>
-      {isLoading && <div>YouTube loading...</div>}
+      {/* {isLoading && <div>YouTube loading...</div>}
 
       {isError && <div>An error has occurred</div>}
 
@@ -754,9 +755,12 @@ export const YouTubeSearchTab = ({ searchQuery }: YouTubeSearchTabProps) => {
           {data.items.length > 0 ? (
             <>
               {data.items.map((channel) => (
-                <YouTubeChannelResult
+                <ChannelCard
                   key={channel.etag}
-                  channelData={channel.snippet}
+                  thumbnailUrl={channel.snippet.thumbnails.medium.url}
+                  title={channel.snippet.title}
+                  description={channel.snippet.description}
+                  route={`${Routes.youtube.channel}/${channel.id}`}
                 />
               ))}
             </>
@@ -764,14 +768,20 @@ export const YouTubeSearchTab = ({ searchQuery }: YouTubeSearchTabProps) => {
             <div>No results found</div>
           )}
         </>
-      )}
-      {/* {testData && (
+      )} */}
+      {testData && (
         <>
           {testData.items.map((channel) => (
-            <YouTubeChannelResult key={channel.etag} channelData={channel.snippet} />
+            <ChannelCard
+              key={channel.etag}
+              thumbnailUrl={channel.snippet.thumbnails.medium.url}
+              title={channel.snippet.title}
+              description={channel.snippet.description}
+              route={`${Routes.youtube.channel}/${channel.id}`}
+            />
           ))}
         </>
-      )} */}
+      )}
     </div>
   );
 };

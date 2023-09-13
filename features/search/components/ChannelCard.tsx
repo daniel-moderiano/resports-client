@@ -1,4 +1,4 @@
-import styles from "features/search/components/styles/YouTubeSearchResult.module.css";
+import styles from "features/search/components/styles/ChannelCard.module.css";
 import Link from "next/link";
 
 type ChannelCardProps = {
