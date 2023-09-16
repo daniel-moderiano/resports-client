@@ -4,6 +4,7 @@ export * from "./components/VideoContainer";
 export * from "./components/video-controls";
 export * from "./components/VideoPlayer";
 export * from "./components/video-settings";
+export * from "./components/save-channel-button/SaveChannelButton";
 export * from "./api/player";
 export * from "./api/useTwitchPlayer";
 export * from "./api/useYouTubeIframe";

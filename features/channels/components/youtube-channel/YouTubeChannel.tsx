@@ -1,5 +1,6 @@
 import { useGetYouTubeChannel } from "features/channels/hooks/useGetYouTubeChannel";
 import { YouTubeChannelVideos } from "features/channels";
+import { SaveChannelButton } from "features/players";
 
 interface YouTubeChannelProps {
   channelId: string;
@@ -45,6 +46,7 @@ const YouTubeChannel = ({ channelId }: YouTubeChannelProps) => {
                   </p>
                   <p>{data.channelData.statistics.videoCount} videos</p>
                 </div>
+                <SaveChannelButton channelId={channelId} platform="youtube" />
               </section>
               <div>
                 {/*These will immediately be loaded, but will be obscured by an overlay within the component*/}

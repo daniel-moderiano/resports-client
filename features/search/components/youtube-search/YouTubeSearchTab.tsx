@@ -1,5 +1,6 @@
+import { Routes } from "config/routes";
 import { useYouTubeSearch } from "features/search/hooks/useYoutubeSearch";
-import { YouTubeChannelResult } from "./YouTubeChannelResult";
+import { ChannelCard } from "../ChannelCard";
 
 interface YouTubeSearchTabProps {
   searchQuery: string;
@@ -753,12 +754,19 @@ export const YouTubeSearchTab = ({ searchQuery }: YouTubeSearchTabProps) => {
         <>
           {data.items.length > 0 ? (
             <>
-              {data.items.map((channel) => (
-                <YouTubeChannelResult
-                  key={channel.etag}
-                  channelData={channel.snippet}
-                />
-              ))}
+              {data.items.map((channel) =>
+                channel.id.channelId ? (
+                  <ChannelCard
+                    key={channel.etag}
+                    thumbnailUrl={channel.snippet.thumbnails.medium.url}
+                    title={channel.snippet.title}
+                    description={channel.snippet.description}
+                    route={`${Routes.youtube.channel}/${channel.id.channelId}`}
+                    channelId={channel.id.channelId}
+                    platform="youtube"
+                  />
+                ) : null
+              )}
             </>
           ) : (
             <div>No results found</div>
@@ -768,7 +776,13 @@ export const YouTubeSearchTab = ({ searchQuery }: YouTubeSearchTabProps) => {
       {/* {testData && (
         <>
           {testData.items.map((channel) => (
-            <YouTubeChannelResult key={channel.etag} channelData={channel.snippet} />
+            <ChannelCard
+              key={channel.etag}
+              thumbnailUrl={channel.snippet.thumbnails.medium.url}
+              title={channel.snippet.title}
+              description={channel.snippet.description}
+              route={`${Routes.youtube.channel}/${channel.id}`}
+            />
           ))}
         </>
       )} */}

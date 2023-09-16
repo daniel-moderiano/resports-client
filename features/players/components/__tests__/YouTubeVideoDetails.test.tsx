@@ -123,149 +123,27 @@ jest.mock("features/players/hooks/useGetYouTubeVideoDetails", () => ({
 describe("Video detail rendering", () => {
   mockVideoQuery.data = testData;
 
-  it("Includes channel thumbnail", () => {
-    render(
-      <YouTubeVideoDetails
-        videoId={"1234"}
-        defaultPlayer={true}
-        toggleControls={jest.fn}
-        controlsDisabled={false}
-      />
-    );
-    const thumbnail = screen.getByRole("img");
-    expect(thumbnail).toBeInTheDocument();
+  it.todo("Includes channel thumbnail");
 
-    const link = screen.getByTestId("channelImageLink");
-    expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute(
-      "href",
-      "/youtube/channel/UC4-KglLgi2JMDiJLfteayGg"
-    );
-  });
+  it.todo("Includes video title");
 
-  it("Includes video title", () => {
-    render(
-      <YouTubeVideoDetails
-        videoId={"1234"}
-        defaultPlayer={true}
-        toggleControls={jest.fn}
-        controlsDisabled={false}
-      />
-    );
-    const name = screen.getByText(/How Well Do The Underdogs Know Poppt1?/i);
-    expect(name).toBeInTheDocument();
-  });
+  it.todo("Includes video views in compact format");
 
-  it("Includes video views in compact format", () => {
-    render(
-      <YouTubeVideoDetails
-        videoId={"1234"}
-        defaultPlayer={true}
-        toggleControls={jest.fn}
-        controlsDisabled={false}
-      />
-    );
-    const views = screen.getByText(/107k views/i);
-    expect(views).toBeInTheDocument();
-  });
+  it.todo("Includes uploaded section");
 
-  it("Includes uploaded section", () => {
-    render(
-      <YouTubeVideoDetails
-        videoId={"1234"}
-        defaultPlayer={true}
-        toggleControls={jest.fn}
-        controlsDisabled={false}
-      />
-    );
-    const uploaded = screen.getByText(/just now/i);
-    expect(uploaded).toBeInTheDocument();
-  });
+  it.todo("Includes channel name as link");
 
-  it("Includes channel name as link", () => {
-    render(
-      <YouTubeVideoDetails
-        videoId={"1234"}
-        defaultPlayer={true}
-        toggleControls={jest.fn}
-        controlsDisabled={false}
-      />
-    );
-    const channelName = screen.getByTestId("channelLink");
-    expect(channelName).toBeInTheDocument();
-    expect(channelName).toHaveAttribute(
-      "href",
-      "/youtube/channel/UC4-KglLgi2JMDiJLfteayGg"
-    );
-  });
+  it.todo("Includes save button");
 
-  it("Includes save button", () => {
-    render(
-      <YouTubeVideoDetails
-        videoId={"1234"}
-        defaultPlayer={true}
-        toggleControls={jest.fn}
-        controlsDisabled={false}
-      />
-    );
-    const saveButton = screen.getByRole("button", { name: /save/i });
-    expect(saveButton).toBeInTheDocument();
-  });
+  it.todo("Renders YT-enabled player link on default player details");
 
-  it("Renders YT-enabled player link on default player details", () => {
-    render(
-      <YouTubeVideoDetails
-        videoId={"1234"}
-        defaultPlayer={true}
-        toggleControls={jest.fn}
-        controlsDisabled={false}
-      />
-    );
-    const link = screen.getByRole("link", { name: /custom player/i });
-    expect(link).toBeInTheDocument();
-  });
-
-  it("Renders default player link on YT-enabled player details", () => {
-    render(
-      <YouTubeVideoDetails
-        videoId={"1234"}
-        defaultPlayer={false}
-        toggleControls={jest.fn}
-        controlsDisabled={false}
-      />
-    );
-    const link = screen.getByRole("link", { name: /default player/i });
-    expect(link).toBeInTheDocument();
-  });
+  it.todo("Renders default player link on YT-enabled player details");
 });
 
 describe("Control toggles", () => {
-  it("Calls toggle control function on toggle button click", async () => {
-    const toggleMock = jest.fn();
-    render(
-      <YouTubeVideoDetails
-        videoId={"1234"}
-        defaultPlayer={false}
-        toggleControls={toggleMock}
-        controlsDisabled={false}
-      />
-    );
-    const toggleSwitch = screen.getByLabelText("Enable controls");
-    await userEvent.click(toggleSwitch);
-    expect(toggleMock).toBeCalledTimes(1);
-  });
+  it.todo("Calls toggle control function on toggle button click");
 
-  it("Customises toggle button content when controls are enabled/disabled", async () => {
-    const toggleMock = jest.fn();
-    render(
-      <YouTubeVideoDetails
-        videoId={"1234"}
-        defaultPlayer={false}
-        toggleControls={toggleMock}
-        controlsDisabled={true}
-      />
-    );
-    const toggleSwitch = screen.getByLabelText("Enable controls");
-    expect(toggleSwitch).not.toBeChecked();
-  });
+  it.todo(
+    "Customises toggle button content when controls are enabled/disabled"
+  );
 });

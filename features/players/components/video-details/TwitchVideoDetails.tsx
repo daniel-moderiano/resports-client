@@ -5,6 +5,7 @@ import { timeAgo } from "config/timeAgoFormatter";
 import TwitchNameIcon from "icons/TwitchNameIcon";
 import { TwitchVideo } from "features/channels";
 import { Routes } from "config/routes";
+import { SaveChannelButton } from "features/players";
 
 interface TwitchVideoDetailsProps {
   videoDetails: TwitchVideo;
@@ -20,7 +21,6 @@ export const TwitchVideoDetails = ({
   controlsDisabled,
 }: TwitchVideoDetailsProps) => {
   const { userData, videoData } = videoDetails;
-
   return (
     <div className={styles.outerContainer}>
       <section className={styles.innerContainer}>
@@ -56,7 +56,7 @@ export const TwitchVideoDetails = ({
             >
               {userData.displayName}
             </Link>
-            <button className={styles.saveButton}>+ Save</button>
+            <SaveChannelButton channelId={userData.id} platform="twitch" />
           </div>
         </div>
         <div className={styles.rightContainer}>

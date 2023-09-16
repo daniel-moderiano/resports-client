@@ -23,14 +23,17 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.0.0",
+    "@auth0/nextjs-auth0": "^2.3.1",
     "@twurple/api": "^5.2.5",
     "@twurple/auth": "^5.2.5",
     "javascript-time-ago": "^2.5.9",
     "next": "^13.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
     "react-query": "^3.39.2",
-    "react-select": "^5.7.0"
+    "react-select": "^5.7.0",
+    "superstruct": "^1.0.3"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",

@@ -29,9 +29,10 @@ exports.onExecutePostLogin = async (event, api) => {
 
   const { data: tokenData } = await axios(tokenRequest);
 
+  // Calls the "addUser lambda" via HTTP API gateway endpoint
   const addUserRequest = {
     method: "POST",
-    url: `${event.secrets.AWS_API_ENDPOINT}users`,
+    url: `${event.secrets.AWS_API_ENDPOINT}/users`,
     headers: {
       "content-type": "application/json",
       Authorization: `Bearer ${tokenData.access_token}`,
@@ -39,10 +40,9 @@ exports.onExecutePostLogin = async (event, api) => {
     data: {
       email: event.user.email,
       email_verified: event.user.email_verified,
-      user_id: event.user.user_id,
+      _id: event.user.user_id,
     },
   };
 
   const res = await axios(addUserRequest);
-  console.log(res);
 };

@@ -8,6 +8,7 @@ import YouTubeFullIcon from "icons/YouTubeFullIcon";
 import SwitchPlayerIcon from "icons/SwitchPlayerIcon";
 import { InfoTooltip } from "../youtube-player/InfoTooltip";
 import { Routes } from "config/routes";
+import { SaveChannelButton } from "features/players";
 
 interface YouTubeVideoDetailsProps {
   videoId: string;
@@ -73,7 +74,10 @@ export const YouTubeVideoDetails = ({
               >
                 {data.channelData.snippet.title}
               </Link>
-              <button className={styles.saveButton}>+ Save</button>
+              <SaveChannelButton
+                channelId={data.channelData.id}
+                platform="youtube"
+              />
             </div>
           </div>
           <div className={styles.rightContainer}>

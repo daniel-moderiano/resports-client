@@ -11,6 +11,7 @@ declare global {
       NEXT_PUBLIC_AUTH0_JWT_AUDIENCE: string;
       NEXT_PUBLIC_AUTH0_CALLBACK_URI: string;
       NEXT_PUBLIC_AUTH0_LOGOUT_URI: string;
+      NEXT_PUBLIC_AWS_API_ENDPOINT: string;
     }
   }
   interface Window {

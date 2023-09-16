@@ -1,9 +1,9 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Button } from "components/button";
-import React from "react";
+import { ButtonHTMLAttributes } from "react";
 
 export const LogoutButton = (
-  props: React.ButtonHTMLAttributes<HTMLButtonElement>
+  props: ButtonHTMLAttributes<HTMLButtonElement>
 ) => {
   const { logout } = useAuth0();
 

@@ -2,45 +2,41 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 1rem 0;
-  max-width: 500px;
+  padding: 0.5rem 0;
+}
+
+.channelLink {
+  text-decoration: none;
+}
+
+.channelLink:hover {
+  text-decoration: underline #c7d1db;
+  text-underline-offset: 2px;
 }
 
 .channelTitle {
-  padding: 0;
-  margin: 0 0 0.5rem 0;
+  padding-left: 0.75rem;
+  color: #c7d1db;
 }
 
 .imgContainer {
   position: relative;
+  height: 50px;
 }
 
 .live {
   position: absolute;
+  right: -6px;
   background-color: red;
   color: white;
   font-weight: bold;
-  padding: 0.1rem 0.5rem;
+  padding: 0.1rem 0.25rem;
   border-radius: 3px;
-  top: 0;
-  left: 0;
-  font-size: 0.85rem;
+  top: 0px;
+  font-size: 0.6rem;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .thumbnail {
   border-radius: 100%;
-}
-
-.channelText {
-  margin-left: 2rem;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.game {
-  font-size: 0.85rem;
-  margin: 0;
-  color: grey;
 }

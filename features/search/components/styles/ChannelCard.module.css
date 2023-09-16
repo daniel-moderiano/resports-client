@@ -1,0 +1,56 @@
+.channel {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1rem 0;
+  max-width: 500px;
+}
+
+.channelTitle {
+  padding: 0;
+  margin: 0 0 0.5rem 0;
+}
+
+.imgContainer {
+  position: relative;
+}
+
+.live {
+  position: absolute;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  padding: 0.1rem 0.5rem;
+  border-radius: 3px;
+  top: 0;
+  left: 0;
+  font-size: 0.85rem;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.thumbnail {
+  border-radius: 100%;
+}
+
+.channelText {
+  margin-left: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.game {
+  font-size: 0.85rem;
+  margin: 0;
+  color: grey;
+}
+
+.description {
+  font-size: 0.85rem;
+  margin: 0;
+  color: grey;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300px;
+}

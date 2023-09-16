@@ -1,5 +1,6 @@
 import { useGetTwitchChannel } from "features/channels/hooks/useGetTwitchChannel";
 import { TwitchChannelVideos } from "features/channels";
+import { SaveChannelButton } from "features/players";
 
 interface TwitchChannelProps {
   channelId: string;
@@ -34,6 +35,7 @@ export const TwitchChannelPage = ({ channelId }: TwitchChannelProps) => {
               />
             )}
           </div>
+          <SaveChannelButton channelId={channelId} platform="twitch" />
         </section>
       )}
 

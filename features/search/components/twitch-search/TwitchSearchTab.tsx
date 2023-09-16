@@ -1,12 +1,13 @@
+import { Routes } from "config/routes";
 import { useTwitchSearch } from "features/search/hooks/useTwitchSearch";
-import { TwitchChannelResult } from "./TwitchChannelResult";
+import { ChannelCard } from "../ChannelCard";
 
 interface TwitchSearchTabProps {
   searchQuery: string;
 }
 
 export const TwitchSearchTab = ({ searchQuery }: TwitchSearchTabProps) => {
-  const { isLoading, isError, data, error } = useTwitchSearch(searchQuery);
+  const { isLoading, isError, data } = useTwitchSearch(searchQuery);
 
   return (
     <div>
@@ -19,7 +20,16 @@ export const TwitchSearchTab = ({ searchQuery }: TwitchSearchTabProps) => {
           {data.length > 0 ? (
             <>
               {data.map((channel) => (
-                <TwitchChannelResult key={channel.id} channelData={channel} />
+                <ChannelCard
+                  key={channel.id}
+                  thumbnailUrl={channel.thumbnailUrl}
+                  title={channel.displayName}
+                  gameName={channel.gameName}
+                  route={`${Routes.twitch.channel}/${channel.id}`}
+                  live={channel.isLive}
+                  platform="twitch"
+                  channelId={channel.id}
+                />
               ))}
             </>
           ) : (
