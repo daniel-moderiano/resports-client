@@ -5,8 +5,6 @@ export function assertApiResponse<T>(
   apiResponseData: unknown,
   desiredApiResponseDataStruct: Struct<T>
 ): asserts apiResponseData is T {
-  console.log(apiResponseData);
-
   if (is(apiResponseData, ApiErrorResponseStruct)) {
     throw new Error(apiResponseData.body.errorMessage);
   }

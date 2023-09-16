@@ -45,5 +45,4 @@ exports.onExecutePostLogin = async (event, api) => {
   };
 
   const res = await axios(addUserRequest);
-  console.log(res);
 };

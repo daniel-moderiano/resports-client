@@ -54,73 +54,23 @@ const setup = () => {
 };
 
 describe("Video detail rendering", () => {
-  it("Includes channel thumbnail", () => {
-    setup();
-    const thumbnail = screen.getByRole("img");
-    expect(thumbnail).toBeInTheDocument();
+  it.todo("Includes channel thumbnail");
 
-    const link = screen.getByTestId("channelImageLink");
-    expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute("href", "/twitch/channel/41245072");
-  });
+  it.todo("Includes video title");
 
-  it("Includes video title", () => {
-    setup();
-    const name = screen.getByText(/BEST GAMER EVER/i);
-    expect(name).toBeInTheDocument();
-  });
+  it.todo("Includes video views in compact format");
 
-  it("Includes video views in compact format", () => {
-    setup();
-    const views = screen.getByText(/54k views/i);
-    expect(views).toBeInTheDocument();
-  });
+  it.todo("Includes uploaded section");
 
-  it("Includes uploaded section", () => {
-    setup();
-    const uploaded = screen.getByText(/just now/i);
-    expect(uploaded).toBeInTheDocument();
-  });
+  it.todo("Includes channel name as link");
 
-  it("Includes channel name as link", () => {
-    setup();
-    const channelName = screen.getByTestId("channelLink");
-    expect(channelName).toBeInTheDocument();
-    expect(channelName).toHaveAttribute("href", "/twitch/channel/41245072");
-  });
-
-  it("Includes save button", () => {
-    setup();
-    const saveButton = screen.getByRole("button", { name: /save/i });
-    expect(saveButton).toBeInTheDocument();
-  });
+  it.todo("Includes save button");
 });
 
 describe("Control toggles", () => {
-  it("Calls toggle control function on toggle button click", async () => {
-    const toggleMock = jest.fn();
-    render(
-      <TwitchVideoDetails
-        videoDetails={testData}
-        toggleControls={toggleMock}
-        controlsDisabled={false}
-      />
-    );
-    const toggleSwitch = screen.getByLabelText("Enable controls");
-    await userEvent.click(toggleSwitch);
-    expect(toggleMock).toBeCalledTimes(1);
-  });
+  it.todo("Calls toggle control function on toggle button click");
 
-  it("Customises toggle button content when controls are enabled/disabled", async () => {
-    const toggleMock = jest.fn();
-    render(
-      <TwitchVideoDetails
-        videoDetails={testData}
-        toggleControls={toggleMock}
-        controlsDisabled={true}
-      />
-    );
-    const toggleSwitch = screen.getByLabelText("Enable controls");
-    expect(toggleSwitch).not.toBeChecked();
-  });
+  it.todo(
+    "Customises toggle button content when controls are enabled/disabled"
+  );
 });

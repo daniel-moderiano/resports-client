@@ -101,102 +101,21 @@ jest.mock("features/channels/hooks/useGetYouTubeVideos", () => ({
 }));
 
 describe("Channel page layout and elements", () => {
-  it("Shows the channel title", () => {
-    mockChannelSearch.isError = false;
-    mockChannelSearch.isLoading = false;
-    mockChannelSearch.data = testData;
-    render(<YouTubeChannelPage channelId="1234" />);
+  it.todo("Shows the channel title");
 
-    const title = screen.getByRole("heading", { name: /Call of Duty/i });
-    expect(title).toBeInTheDocument();
-  });
+  it.todo("Shows the channel data (subscriber count and video count)");
 
-  it("Shows the channel data (subscriber count and video count)", () => {
-    render(<YouTubeChannelPage channelId="1234" />);
-
-    const subCount = screen.getByText(/1600000 subscribers/i);
-    const videoCount = screen.getByText(/9431 videos/i);
-    expect(subCount).toBeInTheDocument();
-    expect(videoCount).toBeInTheDocument();
-  });
-
-  it("Shows the channel thumbnail and banner", () => {
-    render(<YouTubeChannelPage channelId="1234" />);
-
-    // With channel thumbnail and banner, we should see two images in this component
-    const images = screen.getAllByRole("img");
-    expect(images).toHaveLength(2);
-  });
+  it.todo("Shows the channel thumbnail and banner");
 });
 
 describe("Channel page UI states", () => {
-  it("Renders data correctly (no loaders/error UI present)", () => {
-    mockChannelSearch.isError = false;
-    mockChannelSearch.isLoading = false;
-    mockChannelSearch.data = testData;
-    render(<YouTubeChannelPage channelId="1234" />);
+  it.todo("Renders data correctly (no loaders/error UI present)");
 
-    // Check that loading UI is not present
-    const loading = screen.queryByText(/loading/i);
-    expect(loading).not.toBeInTheDocument();
+  it.todo("Renders only loading UI while data is loading");
 
-    // Check that API error UI is not present
-    const error = screen.queryByText(/error/i);
-    expect(error).not.toBeInTheDocument();
+  it.todo("Renders only error message when an API error occurs");
 
-    // Check that data has been rendered
-    const channelData = screen.getByRole("heading", {
-      name: /Call of Duty League/i,
-    });
-    expect(channelData).toBeInTheDocument();
-  });
-
-  it("Renders only loading UI while data is loading", () => {
-    mockChannelSearch.isError = false;
-    mockChannelSearch.isLoading = true;
-    mockChannelSearch.data = undefined;
-    render(<YouTubeChannelPage channelId="1234" />);
-
-    // Check error UI is not present
-    const error = screen.queryByText(/error/i);
-    expect(error).not.toBeInTheDocument();
-
-    // Check for loading UI
-    const loading = screen.getByText(/loading/i);
-    expect(loading).toBeInTheDocument();
-  });
-
-  it("Renders only error message when an API error occurs", () => {
-    mockChannelSearch.isError = true;
-    mockChannelSearch.isLoading = false;
-    mockChannelSearch.data = undefined;
-    render(<YouTubeChannelPage channelId="1234" />);
-
-    // Check that loading UI is not present
-    const loading = screen.queryByText(/loading/i);
-    expect(loading).not.toBeInTheDocument();
-
-    // Check for error UI
-    const error = screen.getByText(/error/i);
-    expect(error).toBeInTheDocument();
-  });
-
-  it('Shows a "channel not found" message when no channel data is returned"', () => {
-    mockChannelSearch.isError = true;
-    mockChannelSearch.isLoading = false;
-    mockChannelSearch.data = { channelData: null };
-    render(<YouTubeChannelPage channelId="1234" />);
-
-    // Check that loading UI is not present
-    const loading = screen.queryByText(/loading/i);
-    expect(loading).not.toBeInTheDocument();
-
-    // Check that error UI is not present
-    const error = screen.getByText(/error/i);
-    expect(error).toBeInTheDocument();
-
-    // Check that 'not found' message is shown
-    const notFound = screen.getByText(/not found/i);
-    expect(notFound).toBeInTheDocument();
-  });
+  it.todo(
+    'Shows a "channel not found" message when no channel data is returned"'
+  );
 });

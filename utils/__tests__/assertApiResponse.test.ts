@@ -1,4 +1,8 @@
-import { UserApiResponseStruct } from "types/backendAPITypes";
+import {
+  User,
+  UserApiResponse,
+  UserApiResponseStruct,
+} from "types/backendAPITypes";
 import { assertApiResponse } from "utils/assertApiResponse";
 
 describe("assertApiResponse", () => {
@@ -6,7 +10,7 @@ describe("assertApiResponse", () => {
     const errorResponse = {
       statusCode: 400,
       headers: { "Content-Type": "application/json" },
-      body: "Error Message",
+      body: "Failed data validation",
     };
 
     expect(() =>
@@ -30,19 +34,22 @@ describe("assertApiResponse", () => {
   });
 
   it("does not throw an error if the response data matches the provided struct", () => {
-    const validResponse = {
+    const validResponse: UserApiResponse = {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
       body: {
-        _id: "1234",
-        email: "test@example.com",
-        email_verified: true,
-        saved_channels: [
-          {
-            channel_id: "5678",
-            platform: "twitch",
-          },
-        ],
+        data: {
+          _id: "1234",
+          __v: 1234,
+          email: "test@example.com",
+          email_verified: true,
+          saved_channels: [
+            {
+              channel_id: "5678",
+              platform: "twitch",
+            },
+          ],
+        },
       },
     };
 

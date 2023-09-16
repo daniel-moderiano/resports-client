@@ -60,3 +60,4 @@ export const SavedChannelsApiResponseStruct = object({
 
 export type Channel = Infer<typeof ChannelStruct>;
 export type User = Infer<typeof UserStruct>;
+export type UserApiResponse = Infer<typeof UserApiResponseStruct>;
