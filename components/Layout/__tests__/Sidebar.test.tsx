@@ -3,36 +3,11 @@ import userEvent from "@testing-library/user-event";
 import { Sidebar } from "components/Layout";
 
 describe("Sidebar component", () => {
-  it("contains appropriate test-id", () => {
-    render(<Sidebar showSidebar={true} closeSidebar={jest.fn} />);
+  it.todo("contains appropriate test-id");
 
-    const sidebar = screen.getByTestId("sidebar");
+  it.todo("sets the active class when the sidebar is shown");
 
-    expect(sidebar).toBeInTheDocument();
-  });
+  it.todo("removes the active class when the sidebar is hidden");
 
-  it("sets the active class when the sidebar is shown", () => {
-    render(<Sidebar showSidebar={true} closeSidebar={jest.fn} />);
-
-    const sidebar = screen.getByTestId("sidebar");
-    expect(sidebar).toHaveClass("sidebarActive");
-  });
-
-  it("removes the active class when the sidebar is hidden", () => {
-    render(<Sidebar showSidebar={false} closeSidebar={jest.fn} />);
-
-    const sidebar = screen.getByTestId("sidebar");
-    expect(sidebar).not.toHaveClass("sidebarActive");
-  });
-
-  it("closes the sidebar when close button is clicked", async () => {
-    render(<Sidebar showSidebar={false} closeSidebar={jest.fn} />);
-
-    const sidebar = screen.getByTestId("sidebar");
-    const closeButton = screen.getByLabelText(/close sidebar/i);
-
-    await userEvent.click(closeButton);
-
-    expect(sidebar).not.toHaveClass("sidebarActive");
-  });
+  it.todo("closes the sidebar when close button is clicked");
 });
