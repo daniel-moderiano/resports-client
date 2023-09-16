@@ -8,9 +8,7 @@ import YouTubeFullIcon from "icons/YouTubeFullIcon";
 import SwitchPlayerIcon from "icons/SwitchPlayerIcon";
 import { InfoTooltip } from "../youtube-player/InfoTooltip";
 import { Routes } from "config/routes";
-import { useGetSavedChannels } from "features/saved-channels";
 import { SaveChannelButton } from "features/players";
-import { checkIsSavedChannel } from "features/players/utils/checkIsChannelSaved";
 
 interface YouTubeVideoDetailsProps {
   videoId: string;
@@ -28,12 +26,10 @@ export const YouTubeVideoDetails = ({
   controlsDisabled,
 }: YouTubeVideoDetailsProps) => {
   const { isError, isLoading, data } = useGetYouTubeVideoDetails(videoId);
-  const { data: savedChannels, isLoading: isLoadingSavedChannels } =
-    useGetSavedChannels();
 
   return (
     <div className={styles.outerContainer}>
-      {data && savedChannels && (
+      {data && (
         <section className={styles.innerContainer}>
           <div className={styles.videoDetails}>
             <h2 className={styles.videoTitle}>
@@ -79,13 +75,6 @@ export const YouTubeVideoDetails = ({
                 {data.channelData.snippet.title}
               </Link>
               <SaveChannelButton
-                isSavedChannel={checkIsSavedChannel(
-                  {
-                    channel_id: data.channelData.id,
-                    platform: "youtube",
-                  },
-                  savedChannels
-                )}
                 channelId={data.channelData.id}
                 platform="youtube"
               />

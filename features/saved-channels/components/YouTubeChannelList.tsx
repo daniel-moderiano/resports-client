@@ -1,7 +1,6 @@
 import { Routes } from "config/routes";
 import { useGetYouTubeChannels } from "features/channels/hooks/useGetYouTubeChannels";
-import { ChannelCard } from "features/search/components/ChannelCard";
-import { useEffect } from "react";
+import { SavedChannelCard } from "./SavedChannelCard";
 
 export const YouTubeChannelList = ({
   channelIds,
@@ -12,17 +11,21 @@ export const YouTubeChannelList = ({
 
   return (
     <>
+      <h3>YouTube channels</h3>
       {channels && (
         <div>
-          {channels.map((channel) => (
-            <ChannelCard
-              key={channel.id}
-              thumbnailUrl={channel.snippet.thumbnails.medium.url}
-              title={channel.snippet.title}
-              description={channel.snippet.description}
-              route={`${Routes.youtube.channel}/${channel.id}`}
-            />
-          ))}
+          {channels
+            .sort((a, b) => a.snippet.title.localeCompare(b.snippet.title))
+            .map((channel) => (
+              <SavedChannelCard
+                key={channel.id}
+                thumbnailUrl={channel.snippet.thumbnails.medium.url}
+                title={channel.snippet.title}
+                route={`${Routes.youtube.channel}/${channel.id}`}
+                channelId={channel.id}
+                platform="youtube"
+              />
+            ))}
         </div>
       )}
     </>

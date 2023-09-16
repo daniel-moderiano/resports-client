@@ -1,48 +1,41 @@
 import { SaveChannelButton } from "features/players";
-import styles from "features/search/components/styles/ChannelCard.module.css";
+import styles from "features/saved-channels/components/styles/SavedChannelCard.module.css";
+import { Platform } from "features/search";
 import Link from "next/link";
-import { Platform } from "./SearchBar";
 
-type ChannelCardProps = {
+type SavedChannelCardProps = {
   thumbnailUrl: string;
   title: string;
-  description?: string;
   route: string;
   live?: boolean;
-  gameName?: string;
   channelId: string;
   platform: Platform;
 };
 
-export const ChannelCard = ({
+export const SavedChannelCard = ({
   thumbnailUrl,
   title,
-  description,
   route,
   live,
-  gameName,
   channelId,
   platform,
-}: ChannelCardProps) => {
+}: SavedChannelCardProps) => {
   return (
     <div className={styles.channel}>
       <div className={styles.imgContainer}>
         <img
           src={thumbnailUrl}
           alt={`${title} channel thumbnail`}
-          height={100}
-          width={100}
+          height={50}
+          width={50}
           className={styles.thumbnail}
         />
         {live && <span className={styles.live}>LIVE</span>}
       </div>
-      <div className={styles.channelText}>
-        <Link href={route}>
-          <h3 className={styles.channelTitle}>{title}</h3>
-        </Link>
-        <p className={styles.description}>{description}</p>
-        {gameName && <p className={styles.game}>{gameName}</p>}
-      </div>
+
+      <Link href={route} className={styles.channelLink}>
+        <span className={styles.channelTitle}>{title}</span>
+      </Link>
       <SaveChannelButton channelId={channelId} platform={platform} />
     </div>
   );

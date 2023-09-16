@@ -27,6 +27,8 @@ export const TwitchSearchTab = ({ searchQuery }: TwitchSearchTabProps) => {
                   gameName={channel.gameName}
                   route={`${Routes.twitch.channel}/${channel.id}`}
                   live={channel.isLive}
+                  platform="twitch"
+                  channelId={channel.id}
                 />
               ))}
             </>

@@ -6,6 +6,7 @@ import {
   useGetSavedChannels,
 } from "features/saved-channels/api/useSavedChannels";
 import { toast } from "react-hot-toast";
+import { TwitchChannelList } from "./TwitchChannelList";
 import { YouTubeChannelList } from "./YouTubeChannelList";
 
 export const SavedChannelsList = () => {
@@ -67,7 +68,22 @@ export const SavedChannelsList = () => {
   return (
     <div>
       <YouTubeChannelList
-        channelIds={data.flatMap((channel) => channel.channel_id)}
+        channelIds={data.flatMap((channel) => {
+          if (channel.platform === "youtube") {
+            return [channel.channel_id];
+          } else {
+            return [];
+          }
+        })}
+      />
+      <TwitchChannelList
+        channelIds={data.flatMap((channel) => {
+          if (channel.platform === "twitch") {
+            return [channel.channel_id];
+          } else {
+            return [];
+          }
+        })}
       />
       <Button
         onClick={() => {
