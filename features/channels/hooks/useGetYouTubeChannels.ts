@@ -27,10 +27,7 @@ export const useGetYouTubeChannels = (
 
       const searchResult = response.result as YouTubeChannelSearchListResponse;
 
-      // Sort by alphabetical order
-      return searchResult.items.sort((a, b) =>
-        a.snippet.title.localeCompare(b.snippet.title)
-      );
+      return searchResult.items;
     },
     {
       enabled:
