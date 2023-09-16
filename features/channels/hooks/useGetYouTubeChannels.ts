@@ -9,7 +9,7 @@ export const useGetYouTubeChannels = (
   const { gapiClientReady } = useGapiContext();
 
   const { isLoading, isError, data, error } = useQuery(
-    ["youtubeChannel", channelIds],
+    ["youtubeChannels", channelIds],
     async () => {
       const response = await gapi.client.request({
         path: "https://www.googleapis.com/youtube/v3/channels",

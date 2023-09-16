@@ -8,7 +8,7 @@ export const useGetTwitchChannels = (
   conditions?: boolean
 ) => {
   const { isLoading, isError, data, error } = useQuery(
-    ["twitchChannel", channelIds],
+    ["twitchChannels", channelIds],
     async () => {
       // The apiClient from the twurple library has internal error handling; no manual error handling is required here.
       const channelResponses = await apiClient.channels.getChannelInfoByIds(
