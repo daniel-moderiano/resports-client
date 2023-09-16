@@ -1,5 +1,5 @@
 // Note: this does not enable context application with 'this'
-export function throttle<T>(func: (...args: T[]) => void, delay: number = 0) {
+export function throttle<T>(func: (...args: T[]) => void, delay = 0) {
   let enableCall = true;
 
   return (...args: T[]) => {
