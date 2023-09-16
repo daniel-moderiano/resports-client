@@ -43,6 +43,7 @@ export const useGetTwitchChannels = (
     {
       // Check for additional conditions before formulating enabled expression.
       enabled: conditions !== undefined ? conditions : true,
+      refetchOnWindowFocus: false,
     }
   );
 

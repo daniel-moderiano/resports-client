@@ -34,6 +34,7 @@ export const useGetYouTubeChannels = (
         conditions !== undefined
           ? conditions && gapiClientReady
           : gapiClientReady,
+      refetchOnWindowFocus: false,
     }
   );
 
