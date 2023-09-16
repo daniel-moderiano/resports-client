@@ -1,8 +1,10 @@
+import { LoadingSpinner } from "components/spinner";
 import { useGetSavedChannels } from "features/saved-channels/api/useSavedChannels";
 import { toast } from "react-hot-toast";
 import { CombinedChannelList } from "./CombinedChannelList";
+import styles from "../styles/SidebarSavedChannelList.module.css";
 
-export const SavedChannelsList = () => {
+export const SidebarSavedChannelsList = () => {
   const {
     data: savedChannels,
     isLoading: isSavedChannelsLoading,
@@ -14,7 +16,11 @@ export const SavedChannelsList = () => {
   }
 
   if (isSavedChannelsLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className={styles.loading}>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!savedChannels) {

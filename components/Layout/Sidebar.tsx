@@ -2,7 +2,7 @@ import styles from "components/Layout/styles/Sidebar.module.css";
 import { useEscapeClose } from "hooks/useEscapeClose";
 import * as React from "react";
 import HamburgerIcon from "icons/HamburgerIcon";
-import { SavedChannelsList } from "features/saved-channels";
+import { SidebarSavedChannelsList } from "features/saved-channels/components/saved-channel-list/SidebarSavedChannelList";
 
 interface SidebarProps {
   showSidebar: boolean;
@@ -25,7 +25,7 @@ export const Sidebar = ({ showSidebar, closeSidebar }: SidebarProps) => {
       <div className={styles.sidebarBody}>
         <div className={styles.sidebarHeader}>Saved channels</div>
         <div onClick={closeSidebar}>
-          <SavedChannelsList />
+          <SidebarSavedChannelsList />
         </div>
       </div>
     </div>

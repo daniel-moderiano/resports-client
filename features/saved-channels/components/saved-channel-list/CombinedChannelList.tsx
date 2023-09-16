@@ -3,6 +3,8 @@ import { useGetYouTubeChannels } from "features/channels/hooks/useGetYouTubeChan
 import { useGetTwitchChannels } from "features/channels/hooks/useGetTwitchChannels";
 import { SavedChannelCard } from "./SavedChannelCard";
 import { toast } from "react-hot-toast";
+import styles from "../styles/SidebarSavedChannelList.module.css";
+import { LoadingSpinner } from "components/spinner";
 
 export const CombinedChannelList = ({
   youtubeChannelIds,
@@ -23,7 +25,11 @@ export const CombinedChannelList = ({
   } = useGetTwitchChannels(twitchChannelIds);
 
   if (youtubeLoading || twitchLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className={styles.loading}>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (youtubeError || twitchError) {
