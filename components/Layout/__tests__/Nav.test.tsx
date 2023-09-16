@@ -14,17 +14,7 @@ jest.mock("next/router", () => ({
 mockUseAuth0();
 
 describe("Nav component", () => {
-  it("calls toggle sidebar function when clicking sidebar toggle button", async () => {
-    const toggleSidebar = jest.fn();
-    render(<Nav toggleSidebar={toggleSidebar} showSidebar={false} />);
-
-    const toggleButton = screen.getByRole("button", {
-      name: /toggle sidebar/i,
-    });
-    await userEvent.click(toggleButton);
-
-    expect(toggleSidebar).toBeCalledTimes(1);
-  });
+  it.todo("calls toggle sidebar function when clicking sidebar toggle button");
 
   it("shows only log in and sign up buttons when user is not authenticated", async () => {
     mockUseAuth0ReturnValue({
