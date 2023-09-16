@@ -8,7 +8,7 @@
   transform: translateX(-100%);
   transition: 200ms ease;
   z-index: 2;
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
 }
 
 .sidebarActive {
@@ -18,7 +18,7 @@
 .sidebarButton {
   background-color: transparent;
   border: none;
-  margin: 0;
+  margin: 0 0.5rem;
   padding: 0.25rem 0.4rem;
   display: flex;
   align-items: center;
@@ -34,4 +34,13 @@
 
 .sidebarButton:hover {
   background-color: #35353e;
+}
+
+.sidebarHeader {
+  padding: 0.25rem 0 0.5rem 0.5rem;
+  font-weight: 500;
+}
+
+.sidebarBody {
+  margin-top: 0.5rem;
 }

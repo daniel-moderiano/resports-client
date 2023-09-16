@@ -2,41 +2,40 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 0.5rem 0;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  position: relative;
+}
+
+.channel:hover {
+  background-color: #35353e;
 }
 
 .channelLink {
   text-decoration: none;
 }
 
-.channelLink:hover {
-  text-decoration: underline #c7d1db;
-  text-underline-offset: 2px;
-}
-
 .channelTitle {
-  padding-left: 0.75rem;
   color: #c7d1db;
-}
-
-.imgContainer {
-  position: relative;
-  height: 50px;
+  font-size: 0.85rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 70%;
 }
 
 .live {
+  width: 6px;
+  height: 6px;
+  right: 1rem;
+  background-color: #ca3521;
+  border-radius: 50%;
+  display: inline-block;
   position: absolute;
-  right: -6px;
-  background-color: red;
-  color: white;
-  font-weight: bold;
-  padding: 0.1rem 0.25rem;
-  border-radius: 3px;
-  top: 0px;
-  font-size: 0.6rem;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .thumbnail {
   border-radius: 100%;
+  margin-right: 1rem;
 }

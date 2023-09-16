@@ -1,120 +1,37 @@
-import { Button } from "components/button";
-import { LoadingSpinner } from "components/spinner";
-import {
-  useAddSavedChannel,
-  useDeleteSavedChannel,
-  useGetSavedChannels,
-} from "features/saved-channels/api/useSavedChannels";
+import { useGetSavedChannels } from "features/saved-channels/api/useSavedChannels";
 import { toast } from "react-hot-toast";
-import { TwitchChannelList } from "./TwitchChannelList";
-import { YouTubeChannelList } from "./YouTubeChannelList";
+import { CombinedChannelList } from "./CombinedChannelList";
 
 export const SavedChannelsList = () => {
   const {
-    data,
+    data: savedChannels,
     isLoading: isSavedChannelsLoading,
-    error,
+    isError: isSavedChannelsError,
   } = useGetSavedChannels();
-  const { mutate: addChannel, isLoading: isAddSavedChannelLoading } =
-    useAddSavedChannel();
-  const { mutate: deleteChannel, isLoading: isDeleteChannelLoading } =
-    useDeleteSavedChannel();
 
-  if (error) {
-    console.error(error);
-    return (
-      <div>
-        <p>Oops! Something went wrong while loading your channels.</p>
-        <p>Please try again later.</p>
-      </div>
-    );
+  if (isSavedChannelsError) {
+    toast.error("Error: Unable to get saved channels.");
   }
 
   if (isSavedChannelsLoading) {
-    return <div>Loading your channels...</div>;
+    return <div>Loading...</div>;
   }
 
-  if (!data || data.length === 0) {
-    return (
-      <div>
-        <Button
-          onClick={() => {
-            toast.success("You've successfully added a channel!");
-            addChannel({
-              channel_id: "5678",
-              platform: "twitch",
-            });
-          }}
-          disabled={isAddSavedChannelLoading}
-        >
-          {isAddSavedChannelLoading && <LoadingSpinner />}
-          Add saved channel
-        </Button>
-        <Button
-          variant="secondary"
-          onClick={() => {
-            deleteChannel("1234");
-          }}
-          disabled={isDeleteChannelLoading}
-        >
-          {isDeleteChannelLoading && <LoadingSpinner />}
-          Delete channel
-        </Button>
-        No channels found.
-      </div>
-    );
+  if (!savedChannels) {
+    return null;
   }
+
+  const twitchChannelIds = savedChannels.flatMap((channel) =>
+    channel.platform === "twitch" ? [channel.channel_id] : []
+  );
+  const youtubeChannelIds = savedChannels.flatMap((channel) =>
+    channel.platform === "youtube" ? [channel.channel_id] : []
+  );
 
   return (
-    <div>
-      <YouTubeChannelList
-        channelIds={data.flatMap((channel) => {
-          if (channel.platform === "youtube") {
-            return [channel.channel_id];
-          } else {
-            return [];
-          }
-        })}
-      />
-      <TwitchChannelList
-        channelIds={data.flatMap((channel) => {
-          if (channel.platform === "twitch") {
-            return [channel.channel_id];
-          } else {
-            return [];
-          }
-        })}
-      />
-      <Button
-        onClick={() => {
-          toast.success("You've successfully added a channel!");
-          addChannel({
-            channel_id: "1234",
-            platform: "twitch",
-          });
-        }}
-        disabled={isAddSavedChannelLoading}
-      >
-        {isAddSavedChannelLoading && <LoadingSpinner />}
-        Add saved channel
-      </Button>
-      <Button
-        variant="secondary"
-        onClick={() => {
-          deleteChannel("1234");
-        }}
-        disabled={isDeleteChannelLoading}
-      >
-        {isDeleteChannelLoading && <LoadingSpinner />}
-        Delete channel
-      </Button>
-      <ul>
-        {data.map((channel) => (
-          <li key={channel.channel_id}>
-            {channel.channel_id} - {channel.platform}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <CombinedChannelList
+      youtubeChannelIds={youtubeChannelIds}
+      twitchChannelIds={twitchChannelIds}
+    />
   );
 };
