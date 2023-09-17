@@ -35,4 +35,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 # TODOS
 
-- Cursor disappears when moving into video overlay from the top (e.g. can't change channel search select)
+- Cursor disappears when moving into video overlay from the top (e.g. can't change channel search select). NOTE: This only occurs on the Twitch player lol
