@@ -1,10 +1,17 @@
 import { LoadingSpinner } from "components/spinner";
 import { useGetSavedChannels } from "features/saved-channels/api/useSavedChannels";
 import { toast } from "react-hot-toast";
-import { CombinedChannelList } from "./CombinedChannelList";
 import styles from "../styles/SidebarSavedChannelList.module.css";
+import { YouTubeSavedChannelList } from "./YouTubeSavedChannelList";
+import { TwitchSavedChannelList } from "./TwitchSavedChannelList";
+import TwitchNameIcon from "icons/TwitchNameIcon";
+import YouTubeFullIcon from "icons/YouTubeFullIcon";
 
-export const SidebarSavedChannelsList = () => {
+export const SidebarSavedChannelsList = ({
+  closeSidebar,
+}: {
+  closeSidebar: () => void;
+}) => {
   const {
     data: savedChannels,
     isLoading: isSavedChannelsLoading,
@@ -12,13 +19,20 @@ export const SidebarSavedChannelsList = () => {
   } = useGetSavedChannels();
 
   if (isSavedChannelsError) {
-    toast.error("Error: Unable to get saved channels.");
+    toast.error("Unable to get saved channels.");
   }
 
   if (isSavedChannelsLoading) {
     return (
-      <div className={styles.loading}>
-        <LoadingSpinner />
+      <div>
+        <TwitchNameIcon fill="#9147FF" className={styles.twitchHeader} />
+        <div className={styles.loading}>
+          <LoadingSpinner />
+        </div>
+        <YouTubeFullIcon className={styles.youtubeHeader} />
+        <div className={styles.loading}>
+          <LoadingSpinner />
+        </div>
       </div>
     );
   }
@@ -35,9 +49,15 @@ export const SidebarSavedChannelsList = () => {
   );
 
   return (
-    <CombinedChannelList
-      youtubeChannelIds={youtubeChannelIds}
-      twitchChannelIds={twitchChannelIds}
-    />
+    <div>
+      <TwitchNameIcon fill="#9147FF" className={styles.twitchHeader} />
+      <div className={styles.savedChannelList} onClick={closeSidebar}>
+        <TwitchSavedChannelList channelIds={twitchChannelIds} />
+      </div>
+      <YouTubeFullIcon className={styles.youtubeHeader} />
+      <div className={styles.savedChannelList} onClick={closeSidebar}>
+        <YouTubeSavedChannelList channelIds={youtubeChannelIds} />
+      </div>
+    </div>
   );
 };
