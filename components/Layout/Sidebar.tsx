@@ -23,10 +23,7 @@ export const Sidebar = ({ showSidebar, closeSidebar }: SidebarProps) => {
         <HamburgerIcon className={styles.hamburgerIcon} />
       </button>
       <div className={styles.sidebarBody}>
-        <div className={styles.sidebarHeader}>Saved channels</div>
-        <div onClick={closeSidebar}>
-          <SidebarSavedChannelsList />
-        </div>
+        <SidebarSavedChannelsList closeSidebar={closeSidebar} />
       </div>
     </div>
   );
