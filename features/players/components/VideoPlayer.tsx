@@ -49,7 +49,6 @@ export const VideoPlayer = ({
   const [playerMuted, setPlayerMuted] = React.useState(true);
   const [playerPaused, setPlayerPaused] = React.useState(false);
   const [theaterMode, setTheaterMode] = React.useState(false);
-  // const { theaterMode, dispatch } = usePlayerContext();
   const [videoEnded, setVideoEnded] = React.useState(false);
 
   // Set the player volume according to local changes in volume. By working with the local volume state, we get a fluid UI as opposed to a laggy API interaction. It is fine to have a trace delay between local change and API player volume update.

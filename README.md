@@ -34,5 +34,3 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 # TODOS
-
-- Cursor disappears when moving into video overlay from the top (e.g. can't change channel search select). NOTE: This only occurs on the Twitch player lol

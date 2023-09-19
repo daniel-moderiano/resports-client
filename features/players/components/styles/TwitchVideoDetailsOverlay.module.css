@@ -17,8 +17,6 @@
     rgba(0, 0, 0, 0.35) 60%,
     transparent
   );
-
-  pointer-events: none;
   z-index: -1;
 }
 

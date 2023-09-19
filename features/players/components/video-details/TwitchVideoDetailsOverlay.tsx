@@ -1,8 +1,6 @@
 import React from "react";
 import styles from "features/players/components/styles/TwitchVideoDetailsOverlay.module.css";
-import Link from "next/link";
 import { TwitchVideo } from "features/channels";
-import { Routes } from "config/routes";
 
 interface TwitchVideoDetailsOverlayProps {
   videoDetails: TwitchVideo;
@@ -16,21 +14,14 @@ export const TwitchVideoDetailsOverlay = ({
     <div className={styles.outerContainer}>
       <div className={styles.gradient}></div>
       <div className={styles.innerContainer}>
-        <Link
-          href={`${Routes.twitch.channel}/${userData.id}`}
-          data-testid="channelImageLink"
-          className={styles.imageLink}
-        >
-          <span className={styles.srOnly}>{userData.displayName}</span>
-          <img
-            alt={`${userData.displayName} thumbnail`}
-            src={userData.profilePictureUrl}
-            width={45}
-            height={45}
-            className={styles.channelThumbnail}
-          />
-        </Link>
-
+        <span className={styles.srOnly}>{userData.displayName}</span>
+        <img
+          alt={`${userData.displayName} thumbnail`}
+          src={userData.profilePictureUrl}
+          width={45}
+          height={45}
+          className={styles.channelThumbnail}
+        />
         <h2 className={styles.videoTitle}>{videoData.title}</h2>
       </div>
     </div>

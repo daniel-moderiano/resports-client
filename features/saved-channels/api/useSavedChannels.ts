@@ -62,7 +62,6 @@ export const useGetSavedChannels = () => {
       return getSavedChannels(accessToken);
     },
     {
-      staleTime: Infinity,
       onError: () => {
         toast.error("Error: Unable to get saved channels.");
       },
