@@ -6,6 +6,7 @@ import TwitchNameIcon from "icons/TwitchNameIcon";
 import { TwitchVideo } from "features/channels";
 import { Routes } from "config/routes";
 import { SaveChannelButton } from "features/players";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface TwitchVideoDetailsProps {
   videoDetails: TwitchVideo;
@@ -21,6 +22,7 @@ export const TwitchVideoDetails = ({
   controlsDisabled,
 }: TwitchVideoDetailsProps) => {
   const { userData, videoData } = videoDetails;
+  const { isAuthenticated } = useAuth0();
   return (
     <div className={styles.outerContainer}>
       <section className={styles.innerContainer}>
@@ -56,7 +58,9 @@ export const TwitchVideoDetails = ({
             >
               {userData.displayName}
             </Link>
-            <SaveChannelButton channelId={userData.id} platform="twitch" />
+            {isAuthenticated && (
+              <SaveChannelButton channelId={userData.id} platform="twitch" />
+            )}
           </div>
         </div>
         <div className={styles.rightContainer}>

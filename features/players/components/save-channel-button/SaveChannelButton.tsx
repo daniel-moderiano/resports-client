@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { Button } from "components/button";
 import { LoadingSpinner } from "components/spinner";
 import { checkIsSavedChannel } from "features/players/utils/checkIsChannelSaved";

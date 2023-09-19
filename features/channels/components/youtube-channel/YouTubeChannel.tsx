@@ -1,6 +1,7 @@
 import { useGetYouTubeChannel } from "features/channels/hooks/useGetYouTubeChannel";
 import { YouTubeChannelVideos } from "features/channels";
 import { SaveChannelButton } from "features/players";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface YouTubeChannelProps {
   channelId: string;
@@ -8,7 +9,7 @@ interface YouTubeChannelProps {
 
 const YouTubeChannel = ({ channelId }: YouTubeChannelProps) => {
   const { isLoading, isError, data } = useGetYouTubeChannel(channelId);
-
+  const { isAuthenticated } = useAuth0();
   return (
     <div>
       {isLoading && <div>YouTube loading...</div>}
@@ -46,7 +47,9 @@ const YouTubeChannel = ({ channelId }: YouTubeChannelProps) => {
                   </p>
                   <p>{data.channelData.statistics.videoCount} videos</p>
                 </div>
-                <SaveChannelButton channelId={channelId} platform="youtube" />
+                {isAuthenticated && (
+                  <SaveChannelButton channelId={channelId} platform="youtube" />
+                )}
               </section>
               <div>
                 {/*These will immediately be loaded, but will be obscured by an overlay within the component*/}

@@ -9,6 +9,7 @@ import SwitchPlayerIcon from "icons/SwitchPlayerIcon";
 import { InfoTooltip } from "../youtube-player/InfoTooltip";
 import { Routes } from "config/routes";
 import { SaveChannelButton } from "features/players";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface YouTubeVideoDetailsProps {
   videoId: string;
@@ -26,6 +27,7 @@ export const YouTubeVideoDetails = ({
   controlsDisabled,
 }: YouTubeVideoDetailsProps) => {
   const { isError, isLoading, data } = useGetYouTubeVideoDetails(videoId);
+  const { isAuthenticated } = useAuth0();
 
   return (
     <div className={styles.outerContainer}>
@@ -74,10 +76,12 @@ export const YouTubeVideoDetails = ({
               >
                 {data.channelData.snippet.title}
               </Link>
-              <SaveChannelButton
-                channelId={data.channelData.id}
-                platform="youtube"
-              />
+              {isAuthenticated && (
+                <SaveChannelButton
+                  channelId={data.channelData.id}
+                  platform="youtube"
+                />
+              )}
             </div>
           </div>
           <div className={styles.rightContainer}>

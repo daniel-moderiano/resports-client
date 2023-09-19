@@ -1,6 +1,7 @@
 import { useGetTwitchChannel } from "features/channels/hooks/useGetTwitchChannel";
 import { TwitchChannelVideos } from "features/channels";
 import { SaveChannelButton } from "features/players";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface TwitchChannelProps {
   channelId: string;
@@ -8,6 +9,7 @@ interface TwitchChannelProps {
 
 export const TwitchChannelPage = ({ channelId }: TwitchChannelProps) => {
   const { isLoading, isError, data, error } = useGetTwitchChannel(channelId);
+  const { isAuthenticated } = useAuth0();
 
   return (
     <div>
@@ -35,7 +37,9 @@ export const TwitchChannelPage = ({ channelId }: TwitchChannelProps) => {
               />
             )}
           </div>
-          <SaveChannelButton channelId={channelId} platform="twitch" />
+          {isAuthenticated && (
+            <SaveChannelButton channelId={channelId} platform="twitch" />
+          )}
         </section>
       )}
 

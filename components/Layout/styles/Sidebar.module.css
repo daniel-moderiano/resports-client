@@ -44,3 +44,8 @@
 .sidebarBody {
   margin-top: 0.5rem;
 }
+
+.loginMessage {
+  font-size: 0.85rem;
+  padding-left: 1rem;
+}

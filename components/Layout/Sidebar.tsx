@@ -3,6 +3,7 @@ import { useEscapeClose } from "hooks/useEscapeClose";
 import * as React from "react";
 import HamburgerIcon from "icons/HamburgerIcon";
 import { SidebarSavedChannelsList } from "features/saved-channels/components/saved-channel-list/SidebarSavedChannelList";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface SidebarProps {
   showSidebar: boolean;
@@ -11,7 +12,7 @@ interface SidebarProps {
 
 export const Sidebar = ({ showSidebar, closeSidebar }: SidebarProps) => {
   useEscapeClose(closeSidebar);
-
+  const { isAuthenticated } = useAuth0();
   return (
     <div
       className={`${styles.sidebar} ${showSidebar ? styles.sidebarActive : ""}`}
@@ -23,7 +24,11 @@ export const Sidebar = ({ showSidebar, closeSidebar }: SidebarProps) => {
         <HamburgerIcon className={styles.hamburgerIcon} />
       </button>
       <div className={styles.sidebarBody}>
-        <SidebarSavedChannelsList closeSidebar={closeSidebar} />
+        {isAuthenticated ? (
+          <SidebarSavedChannelsList closeSidebar={closeSidebar} />
+        ) : (
+          <p className={styles.loginMessage}>Log in to view saved channels</p>
+        )}
       </div>
     </div>
   );
