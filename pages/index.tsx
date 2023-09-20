@@ -1,3 +1,4 @@
+import { RecentlyViewedChannels } from "features/recently-viewed-channels/components/RecentlyViewedChannels";
 import Head from "next/head";
 
 export default function Home() {
@@ -6,6 +7,7 @@ export default function Home() {
       <Head>
         <title>Resports</title>
       </Head>
+      <RecentlyViewedChannels />
     </>
   );
 }
