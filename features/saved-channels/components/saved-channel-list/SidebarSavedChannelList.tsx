@@ -52,11 +52,19 @@ export const SidebarSavedChannelsList = ({
     <div>
       <TwitchNameIcon fill="#9147FF" className={styles.twitchHeader} />
       <div className={styles.savedChannelList} onClick={closeSidebar}>
-        <TwitchSavedChannelList channelIds={twitchChannelIds} />
+        {twitchChannelIds.length > 0 ? (
+          <TwitchSavedChannelList channelIds={twitchChannelIds} />
+        ) : (
+          <p className={styles.subheader}>No saved channels</p>
+        )}
       </div>
       <YouTubeFullIcon className={styles.youtubeHeader} />
       <div className={styles.savedChannelList} onClick={closeSidebar}>
-        <YouTubeSavedChannelList channelIds={youtubeChannelIds} />
+        {youtubeChannelIds.length > 0 ? (
+          <YouTubeSavedChannelList channelIds={youtubeChannelIds} />
+        ) : (
+          <p className={styles.subheader}>No saved channels</p>
+        )}
       </div>
     </div>
   );
