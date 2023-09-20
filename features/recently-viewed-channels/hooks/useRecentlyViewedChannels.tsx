@@ -10,6 +10,7 @@ const MAX_RECENT_CHANNELS = 5;
 
 export function useRecentlyViewedChannels() {
   const [recentChannels, setRecentChannels] = useState<Channel[]>([]);
+  console.log(recentChannels);
 
   useEffect(() => {
     const storedChannels =
@@ -25,7 +26,18 @@ export function useRecentlyViewedChannels() {
           (_channel) => _channel.channel_id === channel.channel_id
         )
       ) {
-        return prevChannels;
+        // If the channel is already at the top, no need to change the state
+        if (prevChannels[0].channel_id === channel.channel_id) {
+          return prevChannels;
+        }
+
+        const remainingChannels = prevChannels.filter(
+          (_channel) => _channel.channel_id !== channel.channel_id
+        );
+        // Move the channel to the 'top' of the list
+        const updatedChannelList = [channel, ...remainingChannels];
+        saveToLocalStorage("recentChannels", updatedChannelList);
+        return [channel, ...remainingChannels];
       }
 
       const newChannels = [channel, ...prevChannels].slice(
