@@ -1,3 +1,4 @@
+import { useUserId } from "features/auth/hooks/useUserId";
 import { useState, useEffect } from "react";
 import { Channel } from "types/backendAPITypes";
 import {
@@ -9,17 +10,26 @@ import {
 const MAX_RECENT_CHANNELS = 5;
 
 export function useRecentlyViewedChannels() {
+  const userId = useUserId();
   const [recentChannels, setRecentChannels] = useState<Channel[]>([]);
-  console.log(recentChannels);
 
   useEffect(() => {
-    const storedChannels =
-      getFromLocalStorage<Channel[]>("recentChannels") || [];
+    if (!userId) {
+      return;
+    }
+
+    const storageKey = `recentChannels-${userId}`;
+    const storedChannels = getFromLocalStorage<Channel[]>(storageKey) || [];
     setRecentChannels(storedChannels);
-  }, []);
+  }, [userId]);
 
   const addChannelToRecent = (channel: Channel) => {
+    if (!userId) {
+      return;
+    }
+
     setRecentChannels((prevChannels) => {
+      const storageKey = `recentChannels-${userId}`;
       // Check if the channel is already in the list
       if (
         prevChannels.some(
@@ -36,7 +46,7 @@ export function useRecentlyViewedChannels() {
         );
         // Move the channel to the 'top' of the list
         const updatedChannelList = [channel, ...remainingChannels];
-        saveToLocalStorage("recentChannels", updatedChannelList);
+        saveToLocalStorage(storageKey, updatedChannelList);
         return [channel, ...remainingChannels];
       }
 
@@ -44,13 +54,18 @@ export function useRecentlyViewedChannels() {
         0,
         MAX_RECENT_CHANNELS
       );
-      saveToLocalStorage("recentChannels", newChannels);
+      saveToLocalStorage(storageKey, newChannels);
       return newChannels;
     });
   };
 
   const clearRecentChannels = () => {
-    clearLocalStorage("recentChannels");
+    if (!userId) {
+      return;
+    }
+
+    const storageKey = `recentChannels-${userId}`;
+    clearLocalStorage(storageKey);
     setRecentChannels([]);
   };
 
