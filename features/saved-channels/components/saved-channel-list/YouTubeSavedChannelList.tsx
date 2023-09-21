@@ -4,11 +4,17 @@ import { toast } from "react-hot-toast";
 import styles from "../styles/SidebarSavedChannelList.module.css";
 import { LoadingSpinner } from "components/spinner";
 import { useGetYouTubeChannels } from "features/channels/hooks/useGetYouTubeChannels";
+import { YouTubeChannelSearchResult } from "types/youtubeAPITypes";
 
 export const YouTubeSavedChannelList = ({
   channelIds,
+  sortFn,
 }: {
   channelIds: string[];
+  sortFn?: (
+    a: YouTubeChannelSearchResult,
+    b: YouTubeChannelSearchResult
+  ) => number;
 }) => {
   const {
     data: channels,
@@ -32,13 +38,15 @@ export const YouTubeSavedChannelList = ({
     return null;
   }
 
-  const sortedChannels = channels.sort((a, b) =>
-    a.snippet.title.toLowerCase().localeCompare(b.snippet.title.toLowerCase())
-  );
+  const channelsToRender = [...channels];
+
+  if (sortFn) {
+    channelsToRender.sort(sortFn);
+  }
 
   return (
     <div>
-      {sortedChannels.map((channel) => (
+      {channelsToRender.map((channel) => (
         <SavedChannelCard
           key={channel.id}
           thumbnailUrl={channel.snippet.thumbnails.medium.url}

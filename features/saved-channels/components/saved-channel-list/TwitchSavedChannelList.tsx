@@ -4,11 +4,14 @@ import { SavedChannelCard } from "./SavedChannelCard";
 import { toast } from "react-hot-toast";
 import styles from "../styles/SidebarSavedChannelList.module.css";
 import { LoadingSpinner } from "components/spinner";
+import { TwitchChannel } from "features/channels";
 
 export const TwitchSavedChannelList = ({
   channelIds,
+  sortFn,
 }: {
   channelIds: string[];
+  sortFn?: (a: TwitchChannel, b: TwitchChannel) => number;
 }) => {
   const {
     data: channels,
@@ -32,15 +35,15 @@ export const TwitchSavedChannelList = ({
     return null;
   }
 
-  const sortedChannels = channels.sort((a, b) =>
-    a.channelData.displayName
-      .toLowerCase()
-      .localeCompare(b.channelData.displayName.toLowerCase())
-  );
+  const channelsToRender = [...channels];
+
+  if (sortFn) {
+    channelsToRender.sort(sortFn);
+  }
 
   return (
     <div>
-      {sortedChannels.map((channel) => (
+      {channelsToRender.map((channel) => (
         <SavedChannelCard
           key={channel.channelData.id}
           thumbnailUrl={channel.userData.profilePictureUrl}
