@@ -1,7 +1,7 @@
 import { sanitiseChannelQuery } from "utils/queryHandling";
 import { GetServerSideProps } from "next";
 import { TwitchChannelPage } from "features/channels";
-import { useAddChannelToRecentOnMount } from "features/recently-viewed-channels";
+import { useAddChannelToRecent } from "features/recently-viewed-channels";
 
 interface ChannelProps {
   channelId: string;
@@ -14,7 +14,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const Channel = ({ channelId }: ChannelProps) => {
-  useAddChannelToRecentOnMount({
+  useAddChannelToRecent({
     channel_id: channelId,
     platform: "twitch",
   });

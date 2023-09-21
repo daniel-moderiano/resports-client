@@ -9,6 +9,15 @@ import {
 
 const MAX_RECENT_CHANNELS = 5;
 
+/**
+ * A hook to manage a user's recently viewed channels list. Utilizes local storage and is
+ * bounded to a maximum of 5 recent channels. Depends on a valid `userId`.
+ *
+ * @returns {object}
+ * - recentlyViewedChannels: array of recent channels
+ * - addChannelToRecent: function to add a channel to the recent list
+ * - clearRecentChannels: function to clear the recent channels list
+ */
 export function useRecentlyViewedChannels() {
   const userId = useUserId();
   const [recentChannels, setRecentChannels] = useState<Channel[]>([]);

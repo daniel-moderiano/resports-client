@@ -1,5 +1,5 @@
 import { YouTubeChannelPage } from "features/channels";
-import { useAddChannelToRecentOnMount } from "features/recently-viewed-channels";
+import { useAddChannelToRecent } from "features/recently-viewed-channels";
 import { GetServerSideProps } from "next";
 import { sanitiseChannelQuery } from "utils/queryHandling";
 
@@ -14,7 +14,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const Channel = ({ channelId }: ChannelProps) => {
-  useAddChannelToRecentOnMount({
+  useAddChannelToRecent({
     channel_id: channelId,
     platform: "youtube",
   });
