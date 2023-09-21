@@ -53,7 +53,15 @@ export const SidebarSavedChannelsList = ({
       <TwitchNameIcon fill="#9147FF" className={styles.twitchHeader} />
       <div className={styles.savedChannelList} onClick={closeSidebar}>
         {twitchChannelIds.length > 0 ? (
-          <TwitchSavedChannelList channelIds={twitchChannelIds} />
+          // Sort alphabetically
+          <TwitchSavedChannelList
+            channelIds={twitchChannelIds}
+            sortFn={(a, b) =>
+              a.channelData.displayName
+                .toLowerCase()
+                .localeCompare(b.channelData.displayName.toLowerCase())
+            }
+          />
         ) : (
           <p className={styles.subheader}>No saved channels</p>
         )}
@@ -61,7 +69,15 @@ export const SidebarSavedChannelsList = ({
       <YouTubeFullIcon className={styles.youtubeHeader} />
       <div className={styles.savedChannelList} onClick={closeSidebar}>
         {youtubeChannelIds.length > 0 ? (
-          <YouTubeSavedChannelList channelIds={youtubeChannelIds} />
+          // Sort alphabetically
+          <YouTubeSavedChannelList
+            channelIds={youtubeChannelIds}
+            sortFn={(a, b) =>
+              a.snippet.title
+                .toLowerCase()
+                .localeCompare(b.snippet.title.toLowerCase())
+            }
+          />
         ) : (
           <p className={styles.subheader}>No saved channels</p>
         )}
