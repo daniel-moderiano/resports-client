@@ -7,6 +7,7 @@ import { useRecentlyViewedChannels } from "../hooks/useRecentlyViewedChannels";
 import styles from "features/saved-channels/components/styles/SidebarSavedChannelList.module.css";
 import { TwitchChannel } from "features/channels";
 import { YouTubeChannelSearchResult } from "types/youtubeAPITypes";
+import { Button } from "components/button";
 
 export const RecentlyViewedChannels = () => {
   const { recentlyViewedChannels, clearRecentChannels } =
@@ -61,6 +62,7 @@ export const RecentlyViewedChannels = () => {
 
   return (
     <div>
+      <h2>Recently viewed channels</h2>
       <TwitchNameIcon fill="#9147FF" className={styles.twitchHeader} />
       <div className={styles.savedChannelList}>
         {twitchChannelIds.length > 0 ? (
@@ -69,7 +71,7 @@ export const RecentlyViewedChannels = () => {
             sortFn={sortTwitchChannelsByReferenceArray}
           />
         ) : (
-          <p className={styles.subheader}>No saved channels</p>
+          <p className={styles.subheader}>No recently viewed</p>
         )}
       </div>
       <YouTubeFullIcon className={styles.youtubeHeader} />
@@ -80,9 +82,10 @@ export const RecentlyViewedChannels = () => {
             sortFn={sortYouTubeChannelsByReferenceArray}
           />
         ) : (
-          <p className={styles.subheader}>No saved channels</p>
+          <p className={styles.subheader}>No recently viewed</p>
         )}
       </div>
+      <Button onClick={clearRecentChannels}>Clear recently viewed</Button>
     </div>
   );
 };
