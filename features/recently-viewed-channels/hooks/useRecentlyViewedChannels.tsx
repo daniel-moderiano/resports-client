@@ -13,7 +13,7 @@ const MAX_RECENT_CHANNELS = 5;
  * A hook to manage a user's recently viewed channels list. Utilizes local storage and is
  * bounded to a maximum of 5 recent channels. Depends on a valid `userId`.
  *
- * @returns {object}
+ * @returns
  * - recentlyViewedChannels: array of recent channels
  * - addChannelToRecent: function to add a channel to the recent list
  * - clearRecentChannels: function to clear the recent channels list
@@ -59,10 +59,23 @@ export function useRecentlyViewedChannels() {
         return [channel, ...remainingChannels];
       }
 
-      const newChannels = [channel, ...prevChannels].slice(
-        0,
-        MAX_RECENT_CHANNELS
-      );
+      const newChannels = [channel, ...prevChannels];
+
+      // Get the count of the new channel's platform
+      const platformCount = newChannels.filter(
+        (ch) => ch.platform === channel.platform
+      ).length;
+      console.log(platformCount);
+
+      // If the count exceeds MAX_RECENT_CHANNELS, remove the oldest entry of that platform
+      if (platformCount > MAX_RECENT_CHANNELS) {
+        for (let i = newChannels.length - 1; i >= 0; i--) {
+          if (newChannels[i].platform === channel.platform) {
+            newChannels.splice(i, 1);
+            break;
+          }
+        }
+      }
       saveToLocalStorage(storageKey, newChannels);
       return newChannels;
     });
