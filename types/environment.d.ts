@@ -12,6 +12,8 @@ declare global {
       NEXT_PUBLIC_AUTH0_CALLBACK_URI: string;
       NEXT_PUBLIC_AUTH0_LOGOUT_URI: string;
       NEXT_PUBLIC_AWS_API_ENDPOINT: string;
+      NEXT_PUBLIC_API_ENDPOINT: string;
+      NEXT_PUBLIC_SERVER_ROOT_URL: string;
     }
   }
   interface Window {
