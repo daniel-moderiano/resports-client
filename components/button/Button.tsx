@@ -22,8 +22,8 @@ export const Button = ({
 }: ButtonProps) => {
   return (
     <button
-      className={`${styles[size]} ${styles[variant]} ${styles.button}`}
       {...ButtonProps}
+      className={`${styles[size]} ${styles[variant]} ${styles.button} ${ButtonProps.className}`}
     >
       {ButtonProps.children}
     </button>

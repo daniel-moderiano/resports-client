@@ -2,9 +2,6 @@
   width: 240px;
   display: flex;
   flex-direction: column;
-}
-
-.imageContainer {
   position: relative;
 }
 
@@ -17,7 +14,7 @@
   margin: 0;
   border-radius: 2px;
   right: 4px;
-  bottom: 10px;
+  top: 110px;
   font-size: 0.8rem;
 }
 
@@ -29,7 +26,7 @@
   padding: 2px 5px;
   margin: 0;
   border-radius: 2px;
-  bottom: 10px;
+  top: 110px;
   left: 4px;
   font-size: 0.8rem;
 }
@@ -50,4 +47,29 @@
 .link {
   margin: 0.2rem 0;
   font-size: 0.8rem;
+}
+
+.linkContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.bottomContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.revealButton {
+  height: 1.5rem;
+  z-index: 2;
+}
+
+.blurOverlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  z-index: 1;
 }

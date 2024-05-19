@@ -1,7 +1,7 @@
 import { useGetYouTubeVideos } from "features/channels/hooks/useGetYouTubeVideos";
 import * as React from "react";
 import { YouTubeVideoListing } from "./YouTubeVideoListing";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styles from "features/channels/components/styles/YouTubeChannelVideos.module.css";
 import { VideosFilterMenu } from "../VideosFilterMenu";
 import { VideoFilters } from "features/channels/types";
@@ -20,7 +20,6 @@ export const YouTubeChannelVideos = ({
   uploadsId,
 }: YouTubeChannelVideosProps) => {
   const { isLoading, isError, data } = useGetYouTubeVideos(uploadsId);
-  const [hideVideos, setHideVideos] = useState(true);
   const [filters, setFilters] = React.useState<VideoFilters | null>(null);
 
   const [filteredVideos, setFilteredVideos] = React.useState<
@@ -58,11 +57,6 @@ export const YouTubeChannelVideos = ({
       {isError && <div>An error has occurred</div>}
       <VideosFilterMenu setFilters={setFilters} />
       <div className={styles.container}>
-        {hideVideos && (
-          <div className={styles.overlay} data-testid="overlay">
-            <button onClick={() => setHideVideos(false)}>Reveal videos</button>
-          </div>
-        )}
         {filteredVideos && (
           <div className={styles.videosList}>
             {filteredVideos.length > 0 ? (

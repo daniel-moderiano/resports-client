@@ -5,6 +5,8 @@ import Link from "next/link";
 import { timeAgo } from "config/timeAgoFormatter";
 import ImageWithFallback from "utils/ImageWithFallback";
 import { Routes } from "config/routes";
+import { Button } from "components/button";
+import { useState } from "react";
 
 interface YouTubeVideoListingProps {
   videoData: YouTubeVideoResult;
@@ -13,9 +15,11 @@ interface YouTubeVideoListingProps {
 export const YouTubeVideoListing = ({
   videoData,
 }: YouTubeVideoListingProps) => {
+  const [isListingVisible, setIsListingVisible] = useState(false);
   return (
     <div className={styles.videoListing}>
-      <div className={styles.imageContainer}>
+      <div className={isListingVisible ? "" : styles.blurOverlay}></div>
+      <div>
         <ImageWithFallback
           src={videoData.snippet.thumbnails.medium.url}
           fallbackSrc="/images/no-thumbnail.png"
@@ -32,20 +36,31 @@ export const YouTubeVideoListing = ({
       </div>
       <h4 className={styles.title}>{videoData.snippet.title}</h4>
       <p className={styles.channel}>{videoData.snippet.channelTitle}</p>
-      <Link
-        rel="noopener"
-        target="_blank"
-        className={styles.link}
-        href={`https://www.youtube.com/watch?v=${videoData.id}`}
-      >
-        View on YouTube
-      </Link>
-      <Link
-        href={`${Routes.youtube.video}/${videoData.id}`}
-        className={styles.link}
-      >
-        View in Player
-      </Link>
+
+      <div className={styles.bottomContainer}>
+        <div className={styles.linkContainer}>
+          <Link
+            rel="noopener"
+            target="_blank"
+            className={styles.link}
+            href={`https://www.youtube.com/watch?v=${videoData.id}`}
+          >
+            View on YouTube
+          </Link>
+          <Link
+            href={`${Routes.youtube.video}/${videoData.id}`}
+            className={styles.link}
+          >
+            View in Player
+          </Link>
+        </div>
+        <Button
+          className={styles.revealButton}
+          onClick={() => setIsListingVisible(true)}
+        >
+          Reveal
+        </Button>
+      </div>
     </div>
   );
 };
