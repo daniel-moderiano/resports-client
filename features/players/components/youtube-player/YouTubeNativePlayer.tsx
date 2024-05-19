@@ -97,7 +97,7 @@ export const YouTubeNativePlayer = ({
         setTimeout(() => {
           // Give the gradient time to fade so you can be sure the YT controls are hidden
           setPlayerPaused(false);
-        }, 100);
+        }, 500);
 
         // A longer timeout is used here because it can be quite anti-user experience to have controls and cursor fade almost immediately after pressing play.
         setTimeout(() => {
