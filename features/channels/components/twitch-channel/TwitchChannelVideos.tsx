@@ -30,7 +30,6 @@ export const TwitchChannelVideos = ({ userId }: TwitchChannelVideosProps) => {
   const [videoType, setVideoType] = useState<
     HelixVideoType | undefined | "all"
   >("archive");
-  const [hideVideos, setHideVideos] = useState(true);
   const [filteredVideos, setFilteredVideos] = React.useState<
     HelixVideo[] | undefined | null
   >(null);
@@ -92,11 +91,6 @@ export const TwitchChannelVideos = ({ userId }: TwitchChannelVideosProps) => {
       </div>
 
       <div className={styles.container}>
-        {hideVideos && (
-          <div className={styles.overlay} data-testid="overlay">
-            <button onClick={() => setHideVideos(false)}>Reveal videos</button>
-          </div>
-        )}
         {filteredVideos && (
           <div className={styles.videosList}>
             {filteredVideos.length > 0 ? (
