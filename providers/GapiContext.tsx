@@ -18,29 +18,33 @@ export const GapiContextProvider = ({ children }: GapiContextProps) => {
   const [gapiClientReady, setGapiClientReady] = React.useState(false);
 
   React.useEffect(() => {
-    // Initialises an instance of the GAPI client using the provided API key. If OAuth is required, these credentials may be provided here.
     const initialiseGapi = () => {
       gapi.client
         .init({
           apiKey: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY,
         })
-        // TODO: Determine what to do here
-        .then(() => console.log("GAPI initialised"))
-        .catch((err) => console.log(err));
+        .then(() => {
+          console.log("GAPI initialised");
+          setGapiClientReady(true);
+        })
+        .catch((err) => console.error("GAPI init failed", err));
     };
 
-    // Check that the GAPI script has loaded and is available. Because of the server-side rendering, theoretically there shouldn't be a case where this hook is called before the GAPI script has initialised?
-    if (typeof gapi === "undefined") {
-      // TODO: Determine what to do here
-      console.error("GAPI script unavailable");
-    } else {
-      if (!gapiClientReady) {
-        // GAPI client has not previously been initialised
-        gapi.load("client", initialiseGapi);
-        setGapiClientReady(true);
+    const waitForGapi = () => {
+      if (typeof window === "undefined") {
+        // SSR guard
+        return;
       }
-    }
-  }, [gapiClientReady]);
+      if (typeof gapi === "undefined" || !gapi.load) {
+        console.warn("GAPI not yet loaded, retrying...");
+        setTimeout(waitForGapi, 100); // Try again in 100ms
+      } else {
+        gapi.load("client", initialiseGapi);
+      }
+    };
+
+    waitForGapi();
+  }, []);
 
   return (
     <GapiContext.Provider value={{ gapiClientReady, setGapiClientReady }}>
